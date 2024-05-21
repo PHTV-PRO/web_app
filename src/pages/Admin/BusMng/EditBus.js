@@ -19,6 +19,7 @@ const EditBus = (props) => {
     dispatch(getBusByIdAction(id))
   }, [dispatch, id])
 
+
   let defaultValue = [];
   if (localStorage.getItem('busStaionDefault')) {
     defaultValue = JSON.parse(localStorage.getItem('busStaionDefault'))?.split(",").map(Number);

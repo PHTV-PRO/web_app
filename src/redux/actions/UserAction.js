@@ -12,18 +12,32 @@ export const loginAction = (loginInfo) => {
       const result = await userService.login(loginInfo);
 
       if (result.status === 200) {
-        localStorage.setItem(TOKEN, result.data.data.token);
-        notification.success({
-          closeIcon: true,
-          message: "Success",
-          description: (
-            <>
-              Login successfully.<br />
-              Welcome to PHTV Bus.
-            </>
-          ),
-        });
-        history.push("/admin/busmng");
+      const user = await userService.getCurrentUser(result.data.data.token);
+        
+        if (user.data.data.role=="ADMIN") {
+          localStorage.setItem(TOKEN, result.data.data.token);
+          notification.success({
+            closeIcon: true,
+            message: "Success",
+            description: (
+              <>
+                Wellcome to admin!!
+              </>
+            ),
+          });
+          history.push("/admin/busmng");
+          } else {
+            notification.error({
+              closeIcon: true,
+              message: "Error",
+              description: (
+                <>
+                  You do not have access!!
+                </>
+              ),
+            });
+            history.replace("login");
+          }
       } else {
         await dispatch(hideLoadingAction);
         history.replace("login");

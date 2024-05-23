@@ -168,7 +168,8 @@ function App() {
         <AdminTemplate path='/admin/newsmng/addnews' exact Component={AddNewNews} />
         <AdminTemplate path='/admin/newsmng/edit/:id' exact Component={NewsEdit} />
 
-        <HomeTemplate path="/" exact Component={Home} />
+        {/* <HomeTemplate path="/" exact Component={Home} /> */}
+        <UserTemplate path="/" exact Component={Login} />
         <HomeTemplate path="/search/" exact Component={Search} />
         <HomeTemplate Component={Home} />
       </Switch>

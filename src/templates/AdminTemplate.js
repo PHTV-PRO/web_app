@@ -73,15 +73,15 @@ export const AdminTemplate = (props) => { //path, exact, Component
     window.scrollTo(0, 0);
   }, [dispatch])
 
-  if (userLogin && (userLogin?.data?.role !== 'ADMIN' )) {
+  if (userLogin && (userLogin?.role !== 'ADMIN' )) {
     history.replace('/')
   }
 
 
 
   const itemsAdmin = [
-    getItem('Bus Management', 'sub1', <UserOutlined />, [
-      getItem('Bus Management', '1', <NavLink className='text-decoration-none' to="/admin/busmng"><i className="fas fa-bus f3"></i></NavLink>),
+    getItem('Skill Management', 'sub1', <UserOutlined />, [
+      getItem('Industry Management', '1', <NavLink className='text-decoration-none' to="/admin/industry"><i className="fas fa-bus f3"></i></NavLink>),
       getItem('Bus Type Management', '2', <NavLink className='text-decoration-none' to="/admin/bustypemng"><i className="fas fa-bus f3"></i></NavLink>),
     ]),
     getItem('Station Management', '3', <NavLink className='text-decoration-none' to="/admin/stationmng"><i className="fa-solid fa-location-dot"></i></NavLink>),
@@ -132,7 +132,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
       <Layout style={{ minHeight: '100vh', }}>
         <Sider collapsible width={300} collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
           <div className="demo-logo-vertical text-white text-2xl text-center my-10" >Admin Page</div>
-          <Menu theme="dark" defaultSelectedKeys={selectedKey} mode="inline" items={userLogin?.role === "Admin" ? itemsAdmin : itemsMod} />
+          <Menu theme="dark" defaultSelectedKeys={selectedKey} mode="inline" items={userLogin?.role === "ADMIN" ? itemsAdmin : itemsMod} />
         </Sider>
         <Layout>
           <Header

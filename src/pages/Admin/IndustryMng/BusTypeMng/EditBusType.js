@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Form, Input, Button } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBusTypeByIdAction, updateBusTypeByIdAction } from '../../../../redux/actions/BusAction';
+import { getBusTypeByIdAction, updateBusTypeByIdAction } from '../../../../redux/actions/IndustryAction';
 
 const EditBusType = (props) => {
   const dispatch = useDispatch();

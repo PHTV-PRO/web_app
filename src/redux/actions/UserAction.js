@@ -25,7 +25,7 @@ export const loginAction = (loginInfo) => {
               </>
             ),
           });
-          history.push("/admin/busmng");
+          history.push("/admin/industry");
           } else {
             notification.error({
               closeIcon: true,
@@ -196,7 +196,7 @@ export const getCurrentUserAction = (token) => {
       if (result.status === 200) {
         dispatch({
           type: GET_CURRENT_USER_ACTION,
-          userLogin: result.data,
+          userLogin: result.data.data,
         });
       }else{
         localStorage.removeItem(TOKEN)

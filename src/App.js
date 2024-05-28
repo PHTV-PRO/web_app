@@ -16,7 +16,7 @@ import Register from "./pages/Register/Register";
 import UserTemplate from "./templates/UserTemplate";
 import Loading from "./components/Loading/Loading";
 import { AdminTemplate } from "./templates/AdminTemplate";
-import Edit from "./pages/Admin/BusMng/EditBus";
+import Edit from "./pages/Admin/IndustryMng/EditBus";
 import UserMng from "./pages/Admin/UserMng/AdminUserMng";
 import UserEdit from "./pages/Admin/UserMng/UserEdit";
 import AddUser from "./pages/Admin/UserMng/AddUser";
@@ -31,13 +31,13 @@ import AboutUs from "./pages/AboutUs/AboutUs";
 import GeneralTerms from "./pages/Terms/GeneralTerms";
 import TermsOfTransaction from "./pages/Terms/TermsOfTransaction";
 import ForgetPassword from "./pages/Login/ForgetPassword";
-import BusMng from "./pages/Admin/BusMng/BusMng";
+import BusMng from "./pages/Admin/IndustryMng/IndustryMng";
 import StationMng from "./pages/Admin/StationMng/StationMng";
 import TripMng from "./pages/Admin/TripMng/TripMng";
-import AddNewBus from "./pages/Admin/BusMng/AddNewBus";
-import BusTypeMng from "./pages/Admin/BusMng/BusTypeMng/BusTypeMng";
-import AddNewBusType from "./pages/Admin/BusMng/BusTypeMng/AddNewBusType";
-import EditBusType from "./pages/Admin/BusMng/BusTypeMng/EditBusType";
+import AddNewBus from "./pages/Admin/IndustryMng/AddNewBus";
+import BusTypeMng from "./pages/Admin/IndustryMng/BusTypeMng/BusTypeMng";
+import AddNewBusType from "./pages/Admin/IndustryMng/BusTypeMng/AddNewBusType";
+import EditBusType from "./pages/Admin/IndustryMng/BusTypeMng/EditBusType";
 import AddNewStation from "./pages/Admin/StationMng/AddNewStation";
 import EditStation from "./pages/Admin/StationMng/EditStation";
 import AddNewTrip from "./pages/Admin/TripMng/AddNewTrip";
@@ -70,6 +70,7 @@ import RevenueRoute from "./pages/Admin/Revenue/RevenueRoute";
 import OfferMng from "./pages/Admin/OfferMng/OfferMng";
 import AddOffer from "./pages/Admin/OfferMng/AddOffer";
 import OfferEdit from "./pages/Admin/OfferMng/OfferEdit";
+import IndustryMng from "./pages/Admin/IndustryMng/IndustryMng";
 
 export const history = createBrowserHistory();
 
@@ -125,7 +126,7 @@ function App() {
         <AdminTemplate path="/admin/drivermng/adddriver" exact Component={AddDriver} />
 
         {/* Bus */}
-        <AdminTemplate path="/admin/busmng" exact Component={BusMng} />
+        <AdminTemplate path="/admin/industry" exact Component={IndustryMng} />
         <AdminTemplate path="/admin/busmng/addnew" exact Component={AddNewBus} />
         <AdminTemplate path="/admin/busmng/edit/:id" exact Component={Edit} />
 

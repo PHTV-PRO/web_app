@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react'
 import { SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tag, Tooltip, Switch } from 'antd';
+import { Button, Input, Space, Table } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteBusAction, enableBusAction, getBusByIdAction, getBusListAction } from '../../../redux/actions/BusAction';
+import { deleteBusTypeAction, getBusTypeByIdAction, getBusTypeListAction } from '../../../../redux/actions/IndustryAction';
 
 
-export default function BusMng() {
-  let { arrBus } = useSelector(state => state.BusReducer);
+export default function BusTypeMng() {
+  let { arrBusType } = useSelector(state => state.BusReducer);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getBusListAction())
+    dispatch(getBusTypeListAction())
   }, [dispatch])
-
 
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
@@ -30,7 +29,8 @@ export default function BusMng() {
     setSearchedColumn(dataIndex);
   };
 
-  const data = arrBus;
+
+  const data = arrBusType;
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -57,7 +57,7 @@ export default function BusMng() {
               width: 90,
             }}
           >
-            Search
+            Tìm
           </Button>
           <Button
             onClick={() => clearFilters && resetSearch(selectedKeys, confirm, dataIndex)}
@@ -104,81 +104,53 @@ export default function BusMng() {
   });
   const columns = [
     {
-      title: 'Bus Plate',
-      dataIndex: 'busPlate',
-      key: 'busPlate',
+      title: 'Type ID',
+      dataIndex: 'id',
+      key: 'id',
       width: '15%',
-      ...getColumnSearchProps('busPlate'),
-      sorter: (a, b) => a.busPlate - b.busPlate,
+      ...getColumnSearchProps('id'),
+      sorter: (a, b) => a.id - b.id,
       sortDirections: ['descend', 'ascend'],
     },
     {
       title: 'Bus Type',
-      dataIndex: 'busType',
-      key: 'busType',
+      dataIndex: 'name',
+      key: 'name',
       width: '15%',
-      ...getColumnSearchProps('busType'),
-      sorter: (a, b) => a.busType - b.busType,
+      ...getColumnSearchProps('name'),
+      sorter: (a, b) => a.name - b.name,
       sortDirections: ['descend', 'ascend'],
-      render: (text, busType) => {
-        return (<Tooltip title={`Number of seat: ${busType.busType?.numberOfSeat}`}>
-          <span>{busType.busType?.name}</span>
-        </Tooltip>)
-      },
     },
     {
-      title: 'Station',
-      dataIndex: 'stations',
-      key: 'stations',
+      title: 'Number Of Seat',
+      dataIndex: 'numberOfSeat',
+      key: 'numberOfSeat',
       width: '30%',
-      ...getColumnSearchProps('stations'),
-      sortDirections: ['descend', 'ascend'],
-      render: (text, stations) => {
-        return stations.stations.map((item, index) => {
-          return <Tag color="magenta" key={index}>{item.name}</Tag>
-        })
-      },
-    },
-    {
-      title: 'Note',
-      dataIndex: 'note',
-      key: 'note',
-      ...getColumnSearchProps('note'),
+      ...getColumnSearchProps('numberOfSeat'),
       sortDirections: ['descend', 'ascend']
     },
     {
-      title: 'Enable',
-      dataIndex: 'enabled',
-      key: 'enabled',
-      sortDirections: ['descend', 'ascend'],
-      render: (text, bus) => {
-        return <Switch size="small" checked={bus.enabled} onClick={()=>{
-          dispatch(enableBusAction(bus.id))
-        }} />
-      },
-    },
-    {
       title: 'Manage',
-      width: '15%',
-      render: (text, bus) => {
+      width: '25%',
+      render: (text, bustype) => {
         return <>
-          <Button key={1} href={`/admin/busmng/edit/${bus.id}`} type="link" icon={<EditOutlined />} onClick={() => {
-            dispatch(getBusByIdAction(bus.id))
-            localStorage.setItem('busStaionDefault', JSON.stringify(bus.stationId))
+          <Button key={1} href={`/admin/bustypemng/edit/${bustype.id}`} type="link" icon={<EditOutlined />} onClick={() => {
+            dispatch(getBusTypeByIdAction(bustype.id))
           }}></Button>
           <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
-            if (window.confirm('Do you want to delete bus ' + bus.busPlate + '?')) {
-              dispatch(deleteBusAction(bus.id))
+            if (window.confirm('Do you want to delete ' + bustype.name + '?')) {
+              dispatch(deleteBusTypeAction(bustype.id))
             }
           }}></Button>
         </>
+
       }
     },
   ]
   return <div>
     <div className='d-flex mb-3'>
-      <h3 className='text-lg'>Bus Management</h3>
-      <Button href='/admin/busmng/addnew' type="primary" className='ml-3 small bg-primary'>+ Add New Bus</Button>
+      <h3 className='text-lg'>Bus Type Management</h3>
+      <Button href='/admin/bustypemng/addnew' type="primary" className='ml-3 small bg-primary'>+ Add New Bus Type</Button>
     </div>
     <Table columns={columns} dataSource={data} rowKey={'id'} />
   </div>

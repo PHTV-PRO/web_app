@@ -1,29 +1,21 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Select, Button, notification } from 'antd';
+import { Form, Input, Button, notification, Select } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBusByIdAction, getBusTypeListAction, updateBusByIdAction } from '../../../redux/actions/BusAction';
+import { addNewBusAction, getBusTypeListAction } from '../../../redux/actions/IndustryAction';
 import { getStationListAction } from '../../../redux/actions/StationAction';
 
-const EditBus = (props) => {
+const AddNewBus = () => {
   const dispatch = useDispatch();
-  const { busDetail } = useSelector(state => state.BusReducer)
-  let { arrStation } = useSelector(state => state.StationReducer);
   let { arrBusType } = useSelector(state => state.BusReducer);
+  let { arrStation } = useSelector(state => state.StationReducer);
   const { TextArea } = Input;
 
-  let { id } = props.match.params;
   useEffect(() => {
     dispatch(getBusTypeListAction())
     dispatch(getStationListAction())
-    dispatch(getBusByIdAction(id))
-  }, [dispatch, id])
+  }, [dispatch]);
 
-
-  let defaultValue = [];
-  if (localStorage.getItem('busStaionDefault')) {
-    defaultValue = JSON.parse(localStorage.getItem('busStaionDefault'))?.split(",").map(Number);
-  }
 
   const options = [];
   arrStation.forEach(element => {
@@ -34,12 +26,11 @@ const EditBus = (props) => {
   });
 
   const formik = useFormik({
-    enableReinitialize: true,
     initialValues: {
-      busPlate: busDetail?.busPlate,
-      busTypeId: busDetail?.busTypeId,
-      stationId: busDetail?.stationId || [],
-      note: busDetail?.note || '',
+      busPlate: '',
+      busTypeId: '',
+      stationId: [],
+      note: '',
     },
     onSubmit: (values) => {
       if (values.busPlate == '' || values.busTypeId == '' || values.stationId == '') {
@@ -54,14 +45,13 @@ const EditBus = (props) => {
         let formData = new FormData();
         for (let key in values) {
           formData.append(key, values[key]);
-        }
-        console.table('formData', [...formData])
-        dispatch(updateBusByIdAction(id, formData))
-        localStorage.removeItem("busStaionDefault");
       }
+        console.table('formData', [...formData])
+        // dispatch(addNewBusAction(formData));
+      }
+
     }
   })
-
 
   const handleChangeBusType = (value) => {
     formik.setFieldValue('busTypeId', value)
@@ -70,7 +60,6 @@ const EditBus = (props) => {
   const handleChangeStation = (value) => {
     formik.setFieldValue('stationId', value)
   };
-
 
   return (
     <Form
@@ -83,11 +72,12 @@ const EditBus = (props) => {
       }}
       layout="horizontal"
     >
-      <h3 className="text-2xl">Edit Bus Type: {formik.values.busPlate}</h3>
+      <h3 className="text-2xl">Add New Bus</h3>
       <div className='row'>
         <div className='col-8'>
           <Form.Item
             label="Bus Plate"
+            name="busPlate"
             style={{ minWidth: '100%' }}
             rules={[
               {
@@ -97,10 +87,11 @@ const EditBus = (props) => {
               },
             ]}
           >
-            <Input name="busPlate" onChange={formik.handleChange} value={formik.values.busPlate} />
+            <Input name="busPlate" onChange={formik.handleChange} />
           </Form.Item>
           <Form.Item
             label="Bus Type"
+            name='busType'
             style={{ minWidth: '100%' }}
             rules={[
               {
@@ -110,10 +101,12 @@ const EditBus = (props) => {
               },
             ]}
           >
-            <Select value={formik.values.busTypeId} options={arrBusType?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeBusType} />
+            {/* <Input name='busType' type='hidden'  /> */}
+            <Select rules={[{required:true}]} options={arrBusType?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeBusType} />
           </Form.Item>
           <Form.Item
             label="Station"
+            name='Station'
             style={{ minWidth: '100%' }}
             rules={[
               {
@@ -129,16 +122,16 @@ const EditBus = (props) => {
               style={{
                 width: '100%',
               }}
-              defaultValue={defaultValue}
+              placeholder="Please select"
               onChange={handleChangeStation}
               options={options}
             />
           </Form.Item>
           <Form.Item label="Note">
-            <TextArea name="note" allowClear rows={4} onChange={formik.handleChange} value={formik.values.note} />
+            <TextArea name="note" allowClear rows={4} onChange={formik.handleChange} />
           </Form.Item>
           <Form.Item label="Action">
-            <Button htmlType="submit" >Update Bus</Button>
+            <Button htmlType="submit" >Add Bus</Button>
           </Form.Item>
         </div>
       </div>
@@ -147,4 +140,4 @@ const EditBus = (props) => {
   );
 };
 
-export default EditBus;
+export default AddNewBus;

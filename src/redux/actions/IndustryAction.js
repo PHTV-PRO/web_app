@@ -1,17 +1,17 @@
-import { GET_BUS_DETAIL, GET_BUS_LIST, GET_BUS_TYPE_DETAIL, GET_BUS_TYPE_LIST, GET_ENABLE_BUS_LIST } from "../constants";
+import { GET_BUS_DETAIL, GET_INDUSTRY_LIST, GET_BUS_TYPE_DETAIL, GET_BUS_TYPE_LIST, GET_ENABLE_BUS_LIST } from "../constants";
 import { history } from "../../App";
-import { busManageService } from "../../services/BusManageService";
+import { industryService } from "../../services/IndustryService";
 import { notification } from "antd";
 
 
-export const getBusListAction = () => {
+export const getIndustryListAction = () => {
     return async (dispatch) => {
         try {
-            const result = await busManageService.getBusList();
-            if (result.data.status === 200) {
+            const result = await industryService.getIndustryList();
+            if (result.status === 200) {
                 dispatch({
-                    type: GET_BUS_LIST,
-                    arrBus: result.data.data
+                    type: GET_INDUSTRY_LIST,
+                    arrIndustry: result.data
                 })
             }
         } catch (error) {
@@ -23,7 +23,7 @@ export const getBusListAction = () => {
 export const getEnableBusListAction = () => {
     return async (dispatch) => {
         try {
-            const result = await busManageService.getEnableBusList();
+            const result = await industryService.getEnableBusList();
             if (result.data.status === 200) {
                 dispatch({
                     type: GET_ENABLE_BUS_LIST,
@@ -39,7 +39,7 @@ export const getEnableBusListAction = () => {
 export const getBusByIdAction = (id) => {
     return async (dispatch) => {
         try {
-            const result = await busManageService.getBusById(id);
+            const result = await industryService.getBusById(id);
             if (result.data.status === 200) {
                 dispatch({
                     type: GET_BUS_DETAIL,
@@ -52,18 +52,28 @@ export const getBusByIdAction = (id) => {
     }
 }
 
-export const addNewBusAction = (formData) => {
+export const addIndustryAction = (formData) => {
     return async (dispatch) => {
         try {
-            const result = await busManageService.addNewBus(formData)
-            notification.success({
+            const result = await industryService.addNewIndustry(formData)
+            if(result.data.status===200){
+                notification.success({
+                    closeIcon: true,
+                    message: 'Success',
+                    description: (
+                        <>Add new Industry successfully.</>
+                    ),
+                });
+                dispatch(getIndustryListAction())
+            }
+            notification.error({
                 closeIcon: true,
-                message: 'Success',
+                message: 'Error',
                 description: (
-                    <>Add new bus successfully.</>
+                    <>Add new Industry fail.</>
                 ),
             });
-            history.push('/admin/busmng');
+
         } catch (error) {
             console.log('error', error);
         }
@@ -73,7 +83,7 @@ export const addNewBusAction = (formData) => {
 export const updateBusByIdAction = (id,formData) => {
     return async (dispatch) => {
         try {
-            const result = await busManageService.updateBus(id,formData);
+            const result = await industryService.updateBus(id,formData);
             notification.success({
                 closeIcon: true,
                 message: 'Success',
@@ -91,7 +101,7 @@ export const updateBusByIdAction = (id,formData) => {
 export const enableBusAction = (id) => {
     return async (dispatch) => {
         try {
-            const result = await busManageService.enableBus(id);
+            const result = await industryService.enableBus(id);
             notification.success({
                 closeIcon: true,
                 message: 'Success',
@@ -99,7 +109,7 @@ export const enableBusAction = (id) => {
                     <>{result.data.data.enabled ? "Enable successfully" : "Disable successfully"}</>
                 ),
             });
-            dispatch(getBusListAction())
+            dispatch(getIndustryListAction())
         } catch (error) {
             console.log('error', error);
         }
@@ -109,7 +119,7 @@ export const enableBusAction = (id) => {
 export const deleteBusAction = (id) => {
     return async (dispatch) => {
         try {
-            const result = await busManageService.deleteBus(id);
+            const result = await industryService.deleteBus(id);
             notification.success({
                 closeIcon: true,
                 message: 'Success',
@@ -117,7 +127,7 @@ export const deleteBusAction = (id) => {
                     <>Delete bus type successfully</>
                 ),
             });
-            dispatch(getBusListAction())
+            dispatch(getIndustryListAction())
         } catch (error) {
             console.log('error', error);
         }
@@ -130,7 +140,7 @@ export const deleteBusAction = (id) => {
 export const getBusTypeListAction = () => {
     return async (dispatch) => {
         try {
-            const result = await busManageService.getBusTypeList();
+            const result = await industryService.getBusTypeList();
             dispatch({
                 type: GET_BUS_TYPE_LIST,
                 arrBusType: result.data.data
@@ -144,7 +154,7 @@ export const getBusTypeListAction = () => {
 export const getBusTypeByIdAction = (id) => {
     return async (dispatch) => {
         try {
-            const result = await busManageService.getBusTypeById(id);
+            const result = await industryService.getBusTypeById(id);
             dispatch({
                 type: GET_BUS_TYPE_DETAIL,
                 busTypeDetail: result.data.data[0]
@@ -159,7 +169,7 @@ export const getBusTypeByIdAction = (id) => {
 export const addBusTypeAction = (formData) => {
     return async (dispatch) => {
         try {
-            const result = await busManageService.addNewBusType(formData)
+            const result = await industryService.addNewBusType(formData)
             notification.success({
                 closeIcon: true,
                 message: 'Success',
@@ -177,7 +187,7 @@ export const addBusTypeAction = (formData) => {
 export const updateBusTypeByIdAction = (id,formData) => {
     return async (dispatch) => {
         try {
-            const result = await busManageService.updateBusType(id,formData);
+            const result = await industryService.updateBusType(id,formData);
             notification.success({
                 closeIcon: true,
                 message: 'Success',
@@ -195,7 +205,7 @@ export const updateBusTypeByIdAction = (id,formData) => {
 export const deleteBusTypeAction = (id) => {
     return async (dispatch) => {
         try {
-            const result = await busManageService.deleteBusType(id);
+            const result = await industryService.deleteBusType(id);
             notification.success({
                 closeIcon: true,
                 message: 'Success',

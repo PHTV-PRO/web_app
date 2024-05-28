@@ -1,6 +1,5 @@
 import { applyMiddleware, createStore, combineReducers } from "redux";
 import reduxThunk from 'redux-thunk';
-import { BusReducer } from './reducers/BusReducer';
 import { StationReducer } from './reducers/StationReducer';
 import { UserReducer } from './reducers/UserReducer';
 import { LoadingReducer } from './reducers/LoadingReducer';
@@ -13,10 +12,11 @@ import { ModReducer } from './reducers/ModReducer';
 import { PromoteTripReducer } from './reducers/PromoteTripReducer';
 import { NewReducer } from './reducers/NewReducer';
 import { OfferReducer } from './reducers/OfferReducer';
+import { IndustryReducer } from "./reducers/IndustryReducer";
 
 
 const rootReducer = combineReducers({
-    BusReducer,
+    IndustryReducer,
     UserReducer,
     ModReducer,
     StationReducer,

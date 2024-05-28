@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Form, Button, Select, Input, DatePicker } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEnableBusListAction } from '../../../redux/actions/BusAction';
+import { getEnableBusListAction } from '../../../redux/actions/IndustryAction';
 import { getStationListAction } from '../../../redux/actions/StationAction';
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat';

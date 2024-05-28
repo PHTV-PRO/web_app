@@ -1,18 +1,18 @@
-import { GET_BUS_DETAIL, GET_BUS_LIST, GET_BUS_TYPE_DETAIL, GET_BUS_TYPE_LIST, GET_ENABLE_BUS_LIST } from "../constants";
+import { GET_BUS_DETAIL, GET_INDUSTRY_LIST, GET_BUS_TYPE_DETAIL, GET_BUS_TYPE_LIST, GET_ENABLE_BUS_LIST } from "../constants";
 
 const initialState = {
-    arrBus: [],
+    arrIndustry: [],
     arrEnableBus: [],
     busDetail: {},
     arrBusType: [],
     busTypeDetail: {},
 }
 
-export const BusReducer = (state = initialState, action) => {
+export const IndustryReducer = (state = initialState, action) => {
     switch (action.type) {
 
-        case GET_BUS_LIST:
-            state.arrBus = action.arrBus;
+        case GET_INDUSTRY_LIST:
+            state.arrIndustry = action.arrIndustry;
             return { ...state }
         case GET_ENABLE_BUS_LIST:
             state.arrEnableBus = action.arrEnableBus;

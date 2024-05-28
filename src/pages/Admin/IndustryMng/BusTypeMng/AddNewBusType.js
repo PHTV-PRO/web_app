@@ -2,7 +2,7 @@ import React  from 'react';
 import { Form, Input, Button, notification } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { addBusTypeAction } from '../../../../redux/actions/BusAction';
+import { addBusTypeAction } from '../../../../redux/actions/IndustryAction';
 
 const AddNewBusType = () => {
   const dispatch = useDispatch();

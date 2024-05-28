@@ -17,7 +17,7 @@ export class baseService {
             url:`${DOMAIN}${url}`,
             method:'POST',
             data:model,
-            headers: {'Authorization': 'Bearer' + localStorage.getItem(TOKEN)} //JWT
+            headers: {'Authorization': 'Bearer ' + localStorage.getItem(TOKEN)} //JWT
         }) 
     }
 
@@ -26,7 +26,7 @@ export class baseService {
         return Axios({
             url:`${DOMAIN}${url}`,
             method:'GET',
-            headers: {'Authorization': 'Bearer' + localStorage.getItem(TOKEN)} //token yêu cầu từ backend chứng minh user đã đăng nhập rồi
+            headers: {'Authorization': 'Bearer ' + localStorage.getItem(TOKEN)} //token yêu cầu từ backend chứng minh user đã đăng nhập rồi
         })
     }
 
@@ -36,5 +36,13 @@ export class baseService {
             method:'DELETE',
             headers: {'Authorization': 'Bearer' + localStorage.getItem(TOKEN)} //token yêu cầu từ backend chứng minh user đã đăng nhập rồi
         })
+    }
+    postNotBearer = (url,model) => {
+        return Axios({
+            url:`${DOMAIN}${url}`,
+            method:'POST',
+            data:model,
+            headers: {'Authorization': 'Bearer' + localStorage.getItem(TOKEN)} //JWT
+        }) 
     }
 }

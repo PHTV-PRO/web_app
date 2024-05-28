@@ -1,21 +1,21 @@
 /* eslint-disable no-useless-constructor */
 import { baseService } from "./baseService";
 
-export class BusManageService extends baseService {
+export class IndustryService extends baseService {
     constructor() {
         super();
     }
 
-    getBusList = () => {
-        return this.get(`/api/Bus`);
+    getIndustryList = () => {
+        return this.get(`/api/industry`);
     }
 
     getEnableBusList = () => {
         return this.get(`/api/Bus/enablebus`);
     }
 
-    addNewBus = (formData) => {
-        return this.post(`/api/Bus`, formData);
+    addNewIndustry = (formData) => {
+        return this.post(`/api/industry`, formData);
     }
 
     getBusById = (id) => {
@@ -59,4 +59,4 @@ export class BusManageService extends baseService {
     }
 }
 
-export const busManageService = new BusManageService();
+export const industryService = new IndustryService();

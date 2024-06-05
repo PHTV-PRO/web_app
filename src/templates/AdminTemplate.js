@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Route } from "react-router-dom";
-import { HomeOutlined, UserOutlined, BuildFilled, QuestionOutlined, BarChartOutlined, FormOutlined, PercentageOutlined, NodeIndexOutlined, CarOutlined, SearchOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined, BuildFilled, QuestionOutlined, BarChartOutlined, FormOutlined, PercentageOutlined, NodeIndexOutlined, CarOutlined, SearchOutlined, AuditOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme, Button, Input, Modal, Descriptions } from 'antd';
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -64,7 +64,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
       dispatch(checkTicketAction(code.split(' ')));
     }
   }
-  
+
 
   useEffect(() => {
     if (accessToken != null) {
@@ -73,7 +73,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
     window.scrollTo(0, 0);
   }, [dispatch])
 
-  if (userLogin && (userLogin?.role !== 'ADMIN' )) {
+  if (userLogin && (userLogin?.role !== 'ADMIN')) {
     history.replace('/')
   }
 
@@ -102,6 +102,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
     ]),
     getItem('FAQ Management', '13', <NavLink className='text-decoration-none' to="/admin/faqmng"><QuestionOutlined /></NavLink>),
     getItem('News Management', '14', <NavLink className='text-decoration-none' to="/admin/newsmng"><FormOutlined /></NavLink>),
+    getItem('Job Type Management', '15', <NavLink className='text-decoration-none' to="/admin/jobtypemng"><AuditOutlined /></NavLink>),
   ]
 
 
@@ -154,20 +155,20 @@ export const AdminTemplate = (props) => { //path, exact, Component
           </Content>
         </Layout>
       </Layout>
-      <Modal title={`Check ticket ${ticketDetail?.code || code}`} open={isModalOpen} maskClosable={true} afterClose={()=>{code = ""}} footer={null} width={850} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title={`Check ticket ${ticketDetail?.code || code}`} open={isModalOpen} maskClosable={true} afterClose={() => { code = "" }} footer={null} width={850} onOk={handleOk} onCancel={handleCancel}>
         {ticketDetail?.isCancel ?
-        <Descriptions className="text-center mt-3" title="Ticket is already canceled"></Descriptions>
-        : ticketDetail != null && ticketDetail != "undefined" ? <div className="pt-3">
-          <Descriptions title="Ticket Info">
-            <Descriptions.Item label="Customer">{ticketDetail.users.email}</Descriptions.Item>
-            <Descriptions.Item label="Seat List">{ticketDetail.seatsList}</Descriptions.Item>
-            <Descriptions.Item label="Route">{ticketDetail.trips.fromStation.name} - {ticketDetail.trips.toStation.name}</Descriptions.Item>
-            <Descriptions.Item label="Departure Time">{dayjs(ticketDetail.trips.startTime).format("DD-MM-YYYY h:mm A")}</Descriptions.Item>
-            <Descriptions.Item label="Arrival Time">{dayjs(ticketDetail.trips.finishTime).format("DD-MM-YYYY h:mm A")}</Descriptions.Item>
-            <Descriptions.Item label="Bus Number">{ticketDetail.trips.bus.busPlate}</Descriptions.Item>
-            <Descriptions.Item label="Status"><span className="text-green-500 font-semibold">{remainHour < 0 ? "Your bus already departed" : `Your bus is going to depart on next ${remainHour} hour(s)`}</span>  </Descriptions.Item>
-          </Descriptions>
-        </div> : <Descriptions className="text-center mt-3" title="Ticket not found"></Descriptions>}
+          <Descriptions className="text-center mt-3" title="Ticket is already canceled"></Descriptions>
+          : ticketDetail != null && ticketDetail != "undefined" ? <div className="pt-3">
+            <Descriptions title="Ticket Info">
+              <Descriptions.Item label="Customer">{ticketDetail.users.email}</Descriptions.Item>
+              <Descriptions.Item label="Seat List">{ticketDetail.seatsList}</Descriptions.Item>
+              <Descriptions.Item label="Route">{ticketDetail.trips.fromStation.name} - {ticketDetail.trips.toStation.name}</Descriptions.Item>
+              <Descriptions.Item label="Departure Time">{dayjs(ticketDetail.trips.startTime).format("DD-MM-YYYY h:mm A")}</Descriptions.Item>
+              <Descriptions.Item label="Arrival Time">{dayjs(ticketDetail.trips.finishTime).format("DD-MM-YYYY h:mm A")}</Descriptions.Item>
+              <Descriptions.Item label="Bus Number">{ticketDetail.trips.bus.busPlate}</Descriptions.Item>
+              <Descriptions.Item label="Status"><span className="text-green-500 font-semibold">{remainHour < 0 ? "Your bus already departed" : `Your bus is going to depart on next ${remainHour} hour(s)`}</span>  </Descriptions.Item>
+            </Descriptions>
+          </div> : <Descriptions className="text-center mt-3" title="Ticket not found"></Descriptions>}
       </Modal>
     </Fragment>
   }} />

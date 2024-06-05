@@ -13,10 +13,12 @@ import { PromoteTripReducer } from './reducers/PromoteTripReducer';
 import { NewReducer } from './reducers/NewReducer';
 import { OfferReducer } from './reducers/OfferReducer';
 import { IndustryReducer } from "./reducers/IndustryReducer";
-
+import { JobTypeReducer } from "./reducers/JobTypeReducer";
 
 const rootReducer = combineReducers({
+
     IndustryReducer,
+    JobTypeReducer,
     UserReducer,
     ModReducer,
     StationReducer,
@@ -31,4 +33,4 @@ const rootReducer = combineReducers({
     OfferReducer
 })
 
-export const store = createStore(rootReducer,applyMiddleware(reduxThunk));
+export const store = createStore(rootReducer, applyMiddleware(reduxThunk));

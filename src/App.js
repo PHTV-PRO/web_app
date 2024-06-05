@@ -71,6 +71,11 @@ import OfferMng from "./pages/Admin/OfferMng/OfferMng";
 import AddOffer from "./pages/Admin/OfferMng/AddOffer";
 import OfferEdit from "./pages/Admin/OfferMng/OfferEdit";
 import IndustryMng from "./pages/Admin/IndustryMng/IndustryMng";
+import JobTypeMng from "./pages/Admin/JobTypeMng/JobTypeMng";
+import AddJobType from "./pages/Admin/JobTypeMng/AddNewJobType";
+import EditJobType from "./pages/Admin/JobTypeMng/EditJobType";
+
+
 
 export const history = createBrowserHistory();
 
@@ -168,6 +173,11 @@ function App() {
         <AdminTemplate path='/admin/newsmng' exact Component={NewsMng} />
         <AdminTemplate path='/admin/newsmng/addnews' exact Component={AddNewNews} />
         <AdminTemplate path='/admin/newsmng/edit/:id' exact Component={NewsEdit} />
+
+        {/* Job Type */}
+        <AdminTemplate path="/admin/jobtypemng" exact Component={JobTypeMng} />
+        <AdminTemplate path="/admin/jobtypemng/addjobtype" exact Component={AddJobType} />
+        <AdminTemplate path="/admin/jobtypemng/edit/:id" exact Component={EditJobType} />
 
         {/* <HomeTemplate path="/" exact Component={Home} /> */}
         <UserTemplate path="/" exact Component={Login} />

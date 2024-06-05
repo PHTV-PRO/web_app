@@ -2,10 +2,10 @@ import React from 'react';
 import { Form, Input, Button, notification } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { addJobTypeAction } from '../../../redux/actions/JobTypeAction';
+import { addJobTypeAction } from '../../../redux/actions/LevelAction';
 
 
-const AddNewJobType = () => {
+const AddNewLevel = () => {
     const dispatch = useDispatch();
 
     const formik = useFormik({
@@ -48,7 +48,7 @@ const AddNewJobType = () => {
             }}
             layout="horizontal"
         >
-            <h3 className="text-2xl">Add New Job Type</h3>
+            <h3 className="text-2xl">Add New Level</h3>
             <div className='row'>
                 <div className='col-8'>
                     <Form.Item
@@ -58,7 +58,7 @@ const AddNewJobType = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Name  is required!',
+                                message: 'Level is required!',
                                 transform: (value) => value.trim(),
                             },
                         ]}
@@ -67,7 +67,7 @@ const AddNewJobType = () => {
                     </Form.Item>
 
                     <Form.Item label="Action">
-                        <Button htmlType="submit" >Add New Job Type</Button>
+                        <Button htmlType="submit" >Add New Level</Button>
                     </Form.Item>
                 </div>
             </div>
@@ -76,4 +76,4 @@ const AddNewJobType = () => {
     );
 };
 
-export default AddNewJobType;
+export default AddNewLevel;

@@ -71,11 +71,14 @@ import OfferMng from "./pages/Admin/OfferMng/OfferMng";
 import AddOffer from "./pages/Admin/OfferMng/AddOffer";
 import OfferEdit from "./pages/Admin/OfferMng/OfferEdit";
 import IndustryMng from "./pages/Admin/IndustryMng/IndustryMng";
+// JobType
 import JobTypeMng from "./pages/Admin/JobTypeMng/JobTypeMng";
 import AddJobType from "./pages/Admin/JobTypeMng/AddNewJobType";
 import EditJobType from "./pages/Admin/JobTypeMng/EditJobType";
-
-
+// Level
+import LevelMng from "./pages/Admin/LevelMng/LevelMng";
+import AddNewLevel from "./pages/Admin/LevelMng/AddNewLevel";
+import EditLevel from "./pages/Admin/LevelMng/EditLevel";
 
 export const history = createBrowserHistory();
 
@@ -178,6 +181,11 @@ function App() {
         <AdminTemplate path="/admin/jobtypemng" exact Component={JobTypeMng} />
         <AdminTemplate path="/admin/jobtypemng/addjobtype" exact Component={AddJobType} />
         <AdminTemplate path="/admin/jobtypemng/edit/:id" exact Component={EditJobType} />
+
+        {/* Level */}
+        <AdminTemplate path="/admin/levelmng" exact Component={LevelMng} />
+        <AdminTemplate path="/admin/levelmng/addlevel" exact Component={AddNewLevel} />
+        <AdminTemplate path="/admin/levelmng/edit/:id" exact Component={EditLevel} />
 
         {/* <HomeTemplate path="/" exact Component={Home} /> */}
         <UserTemplate path="/" exact Component={Login} />

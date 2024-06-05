@@ -14,11 +14,15 @@ import { NewReducer } from './reducers/NewReducer';
 import { OfferReducer } from './reducers/OfferReducer';
 import { IndustryReducer } from "./reducers/IndustryReducer";
 import { JobTypeReducer } from "./reducers/JobTypeReducer";
+import { LevelReducer } from "./reducers/LevelReducer";
+
+// LevelReducer
 
 const rootReducer = combineReducers({
 
     IndustryReducer,
     JobTypeReducer,
+    LevelReducer,
     UserReducer,
     ModReducer,
     StationReducer,

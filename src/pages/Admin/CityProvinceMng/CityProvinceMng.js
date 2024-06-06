@@ -4,15 +4,15 @@ import { Button, Input, Space, Table } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteLevelAction, getLevelByIdAction, getLevelListAction } from '../../../redux/actions/LevelAction';
+import { getCityProvinceListAction, deleteCityProvinceAction } from '../../../redux/actions/CityProvinceAction';
 
 
-export default function LevelMng() {
-    let { arrLevel } = useSelector(state => state.LevelReducer);
-    console.log(arrLevel);
+export default function CityProvinceMng() {
+    let { arrCityProvince } = useSelector(state => state.CityProvinceReducer);
+    console.log(arrCityProvince);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getLevelListAction())
+        dispatch(getCityProvinceListAction())
     }, [dispatch])
 
 
@@ -32,7 +32,7 @@ export default function LevelMng() {
     };
 
 
-    const data = arrLevel.data;
+    const data = arrCityProvince.data;
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -125,14 +125,13 @@ export default function LevelMng() {
         {
             title: 'Manage',
             width: '25%',
-            render: (text, level) => {
+            render: (text, cityProvince) => {
                 return <>
-                    <Button key={1} href={`/admin/levelmng/edit/${level.id}`} type="link" icon={<EditOutlined />} onClick={() => {
-                        dispatch(getLevelListAction(level.id))
+                    <Button key={1} href={`/admin/cityprovincemng/edit/${cityProvince.id}`} type="link" icon={<EditOutlined />} onClick={() => {
                     }}></Button>
                     <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
-                        if (window.confirm('Do you want to delete ' + level.name + '?')) {
-                            dispatch(deleteLevelAction(level.id))
+                        if (window.confirm('Do you want to delete ' + cityProvince.name + '?')) {
+                            dispatch(deleteCityProvinceAction(cityProvince.id))
                         }
                     }}></Button>
                 </>
@@ -142,8 +141,8 @@ export default function LevelMng() {
     ]
     return <div>
         <div className='d-flex mb-3'>
-            <h3 className='text-lg'>Level Management</h3>
-            <Button href='/admin/levelmng/addlevel' type="primary" className='ml-3 small bg-primary'>+ Add New Level</Button>
+            <h3 className='text-lg'>Job Type Management</h3>
+            <Button href='/admin/cityprovincemng/addcityprovince' type="primary" className='ml-3 small bg-primary'>+ Add New City Province</Button>
         </div>
         <Table columns={columns} dataSource={data} rowKey={'id'} />
     </div>

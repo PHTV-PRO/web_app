@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 import {
   HomeOutlined, UserOutlined, BuildFilled, QuestionOutlined, BarChartOutlined, FormOutlined,
-  PercentageOutlined, NodeIndexOutlined, CarOutlined, SearchOutlined, AuditOutlined, ApartmentOutlined
+  PercentageOutlined, NodeIndexOutlined, CarOutlined, SearchOutlined, AuditOutlined, ApartmentOutlined, BankOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, theme, Button, Input, Modal, Descriptions } from 'antd';
 import { NavLink } from "react-router-dom";
@@ -107,6 +107,8 @@ export const AdminTemplate = (props) => { //path, exact, Component
     getItem('News Management', '14', <NavLink className='text-decoration-none' to="/admin/newsmng"><FormOutlined /></NavLink>),
     getItem('Job Type Management', '15', <NavLink className='text-decoration-none' to="/admin/jobtypemng"><AuditOutlined /></NavLink>),
     getItem('Level Management', '16', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
+    getItem('City Province Management', '17', <NavLink className='text-decoration-none' to="/admin/cityprovincemng"><BankOutlined /></NavLink>),
+
   ]
 
 

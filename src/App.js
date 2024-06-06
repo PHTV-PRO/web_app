@@ -79,6 +79,10 @@ import EditJobType from "./pages/Admin/JobTypeMng/EditJobType";
 import LevelMng from "./pages/Admin/LevelMng/LevelMng";
 import AddNewLevel from "./pages/Admin/LevelMng/AddNewLevel";
 import EditLevel from "./pages/Admin/LevelMng/EditLevel";
+//City Province
+import CityProvinceMng from "./pages/Admin/CityProvinceMng/CityProvinceMng";
+import AddNewCityProvince from "./pages/Admin/CityProvinceMng/AddNewCityProvince";
+import EditCityProvince from "./pages/Admin/CityProvinceMng/EditCityProvince";
 
 export const history = createBrowserHistory();
 
@@ -186,6 +190,11 @@ function App() {
         <AdminTemplate path="/admin/levelmng" exact Component={LevelMng} />
         <AdminTemplate path="/admin/levelmng/addlevel" exact Component={AddNewLevel} />
         <AdminTemplate path="/admin/levelmng/edit/:id" exact Component={EditLevel} />
+
+        {/* City Province */}
+        <AdminTemplate path="/admin/cityprovincemng" exact Component={CityProvinceMng} />
+        <AdminTemplate path="/admin/cityprovincemng/addcityprovince" exact Component={AddNewCityProvince} />
+        <AdminTemplate path="/admin/cityprovincemng/edit/:id" exact Component={EditCityProvince} />
 
         {/* <HomeTemplate path="/" exact Component={Home} /> */}
         <UserTemplate path="/" exact Component={Login} />

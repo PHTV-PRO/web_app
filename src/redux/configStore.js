@@ -16,6 +16,8 @@ import { IndustryReducer } from "./reducers/IndustryReducer";
 import { JobTypeReducer } from "./reducers/JobTypeReducer";
 import { LevelReducer } from "./reducers/LevelReducer";
 import { CityProvinceReducer } from "./reducers/CityProvinceReducer";
+import { SubscriptionPlanReducer } from "./reducers/SubscriptionPlanReducer";
+
 
 
 // LevelReducer
@@ -26,6 +28,7 @@ const rootReducer = combineReducers({
     JobTypeReducer,
     LevelReducer,
     CityProvinceReducer,
+    SubscriptionPlanReducer,
     UserReducer,
     ModReducer,
     StationReducer,

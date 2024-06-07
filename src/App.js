@@ -83,6 +83,12 @@ import EditLevel from "./pages/Admin/LevelMng/EditLevel";
 import CityProvinceMng from "./pages/Admin/CityProvinceMng/CityProvinceMng";
 import AddNewCityProvince from "./pages/Admin/CityProvinceMng/AddNewCityProvince";
 import EditCityProvince from "./pages/Admin/CityProvinceMng/EditCityProvince";
+//SubscriptionPlan 
+import SubscriptionPlanMng from "./pages/Admin/SubscriptionPlanMng/SubscriptionPlanMng";
+import AddNewSubscriptionPlan from "./pages/Admin/SubscriptionPlanMng/AddNewSubscriptionPlan";
+import EditSubscriptionPlan from "./pages/Admin/SubscriptionPlanMng/EditSubscriptionPlan";
+
+
 
 export const history = createBrowserHistory();
 
@@ -195,6 +201,11 @@ function App() {
         <AdminTemplate path="/admin/cityprovincemng" exact Component={CityProvinceMng} />
         <AdminTemplate path="/admin/cityprovincemng/addcityprovince" exact Component={AddNewCityProvince} />
         <AdminTemplate path="/admin/cityprovincemng/edit/:id" exact Component={EditCityProvince} />
+        {/* SubscriptionPlan */}
+        {/* City Province */}
+        <AdminTemplate path="/admin/subplanmng" exact Component={SubscriptionPlanMng} />
+        <AdminTemplate path="/admin/subplanmng/addsubplan" exact Component={AddNewSubscriptionPlan} />
+        <AdminTemplate path="/admin/subplanmng/edit/:id" exact Component={EditSubscriptionPlan} />
 
         {/* <HomeTemplate path="/" exact Component={Home} /> */}
         <UserTemplate path="/" exact Component={Login} />

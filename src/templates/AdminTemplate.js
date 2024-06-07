@@ -2,8 +2,10 @@ import { Fragment, useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 import {
   HomeOutlined, UserOutlined, BuildFilled, QuestionOutlined, BarChartOutlined, FormOutlined,
-  PercentageOutlined, NodeIndexOutlined, CarOutlined, SearchOutlined, AuditOutlined, ApartmentOutlined, BankOutlined
+  PercentageOutlined, NodeIndexOutlined, CarOutlined, SearchOutlined, AuditOutlined, ApartmentOutlined, BankOutlined,
+  ContainerOutlined
 } from '@ant-design/icons';
+
 import { Layout, Menu, theme, Button, Input, Modal, Descriptions } from 'antd';
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -108,6 +110,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
     getItem('Job Type Management', '15', <NavLink className='text-decoration-none' to="/admin/jobtypemng"><AuditOutlined /></NavLink>),
     getItem('Level Management', '16', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
     getItem('City Province Management', '17', <NavLink className='text-decoration-none' to="/admin/cityprovincemng"><BankOutlined /></NavLink>),
+    getItem('SubscriptionPlan Management', '18', <NavLink className='text-decoration-none' to="/admin/subplanmng"><ContainerOutlined /></NavLink>),
 
   ]
 

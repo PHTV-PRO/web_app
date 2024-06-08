@@ -8,7 +8,6 @@ import { ProfitReducer } from './reducers/ProfitReducer';
 import { TripReducer } from './reducers/TripReducer';
 import { DriverReducer } from './reducers/DriverReducer';
 import { OrderReducer } from './reducers/OrderReducer';
-import { ModReducer } from './reducers/ModReducer';
 import { PromoteTripReducer } from './reducers/PromoteTripReducer';
 import { NewReducer } from './reducers/NewReducer';
 import { OfferReducer } from './reducers/OfferReducer';
@@ -17,6 +16,7 @@ import { JobTypeReducer } from "./reducers/JobTypeReducer";
 import { LevelReducer } from "./reducers/LevelReducer";
 import { CityProvinceReducer } from "./reducers/CityProvinceReducer";
 import { SubscriptionPlanReducer } from "./reducers/SubscriptionPlanReducer";
+import { EmployerReducer } from './reducers/EmployerReducer';
 
 
 
@@ -30,7 +30,7 @@ const rootReducer = combineReducers({
     CityProvinceReducer,
     SubscriptionPlanReducer,
     UserReducer,
-    ModReducer,
+    EmployerReducer,
     StationReducer,
     DriverReducer,
     TripReducer,

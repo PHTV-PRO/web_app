@@ -2,32 +2,29 @@ import React, { useState } from "react";
 import { Form, Input, Button, Select, Checkbox } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getModByIdAction,
-  updateModAction,
-} from "../../../../redux/actions/ModAction";
+  getEmployerByIdAction,
+  updateEmployerByIdAction,
+} from "../../../../redux/actions/EmployerAction";
 import { useFormik } from "formik";
-import { DOMAIN } from "../../../../util/settings/config";
 import { useEffect } from "react";
 const { Option } = Select;
 
 const ModEdit = (props) => {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
-  const { modDetail } = useSelector((state) => state.ModReducer);
+  const { empDetail } = useSelector((state) => state.EmployerReducer);
   let { id } = props.match.params;
   useEffect(() => {
-    dispatch(getModByIdAction(id));
+    dispatch(getEmployerByIdAction(id));
   }, [dispatch, id]);
 
-  const [imgSrc, setImgSrc] = useState("");
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      email: modDetail?.email,
+      name: empDetail?.name,
+      email: empDetail?.email,
       password: null,
-      fullName: modDetail?.fullName,
-      role: modDetail?.role,
-      avatar: modDetail?.avatar,
+      address: empDetail?.address,
     },
     onSubmit: async (values) => {
       let formData = new FormData();
@@ -39,30 +36,10 @@ const ModEdit = (props) => {
         }
       }
       console.table("formData", [...formData]);
-      dispatch(updateModAction(id, formData));
+      dispatch(updateEmployerByIdAction(id, formData));
     },
   });
 
-  const handleChangeFile = (e) => {
-    let file = e.target.files[0];
-
-    if (
-      file.type === "image/jpeg" ||
-      file.type === "image/jpg" ||
-      file.type === "image/png"
-    ) {
-      let reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (e) => {
-        setImgSrc(e.target.result); //Hình base 64
-      };
-      formik.setFieldValue("UploadImage", file);
-    }
-  };
-
-  const handleChangeRole = (value) => {
-    formik.setFieldValue("role", value);
-  };
 
   const onChangeCheck = (e) => {
     setChecked(e.target.checked);
@@ -81,6 +58,19 @@ const ModEdit = (props) => {
         layout="horizontal"
         onSubmitCapture={formik.handleSubmit}
       >
+        <Form.Item
+          label="Name"
+          style={{ minWidth: '100%' }}
+          rules={[
+            {
+              required: true,
+              message: 'Name is required!',
+              transform: (value) => value.trim(),
+            },
+          ]}
+        >
+          <Input name="name" onChange={formik.handleChange} value={formik.values.name} />
+        </Form.Item>
         <Form.Item
           label="Email"
           rules={[
@@ -130,42 +120,17 @@ const ModEdit = (props) => {
         )}
 
         <Form.Item
-            label="Role"
-            rules={[
-              {
-                required: true,
-                message: "Role User cannot be blank!",
-              },
-            ]}
-          >
-            <Select name="role" onChange={handleChangeRole} placeholder="Choose Role User" value={formik.values.role}>
-              <Option value="Mod">Mod</Option>
-              <Option value="User">User</Option>
-            </Select>
-          </Form.Item>
-
-        <Form.Item label="Avatar">
-          <input
-            name="UploadImage"
-            type="file"
-            onChange={handleChangeFile}
-            accept="image/png, image/jpeg,image/gif,image/png"
-          />
-          <br />
-          <img
-            style={{
-              width: 200,
-              height: 200,
-              objectFit: "cover",
-              borderRadius: "50%",
-            }}
-            src={
-              imgSrc === ""
-                ? `${DOMAIN}/Images/User/${formik.values.avatar}`
-                : imgSrc
-            }
-            alt="..."
-          />
+          label="Address"
+          style={{ minWidth: '100%' }}
+          rules={[
+            {
+              required: true,
+              message: 'Address is required!',
+              transform: (value) => value.trim(),
+            },
+          ]}
+        >
+          <Input name="address" onChange={formik.handleChange} value={formik.values.address} />
         </Form.Item>
 
         <Form.Item label="Action">

@@ -47,9 +47,6 @@ import DriverMng from "./pages/Admin/DriverMng/DriverMng";
 import FAQMng from "./pages/Admin/FAQMng/FAQMng";
 import EditFAQ from "./pages/Admin/FAQMng/EditFAQ";
 import AddNewFAQ from "./pages/Admin/FAQMng/AddNewFAQ";
-import ModMng from "./pages/Admin/UserMng/ModMng/ModMng";
-import AddMod from "./pages/Admin/UserMng/ModMng/AddMod";
-import ModEdit from "./pages/Admin/UserMng/ModMng/ModEdit";
 import RegisterDriverMng from "./pages/Admin/DriverMng/RegisterDriverMng";
 import LoginDriver from './pages/Driver/LoginDriver';
 import RegisterDriver from "./pages/Driver/RegisterDriver";
@@ -87,7 +84,10 @@ import EditCityProvince from "./pages/Admin/CityProvinceMng/EditCityProvince";
 import SubscriptionPlanMng from "./pages/Admin/SubscriptionPlanMng/SubscriptionPlanMng";
 import AddNewSubscriptionPlan from "./pages/Admin/SubscriptionPlanMng/AddNewSubscriptionPlan";
 import EditSubscriptionPlan from "./pages/Admin/SubscriptionPlanMng/EditSubscriptionPlan";
-
+// Employer
+import EmployerMng from "./pages/Admin/UserMng/EmployerMng/EmployerMng";
+import AddNewEmployer from "./pages/Admin/UserMng/EmployerMng/AddNewEmployer";
+import EmployerEdit from "./pages/Admin/UserMng/EmployerMng/EmployerEdit";
 
 
 export const history = createBrowserHistory();
@@ -132,10 +132,7 @@ function App() {
         <AdminTemplate path="/admin/users/adduser" exact Component={AddUser} />
         <AdminTemplate path="/admin/ordershistory/:id" exact Component={UserOrder} />
 
-        {/* Mod */}
-        <AdminTemplate path="/admin/modmng" exact Component={ModMng} />
-        <AdminTemplate path="/admin/modmng/addmod" exact Component={AddMod} />
-        <AdminTemplate path="/admin/modmng/edit/:id" exact Component={ModEdit} />
+
 
         {/* Driver Management */}
         <AdminTemplate path="/admin/drivermng" exact Component={DriverMng} />
@@ -202,10 +199,13 @@ function App() {
         <AdminTemplate path="/admin/cityprovincemng/addcityprovince" exact Component={AddNewCityProvince} />
         <AdminTemplate path="/admin/cityprovincemng/edit/:id" exact Component={EditCityProvince} />
         {/* SubscriptionPlan */}
-        {/* City Province */}
         <AdminTemplate path="/admin/subplanmng" exact Component={SubscriptionPlanMng} />
         <AdminTemplate path="/admin/subplanmng/addsubplan" exact Component={AddNewSubscriptionPlan} />
         <AdminTemplate path="/admin/subplanmng/edit/:id" exact Component={EditSubscriptionPlan} />
+        {/* Mod */}
+        <AdminTemplate path="/admin/empmng" exact Component={EmployerMng} />
+        <AdminTemplate path="/admin/empmng/addemp" exact Component={AddNewEmployer} />
+        <AdminTemplate path="/admin/empmng/edit/:id" exact Component={EmployerEdit} />
 
         {/* <HomeTemplate path="/" exact Component={Home} /> */}
         <UserTemplate path="/" exact Component={Login} />

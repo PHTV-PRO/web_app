@@ -94,7 +94,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
     getItem('Top Route Management', '5', <NavLink className='text-decoration-none' to="/admin/promotripmng"><NodeIndexOutlined /></NavLink>),
     getItem('Offer Management', '6', <NavLink className='text-decoration-none' to="/admin/offermng"><PercentageOutlined /></NavLink>),
     getItem('User Management', 'sub2', <UserOutlined />, [
-      getItem('Moderator', '7', <NavLink className='text-decoration-none' to="/admin/modmng"><UserOutlined /></NavLink>),
+      getItem('Employer', '7', <NavLink className='text-decoration-none' to="/admin/empmng"><UserOutlined /></NavLink>),
       getItem("Customer", "8", <NavLink className="text-decoration-none" to="/admin/adminusers"><UserOutlined /></NavLink>),
     ]),
     getItem('Driver Management', 'sub3', <CarOutlined />, [

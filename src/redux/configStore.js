@@ -17,6 +17,8 @@ import { LevelReducer } from "./reducers/LevelReducer";
 import { CityProvinceReducer } from "./reducers/CityProvinceReducer";
 import { SubscriptionPlanReducer } from "./reducers/SubscriptionPlanReducer";
 import { EmployerReducer } from './reducers/EmployerReducer';
+import { AccountReducer } from './reducers/AccountReducer';
+
 
 
 
@@ -31,6 +33,7 @@ const rootReducer = combineReducers({
     SubscriptionPlanReducer,
     UserReducer,
     EmployerReducer,
+    AccountReducer,
     StationReducer,
     DriverReducer,
     TripReducer,

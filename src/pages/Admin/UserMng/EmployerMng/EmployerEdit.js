@@ -9,7 +9,7 @@ import { useFormik } from "formik";
 import { useEffect } from "react";
 const { Option } = Select;
 
-const ModEdit = (props) => {
+const EmployeeEdit = (props) => {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
   const { empDetail } = useSelector((state) => state.EmployerReducer);
@@ -47,7 +47,7 @@ const ModEdit = (props) => {
 
   return (
     <div>
-      <h3 className="mb-5">Update infomation mod: {formik.values.name}</h3>
+      <h3 className="mb-5">Update infomation Employer: {formik.values.name}</h3>
       <Form
         labelCol={{
           span: 4,
@@ -148,4 +148,4 @@ const ModEdit = (props) => {
   );
 };
 
-export default ModEdit;
+export default EmployeeEdit;

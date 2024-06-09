@@ -17,14 +17,11 @@ import UserTemplate from "./templates/UserTemplate";
 import Loading from "./components/Loading/Loading";
 import { AdminTemplate } from "./templates/AdminTemplate";
 import Edit from "./pages/Admin/IndustryMng/EditBus";
-import UserMng from "./pages/Admin/UserMng/AdminUserMng";
-import UserEdit from "./pages/Admin/UserMng/UserEdit";
-import AddUser from "./pages/Admin/UserMng/AddUser";
+
 import Profile from "./pages/Profile/Profile";
 import { ProfileTemplate } from "./templates/ProfileTemplate";
 import OrderHistory from "./pages/Admin/UserMng/OrderHistory";
 import Search from "./pages/Search/Search";
-import AdminUserMng from "./pages/Admin/UserMng/AdminUserMng";
 import RevenueMonth from "./pages/Admin/Revenue/RevenueMonth";
 import UserOrder from "./pages/Admin/UserMng/UserOrder";
 import AboutUs from "./pages/AboutUs/AboutUs";
@@ -88,6 +85,17 @@ import EditSubscriptionPlan from "./pages/Admin/SubscriptionPlanMng/EditSubscrip
 import EmployerMng from "./pages/Admin/UserMng/EmployerMng/EmployerMng";
 import AddNewEmployer from "./pages/Admin/UserMng/EmployerMng/AddNewEmployer";
 import EmployerEdit from "./pages/Admin/UserMng/EmployerMng/EmployerEdit";
+// Account
+import AccountMng from "./pages/Admin/UserMng/AccountMng/AccountMng";
+import AddAccount from "./pages/Admin/UserMng/AccountMng/AddAccount";
+import AccountEdit from "./pages/Admin/UserMng/AccountMng/EditAccount";
+
+// User
+import UserMng from "./pages/Admin/UserMng/AdminUserMng";
+import UserEdit from "./pages/Admin/UserMng/UserEdit";
+import AddUser from "./pages/Admin/UserMng/AddUser";
+import AdminUserMng from "./pages/Admin/UserMng/AdminUserMng";
+
 
 
 export const history = createBrowserHistory();
@@ -125,12 +133,7 @@ function App() {
         <ProfileTemplate path="/users/ordershistory" exact Component={OrderHistory} />
         <ProfileTemplate path="/users/ordershistory/cancel/:id" exact Component={CancelTicket} />
 
-        {/* User */}
-        <AdminTemplate path="/admin" exact Component={UserMng} />
-        <AdminTemplate path="/admin/adminusers" exact Component={AdminUserMng} />
-        <AdminTemplate path="/admin/users/edit/:id" exact Component={UserEdit} />
-        <AdminTemplate path="/admin/users/adduser" exact Component={AddUser} />
-        <AdminTemplate path="/admin/ordershistory/:id" exact Component={UserOrder} />
+
 
 
 
@@ -198,14 +201,30 @@ function App() {
         <AdminTemplate path="/admin/cityprovincemng" exact Component={CityProvinceMng} />
         <AdminTemplate path="/admin/cityprovincemng/addcityprovince" exact Component={AddNewCityProvince} />
         <AdminTemplate path="/admin/cityprovincemng/edit/:id" exact Component={EditCityProvince} />
+
         {/* SubscriptionPlan */}
         <AdminTemplate path="/admin/subplanmng" exact Component={SubscriptionPlanMng} />
         <AdminTemplate path="/admin/subplanmng/addsubplan" exact Component={AddNewSubscriptionPlan} />
         <AdminTemplate path="/admin/subplanmng/edit/:id" exact Component={EditSubscriptionPlan} />
+
         {/* Mod */}
         <AdminTemplate path="/admin/empmng" exact Component={EmployerMng} />
         <AdminTemplate path="/admin/empmng/addemp" exact Component={AddNewEmployer} />
         <AdminTemplate path="/admin/empmng/edit/:id" exact Component={EmployerEdit} />
+
+        {/* Account */}
+        <AdminTemplate path="/admin/accmng" exact Component={AccountMng} />
+        <AdminTemplate path="/admin/accmng/addacc" exact Component={AddAccount} />
+        <AdminTemplate path="/admin/accmng/edit/:id" exact Component={AccountEdit} />
+
+        {/* User */}
+        <AdminTemplate path="/admin" exact Component={UserMng} />
+        {/* <AdminTemplate path="/admin/adminusers" exact Component={AdminUserMng} /> */}
+        <AdminTemplate path="/admin/users/edit/:id" exact Component={UserEdit} />
+        <AdminTemplate path="/admin/users/adduser" exact Component={AddUser} />
+        <AdminTemplate path="/admin/ordershistory/:id" exact Component={UserOrder} />
+
+
 
         {/* <HomeTemplate path="/" exact Component={Home} /> */}
         <UserTemplate path="/" exact Component={Login} />

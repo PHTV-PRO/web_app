@@ -19,26 +19,13 @@ export class UserService extends baseService {
     };
 
     getCurrentUser = (token) => {
-        if(token != null){
-            return this.postNotBearer(`/api/getinfo`,token);
+        if (token != null) {
+            return this.postNotBearer(`/api/getinfo`, token);
         }
     }
 
-    getListUser = () => {
-        return this.get(`/api/User`);
-    };
-    getUserById = (userId) => {
-        return this.get(`/api/User/${userId}`);
-    }
-    createUser = (User) => {
-        return this.post(`/api/User`, User);
-    };
-    deleteUser = (id) => {
-        return this.delete(`/api/User?Id=${id}`);
-    };
-    updateUser = (id, User) => {
-        return this.put(`/api/User/${id}`, User);
-    };
+
+
 }
 
 export const userService = new UserService();

@@ -87,26 +87,26 @@ export const AdminTemplate = (props) => { //path, exact, Component
   const itemsAdmin = [
     getItem('Skill Management', 'sub1', <UserOutlined />, [
       getItem('Industry Management', '1', <NavLink className='text-decoration-none' to="/admin/industry"><i className="fas fa-bus f3"></i></NavLink>),
-      getItem('Bus Type Management', '2', <NavLink className='text-decoration-none' to="/admin/bustypemng"><i className="fas fa-bus f3"></i></NavLink>),
+      // getItem('Bus Type Management', '2', <NavLink className='text-decoration-none' to="/admin/bustypemng"><i className="fas fa-bus f3"></i></NavLink>),
     ]),
-    getItem('Station Management', '3', <NavLink className='text-decoration-none' to="/admin/stationmng"><i className="fa-solid fa-location-dot"></i></NavLink>),
-    getItem('Trip Management', '4', <NavLink className='text-decoration-none' to="/admin/tripmng"><BuildFilled /></NavLink>),
-    getItem('Top Route Management', '5', <NavLink className='text-decoration-none' to="/admin/promotripmng"><NodeIndexOutlined /></NavLink>),
-    getItem('Offer Management', '6', <NavLink className='text-decoration-none' to="/admin/offermng"><PercentageOutlined /></NavLink>),
+    // getItem('Station Management', '3', <NavLink className='text-decoration-none' to="/admin/stationmng"><i className="fa-solid fa-location-dot"></i></NavLink>),
+    // getItem('Trip Management', '4', <NavLink className='text-decoration-none' to="/admin/tripmng"><BuildFilled /></NavLink>),
+    // getItem('Top Route Management', '5', <NavLink className='text-decoration-none' to="/admin/promotripmng"><NodeIndexOutlined /></NavLink>),
+    // getItem('Offer Management', '6', <NavLink className='text-decoration-none' to="/admin/offermng"><PercentageOutlined /></NavLink>),
     getItem('User Management', 'sub2', <UserOutlined />, [
       getItem('Employer', '7', <NavLink className='text-decoration-none' to="/admin/empmng"><UserOutlined /></NavLink>),
       getItem("Candidate", "8", <NavLink className="text-decoration-none" to="/admin/accmng"><UserOutlined /></NavLink>),
     ]),
-    getItem('Driver Management', 'sub3', <CarOutlined />, [
-      getItem('Drivers', '9', <NavLink className='text-decoration-none' to="/admin/drivermng"><CarOutlined /></NavLink>),
-      getItem("Register Drivers", '10', <NavLink className="text-decoration-none" to="/admin/regdrivermng"><CarOutlined /></NavLink>),
-    ]),
-    getItem('Revenue', 'sub4', <BarChartOutlined />, [
-      getItem('Revenue By Month', '11', <NavLink className='text-decoration-none' to="/admin/revenuemonth"><BarChartOutlined /></NavLink>),
-      getItem('Revunue By Route', '12', <NavLink className='text-decoration-none' to="/admin/revenueroute"><BarChartOutlined /></NavLink>),
-    ]),
-    getItem('FAQ Management', '13', <NavLink className='text-decoration-none' to="/admin/faqmng"><QuestionOutlined /></NavLink>),
-    getItem('News Management', '14', <NavLink className='text-decoration-none' to="/admin/newsmng"><FormOutlined /></NavLink>),
+    // getItem('Driver Management', 'sub3', <CarOutlined />, [
+    //   getItem('Drivers', '9', <NavLink className='text-decoration-none' to="/admin/drivermng"><CarOutlined /></NavLink>),
+    //   getItem("Register Drivers", '10', <NavLink className="text-decoration-none" to="/admin/regdrivermng"><CarOutlined /></NavLink>),
+    // ]),
+    // getItem('Revenue', 'sub4', <BarChartOutlined />, [
+    //   getItem('Revenue By Month', '11', <NavLink className='text-decoration-none' to="/admin/revenuemonth"><BarChartOutlined /></NavLink>),
+    //   getItem('Revunue By Route', '12', <NavLink className='text-decoration-none' to="/admin/revenueroute"><BarChartOutlined /></NavLink>),
+    // ]),
+    // getItem('FAQ Management', '13', <NavLink className='text-decoration-none' to="/admin/faqmng"><QuestionOutlined /></NavLink>),
+    // getItem('News Management', '14', <NavLink className='text-decoration-none' to="/admin/newsmng"><FormOutlined /></NavLink>),
     getItem('Job Type Management', '15', <NavLink className='text-decoration-none' to="/admin/jobtypemng"><AuditOutlined /></NavLink>),
     getItem('Level Management', '16', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
     getItem('City Province Management', '17', <NavLink className='text-decoration-none' to="/admin/cityprovincemng"><BankOutlined /></NavLink>),
@@ -116,13 +116,13 @@ export const AdminTemplate = (props) => { //path, exact, Component
 
 
   const itemsMod = [
-    getItem('Bus Management', '1', <NavLink className='text-decoration-none' to="/admin/busmng"><i className="fas fa-bus f3"></i></NavLink>),
-    getItem('Station Management', '2', <NavLink className='text-decoration-none' to="/admin/stationmng"><i className="fa-solid fa-location-dot"></i></NavLink>),
-    getItem('Trip Management', '3', <NavLink className='text-decoration-none' to="/admin/tripmng"><BuildFilled /></NavLink>),
-    getItem('Top Route Management', '4', <NavLink className='text-decoration-none' to="/admin/promotripmng"><NodeIndexOutlined /></NavLink>),
-    getItem('Drivers', '5', <NavLink className='text-decoration-none' to="/admin/drivermng"><CarOutlined /></NavLink>),
-    getItem('FAQ Management', '6', <NavLink className='text-decoration-none' to="/admin/faqmng"><QuestionOutlined /></NavLink>),
-    getItem('News Management', '7', <NavLink className='text-decoration-none' to="/admin/newsmng"><FormOutlined /></NavLink>),
+    // getItem('Bus Management', '1', <NavLink className='text-decoration-none' to="/admin/busmng"><i className="fas fa-bus f3"></i></NavLink>),
+    // getItem('Station Management', '2', <NavLink className='text-decoration-none' to="/admin/stationmng"><i className="fa-solid fa-location-dot"></i></NavLink>),
+    // getItem('Trip Management', '3', <NavLink className='text-decoration-none' to="/admin/tripmng"><BuildFilled /></NavLink>),
+    // getItem('Top Route Management', '4', <NavLink className='text-decoration-none' to="/admin/promotripmng"><NodeIndexOutlined /></NavLink>),
+    // getItem('Drivers', '5', <NavLink className='text-decoration-none' to="/admin/drivermng"><CarOutlined /></NavLink>),
+    // getItem('FAQ Management', '6', <NavLink className='text-decoration-none' to="/admin/faqmng"><QuestionOutlined /></NavLink>),
+    // getItem('News Management', '7', <NavLink className='text-decoration-none' to="/admin/newsmng"><FormOutlined /></NavLink>),
   ]
 
   let remainHour = dayjs(ticketDetail?.trips?.startTime).diff(dayjs(new Date()), 'hour')

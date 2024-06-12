@@ -1,34 +1,14 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { createBrowserHistory } from "history";
 import { Switch, Router } from "react-router-dom";
 
-import { HomeTemplate } from "./templates/HomeTemplate/HomeTemplate";
-import Home from "./pages/Home/Home";
-import Contact from "./pages/Contact/Contact";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Detail from "./pages/Detail/Detail";
-import CheckOutTemplate from "./templates/CheckOutTemplate";
-import Login from "./pages/Login/Login";
-import Register from "./pages/Register/Register";
 
-import UserTemplate from "./templates/UserTemplate";
 import Loading from "./components/Loading/Loading";
 import { AdminTemplate } from "./templates/AdminTemplate";
 import Edit from "./pages/Admin/IndustryMng/EditBus";
 
-import Profile from "./pages/Profile/Profile";
-import { ProfileTemplate } from "./templates/ProfileTemplate";
-import OrderHistory from "./pages/Admin/UserMng/OrderHistory";
-import Search from "./pages/Search/Search";
 import RevenueMonth from "./pages/Admin/Revenue/RevenueMonth";
 import UserOrder from "./pages/Admin/UserMng/UserOrder";
-import AboutUs from "./pages/AboutUs/AboutUs";
-import GeneralTerms from "./pages/Terms/GeneralTerms";
-import TermsOfTransaction from "./pages/Terms/TermsOfTransaction";
-import ForgetPassword from "./pages/Login/ForgetPassword";
-import BusMng from "./pages/Admin/IndustryMng/IndustryMng";
 import StationMng from "./pages/Admin/StationMng/StationMng";
 import TripMng from "./pages/Admin/TripMng/TripMng";
 import AddNewBus from "./pages/Admin/IndustryMng/AddNewBus";
@@ -45,18 +25,10 @@ import FAQMng from "./pages/Admin/FAQMng/FAQMng";
 import EditFAQ from "./pages/Admin/FAQMng/EditFAQ";
 import AddNewFAQ from "./pages/Admin/FAQMng/AddNewFAQ";
 import RegisterDriverMng from "./pages/Admin/DriverMng/RegisterDriverMng";
-import LoginDriver from './pages/Driver/LoginDriver';
-import RegisterDriver from "./pages/Driver/RegisterDriver";
-import ForgetPasswordDriver from './pages/Driver/ForgetPasswordDriver';
-import DetailTripOfDriver from "./pages/Driver/DetailTripOfDriver";
-import ProfileDriver from "./pages/Driver/ProfileDriver";
 import PromoteTripMng from "./pages/Admin/PromoteTripMng/PromoteTripMng";
 import AddNewPromoteTrip from "./pages/Admin/PromoteTripMng/AddNewPromoteTrip";
 import EditPromoteTrip from "./pages/Admin/PromoteTripMng/EditPromoteTrip";
-import CancelTicket from "./pages/Admin/UserMng/CancelTicket";
 import EditTrip from "./pages/Admin/TripMng/EditTrip";
-import News from './pages/News/News';
-import NewsDetail from './pages/News/NewsDetail';
 import NewsMng from './pages/Admin/NewsMng/NewsMng';
 import AddNewNews from './pages/Admin/NewsMng/AddNewNews';
 import NewsEdit from "./pages/Admin/NewsMng/NewsEdit";
@@ -94,7 +66,11 @@ import AccountEdit from "./pages/Admin/UserMng/AccountMng/EditAccount";
 import UserMng from "./pages/Admin/UserMng/AdminUserMng";
 import UserEdit from "./pages/Admin/UserMng/UserEdit";
 import AddUser from "./pages/Admin/UserMng/AddUser";
-import AdminUserMng from "./pages/Admin/UserMng/AdminUserMng";
+
+//
+import UserTemplate from "./templates/UserTemplate";
+import Login from "./pages/Login/Login";
+
 
 
 
@@ -106,33 +82,7 @@ function App() {
       <Loading />
 
       <Switch>
-        <HomeTemplate path="/home" exact Component={Home} />
-        <HomeTemplate path="/contact" exact Component={Contact} />
-        <CheckOutTemplate path="/detail/:id" exact Component={Detail} />
-        <HomeTemplate path='/news' exact Component={News} />
-        <HomeTemplate path='/news/detail/:id' exact Component={NewsDetail} />
-
-        {/* Footer */}
-        <HomeTemplate path="/about" exact Component={AboutUs} />
-        <HomeTemplate path="/terms" exact Component={GeneralTerms} />
-        <HomeTemplate path="/termsoftransaction" exact Component={TermsOfTransaction} />
-
-        <UserTemplate path="/login" exact Component={Login} />
-        <UserTemplate path="/register" exact Component={Register} />
-        <UserTemplate path="/forgetPassword" exact Component={ForgetPassword} />
-
-        {/* Become Driver */}
-        <UserTemplate path="/loginDriver" exact Component={LoginDriver} />
-        <UserTemplate path="/registerDriver" exact Component={RegisterDriver} />
-        <UserTemplate path="/forgetPasswordDriver" exact Component={ForgetPasswordDriver} />
-        <HomeTemplate path="/detailTripOfDriver" exact Component={DetailTripOfDriver} />
-
-        <ProfileTemplate path="/users" exact Component={Profile} />
-        <ProfileTemplate path="/users/profile" exact Component={Profile} />
-        <ProfileTemplate path="/users/edit/:id" exact Component={UserEdit} />
-        <ProfileTemplate path="/users/ordershistory" exact Component={OrderHistory} />
-        <ProfileTemplate path="/users/ordershistory/cancel/:id" exact Component={CancelTicket} />
-
+       
 
 
 
@@ -228,8 +178,7 @@ function App() {
 
         {/* <HomeTemplate path="/" exact Component={Home} /> */}
         <UserTemplate path="/" exact Component={Login} />
-        <HomeTemplate path="/search/" exact Component={Search} />
-        <HomeTemplate Component={Home} />
+        
       </Switch>
     </Router>
   );

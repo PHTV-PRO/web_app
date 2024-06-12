@@ -10,7 +10,6 @@ import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
 import {
     getListAccountAction, deleteAccountAction,
-    updateAccountByIdAction
 } from "../../../../redux/actions/AccountAction";
 import { DOMAIN } from "../../../../util/settings/config";
 
@@ -160,7 +159,7 @@ export default function AccountMng() {
             key: "avatar",
             render: (text, data, index) => {
                 return data.image != null ? (
-                    <img key={index} style={{ width: 40, height: 40, objectFit: "cover", borderRadius: "50%", }} src={`${DOMAIN}/Images/Accounts/${data.image}`} alt={data.image} />
+                    <img key={index} style={{ width: 40, height: 40, objectFit: "cover", borderRadius: "50%", }} src={`${DOMAIN}/api/file/image/${data.image}`} alt={data.image} />
                 ) : (
                     <Avatar size={40} style={{ fontSize: "20px", display: "flex", justifyContent: "center", alignItems: "center" }} icon={data.email.substr(0, 1)} />
                 );

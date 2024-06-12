@@ -182,7 +182,7 @@ const AccountEdit = (props) => {
                         accept="image/png, image/jpeg,image/gif,image/png"
                     />
                     <br />
-                    <img style={{ width: 200, height: 200, objectFit: 'cover', borderRadius: '50%' }} src={imgSrc === '' ? `${DOMAIN}/Images/User/${formik.values.avatar}` : imgSrc} alt="..." />
+                    <img style={{ width: 200, height: 200, objectFit: 'cover', borderRadius: '50%', border: "0.1px solid #ccc" }} src={imgSrc === '' ? `${DOMAIN}/api/file/image/${formik.values.image}` : imgSrc} alt="..." />
                 </Form.Item>
 
                 <Form.Item label="Action">

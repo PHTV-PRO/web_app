@@ -4,7 +4,7 @@ import {
     EditOutlined,
     DeleteOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Space, Table } from "antd";
+import { Button, Input, Space, Table, Avatar } from "antd";
 import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,8 +12,9 @@ import {
     getListAccountAction, deleteAccountAction,
     updateAccountByIdAction
 } from "../../../../redux/actions/AccountAction";
+import { DOMAIN } from "../../../../util/settings/config";
 
-export default function ModMng() {
+export default function AccountMng() {
     const dispatch = useDispatch();
     let { arrAccount } = useSelector((state) => state.AccountReducer);
     console.log(arrAccount);
@@ -154,12 +155,16 @@ export default function ModMng() {
             sortDirections: ["descend", "ascend"],
         },
         {
-            title: "Image",
-            dataIndex: "image",
-            key: "image",
-            ...getColumnSearchProps("image"),
-            sorter: (a, b) => a.image.length - b.image.length,
-            sortDirections: ["descend", "ascend"],
+            title: "Avatar",
+            dataIndex: "avatar",
+            key: "avatar",
+            render: (text, data, index) => {
+                return data.image != null ? (
+                    <img key={index} style={{ width: 40, height: 40, objectFit: "cover", borderRadius: "50%", }} src={`${DOMAIN}/Images/Accounts/${data.image}`} alt={data.image} />
+                ) : (
+                    <Avatar size={40} style={{ fontSize: "20px", display: "flex", justifyContent: "center", alignItems: "center" }} icon={data.email.substr(0, 1)} />
+                );
+            },
         },
         {
             title: "Role",

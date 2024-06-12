@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Select, Checkbox } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { useFormik } from "formik";
+import { useEffect } from "react";
 import {
     getAccountByIdAction,
     updateAccountByIdAction,
 } from "../../../../redux/actions/AccountAction";
-import { useFormik } from "formik";
-import { useEffect } from "react";
+import { DOMAIN } from "../../../../util/settings/config";
+
 const { Option } = Select;
+
+
 
 const AccountEdit = (props) => {
     const dispatch = useDispatch();
     const [checked, setChecked] = useState(false);
+    const [imgSrc, setImgSrc] = useState("");
     const { accountDetail } = useSelector((state) => state.AccountReducer);
     let { id } = props.match.params;
     useEffect(() => {
@@ -32,16 +37,29 @@ const AccountEdit = (props) => {
         onSubmit: async (values) => {
             let formData = new FormData();
             for (let key in values) {
-                if (key !== "avatar") {
+                if (key !== "image") {
                     formData.append(key, values[key]);
                 } else {
-                    formData.append("avatar", values["avatar"]);
+                    formData.append("image", values["image"]);
                 }
             }
             console.table("formData", [...formData]);
             dispatch(updateAccountByIdAction(id, formData));
         },
     });
+
+    const handleChangeFile = (e) => {
+        let file = e.target.files[0];
+
+        if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png') {
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                setImgSrc(e.target.result); //Hình base 64
+            };
+            formik.setFieldValue("UploadFile", file);
+        }
+    };
 
 
     const onChangeCheck = (e) => {
@@ -54,7 +72,7 @@ const AccountEdit = (props) => {
 
     return (
         <div>
-            <h3 className="mb-5">Update infomation Candidate: {formik.values.name}</h3>
+            <h3 className="mb-5">Update infomation Candidate : {formik.values.name}</h3>
             <Form
                 labelCol={{
                     span: 4,
@@ -155,18 +173,16 @@ const AccountEdit = (props) => {
                     <Input name="address" onChange={formik.handleChange} value={formik.values.address} />
                 </Form.Item>
 
-                <Form.Item
-                    label="Image"
-                    style={{ minWidth: '100%' }}
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Image is required!',
-                            transform: (value) => value.trim(),
-                        },
-                    ]}
-                >
-                    <Input name="image" onChange={formik.handleChange} value={formik.values.image} />
+
+                <Form.Item label="Image">
+                    <input
+                        name="UploadFile"
+                        type="file"
+                        onChange={handleChangeFile}
+                        accept="image/png, image/jpeg,image/gif,image/png"
+                    />
+                    <br />
+                    <img style={{ width: 200, height: 200, objectFit: 'cover', borderRadius: '50%' }} src={imgSrc === '' ? `${DOMAIN}/Images/User/${formik.values.avatar}` : imgSrc} alt="..." />
                 </Form.Item>
 
                 <Form.Item label="Action">

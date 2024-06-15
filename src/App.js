@@ -67,6 +67,12 @@ import UserMng from "./pages/Admin/UserMng/AdminUserMng";
 import UserEdit from "./pages/Admin/UserMng/UserEdit";
 import AddUser from "./pages/Admin/UserMng/AddUser";
 
+//Company
+import CompanyMng from "./pages/Admin/CompanyMng/CompanyMng";
+import AddNewCompany from "./pages/Admin/CompanyMng/AddCompany";
+import EditCompany from "./pages/Admin/CompanyMng/EditCompany";
+
+
 //
 import UserTemplate from "./templates/UserTemplate";
 import Login from "./pages/Login/Login";
@@ -82,7 +88,7 @@ function App() {
       <Loading />
 
       <Switch>
-       
+
 
 
 
@@ -157,6 +163,11 @@ function App() {
         <AdminTemplate path="/admin/subplanmng/addsubplan" exact Component={AddNewSubscriptionPlan} />
         <AdminTemplate path="/admin/subplanmng/edit/:id" exact Component={EditSubscriptionPlan} />
 
+        {/* Company */}
+        <AdminTemplate path="/admin/companymng" exact Component={CompanyMng} />
+        <AdminTemplate path="/admin/companymng/addcom" exact Component={AddNewCompany} />
+        <AdminTemplate path="/admin/companymng/edit/:id" exact Component={EditCompany} />/
+
         {/* Mod */}
         <AdminTemplate path="/admin/empmng" exact Component={EmployerMng} />
         <AdminTemplate path="/admin/empmng/addemp" exact Component={AddNewEmployer} />
@@ -178,7 +189,7 @@ function App() {
 
         {/* <HomeTemplate path="/" exact Component={Home} /> */}
         <UserTemplate path="/" exact Component={Login} />
-        
+
       </Switch>
     </Router>
   );

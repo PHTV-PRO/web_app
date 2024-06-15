@@ -141,7 +141,7 @@ export default function CityProvinceMng() {
     ]
     return <div>
         <div className='d-flex mb-3'>
-            <h3 className='text-lg'>Job Type Management</h3>
+            <h3 className='text-lg'>Company Management</h3>
             <Button href='/admin/cityprovincemng/addcityprovince' type="primary" className='ml-3 small bg-primary'>+ Add New City Province</Button>
         </div>
         <Table columns={columns} dataSource={data} rowKey={'id'} />

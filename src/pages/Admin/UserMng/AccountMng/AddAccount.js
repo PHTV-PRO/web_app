@@ -19,6 +19,7 @@ const AddAccount = () => {
             address: "",
             password: "",
             image: "",
+            role: "CANDIDATE"
         },
         onSubmit: async (values) => {
             let formData = new FormData();

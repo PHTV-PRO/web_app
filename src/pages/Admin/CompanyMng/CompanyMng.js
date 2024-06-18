@@ -229,16 +229,16 @@ export default function CompanyMng() {
 
         },
         {
-            title: 'Employer',
-            dataIndex: 'employer_id ',
-            key: 'employer_id ',
+            title: 'Account',
+            dataIndex: 'account_id ',
+            key: 'account_id ',
             width: '5%',
-            ...getColumnSearchProps('employer_id '),
-            sorter: (a, b) => a.employer_id - b.employer_id,
+            ...getColumnSearchProps('account_id '),
+            sorter: (a, b) => a.account_id - b.account_id,
             sortDirections: ['descend', 'ascend'],
-            render: (text, employer) => {
+            render: (text, account) => {
                 return (<>
-                    <span>{employer.employer?.name}</span>
+                    <span>{account.account?.name}</span>
                 </>)
             },
         },

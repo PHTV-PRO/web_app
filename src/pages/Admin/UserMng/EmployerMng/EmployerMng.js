@@ -4,21 +4,21 @@ import {
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Space, Table } from "antd";
+import { Button, Input, Space, Table, Avatar } from "antd";
 import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getListEmployerAction, deleteEmployerAction,
-  updateEmployerByIdAction
-} from "../../../../redux/actions/EmployerAction";
+  getListAccountAction, deleteAccountAction,
+} from "../../../../redux/actions/AccountAction";
+import { DOMAIN } from "../../../../util/settings/config";
 
-export default function ModMng() {
+export default function EmployerMng() {
   const dispatch = useDispatch();
-  let { arrEmp } = useSelector((state) => state.EmployerReducer);
-  console.log(arrEmp);
+  let { arrAccount } = useSelector((state) => state.AccountReducer);
+  console.log(arrAccount);
   useEffect(() => {
-    dispatch(getListEmployerAction());
+    dispatch(getListAccountAction());
   }, [dispatch]);
 
   const [searchText, setSearchText] = useState("");
@@ -36,7 +36,8 @@ export default function ModMng() {
     setSearchedColumn(dataIndex);
   };
 
-  const data = arrEmp.data;
+  const data = arrAccount.data;
+  console.log(data);
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
@@ -138,12 +139,32 @@ export default function ModMng() {
       sortDirections: ["descend", "ascend"],
     },
     {
+      title: "Gender",
+      dataIndex: "gender",
+      key: "gender",
+      ...getColumnSearchProps("gender"),
+      sorter: (a, b) => a.gender.length - b.gender.length,
+      sortDirections: ["descend", "ascend"],
+    },
+    {
       title: "Address",
       dataIndex: "address",
       key: "address",
       ...getColumnSearchProps("address"),
       sorter: (a, b) => a.address.length - b.address.length,
       sortDirections: ["descend", "ascend"],
+    },
+    {
+      title: "Avatar",
+      dataIndex: "avatar",
+      key: "avatar",
+      render: (text, data, index) => {
+        return data.image != null ? (
+          <img key={index} style={{ width: 40, height: 40, objectFit: "cover", borderRadius: "50%", }} src={`https://res.cloudinary.com/dj7xlmndj/image/upload/v1718241364/${data.image}`} alt={data.image} />
+        ) : (
+          <Avatar size={40} style={{ fontSize: "20px", display: "flex", justifyContent: "center", alignItems: "center" }} icon={data.email.substr(0, 1)} />
+        );
+      },
     },
     {
       title: "Role",
@@ -158,11 +179,11 @@ export default function ModMng() {
           <Fragment key={index}>
             <Button
               key={1}
-              href={`/admin/empmng/edit/` + data.id}
+              href={`/admin/empmng/edit/:id` + data.id}
               type="link"
               icon={<EditOutlined />}
               onClick={() => {
-                dispatch(updateEmployerByIdAction(data.id));
+                // dispatch(updateEmployerByIdAction(data.id));
               }}
             ></Button>
             <Button
@@ -178,7 +199,7 @@ export default function ModMng() {
                     "?"
                   )
                 ) {
-                  dispatch(deleteEmployerAction(data.id));
+                  dispatch(deleteAccountAction(data.id));
                 }
               }}
             ></Button>

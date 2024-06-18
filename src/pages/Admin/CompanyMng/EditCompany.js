@@ -3,18 +3,18 @@ import { Form, Input, Select, Button, notification } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCompanyIdAction, updateCompanyByIdAction } from '../../../redux/actions/CompanyAction';
-import { getListEmployerAction } from '../../../redux/actions/EmployerAction';
+import { getAccountByIdAction } from '../../../redux/actions/AccountAction';
 
 const { Option } = Select;
 
 const EditCompany = (props) => {
     const dispatch = useDispatch();
     const { companyDetail } = useSelector(state => state.CompanyReducer)
-    let { arrEmp } = useSelector(state => state.EmployerReducer);
+    let { arrAccount } = useSelector(state => state.AccountReducer);
 
     let { id } = props.match.params;
     useEffect(() => {
-        dispatch(getListEmployerAction())
+        dispatch(getAccountByIdAction())
         dispatch(getCompanyIdAction(id))
     }, [dispatch, id])
 
@@ -35,7 +35,7 @@ const EditCompany = (props) => {
             logo_image: companyDetail?.logo_image,
             background_image: companyDetail?.background_image,
             enable: companyDetail?.enable,
-            employer: companyDetail?.employer?.id
+            account: companyDetail?.account?.id
         },
         onSubmit: (values) => {
             if (values.name == '' || values.introduction == '' || values.benefit == '') {
@@ -63,8 +63,8 @@ const EditCompany = (props) => {
     };
 
 
-    const handleChangeEmployer = (value) => {
-        formik.setFieldValue('employer_id', value)
+    const handleChangeAccount = (value) => {
+        formik.setFieldValue('account_id', value)
     }
 
     // const handleChangeStation = (value) => {
@@ -256,17 +256,17 @@ const EditCompany = (props) => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Employer"
+                        label="Account"
                         style={{ minWidth: '100%' }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Employer is required!',
+                                message: 'Account is required!',
                                 transform: (value) => value.trim(),
                             },
                         ]}
                     >
-                        <Select value={formik.values.employer} options={arrEmp?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeEmployer} />
+                        <Select value={formik.values.account} options={arrAccount?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeAccount} />
                     </Form.Item>
 
 

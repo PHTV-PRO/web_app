@@ -3,7 +3,7 @@ import { Form, Input, Button, notification, Select } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 // import { addNewBusAction, getBusTypeListAction } from '../../../redux/actions/BusAction';
-import { getListEmployerAction } from '../../../redux/actions/EmployerAction';
+import { getListAccountAction } from '../../../redux/actions/AccountAction';
 import { addCompanyAction } from '../../../redux/actions/CompanyAction';
 
 
@@ -11,10 +11,10 @@ import { addCompanyAction } from '../../../redux/actions/CompanyAction';
 
 const AddNewCompany = () => {
     const dispatch = useDispatch();
-    let { arrEmp } = useSelector(state => state.EmployerReducer);
-    console.log(arrEmp);
+    let { arrAccount } = useSelector(state => state.AccountReducer);
+    console.log(arrAccount);
     useEffect(() => {
-        dispatch(getListEmployerAction())
+        dispatch(getListAccountAction())
     }, [dispatch]);
 
 
@@ -56,8 +56,8 @@ const AddNewCompany = () => {
         }
     })
 
-    const handleChangeEmployer = (value) => {
-        formik.setFieldValue('employer_id', value)
+    const handleChangeAccount = (value) => {
+        formik.setFieldValue('account_id', value)
     }
 
     return (
@@ -243,21 +243,21 @@ const AddNewCompany = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Employer"
-                        name='employer'
+                        label="Account"
+                        name='account'
                         style={{ minWidth: '100%' }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Employer is required!',
+                                message: 'Account is required!',
                                 transform: (value) => value.trim(),
                             },
                         ]}
                     >
                         <Select
                             rules={[{ required: true }]}
-                            options={arrEmp ? arrEmp?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id })) : ''}
-                            onChange={handleChangeEmployer}
+                            options={arrAccount ? arrAccount?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id })) : ''}
+                            onChange={handleChangeAccount}
                         />
                     </Form.Item>
 

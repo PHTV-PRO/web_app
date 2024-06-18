@@ -88,11 +88,6 @@ function App() {
       <Loading />
 
       <Switch>
-
-
-
-
-
         {/* Driver Management */}
         <AdminTemplate path="/admin/drivermng" exact Component={DriverMng} />
         <AdminTemplate path="/admin/regdrivermng" exact Component={RegisterDriverMng} />
@@ -168,7 +163,7 @@ function App() {
         <AdminTemplate path="/admin/companymng/addcom" exact Component={AddNewCompany} />
         <AdminTemplate path="/admin/companymng/edit/:id" exact Component={EditCompany} />/
 
-        {/* Mod */}
+        {/* Employer */}
         <AdminTemplate path="/admin/empmng" exact Component={EmployerMng} />
         <AdminTemplate path="/admin/empmng/addemp" exact Component={AddNewEmployer} />
         <AdminTemplate path="/admin/empmng/edit/:id" exact Component={EmployerEdit} />

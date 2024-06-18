@@ -72,7 +72,7 @@ const AccountEdit = (props) => {
 
     return (
         <div>
-            <h3 className="mb-5">Update infomation Candidate : {formik.values.name}</h3>
+            <h3 className="mb-5">Update infomation {formik.values.role === 'EMPLOYER' ? 'Employer' : 'Candidate'} : {formik.values.name}</h3>
             <Form
                 labelCol={{
                     span: 4,

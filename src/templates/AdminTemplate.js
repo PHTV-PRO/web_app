@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 import {
   HomeOutlined, UserOutlined, SearchOutlined, AuditOutlined, ApartmentOutlined, BankOutlined,
-  UsergroupAddOutlined, ContainerOutlined
+  HomeFilled, ContainerOutlined, WalletOutlined
 } from '@ant-design/icons';
 
 import { Layout, Menu, theme, Button, Input, Modal, Descriptions } from 'antd';
@@ -110,7 +110,9 @@ export const AdminTemplate = (props) => { //path, exact, Component
     getItem('Level Management', '16', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
     getItem('City Province Management', '17', <NavLink className='text-decoration-none' to="/admin/cityprovincemng"><BankOutlined /></NavLink>),
     getItem('SubscriptionPlan Management', '18', <NavLink className='text-decoration-none' to="/admin/subplanmng"><ContainerOutlined /></NavLink>),
-    getItem('Company Management', '19', <NavLink className='text-decoration-none' to="/admin/companymng"><UsergroupAddOutlined /></NavLink>),
+    getItem('Company Management', '19', <NavLink className='text-decoration-none' to="/admin/companymng"><HomeFilled /></NavLink>),
+    getItem('Job Management', '20', <NavLink className='text-decoration-none' to="/admin/jobmng"><WalletOutlined /></NavLink>),
+
 
 
   ]

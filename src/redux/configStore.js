@@ -18,6 +18,8 @@ import { CityProvinceReducer } from "./reducers/CityProvinceReducer";
 import { SubscriptionPlanReducer } from "./reducers/SubscriptionPlanReducer";
 import { AccountReducer } from './reducers/AccountReducer';
 import { CompanyReducer } from './reducers/CompanyReducer';
+import { JobReducer } from './reducers/JobReducer';
+
 
 
 
@@ -35,6 +37,7 @@ const rootReducer = combineReducers({
     UserReducer,
     AccountReducer,
     CompanyReducer,
+    JobReducer,
     StationReducer,
     DriverReducer,
     TripReducer,

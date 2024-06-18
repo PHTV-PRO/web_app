@@ -181,7 +181,7 @@ const AddEmployer = () => {
         </Form.Item> */}
 
         <Form.Item label="Action">
-          <Button htmlType="submit" className="btn-primary bg-primary" type="primary" > Add User </Button>
+          <Button htmlType="submit" className="btn-primary bg-primary" type="primary" > Add Employer </Button>
         </Form.Item>
       </Form>
     </div>

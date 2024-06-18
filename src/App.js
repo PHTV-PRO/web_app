@@ -72,6 +72,9 @@ import CompanyMng from "./pages/Admin/CompanyMng/CompanyMng";
 import AddNewCompany from "./pages/Admin/CompanyMng/AddCompany";
 import EditCompany from "./pages/Admin/CompanyMng/EditCompany";
 
+//Job
+import JobMng from "./pages/Admin/JobMng/JobMng";
+
 
 //
 import UserTemplate from "./templates/UserTemplate";
@@ -161,7 +164,12 @@ function App() {
         {/* Company */}
         <AdminTemplate path="/admin/companymng" exact Component={CompanyMng} />
         <AdminTemplate path="/admin/companymng/addcom" exact Component={AddNewCompany} />
-        <AdminTemplate path="/admin/companymng/edit/:id" exact Component={EditCompany} />/
+        <AdminTemplate path="/admin/companymng/edit/:id" exact Component={EditCompany} />
+
+        {/* Job */}
+        <AdminTemplate path="/admin/jobmng" exact Component={JobMng} />
+        {/* <AdminTemplate path="/admin/jobmng/addjob" exact Component={AddNewCompany} /> */}
+        {/* <AdminTemplate path="/admin/jobmng/edit/:id" exact Component={EditCompany} /> */}
 
         {/* Employer */}
         <AdminTemplate path="/admin/empmng" exact Component={EmployerMng} />

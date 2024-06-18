@@ -8,7 +8,7 @@ import Highlighter from 'react-highlight-words';
 import dayjs from 'dayjs';
 
 
-export default function TripMng() {}
+export default function TripMng() { }
 //   const [isModalOpen, setIsModalOpen] = useState(false);
 //   const [tripId, setTripId] = useState();
 //   const [tripDetail, setTripDetail] = useState({});

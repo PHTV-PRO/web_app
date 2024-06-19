@@ -195,8 +195,9 @@ export default function JobMng() {
                 return <>
                     <Button key={1} href={`/admin/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => {
                     }}></Button>
+
                     <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
-                        if (window.confirm('Do you want to delete ' + job.name + '?')) {
+                        if (window.confirm('Do you want to delete ' + job.title + '?')) {
                             dispatch(deleteJobAction(job.id))
                         }
                     }}></Button>

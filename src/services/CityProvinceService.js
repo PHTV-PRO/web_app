@@ -14,6 +14,10 @@ export class CityProvinceService extends baseService {
         return this.get(`/api/cityProvince/${id}`);
     }
 
+    // getCityProvinceById = (id) => {
+    //     return this.get(`/api/cityProvince/${id}`);
+    // }
+
     addNewCityProvince = (formData) => {
         return this.post(`/api/cityProvince`, formData);
     }

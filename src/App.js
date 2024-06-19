@@ -74,11 +74,14 @@ import EditCompany from "./pages/Admin/CompanyMng/EditCompany";
 
 //Job
 import JobMng from "./pages/Admin/JobMng/JobMng";
+import AddJob from "./pages/Admin/JobMng/AddJob";
+
 
 
 //
 import UserTemplate from "./templates/UserTemplate";
 import Login from "./pages/Login/Login";
+import AddNewJob from "./pages/Admin/JobMng/AddJob";
 
 
 
@@ -168,7 +171,7 @@ function App() {
 
         {/* Job */}
         <AdminTemplate path="/admin/jobmng" exact Component={JobMng} />
-        {/* <AdminTemplate path="/admin/jobmng/addjob" exact Component={AddNewCompany} /> */}
+        <AdminTemplate path="/admin/jobmng/addjob" exact Component={AddNewJob} />
         {/* <AdminTemplate path="/admin/jobmng/edit/:id" exact Component={EditCompany} /> */}
 
         {/* Employer */}

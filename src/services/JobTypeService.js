@@ -7,23 +7,23 @@ export class JobTypeService extends baseService {
     }
 
     getJobTypeList = () => {
-        return this.get(`/api/jobType`);
+        return this.get(`/api/general/job_type`);
     }
 
     getJobTypeById = (id) => {
-        return this.get(`/api/jobType/${id}`);
+        return this.get(`/api/general/job_type/${id}`);
     }
 
     addNewJobType = (formData) => {
-        return this.post(`/api/jobType`, formData);
+        return this.post(`/api/admin/job_type`, formData);
     }
 
     updateJobType = (id, formData) => {
-        return this.put(`/api/jobType/${id}`, formData);
+        return this.put(`/api/admin/job_type/${id}`, formData);
     }
 
     deleteJobType = (JobTypeId) => {
-        return this.delete(`/api/jobType/${JobTypeId}`);
+        return this.delete(`/api/admin/job_type/${JobTypeId}`);
     }
 }
 

@@ -82,6 +82,9 @@ import AddJob from "./pages/Admin/JobMng/AddJob";
 import UserTemplate from "./templates/UserTemplate";
 import Login from "./pages/Login/Login";
 import AddNewJob from "./pages/Admin/JobMng/AddJob";
+import LocationMng from "./pages/Admin/LocationMng/LocationMng";
+import AddNewLocation from "./pages/Admin/LocationMng/AddNewLocation";
+import EditLocation from "./pages/Admin/LocationMng/EditLocation";
 
 
 
@@ -158,6 +161,13 @@ function App() {
         <AdminTemplate path="/admin/cityprovincemng" exact Component={CityProvinceMng} />
         <AdminTemplate path="/admin/cityprovincemng/addcityprovince" exact Component={AddNewCityProvince} />
         <AdminTemplate path="/admin/cityprovincemng/edit/:id" exact Component={EditCityProvince} />
+
+        {/* Location */}
+        <AdminTemplate path="/admin/locationmng" exact Component={LocationMng} />
+        <AdminTemplate path="/admin/locationmng/addlocation" exact Component={AddNewLocation} />
+        <AdminTemplate path="/admin/locationmng/edit/:id" exact Component={EditLocation} />
+
+
 
         {/* SubscriptionPlan */}
         <AdminTemplate path="/admin/subplanmng" exact Component={SubscriptionPlanMng} />

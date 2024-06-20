@@ -7,23 +7,23 @@ export class SubcriptionPlanService extends baseService {
     }
 
     getSubcriptionPlanList = () => {
-        return this.get(`/api/subcriptionPlan`);
+        return this.get(`/api/general/subcription_plan`);
     }
 
     getSubcriptionPlanById = (id) => {
-        return this.get(`/api/subcriptionPlan/${id}`);
+        return this.get(`/api/general/subcription_plan/${id}`);
     }
 
     addNewSubcriptionPlan = (formData) => {
-        return this.post(`/api/subcriptionPlan`, formData);
+        return this.post(`/api/admin/subcription_plan`, formData);
     }
 
     updateSubcriptionPlan = (id, formData) => {
-        return this.put(`/api/subcriptionPlan/${id}`, formData);
+        return this.put(`/api/admin/subcription_plan/${id}`, formData);
     }
 
     deleteSubcriptionPlan = (id) => {
-        return this.delete(`/api/subcriptionPlan/${id}`);
+        return this.delete(`/api/admin/subcription_plan/${id}`);
     }
 }
 

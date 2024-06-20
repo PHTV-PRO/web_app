@@ -2,12 +2,11 @@ import React, { useEffect } from 'react';
 import { Form, Input, Button, notification, Select } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-// import { addNewBusAction, getBusTypeListAction } from '../../../redux/actions/BusAction';
 import { getListAccountAction } from '../../../redux/actions/AccountAction';
 import { addCompanyAction } from '../../../redux/actions/CompanyAction';
 
+const { Option } = Select;
 
-// import { getStationListAction } from '../../../redux/actions/StationAction';
 
 const AddNewCompany = () => {
     const dispatch = useDispatch();
@@ -33,7 +32,7 @@ const AddNewCompany = () => {
             nationnality: '',
             logo_image: '',
             background_image: '',
-            enable: 0,
+            enable: '',
         },
         onSubmit: (values) => {
             if (values.name == '' || values.introduction == '' || values.benefit == '') {
@@ -59,6 +58,10 @@ const AddNewCompany = () => {
     const handleChangeAccount = (value) => {
         formik.setFieldValue('account_id', value)
     }
+
+    const handleChangeEnable = (value) => {
+        formik.setFieldValue("enable", value);
+    };
 
     return (
         <Form
@@ -240,6 +243,21 @@ const AddNewCompany = () => {
                         ]}
                     >
                         <Input name="background_image" onChange={formik.handleChange} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Enable"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Enable cannot be blank!",
+                            },
+                        ]}
+                    >
+                        <Select name="enable" onChange={handleChangeEnable} placeholder="Choose Enable">
+                            <Option value={0}>On</Option>
+                            <Option value={1}>Off</Option>
+                        </Select>
                     </Form.Item>
 
                     <Form.Item

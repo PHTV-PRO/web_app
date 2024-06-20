@@ -7,11 +7,11 @@ export class CityProvinceService extends baseService {
     }
 
     getCityProvinceList = () => {
-        return this.get(`/api/cityProvince`);
+        return this.get(`/api/general/city_province`);
     }
 
     getCityProvinceById = (id) => {
-        return this.get(`/api/cityProvince/${id}`);
+        return this.get(`/api/general/city_province/${id}`);
     }
 
     // getCityProvinceById = (id) => {
@@ -19,15 +19,15 @@ export class CityProvinceService extends baseService {
     // }
 
     addNewCityProvince = (formData) => {
-        return this.post(`/api/cityProvince`, formData);
+        return this.post(`/api/admin/city_province`, formData);
     }
 
     updateCityProvince = (id, formData) => {
-        return this.put(`/api/cityProvince/${id}`, formData);
+        return this.put(`/api/admin/city_province/${id}`, formData);
     }
 
     deleteCityProvince = (cityProvinceId) => {
-        return this.delete(`/api/cityProvince/${cityProvinceId}`);
+        return this.delete(`/api/admin/city_province/${cityProvinceId}`);
     }
 }
 

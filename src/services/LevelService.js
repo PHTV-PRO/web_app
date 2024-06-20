@@ -7,23 +7,23 @@ export class LevelService extends baseService {
     }
 
     getLevelList = () => {
-        return this.get(`/api/level`);
+        return this.get(`/api/general/level`);
     }
 
     getLevelById = (id) => {
-        return this.get(`/api/level/${id}`);
+        return this.get(`/api/general/level/${id}`);
     }
 
     addNewLevel = (formData) => {
-        return this.post(`/api/level`, formData);
+        return this.post(`/api/admin/level`, formData);
     }
 
     updateLevel = (id, formData) => {
-        return this.put(`/api/level/${id}`, formData);
+        return this.put(`/api/admin/level/${id}`, formData);
     }
 
     deleteLevel = (levelId) => {
-        return this.delete(`/api/level/${levelId}`);
+        return this.delete(`/api/admin/level/${levelId}`);
     }
 }
 

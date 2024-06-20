@@ -6,19 +6,19 @@ export class AccountService extends baseService {
         super();
     }
     getListAccount = () => {
-        return this.get(`/api/account`);
+        return this.get(`/api/admin/account`);
     };
     getAccountById = (id) => {
-        return this.get(`/api/account/${id}`);
+        return this.get(`/api/admin/account/${id}`);
     }
     createAccount = (ac) => {
-        return this.post(`/api/account`, ac);
+        return this.post(`/api/admin/account`, ac);
     };
     deleteAccount = (id) => {
-        return this.delete(`/api/account/${id}`);
+        return this.delete(`/api/admin/account/${id}`);
     };
     updateAccount = (id, ac) => {
-        return this.put(`/api/account/${id}`, ac);
+        return this.put(`/api/admin/account/${id}`, ac);
     };
 
 }

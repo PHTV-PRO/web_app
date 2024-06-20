@@ -3,7 +3,7 @@ import { Form, Input, Select, Button, notification } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCompanyIdAction, updateCompanyByIdAction } from '../../../redux/actions/CompanyAction';
-import { getAccountByIdAction } from '../../../redux/actions/AccountAction';
+import { getListAccountAction } from '../../../redux/actions/AccountAction';
 
 const { Option } = Select;
 
@@ -14,7 +14,7 @@ const EditCompany = (props) => {
 
     let { id } = props.match.params;
     useEffect(() => {
-        dispatch(getAccountByIdAction())
+        dispatch(getListAccountAction())
         dispatch(getCompanyIdAction(id))
     }, [dispatch, id])
 
@@ -241,11 +241,11 @@ const EditCompany = (props) => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Gender"
+                        label="Enable"
                         rules={[
                             {
                                 required: true,
-                                message: "Gender cannot be blank!",
+                                message: "Enable cannot be blank!",
                             },
                         ]}
                     >

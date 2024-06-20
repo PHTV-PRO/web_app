@@ -179,13 +179,14 @@ export default function EmployerMng() {
           <Fragment key={index}>
             <Button
               key={1}
-              href={`/admin/empmng/edit/:id` + data.id}
+              href={`/admin/empmng/edit/` + data.id}
               type="link"
               icon={<EditOutlined />}
               onClick={() => {
                 // dispatch(updateEmployerByIdAction(data.id));
               }}
             ></Button>
+
             <Button
               key={2}
               type="link"

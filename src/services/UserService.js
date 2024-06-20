@@ -7,11 +7,11 @@ export class UserService extends baseService {
     }
 
     login = (loginInfo) => {
-        return this.postNotBearer(`/api/login`, loginInfo);
+        return this.postNotBearer(`/api/general/login`, loginInfo);
     }
 
     register = (registerInfo) => {
-        return this.postNotBearer(`/api/auth/register`, registerInfo);
+        return this.postNotBearer(`/api/general/register`, registerInfo);
     }
 
     forgetPassword = (email) => {
@@ -20,7 +20,7 @@ export class UserService extends baseService {
 
     getCurrentUser = (token) => {
         if (token != null) {
-            return this.postNotBearer(`/api/getinfo`, token);
+            return this.postNotBearer(`/api/general/check_token`, token);
         }
     }
 

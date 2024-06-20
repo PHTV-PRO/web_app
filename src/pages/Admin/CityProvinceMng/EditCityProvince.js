@@ -52,7 +52,7 @@ const EditCityProvince = (props) => {
             }}
             layout="horizontal"
         >
-            <h3 className="text-2xl">Edit Level:</h3>
+            <h3 className="text-2xl">Edit City Province:</h3>
             <div className='row'>
                 <div className='col-8'>
                     <Form.Item
@@ -69,7 +69,7 @@ const EditCityProvince = (props) => {
                         <Input name="name" onChange={formik.handleChange} value={formik.values.name} />
                     </Form.Item>
                     <Form.Item label="Action">
-                        <Button htmlType="submit">Update Level</Button>
+                        <Button htmlType="submit">Update City Province</Button>
                     </Form.Item>
                 </div>
             </div>

@@ -4,15 +4,15 @@ import { Button, Input, Space, Table } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCityProvinceListAction, deleteCityProvinceAction } from '../../../redux/actions/CityProvinceAction';
+import { deleteLocationAction, getLocationListAction } from '../../../redux/actions/LocationAction';
 
 
-export default function CityProvinceMng() {
-    let { arrCityProvince } = useSelector(state => state.CityProvinceReducer);
-    console.log(arrCityProvince);
+export default function LocationMng() {
+    let { arrLocation } = useSelector(state => state.LocationReducer);
+    console.log(arrLocation);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getCityProvinceListAction())
+        dispatch(getLocationListAction())
     }, [dispatch])
 
 
@@ -32,7 +32,7 @@ export default function CityProvinceMng() {
     };
 
 
-    const data = arrCityProvince.data;
+    const data = arrLocation.data;
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -117,21 +117,49 @@ export default function CityProvinceMng() {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
-            width: '50%',
+            width: '20%',
             ...getColumnSearchProps('name'),
             sorter: (a, b) => a.name - b.name,
             sortDirections: ['descend', 'ascend'],
         },
         {
+            title: 'Company',
+            dataIndex: 'company_id ',
+            key: 'company_id ',
+            width: '20%',
+            ...getColumnSearchProps('company_id '),
+            sorter: (a, b) => a.company_id - b.company_id,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, company) => {
+                return (<>
+                    <span>{company.company?.name}</span>
+                </>)
+            },
+        },
+        {
+            title: 'City Province',
+            dataIndex: 'city_provence_id ',
+            key: 'city_provence_id ',
+            width: '20%',
+            ...getColumnSearchProps('city_provence_id '),
+            sorter: (a, b) => a.city_provence_id - b.city_provence_id,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, cityProvince) => {
+                return (<>
+                    <span>{cityProvince.cityProvince?.name}</span>
+                </>)
+            },
+        },
+        {
             title: 'Manage',
             width: '25%',
-            render: (text, cityProvince) => {
+            render: (text, location) => {
                 return <>
-                    <Button key={1} href={`/admin/cityprovincemng/edit/${cityProvince.id}`} type="link" icon={<EditOutlined />} onClick={() => {
+                    <Button key={1} href={`/admin/locationmng/edit/${location.id}`} type="link" icon={<EditOutlined />} onClick={() => {
                     }}></Button>
                     <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
-                        if (window.confirm('Do you want to delete ' + cityProvince.name + '?')) {
-                            dispatch(deleteCityProvinceAction(cityProvince.id))
+                        if (window.confirm('Do you want to delete ' + location.name + '?')) {
+                            dispatch(deleteLocationAction(location.id))
                         }
                     }}></Button>
                 </>
@@ -141,8 +169,8 @@ export default function CityProvinceMng() {
     ]
     return <div>
         <div className='d-flex mb-3'>
-            <h3 className='text-lg'>City Province Management</h3>
-            <Button href='/admin/cityprovincemng/addcityprovince' type="primary" className='ml-3 small bg-primary'>+ Add New City Province</Button>
+            <h3 className='text-lg'>Location Management</h3>
+            <Button href='/admin/locationmng/addlocation' type="primary" className='ml-3 small bg-primary'>+ Add New Location</Button>
         </div>
         <Table columns={columns} dataSource={data} rowKey={'id'} />
     </div>

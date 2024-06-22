@@ -10,12 +10,10 @@ export const loginAction = (loginInfo) => {
     try {
       dispatch(displayLoadingAction);
       const result = await userService.login(loginInfo);
-
+      localStorage.setItem(TOKEN, result.data.data.token);
       if (result.status === 200) {
       const user = await userService.getCurrentUser(result.data.data.token);
-        
         if (user.data.data.role=="ADMIN") {
-          localStorage.setItem(TOKEN, result.data.data.token);
           notification.success({
             closeIcon: true,
             message: "Success",
@@ -26,7 +24,20 @@ export const loginAction = (loginInfo) => {
             ),
           });
           history.push("/admin/industry");
-          } else {
+          } else 
+          if (user.data.data.role=="EMPLOYER") {
+            notification.success({
+              closeIcon: true,
+              message: "Success",
+              description: (
+                <>
+                  Wellcome to Employer!!
+                </>
+              ),
+            });
+            history.push("/admin/industry");
+            } 
+         else {
             notification.error({
               closeIcon: true,
               message: "Error",

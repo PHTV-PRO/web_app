@@ -7,7 +7,7 @@ export class IndustryService extends baseService {
     }
 
     getIndustryList = () => {
-        return this.get(`/api/industry`);
+        return this.get(`/api/general/industry`);
     }
 
     getEnableBusList = () => {
@@ -15,14 +15,14 @@ export class IndustryService extends baseService {
     }
 
     addNewIndustry = (formData) => {
-        return this.post(`/api/industry`, formData);
+        return this.post(`/api/admin/industry`, formData);
     }
 
     getBusById = (id) => {
         return this.get(`/api/Bus/${id}`);
     }
 
-    updateBus = (id,formData) => {
+    updateBus = (id, formData) => {
         return this.put(`/api/Bus?Id=${id}`, formData);
     }
 
@@ -45,12 +45,12 @@ export class IndustryService extends baseService {
     getBusTypeById = (id) => {
         return this.get(`/api/BusType/${id}`);
     }
-    
+
     addNewBusType = (formData) => {
         return this.post(`/api/BusType`, formData);
     }
 
-    updateBusType = (id,formData) => {
+    updateBusType = (id, formData) => {
         return this.put(`/api/BusType?Id=${id}`, formData);
     }
 

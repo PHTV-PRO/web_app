@@ -80,7 +80,8 @@ export const updateAccountByIdAction = (id, formData) => {
                     <>Update Account successfully</>
                 ),
             });
-            history.push('/admin/accmng');
+            // history.push('/admin/accmng');
+            history.goBack();
         } catch (error) {
             console.log('error', error);
         }

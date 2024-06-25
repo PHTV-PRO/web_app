@@ -78,7 +78,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
     window.scrollTo(0, 0);
   }, [dispatch])
 
-  if (userLogin && (userLogin?.role !== 'ADMIN')) {
+  if (userLogin && (userLogin?.role !== 'ADMIN' && userLogin?.role !== 'EMPLOYER')) {
     history.replace('/')
   }
 
@@ -87,49 +87,36 @@ export const AdminTemplate = (props) => { //path, exact, Component
   const itemsAdmin = [
     getItem('Skill Management', 'sub1', <UserOutlined />, [
       getItem('Industry Management', '1', <NavLink className='text-decoration-none' to="/admin/industry"><i className="fas fa-bus f3"></i></NavLink>),
-      // getItem('Bus Type Management', '2', <NavLink className='text-decoration-none' to="/admin/bustypemng"><i className="fas fa-bus f3"></i></NavLink>),
+
     ]),
-    // getItem('Station Management', '3', <NavLink className='text-decoration-none' to="/admin/stationmng"><i className="fa-solid fa-location-dot"></i></NavLink>),
-    // getItem('Trip Management', '4', <NavLink className='text-decoration-none' to="/admin/tripmng"><BuildFilled /></NavLink>),
-    // getItem('Top Route Management', '5', <NavLink className='text-decoration-none' to="/admin/promotripmng"><NodeIndexOutlined /></NavLink>),
-    // getItem('Offer Management', '6', <NavLink className='text-decoration-none' to="/admin/offermng"><PercentageOutlined /></NavLink>),
+
     getItem('User Management', 'sub2', <UserOutlined />, [
-      getItem('Employer', '7', <NavLink className='text-decoration-none' to="/admin/empmng"><UserOutlined /></NavLink>),
-      getItem("Candidate", "8", <NavLink className="text-decoration-none" to="/admin/accmng"><UserOutlined /></NavLink>),
+      getItem('Employer', '2', <NavLink className='text-decoration-none' to="/admin/empmng"><UserOutlined /></NavLink>),
+      getItem("Candidate", "3", <NavLink className="text-decoration-none" to="/admin/accmng"><UserOutlined /></NavLink>),
     ]),
-    // getItem('Driver Management', 'sub3', <CarOutlined />, [
-    //   getItem('Drivers', '9', <NavLink className='text-decoration-none' to="/admin/drivermng"><CarOutlined /></NavLink>),
-    //   getItem("Register Drivers", '10', <NavLink className="text-decoration-none" to="/admin/regdrivermng"><CarOutlined /></NavLink>),
-    // ]),
-    // getItem('Revenue', 'sub4', <BarChartOutlined />, [
-    //   getItem('Revenue By Month', '11', <NavLink className='text-decoration-none' to="/admin/revenuemonth"><BarChartOutlined /></NavLink>),
-    //   getItem('Revunue By Route', '12', <NavLink className='text-decoration-none' to="/admin/revenueroute"><BarChartOutlined /></NavLink>),
-    // ]),
-    // getItem('FAQ Management', '13', <NavLink className='text-decoration-none' to="/admin/faqmng"><QuestionOutlined /></NavLink>),
-    // getItem('News Management', '14', <NavLink className='text-decoration-none' to="/admin/newsmng"><FormOutlined /></NavLink>),
     getItem('Areea Management', 'sub3', <CompassOutlined />, [
-      getItem('City Province ', '17', <NavLink className='text-decoration-none' to="/admin/cityprovincemng"><BankOutlined /></NavLink>),
-      getItem('Location ', '21', <NavLink className='text-decoration-none' to="/admin/locationmng"><AimOutlined /></NavLink>),
+      getItem('City Province ', '4', <NavLink className='text-decoration-none' to="/admin/cityprovincemng"><BankOutlined /></NavLink>),
+      getItem('Location ', '5', <NavLink className='text-decoration-none' to="/admin/locationmng"><AimOutlined /></NavLink>),
     ]),
-    getItem('Job Type Management', '15', <NavLink className='text-decoration-none' to="/admin/jobtypemng"><AuditOutlined /></NavLink>),
-    getItem('Level Management', '16', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
-    getItem('SubscriptionPlan Management', '18', <NavLink className='text-decoration-none' to="/admin/subplanmng"><ContainerOutlined /></NavLink>),
-    getItem('Company Management', '19', <NavLink className='text-decoration-none' to="/admin/companymng"><HomeFilled /></NavLink>),
-    getItem('Job Management', '20', <NavLink className='text-decoration-none' to="/admin/jobmng"><WalletOutlined /></NavLink>),
-
-
-
+    getItem('Job Type Management', '6', <NavLink className='text-decoration-none' to="/admin/jobtypemng"><AuditOutlined /></NavLink>),
+    getItem('Level Management', '7', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
+    getItem('SubscriptionPlan Management', '8', <NavLink className='text-decoration-none' to="/admin/subplanmng"><ContainerOutlined /></NavLink>),
+    getItem('Company Management', '9', <NavLink className='text-decoration-none' to="/admin/companymng"><HomeFilled /></NavLink>),
+    getItem('Job Management', '10', <NavLink className='text-decoration-none' to="/admin/jobmng"><WalletOutlined /></NavLink>),
   ]
 
 
-  const itemsMod = [
-    // getItem('Bus Management', '1', <NavLink className='text-decoration-none' to="/admin/busmng"><i className="fas fa-bus f3"></i></NavLink>),
-    // getItem('Station Management', '2', <NavLink className='text-decoration-none' to="/admin/stationmng"><i className="fa-solid fa-location-dot"></i></NavLink>),
-    // getItem('Trip Management', '3', <NavLink className='text-decoration-none' to="/admin/tripmng"><BuildFilled /></NavLink>),
-    // getItem('Top Route Management', '4', <NavLink className='text-decoration-none' to="/admin/promotripmng"><NodeIndexOutlined /></NavLink>),
-    // getItem('Drivers', '5', <NavLink className='text-decoration-none' to="/admin/drivermng"><CarOutlined /></NavLink>),
-    // getItem('FAQ Management', '6', <NavLink className='text-decoration-none' to="/admin/faqmng"><QuestionOutlined /></NavLink>),
-    // getItem('News Management', '7', <NavLink className='text-decoration-none' to="/admin/newsmng"><FormOutlined /></NavLink>),
+  const itemsEmployer = [
+    getItem('Level Management', '1', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
+    getItem('Areea Management', 'sub1', <CompassOutlined />, [
+      getItem('City Province ', '2', <NavLink className='text-decoration-none' to="/admin/cityprovincemng"><BankOutlined /></NavLink>),
+      getItem('Location ', '3', <NavLink className='text-decoration-none' to="/admin/locationmng"><AimOutlined /></NavLink>),
+    ]),
+    getItem('Job Type Management', '4', <NavLink className='text-decoration-none' to="/admin/jobtypemng"><AuditOutlined /></NavLink>),
+    getItem('Level Management', '5', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
+    getItem('SubscriptionPlan Management', '6', <NavLink className='text-decoration-none' to="/admin/subplanmng"><ContainerOutlined /></NavLink>),
+    getItem('Company Management', '7', <NavLink className='text-decoration-none' to="/admin/companymng"><HomeFilled /></NavLink>),
+    getItem('Job Management', '8', <NavLink className='text-decoration-none' to="/admin/jobmng"><WalletOutlined /></NavLink>),
   ]
 
   let remainHour = dayjs(ticketDetail?.trips?.startTime).diff(dayjs(new Date()), 'hour')
@@ -148,8 +135,10 @@ export const AdminTemplate = (props) => { //path, exact, Component
     return <Fragment key={index}>
       <Layout style={{ minHeight: '100vh', }}>
         <Sider collapsible width={300} collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-          <div className="demo-logo-vertical text-white text-2xl text-center my-10" >Admin Page</div>
-          <Menu theme="dark" defaultSelectedKeys={selectedKey} mode="inline" items={userLogin?.role === "ADMIN" ? itemsAdmin : itemsMod} />
+          {userLogin?.role === "ADMIN" ? <div className="demo-logo-vertical text-white text-2xl text-center my-10" >Admin Page</div>
+            : <div className="demo-logo-vertical text-white text-2xl text-center my-10" >Employer Page</div>}
+
+          <Menu theme="dark" defaultSelectedKeys={selectedKey} mode="inline" items={userLogin?.role === "ADMIN" ? itemsAdmin : itemsEmployer} />
         </Sider>
         <Layout>
           <Header

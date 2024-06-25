@@ -4,16 +4,23 @@ import { Button, Input, Space, Table } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteLevelAction, getLevelByIdAction, getLevelListAction } from '../../../redux/actions/LevelAction';
+import { deleteLevelAction, getLevelListAction } from '../../../redux/actions/LevelAction';
+
 
 
 export default function LevelMng() {
     let { arrLevel } = useSelector(state => state.LevelReducer);
+
     console.log(arrLevel);
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getLevelListAction())
     }, [dispatch])
+
+    // useEffect(() => {
+    //     dispatch(loginAction())
+    // }, [dispatch])
 
 
     const [searchText, setSearchText] = useState('');

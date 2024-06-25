@@ -12,8 +12,8 @@ export const loginAction = (loginInfo) => {
       const result = await userService.login(loginInfo);
       localStorage.setItem(TOKEN, result.data.data.token);
       if (result.status === 200) {
-      const user = await userService.getCurrentUser(result.data.data.token);
-        if (user.data.data.role=="ADMIN") {
+        const user = await userService.getCurrentUser(result.data.data.token);
+        if (user.data.data.role == "ADMIN") {
           notification.success({
             closeIcon: true,
             message: "Success",
@@ -24,8 +24,8 @@ export const loginAction = (loginInfo) => {
             ),
           });
           history.push("/admin/industry");
-          } else 
-          if (user.data.data.role=="EMPLOYER") {
+        } else
+          if (user.data.data.role == "EMPLOYER") {
             notification.success({
               closeIcon: true,
               message: "Success",
@@ -35,9 +35,9 @@ export const loginAction = (loginInfo) => {
                 </>
               ),
             });
-            history.push("/admin/industry");
-            } 
-         else {
+            history.push("/admin/levelmng");
+          }
+          else {
             notification.error({
               closeIcon: true,
               message: "Error",
@@ -209,7 +209,7 @@ export const getCurrentUserAction = (token) => {
           type: GET_CURRENT_USER_ACTION,
           userLogin: result.data.data,
         });
-      }else{
+      } else {
         localStorage.removeItem(TOKEN)
       }
     } catch (error) {

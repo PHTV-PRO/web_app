@@ -21,10 +21,9 @@ const AddNewLocation = () => {
     const formik = useFormik({
         initialValues: {
             name: '',
-
         },
         onSubmit: (values) => {
-            if (values.name === '', values.company_id === '', values.city_provence_id === '') {
+            if (values.name === '') {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',

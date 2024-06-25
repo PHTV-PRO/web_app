@@ -9,30 +9,37 @@ export class IndustryService extends baseService {
     getIndustryList = () => {
         return this.get(`/api/general/industry`);
     }
-
-    getEnableBusList = () => {
-        return this.get(`/api/Bus/enablebus`);
-    }
-
     addNewIndustry = (formData) => {
         return this.post(`/api/admin/industry`, formData);
     }
-
-    getBusById = (id) => {
-        return this.get(`/api/Bus/${id}`);
+    getIndustryById = (id) => {
+        return this.get(`/api/general/industry/${id}`);
+    }
+    updateIndustry = (id, formData) => {
+        return this.put(`/api/admin/industry/${id}`, formData);
+    }
+    deleteIndustry = (industryId) => {
+        return this.delete(`/api/admin/industry/${industryId}`);
     }
 
-    updateBus = (id, formData) => {
-        return this.put(`/api/Bus?Id=${id}`, formData);
-    }
+    // getEnableBusList = () => {
+    //     return this.get(`/api/Bus/enablebus`);
+    // }
+    // getBusById = (id) => {
+    //     return this.get(`/api/Bus/${id}`);
+    // }
 
-    deleteBus = (busId) => {
-        return this.delete(`/api/Bus/${busId}`);
-    }
+    // updateBus = (id, formData) => {
+    //     return this.put(`/api/Bus?Id=${id}`, formData);
+    // }
 
-    enableBus = (id) => {
-        return this.put(`/api/Bus/enable?Id=${id}`);
-    }
+    // deleteBus = (busId) => {
+    //     return this.delete(`/api/Bus/${busId}`);
+    // }
+
+    // enableBus = (id) => {
+    //     return this.put(`/api/Bus/enable?Id=${id}`);
+    // }
 
 
 

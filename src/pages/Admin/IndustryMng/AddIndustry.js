@@ -2,10 +2,10 @@ import React from 'react';
 import { Form, Input, Button, notification } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { addCityProvinceAction } from '../../../redux/actions/CityProvinceAction';
+import { addIndustryAction } from '../../../redux/actions/IndustryAction';
 
 
-const AddNewCityProvince = () => {
+const AddNewIndustry = () => {
     const dispatch = useDispatch();
 
     const formik = useFormik({
@@ -13,7 +13,7 @@ const AddNewCityProvince = () => {
             name: ''
         },
         onSubmit: (values) => {
-            if (values.name === '') {
+            if (values.name == '') {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',
@@ -30,13 +30,11 @@ const AddNewCityProvince = () => {
                 }
                 console.table('formData', [...formData])
                 // console.log(formData);
-                dispatch(addCityProvinceAction(formData));
+                dispatch(addIndustryAction(formData));
             }
 
         }
     })
-
-
     return (
         <Form
             onSubmitCapture={formik.handleSubmit}
@@ -48,7 +46,7 @@ const AddNewCityProvince = () => {
             }}
             layout="horizontal"
         >
-            <h3 className="text-2xl">Add New City Province</h3>
+            <h3 className="text-2xl">Add New Job Type</h3>
             <div className='row'>
                 <div className='col-8'>
                     <Form.Item
@@ -58,7 +56,7 @@ const AddNewCityProvince = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'City Province is required!',
+                                message: 'Name  is required!',
                                 transform: (value) => value.trim(),
                             },
                         ]}
@@ -67,7 +65,7 @@ const AddNewCityProvince = () => {
                     </Form.Item>
 
                     <Form.Item label="Action">
-                        <Button htmlType="submit" >Add New City Province</Button>
+                        <Button htmlType="submit" >Add New Industry</Button>
                     </Form.Item>
                 </div>
             </div>
@@ -76,4 +74,4 @@ const AddNewCityProvince = () => {
     );
 };
 
-export default AddNewCityProvince;
+export default AddNewIndustry;

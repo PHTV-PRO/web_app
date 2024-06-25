@@ -5,16 +5,16 @@ import { Switch, Router } from "react-router-dom";
 
 import Loading from "./components/Loading/Loading";
 import { AdminTemplate } from "./templates/AdminTemplate";
-import Edit from "./pages/Admin/IndustryMng/EditBus";
+// import Edit from "./pages/Admin/IndustryMng/EditBus";
 
 import RevenueMonth from "./pages/Admin/Revenue/RevenueMonth";
 import UserOrder from "./pages/Admin/UserMng/UserOrder";
 import StationMng from "./pages/Admin/StationMng/StationMng";
 import TripMng from "./pages/Admin/TripMng/TripMng";
-import AddNewBus from "./pages/Admin/IndustryMng/AddNewBus";
-import BusTypeMng from "./pages/Admin/IndustryMng/BusTypeMng/BusTypeMng";
-import AddNewBusType from "./pages/Admin/IndustryMng/BusTypeMng/AddNewBusType";
-import EditBusType from "./pages/Admin/IndustryMng/BusTypeMng/EditBusType";
+// import AddNewBus from "./pages/Admin/IndustryMng/AddNewBus";
+// import BusTypeMng from "./pages/Admin/IndustryMng/BusTypeMng/BusTypeMng";
+// import AddNewBusType from "./pages/Admin/IndustryMng/BusTypeMng/AddNewBusType";
+// import EditBusType from "./pages/Admin/IndustryMng/BusTypeMng/EditBusType";
 import AddNewStation from "./pages/Admin/StationMng/AddNewStation";
 import EditStation from "./pages/Admin/StationMng/EditStation";
 import AddNewTrip from "./pages/Admin/TripMng/AddNewTrip";
@@ -36,7 +36,13 @@ import RevenueRoute from "./pages/Admin/Revenue/RevenueRoute";
 import OfferMng from "./pages/Admin/OfferMng/OfferMng";
 import AddOffer from "./pages/Admin/OfferMng/AddOffer";
 import OfferEdit from "./pages/Admin/OfferMng/OfferEdit";
+
+//Industry
 import IndustryMng from "./pages/Admin/IndustryMng/IndustryMng";
+import AddIndustry from "./pages/Admin/IndustryMng/AddIndustry";
+import EditIndustry from "./pages/Admin/IndustryMng/EditIndustry";
+
+
 // JobType
 import JobTypeMng from "./pages/Admin/JobTypeMng/JobTypeMng";
 import AddJobType from "./pages/Admin/JobTypeMng/AddNewJobType";
@@ -106,15 +112,10 @@ function App() {
         <AdminTemplate path="/admin/drivermng/edit/:id" exact Component={DriverEdit} />
         <AdminTemplate path="/admin/drivermng/adddriver" exact Component={AddDriver} />
 
-        {/* Bus */}
-        <AdminTemplate path="/admin/industry" exact Component={IndustryMng} />
-        <AdminTemplate path="/admin/busmng/addnew" exact Component={AddNewBus} />
-        <AdminTemplate path="/admin/busmng/edit/:id" exact Component={Edit} />
 
-        {/* Bus Type */}
-        <AdminTemplate path="/admin/bustypemng" exact Component={BusTypeMng} />
-        <AdminTemplate path="/admin/bustypemng/addnew" exact Component={AddNewBusType} />
-        <AdminTemplate path="/admin/bustypemng/edit/:id" exact Component={EditBusType} />
+
+
+
 
         {/* Station */}
         <AdminTemplate path="/admin/stationmng" exact Component={StationMng} />
@@ -149,6 +150,11 @@ function App() {
         <AdminTemplate path='/admin/newsmng' exact Component={NewsMng} />
         <AdminTemplate path='/admin/newsmng/addnews' exact Component={AddNewNews} />
         <AdminTemplate path='/admin/newsmng/edit/:id' exact Component={NewsEdit} />
+
+        {/* Industry */}
+        <AdminTemplate path="/admin/industry" exact Component={IndustryMng} />
+        <AdminTemplate path="/admin/industry/addindustry" exact Component={AddIndustry} />
+        <AdminTemplate path="/admin/industry/edit/:id" exact Component={EditIndustry} />
 
         {/* Job Type */}
         <AdminTemplate path="/admin/jobtypemng" exact Component={JobTypeMng} />

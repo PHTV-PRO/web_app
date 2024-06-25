@@ -1,186 +1,149 @@
 import React, { useEffect } from 'react'
 import { SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Input, Form, Table, Drawer,} from 'antd';
+import { Button, Input, Space, Table } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteBusAction, enableBusAction, addIndustryAction, getIndustryListAction } from '../../../redux/actions/IndustryAction';
+import { deleteIndustryAction, getIndustryListAction } from '../../../redux/actions/IndustryAction';
 
 
 export default function IndustryMng() {
   let { arrIndustry } = useSelector(state => state.IndustryReducer);
+  console.log(arrIndustry);
   const dispatch = useDispatch();
-  const [openIndustry, setOpenIndustry] = useState(false);
-  const [openSkill, setOpenSkill] = useState(false);
-
-
   useEffect(() => {
     dispatch(getIndustryListAction())
   }, [dispatch])
 
+
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef(null);
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const resetSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0] = '');
+    setSearchedColumn(dataIndex);
+  };
+
+
   const data = arrIndustry.data;
-  const showDrawerIndustry = (id) => {
-    setOpenIndustry(true);
-  };
-  const onCloseIndustry = () => {
-    setOpenIndustry(false);
-  };
-  const showDrawerSkill = (id) => {
-    console.log("industry id:",id)
-    setOpenSkill(true);
-  };
-  const onCloseSKill = () => {
-    setOpenSkill(false);
-  };
-  
+
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+      <div style={{ padding: 8, }} onKeyDown={(e) => e.stopPropagation()} >
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{
+            marginBottom: 8,
+            display: 'block',
+          }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            className='bg-primary'
+            style={{
+              width: 90,
+            }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && resetSearch(selectedKeys, confirm, dataIndex)}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Reset
+          </Button>
+
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined
+        style={{
+          color: filtered ? '#1677ff' : undefined,
+        }}
+      />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text, index) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          key={index}
+          highlightStyle={{
+            backgroundColor: '#ffc069',
+            padding: 0,
+          }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ''}
+        />
+      ) : (
+        text
+      ),
+  });
   const columns = [
     {
-      title: 'ID',
+      title: 'Id',
       dataIndex: 'id',
       key: 'id',
-      sorter: (a, b) => a.id - b.id, // Sorter for ID column
+      width: '25%',
+      sorter: (a, b) => a.id - b.id,
+      sortDirections: ['descend', 'ascend'],
     },
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      sorter: (a, b) => a.name.localeCompare(b.name), // Sorter for Name column
-       
-    },
-    {
-      title: 'Skills',
-      dataIndex: 'skills',
-      key: 'skills',
-      render: (skills) => (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <ul style={{ marginRight: '10px' }}>
-            { skills.map((skill, index) => (
-              <span key={skill.id}>
-                {index === skills.length - 1 ? skill.name : skill.name + ', '}
-              </span>
-            ))}
-          </ul>
-        </div>
-      ),
-    },
-    {
-      key: 'id',
-      render: (id, record) => (
-        <Button onClick={() => showDrawerSkill(record.id)}>+</Button>
-      ),
+      width: '50%',
+      ...getColumnSearchProps('name'),
+      sorter: (a, b) => a.name - b.name,
+      sortDirections: ['descend', 'ascend'],
     },
     {
       title: 'Manage',
-      width: '20%',
-      render: (text, item) => {
+      width: '25%',
+      render: (text, industry) => {
         return <>
-          <Button key={1} href={`/admin/industry/edit/${item.id}`}  type="link" icon={<EditOutlined />} onClick={() => {
+          <Button key={1} href={`/admin/industry/edit/${industry.id}`} type="link" icon={<EditOutlined />} onClick={() => {
           }}></Button>
           <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
-            if (window.confirm('Do you want to delete Industry ' + item.id + '?')) {
-              // dispatch(deleteNewsAction(item.id))
+            if (window.confirm('Do you want to delete ' + industry.name + '?')) {
+              dispatch(deleteIndustryAction(industry.id))
             }
           }}></Button>
         </>
 
       }
     },
-  ];
-  const onFinishIndustry = (values) => {
-    dispatch(addIndustryAction(values))
-    console.log('Success:', values);
-  };
-  const onFinishSkill = (values) => {
-    dispatch(addIndustryAction(values))
-    console.log('Success:', values);
-  };
-  
+  ]
   return <div>
     <div className='d-flex mb-3'>
       <h3 className='text-lg'>Industry Management</h3>
-      <Button  type="primary" className='ml-3 small bg-primary' onClick={showDrawerIndustry}>+ Add New Industry</Button>
+      <Button href='/admin/industry/addindustry' type="primary" className='ml-3 small bg-primary'>+ Add New Industry</Button>
     </div>
-
-   
-    <Table dataSource={data} columns={columns} />
-    <Drawer title={"Insert Skill"}  placement="right" onClose={onCloseSKill} open={openSkill}>
-        <Form
-          name="basic"
-          labelCol={{
-            span: 10,
-          }}
-          wrapperCol={{
-            span: 25,
-          }}
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinishSkill}
-          autoComplete="off"
-        >
-          <Form.Item
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: 'Please input Industry name!',
-              },
-            ]}
-          >
-            <Input placeholder='Enter Industry'/>
-          </Form.Item>
-          <Form.Item
-            wrapperCol={{
-              offset: 9,
-              span: 25,
-            }}
-          >
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </Drawer>
-
-      <Drawer title="Insert Industry" placement="right" onClose={onCloseIndustry} open={openIndustry}>
-        <Form
-          name="basic"
-          labelCol={{
-            span: 10,
-          }}
-          wrapperCol={{
-            span: 25,
-          }}
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinishIndustry}
-          autoComplete="off"
-        >
-          <Form.Item
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: 'Please input Industry name!',
-              },
-            ]}
-          >
-            <Input placeholder='Enter Industry'/>
-          </Form.Item>
-          <Form.Item
-            wrapperCol={{
-              offset: 9,
-              span: 25,
-            }}
-          >
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </Drawer>
-    
+    <Table columns={columns} dataSource={data} rowKey={'id'} />
   </div>
-
 }

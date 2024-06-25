@@ -1,79 +1,129 @@
-import React, { useEffect } from 'react';
-import { Form, Input, Button, notification, Select } from 'antd';
-import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { Form, Input, Button, notification, Select, DatePicker } from "antd";
+import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 
-import { getJobTypeListAction } from '../../../redux/actions/JobTypeAction';
-import { getCompanyListAction } from '../../../redux/actions/CompanyAction';
-import { addJobAction } from '../../../redux/actions/JobAction';
+import { getJobTypeListAction } from "../../../redux/actions/JobTypeAction";
+import { getCompanyListAction } from "../../../redux/actions/CompanyAction";
+import { addJobAction } from "../../../redux/actions/JobAction";
+
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
+var utc = require('dayjs/plugin/utc')
+var timezone = require('dayjs/plugin/timezone')
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.tz.guess()
 const { Option } = Select;
 
-
 const AddNewJob = () => {
+    const dateFormat = 'DD-MM-YYYY';
     const dispatch = useDispatch();
-    let { arrJobType } = useSelector(state => state.JobTypeReducer);
-    let { arrCompany } = useSelector(state => state.CompanyReducer);
-
+    let { arrJobType } = useSelector((state) => state.JobTypeReducer);
+    let { arrCompany } = useSelector((state) => state.CompanyReducer);
 
     console.log(arrJobType);
     console.log(arrCompany);
 
     useEffect(() => {
-        dispatch(getCompanyListAction())
-        dispatch(getJobTypeListAction())
-
+        dispatch(getCompanyListAction());
+        dispatch(getJobTypeListAction());
     }, [dispatch]);
-
-
-
 
     const formik = useFormik({
         initialValues: {
-            title: '',
-            description: '',
-            reponsibility: '',
-            skill_required: '',
-            benefit: '',
-            interview_steps: '',
+            title: "",
+            description: "",
+            reponsibility: "",
+            skill_required: "",
+            benefit: "",
+            interview_steps: "",
             amount: 10,
-            experience_required: '',
-            salary_max: '',
-            salary_min: '',
-            start_date: "2025-09-05T17:00:00.000+00:00",
-            end_date: "2025-09-05T17:00:00.000+00:00",
+            experience_required: "",
+            salary_max: "",
+            salary_min: "",
+            start_date: "",
+            end_date: "",
             is_active: 0,
             location_id: 1,
         },
         onSubmit: (values) => {
-            if (values.title == '' || values.description == '' || values.reponsibility == '') {
+            if (
+                values.title === "" ||
+                values.description === "" ||
+                values.reponsibility === "" ||
+                values.skill_required === "" ||
+                values.benefit === "" ||
+                values.amount === "" ||
+                values.experience_required === "" ||
+                values.salary_max === "" ||
+                values.salary_min === ""
+                // values.reponsibility == "" ||
+                // values.reponsibility == "" ||
+                // values.reponsibility == ""
+            ) {
                 notification.error({
                     closeIcon: true,
-                    message: 'Error',
-                    description: (
-                        <>Please fill in all required fields.</>
-                    ),
+                    message: "Error",
+                    description: <>Please fill in all required fields.</>,
                 });
             } else {
                 let formData = new FormData();
                 for (let key in values) {
                     formData.append(key, values[key]);
                 }
-                console.table('formData', [...formData])
+                console.table("formData", [...formData]);
                 dispatch(addJobAction(formData));
             }
-
-        }
-    })
+        },
+    });
 
     const handleChangeCompany = (value) => {
-        formik.setFieldValue('company_id', value)
-    }
+        formik.setFieldValue("company_id", value);
+    };
     const handleChangeJobType = (value) => {
-        formik.setFieldValue('job_type_id', value)
-    }
+        formik.setFieldValue("jobType_id", value);
+    };
     const handleChangeGender = (value) => {
         formik.setFieldValue("gender", value);
+    };
+    const onOkBeginDate = (values) => {
+        formik.setFieldValue('start_date', values);
     }
+
+    const onChangeBeginDate = (values) => {
+        formik.setFieldValue('start_date', values);
+    }
+
+    const onOkEndDate = (values) => {
+        if (values < formik.values.start_date) {
+            notification.error({
+                closeIcon: true,
+                message: 'Error',
+                description: (
+                    <>End Date must after Begin Date</>
+                ),
+            });
+        } else {
+            formik.setFieldValue('end_date', values);
+        }
+    }
+
+    const onChangeEndDate = (values) => {
+        if (values < formik.values.start_date) {
+            notification.error({
+                closeIcon: true,
+                message: 'Error',
+                description: (
+                    <>End Date must after Begin Date</>
+                ),
+            });
+        } else {
+            formik.setFieldValue('end_date', values);
+        }
+    }
+
     return (
         <Form
             onSubmitCapture={formik.handleSubmit}
@@ -86,16 +136,16 @@ const AddNewJob = () => {
             layout="horizontal"
         >
             <h3 className="text-2xl">Add New Job</h3>
-            <div className='row'>
-                <div className='col-8'>
+            <div className="row">
+                <div className="col-8">
                     <Form.Item
                         label="Title"
                         name="title"
-                        style={{ minWidth: '100%' }}
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Title is required!',
+                                message: "Title is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
@@ -106,11 +156,11 @@ const AddNewJob = () => {
                     <Form.Item
                         label="Description"
                         name="description"
-                        style={{ minWidth: '100%' }}
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Description is required!',
+                                message: "Description is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
@@ -121,11 +171,11 @@ const AddNewJob = () => {
                     <Form.Item
                         label="Reponsibility"
                         name="reponsibility"
-                        style={{ minWidth: '100%' }}
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Reponsibility is required!',
+                                message: "Reponsibility is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
@@ -136,11 +186,11 @@ const AddNewJob = () => {
                     <Form.Item
                         label="Skill Required"
                         name="skill_required"
-                        style={{ minWidth: '100%' }}
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Skill Required is required!',
+                                message: "Skill Required is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
@@ -151,11 +201,11 @@ const AddNewJob = () => {
                     <Form.Item
                         label="Benefit"
                         name="benefit"
-                        style={{ minWidth: '100%' }}
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Benefit is required!',
+                                message: "Benefit is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
@@ -166,11 +216,11 @@ const AddNewJob = () => {
                     <Form.Item
                         label="Interview Steps"
                         name="interview_steps"
-                        style={{ minWidth: '100%' }}
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Intervie Steps is required!',
+                                message: "Intervie Steps is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
@@ -181,11 +231,11 @@ const AddNewJob = () => {
                     <Form.Item
                         label="Amount"
                         name="amount"
-                        style={{ minWidth: '100%' }}
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Amount is required!',
+                                message: "Amount is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
@@ -196,11 +246,11 @@ const AddNewJob = () => {
                     <Form.Item
                         label="Experience Required"
                         name="experience_required"
-                        style={{ minWidth: '100%' }}
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Experience Required is required!',
+                                message: "Experience Required is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
@@ -211,11 +261,11 @@ const AddNewJob = () => {
                     <Form.Item
                         label="Salary Max"
                         name="salary_max"
-                        style={{ minWidth: '100%' }}
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Salary Max is required!',
+                                message: "Salary Max is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
@@ -225,11 +275,11 @@ const AddNewJob = () => {
                     <Form.Item
                         label="Salary Min"
                         name="salary_min"
-                        style={{ minWidth: '100%' }}
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Salary Min is required!',
+                                message: "Salary Min is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
@@ -237,34 +287,31 @@ const AddNewJob = () => {
                         <Input name="salary_min" onChange={formik.handleChange} />
                     </Form.Item>
 
-                    {/* <Form.Item
+                    <Form.Item
                         label="Start Date"
                         name="start_date"
-                        style={{ minWidth: '100%' }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Start Date is required!',
-                                transform: (value) => value.trim(),
+                                message: 'Start Date can not be blank!',
                             },
                         ]}
                     >
-                        <Input name="start_date" onChange={formik.handleChange} />
+                        <DatePicker name="start_date" rules={[{ required: true, message: 'Start Date can not be blank!' }]} format={day => day.tz("Asia/Saigon").format(dateFormat)} onChange={onChangeBeginDate} onOk={onOkBeginDate} />
                     </Form.Item>
+
                     <Form.Item
                         label="End Date"
-                        name="end_date"
-                        style={{ minWidth: '100%' }}
+                        name=" end_date"
                         rules={[
                             {
                                 required: true,
-                                message: 'End Date is required!',
-                                transform: (value) => value.trim(),
+                                message: 'End date can not be blank!',
                             },
                         ]}
                     >
-                        <Input name="end_date" onChange={formik.handleChange} />
-                    </Form.Item> */}
+                        <DatePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} onChange={onChangeEndDate} onOk={onOkEndDate} />
+                    </Form.Item>
 
                     {/* <Form.Item
                         label="Is Active"
@@ -290,7 +337,11 @@ const AddNewJob = () => {
                             },
                         ]}
                     >
-                        <Select name="gender" onChange={handleChangeGender} placeholder="Choose Gender">
+                        <Select
+                            name="gender"
+                            onChange={handleChangeGender}
+                            placeholder="Choose Gender"
+                        >
                             <Option value={1}>Male</Option>
                             <Option value={2}>FeMale</Option>
                         </Select>
@@ -299,11 +350,11 @@ const AddNewJob = () => {
                     <Form.Item
                         label="Reponsibility"
                         name="reponsibility"
-                        style={{ minWidth: '100%' }}
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Reponsibility is required!',
+                                message: "Reponsibility is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
@@ -311,51 +362,65 @@ const AddNewJob = () => {
                         <Input name="reponsibility" onChange={formik.handleChange} />
                     </Form.Item>
 
-
                     <Form.Item
                         label="Company"
-                        name='company'
-                        style={{ minWidth: '100%' }}
+                        name="company"
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Company is required!',
+                                message: "Company is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
                     >
                         <Select
                             rules={[{ required: true }]}
-                            options={arrCompany ? arrCompany?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id })) : ''}
+                            options={
+                                arrCompany
+                                    ? arrCompany?.data?.map((item, index) => ({
+                                        key: index,
+                                        label: item.name,
+                                        value: item.id,
+                                    }))
+                                    : ""
+                            }
                             onChange={handleChangeCompany}
                         />
                     </Form.Item>
 
                     <Form.Item
                         label="Job Type"
-                        name='jobtype'
-                        style={{ minWidth: '100%' }}
+                        name="jobtype"
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Job Type is required!',
+                                message: "Job Type is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
                     >
                         <Select
                             rules={[{ required: true }]}
-                            options={arrJobType ? arrJobType?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id })) : ''}
+                            options={
+                                arrJobType
+                                    ? arrJobType?.data?.map((item, index) => ({
+                                        key: index,
+                                        label: item.name,
+                                        value: item.id,
+                                    }))
+                                    : ""
+                            }
                             onChange={handleChangeJobType}
                         />
                     </Form.Item>
 
                     <Form.Item label="Action">
-                        <Button htmlType="submit" >Add Company</Button>
+                        <Button htmlType="submit">Add Job</Button>
                     </Form.Item>
                 </div>
             </div>
-
         </Form>
     );
 };

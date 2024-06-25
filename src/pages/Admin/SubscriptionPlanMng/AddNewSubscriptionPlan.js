@@ -15,7 +15,7 @@ const AddNewSubcriptionPlan = () => {
             price: ''
         },
         onSubmit: (values) => {
-            if (values.name == '') {
+            if (values.expiry === '' || values.name === '' || values.price === '') {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',

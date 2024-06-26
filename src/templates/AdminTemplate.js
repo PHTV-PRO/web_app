@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import {
   HomeOutlined, UserOutlined, SearchOutlined, AuditOutlined,
   ApartmentOutlined, BankOutlined, AimOutlined, CompassOutlined,
-  HomeFilled, ContainerOutlined, WalletOutlined
+  HomeFilled, ContainerOutlined, WalletOutlined, IssuesCloseOutlined
 } from '@ant-design/icons';
 
 import { Layout, Menu, theme, Button, Input, Modal, Descriptions } from 'antd';
@@ -85,9 +85,9 @@ export const AdminTemplate = (props) => { //path, exact, Component
 
 
   const itemsAdmin = [
-    getItem('Skill Management', 'sub1', <UserOutlined />, [
-      getItem('Industry Management', '1', <NavLink className='text-decoration-none' to="/admin/industry"><i className="fas fa-bus f3"></i></NavLink>),
-
+    getItem('Industry Management', 'sub1', <IssuesCloseOutlined />, [
+      getItem('Industry ', '1', <NavLink className='text-decoration-none' to="/admin/industry"><i className="fa fa-check"></i></NavLink>),
+      getItem('Skill ', '11', <NavLink className='text-decoration-none' to="/admin/skillmng"><i className="fa fa-check"></i></NavLink>),
     ]),
 
     getItem('User Management', 'sub2', <UserOutlined />, [

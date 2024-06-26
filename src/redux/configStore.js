@@ -12,6 +12,7 @@ import { PromoteTripReducer } from './reducers/PromoteTripReducer';
 import { NewReducer } from './reducers/NewReducer';
 import { OfferReducer } from './reducers/OfferReducer';
 import { IndustryReducer } from './reducers/IndustryReducer';
+import { SkillReducer } from './reducers/SkillReducer';
 import { JobTypeReducer } from "./reducers/JobTypeReducer";
 import { LevelReducer } from "./reducers/LevelReducer";
 import { CityProvinceReducer } from "./reducers/CityProvinceReducer";
@@ -30,6 +31,7 @@ import { LocationReducer } from './reducers/LocationReducer';
 // LevelReducer
 
 const rootReducer = combineReducers({
+    SkillReducer,
     IndustryReducer,
     JobTypeReducer,
     LevelReducer,

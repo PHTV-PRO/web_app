@@ -20,12 +20,16 @@ const { Option } = Select;
 const AddNewJob = () => {
     const dateFormat = 'DD-MM-YYYY';
     const dispatch = useDispatch();
+    const { companyDetail } = useSelector(state => state.CompanyReducer)
+
     let { arrJobType } = useSelector((state) => state.JobTypeReducer);
     let { arrCompany } = useSelector((state) => state.CompanyReducer);
 
+
+
     console.log(arrJobType);
     console.log(arrCompany);
-
+    console.log(companyDetail);
     useEffect(() => {
         dispatch(getCompanyListAction());
         dispatch(getJobTypeListAction());
@@ -45,7 +49,7 @@ const AddNewJob = () => {
             salary_min: "",
             start_date: "",
             end_date: "",
-            is_active: 0,
+            is_active: "",
             location_id: 1,
         },
         onSubmit: (values) => {
@@ -87,6 +91,10 @@ const AddNewJob = () => {
     };
     const handleChangeGender = (value) => {
         formik.setFieldValue("gender", value);
+    };
+
+    const handleChangeActive = (value) => {
+        formik.setFieldValue("is_active", value);
     };
     const onOkBeginDate = (values) => {
         formik.setFieldValue('start_date', values);
@@ -273,7 +281,7 @@ const AddNewJob = () => {
                         <Input name="salary_max" onChange={formik.handleChange} />
                     </Form.Item>
                     <Form.Item
-                        label="Salary Min"
+                        label={companyDetail.name}
                         name="salary_min"
                         style={{ minWidth: "100%" }}
                         rules={[
@@ -313,20 +321,24 @@ const AddNewJob = () => {
                         <DatePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} onChange={onChangeEndDate} onOk={onOkEndDate} />
                     </Form.Item>
 
-                    {/* <Form.Item
-                        label="Is Active"
-                        name="is_active"
-                        style={{ minWidth: '100%' }}
+                    <Form.Item
+                        label="Active"
                         rules={[
                             {
                                 required: true,
-                                message: 'Is Active is required!',
-                                transform: (value) => value.trim(),
+                                message: "Active cannot be blank!",
                             },
                         ]}
                     >
-                        <Input name="is_active" onChange={formik.handleChange} />
-                    </Form.Item> */}
+                        <Select
+                            name="enable"
+                            onChange={handleChangeActive}
+                            placeholder="Choose Active"
+                        >
+                            <Option value={0}>On</Option>
+                            <Option value={1}>Off</Option>
+                        </Select>
+                    </Form.Item>
 
                     <Form.Item
                         label="Gender"
@@ -345,21 +357,6 @@ const AddNewJob = () => {
                             <Option value={1}>Male</Option>
                             <Option value={2}>FeMale</Option>
                         </Select>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Reponsibility"
-                        name="reponsibility"
-                        style={{ minWidth: "100%" }}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Reponsibility is required!",
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Input name="reponsibility" onChange={formik.handleChange} />
                     </Form.Item>
 
                     <Form.Item

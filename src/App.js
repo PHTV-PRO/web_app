@@ -42,6 +42,13 @@ import IndustryMng from "./pages/Admin/IndustryMng/IndustryMng";
 import AddIndustry from "./pages/Admin/IndustryMng/AddIndustry";
 import EditIndustry from "./pages/Admin/IndustryMng/EditIndustry";
 
+//Skill
+import SkillMng from "./pages/Admin/SkillMng/SkillMng";
+import AddSkill from "./pages/Admin/SkillMng/AddSkill";
+import EditSkill from "./pages/Admin/SkillMng/EditSkill";
+
+
+
 
 // JobType
 import JobTypeMng from "./pages/Admin/JobTypeMng/JobTypeMng";
@@ -83,7 +90,6 @@ import EditCompany from "./pages/Admin/CompanyMng/EditCompany";
 //Job
 import JobMng from "./pages/Admin/JobMng/JobMng";
 import AddJob from "./pages/Admin/JobMng/AddJob";
-
 
 
 //
@@ -156,6 +162,13 @@ function App() {
         <AdminTemplate path="/admin/industry/addindustry" exact Component={AddIndustry} />
         <AdminTemplate path="/admin/industry/edit/:id" exact Component={EditIndustry} />
 
+        {/* Skill */}
+        <AdminTemplate path="/admin/skillmng" exact Component={SkillMng} />
+        <AdminTemplate path="/admin/skillmng/addskill" exact Component={AddSkill} />
+        <AdminTemplate path="/admin/skillmng/edit/:id" exact Component={EditSkill} />
+
+
+
         {/* Job Type */}
         <AdminTemplate path="/admin/jobtypemng" exact Component={JobTypeMng} />
         <AdminTemplate path="/admin/jobtypemng/addjobtype" exact Component={AddJobType} />
@@ -175,8 +188,6 @@ function App() {
         <AdminTemplate path="/admin/locationmng" exact Component={LocationMng} />
         <AdminTemplate path="/admin/locationmng/addlocation" exact Component={AddNewLocation} />
         <AdminTemplate path="/admin/locationmng/edit/:id" exact Component={EditLocation} />
-
-
 
         {/* SubscriptionPlan */}
         <AdminTemplate path="/admin/subplanmng" exact Component={SubscriptionPlanMng} />

@@ -22,7 +22,6 @@ const EditLocation = (props) => {
         dispatch(getLocationIdAction(id));
         dispatch(getCityProvinceListAction());
         dispatch(getCompanyListAction());
-
     }, [dispatch, id])
 
     const formik = useFormik({

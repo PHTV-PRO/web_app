@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, notification, Select, DatePicker } from "antd";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getJobTypeListAction } from "../../../redux/actions/JobTypeAction";
-import { getCompanyListAction } from "../../../redux/actions/CompanyAction";
+import { getCompanyListAction, getCompanyIdAction } from "../../../redux/actions/CompanyAction";
 import { addJobAction } from "../../../redux/actions/JobAction";
 
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { forEach } from "lodash";
 dayjs.extend(customParseFormat);
 var utc = require('dayjs/plugin/utc')
 var timezone = require('dayjs/plugin/timezone')
@@ -18,12 +19,14 @@ dayjs.tz.guess()
 const { Option } = Select;
 
 const AddNewJob = () => {
+    const [location, setLocation] = useState(0);
     const dateFormat = 'DD-MM-YYYY';
     const dispatch = useDispatch();
     const { companyDetail } = useSelector(state => state.CompanyReducer)
 
     let { arrJobType } = useSelector((state) => state.JobTypeReducer);
     let { arrCompany } = useSelector((state) => state.CompanyReducer);
+    console.log(location);
 
 
 
@@ -33,7 +36,8 @@ const AddNewJob = () => {
     useEffect(() => {
         dispatch(getCompanyListAction());
         dispatch(getJobTypeListAction());
-    }, [dispatch]);
+        dispatch(getCompanyIdAction(location))
+    }, [dispatch, location]);
 
     const formik = useFormik({
         initialValues: {
@@ -50,7 +54,6 @@ const AddNewJob = () => {
             start_date: "",
             end_date: "",
             is_active: "",
-            location_id: 1,
         },
         onSubmit: (values) => {
             if (
@@ -83,9 +86,17 @@ const AddNewJob = () => {
         },
     });
 
+
     const handleChangeCompany = (value) => {
+        setLocation(value);
         formik.setFieldValue("company_id", value);
     };
+
+    const handleChangeLocation = (value) => {
+        setLocation(value);
+        formik.setFieldValue("location_id", value);
+    };
+
     const handleChangeJobType = (value) => {
         formik.setFieldValue("jobType_id", value);
     };
@@ -280,8 +291,9 @@ const AddNewJob = () => {
                     >
                         <Input name="salary_max" onChange={formik.handleChange} />
                     </Form.Item>
+
                     <Form.Item
-                        label={companyDetail.name}
+                        label="Salary Min"
                         name="salary_min"
                         style={{ minWidth: "100%" }}
                         rules={[
@@ -385,6 +397,34 @@ const AddNewJob = () => {
                             onChange={handleChangeCompany}
                         />
                     </Form.Item>
+
+                    <Form.Item
+                        label="Location"
+                        name="location"
+                        style={{ minWidth: "100%" }}
+                        rules={[
+                            {
+                                required: true,
+                                message: "Location is required!",
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        <Select
+                            rules={[{ required: true }]}
+                            options={
+                                companyDetail
+                                    ? companyDetail?.locations?.map((item, index) => ({
+                                        key: index,
+                                        label: item.name,
+                                        value: item.id,
+                                    }))
+                                    : ""
+                            }
+                            onChange={handleChangeLocation}
+                        />
+                    </Form.Item>
+
 
                     <Form.Item
                         label="Job Type"

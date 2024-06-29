@@ -8,6 +8,8 @@ import { addCompanyAction } from "../../../redux/actions/CompanyAction";
 const { Option } = Select;
 
 const AddNewCompany = () => {
+    const [logoSrc, setLogoSrc] = useState("");
+    const [backgroundSrc, setBackgroundSrc] = useState("");
 
     const dispatch = useDispatch();
     let { arrAccount } = useSelector((state) => state.AccountReducer);
@@ -41,7 +43,7 @@ const AddNewCompany = () => {
                 values.size_max === "" ||
                 values.skill === "" ||
                 values.nationnality === "" ||
-                values.background_image === "" ||
+                // values.background_image === "" ||
                 values.introduction === ""
             ) {
                 notification.error({
@@ -68,6 +70,32 @@ const AddNewCompany = () => {
         formik.setFieldValue("enable", value);
     };
 
+
+    const handleChangeFileLogo = (e) => {
+        let file = e.target.files[0];
+
+        if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png') {
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                setLogoSrc(e.target.result); //Hình base 64
+            };
+            formik.setFieldValue("UploadFileLogo", file);
+        }
+    };
+
+    const handleChangeFileBackground = (e) => {
+        let file = e.target.files[0];
+
+        if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png') {
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                setBackgroundSrc(e.target.result); //Hình base 64
+            };
+            formik.setFieldValue("UploadFileBackground", file);
+        }
+    };
     return (
         <Form
             onSubmitCapture={formik.handleSubmit}
@@ -216,37 +244,6 @@ const AddNewCompany = () => {
                     >
                         <Input name="nationnality" onChange={formik.handleChange} />
                     </Form.Item>
-
-                    <Form.Item
-                        label="Logo"
-                        name="logo_image"
-                        style={{ minWidth: "100%" }}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Logo is required!",
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Input name="logo_image" onChange={formik.handleChange} />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Background"
-                        name="background_image"
-                        style={{ minWidth: "100%" }}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Background is required!",
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Input name="background_image" onChange={formik.handleChange} />
-                    </Form.Item>
-
                     <Form.Item
                         label="Enable"
                         rules={[
@@ -292,6 +289,37 @@ const AddNewCompany = () => {
                             onChange={handleChangeAccount}
                         />
                     </Form.Item>
+
+                    <Form.Item label="Logo Company">
+                        <input
+                            name="UploadFileLogo"
+                            type="file"
+                            onChange={handleChangeFileLogo}
+                            accept="image/png, image/jpeg,image/gif,image/png"
+                        />
+                        <br />
+                        {logoSrc ? (
+                            <img style={{ width: 500, height: 400, objectFit: "cover", borderRadius: "10%", }} src={logoSrc} alt="..." />
+                        ) : (
+                            <img style={{ width: 500, height: 400, border: "0.1px solid #ccc", borderRadius: "10%", }} src="/img/placeholder-image.jpg" alt="..." />
+                        )}
+                    </Form.Item>
+
+                    <Form.Item label="Background Company">
+                        <input
+                            name="UploadFileBackground"
+                            type="file"
+                            onChange={handleChangeFileBackground}
+                            accept="image/png, image/jpeg,image/gif,image/png"
+                        />
+                        <br />
+                        {backgroundSrc ? (
+                            <img style={{ width: 500, height: 400, objectFit: "cover", borderRadius: "10%", }} src={backgroundSrc} alt="..." />
+                        ) : (
+                            <img style={{ width: 500, height: 400, border: "0.1px solid #ccc", borderRadius: "10%", }} src="/img/placeholder-image.jpg" alt="..." />
+                        )}
+                    </Form.Item>
+
 
                     <Form.Item label="Action">
                         <Button htmlType="submit">Add Company</Button>

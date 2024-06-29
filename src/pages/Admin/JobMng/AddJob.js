@@ -66,9 +66,6 @@ const AddNewJob = () => {
                 values.experience_required === "" ||
                 values.salary_max === "" ||
                 values.salary_min === ""
-                // values.reponsibility == "" ||
-                // values.reponsibility == "" ||
-                // values.reponsibility == ""
             ) {
                 notification.error({
                     closeIcon: true,

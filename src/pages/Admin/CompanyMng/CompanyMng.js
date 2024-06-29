@@ -142,34 +142,6 @@ export default function CompanyMng() {
             sorter: (a, b) => a.enable - b.enable,
             sortDirections: ['descend', 'ascend'],
         },
-        // {
-        //     title: 'Introduction',
-        //     dataIndex: 'introduction',
-        //     key: 'introduction',
-        //     width: '5%',
-        //     ...getColumnSearchProps('introduction'),
-        //     sorter: (a, b) => a.introduction - b.introduction,
-        //     sortDirections: ['descend', 'ascend'],
-        //     render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text.replace(/<[^>]+>/g, '')}</p> }
-        // },
-        // {
-        //     title: 'Link website',
-        //     dataIndex: 'link_website',
-        //     key: 'link_website',
-        //     width: '10%',
-        //     ...getColumnSearchProps('link_website'),
-        //     sorter: (a, b) => a.link_website - b.link_website,
-        //     sortDirections: ['descend', 'ascend'],
-        // },
-        // {
-        //     title: 'Logo Image',
-        //     dataIndex: 'logo_image',
-        //     key: 'logo_image',
-        //     width: '5%',
-        //     ...getColumnSearchProps('logo_image'),
-        //     sorter: (a, b) => a.logo_image - b.logo_image,
-        //     sortDirections: ['descend', 'ascend'],
-        // },
         {
             title: 'Name',
             dataIndex: 'name',
@@ -200,24 +172,6 @@ export default function CompanyMng() {
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Size Max',
-            dataIndex: 'size_max',
-            key: 'size_max',
-            width: '5%',
-            ...getColumnSearchProps('size_max'),
-            sorter: (a, b) => a.size_max - b.size_max,
-            sortDirections: ['descend', 'ascend'],
-        },
-        {
-            title: 'Size Min',
-            dataIndex: 'size_min',
-            key: 'size_min',
-            width: '5%',
-            ...getColumnSearchProps('size_min'),
-            sorter: (a, b) => a.size_min - b.size_min,
-            sortDirections: ['descend', 'ascend'],
-        },
-        {
             title: 'Skill',
             dataIndex: 'skill',
             key: 'skill',
@@ -227,6 +181,38 @@ export default function CompanyMng() {
             sortDirections: ['descend', 'ascend'],
             render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{'' || text.replace(/<[^>]+>/g, '')}</p> }
 
+        },
+        {
+            title: "Logo Company",
+            dataIndex: "logo_image",
+            key: "logo_image",
+            width: '5%',
+
+            render: (text, data, index) => {
+                return data.logo_image != "null" && data.logo_image != null ? (
+                    <img key={index} style={{ width: 80, height: 80, objectFit: "cover", borderRadius: "10%", }}
+                        src={`${data.logo_image}`} alt={data.logo_image}
+                    />
+                ) : (
+                    <div>No Image</div>
+                );
+            },
+        },
+        {
+            title: "Background Company",
+            dataIndex: "background_image",
+            key: "background_image",
+            width: '5%',
+
+            render: (text, data, index) => {
+                return data.background_image != "null" && data.background_image != null ? (
+                    <img key={index} style={{ width: 80, height: 80, objectFit: "cover", borderRadius: "10%", }}
+                        src={`${data.background_image}`} alt={data.background_image}
+                    />
+                ) : (
+                    <div>No Image</div>
+                );
+            },
         },
         {
             title: 'Account',

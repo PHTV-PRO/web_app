@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Select, Button, notification } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,9 @@ import { getListAccountAction } from '../../../redux/actions/AccountAction';
 const { Option } = Select;
 
 const EditCompany = (props) => {
+    const [logoSrc, setLogoSrc] = useState("");
+    const [backgroundImageSrc, setBackgroundImageSrc] = useState("");
+
     const dispatch = useDispatch();
     const { companyDetail } = useSelector(state => state.CompanyReducer)
     let { arrAccount } = useSelector(state => state.AccountReducer);
@@ -66,6 +69,32 @@ const EditCompany = (props) => {
     const handleChangeAccount = (value) => {
         formik.setFieldValue('account_id', value)
     }
+
+    const handleChangeLogo = (e) => {
+        let file = e.target.files[0];
+
+        if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png') {
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                setLogoSrc(e.target.result); //Hình base 64
+            };
+            formik.setFieldValue("UploadFileLogo", file);
+        }
+    };
+
+    const handleChangeBackgroundImage = (e) => {
+        let file = e.target.files[0];
+
+        if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png') {
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                setBackgroundImageSrc(e.target.result); //Hình base 64
+            };
+            formik.setFieldValue("UploadFileBackground", file);
+        }
+    };
 
     // const handleChangeStation = (value) => {
     //     formik.setFieldValue('stationId', value)
@@ -212,7 +241,7 @@ const EditCompany = (props) => {
                         <Input name="nationnality" onChange={formik.handleChange} value={formik.values.nationnality} />
                     </Form.Item>
 
-                    <Form.Item
+                    {/* <Form.Item
                         label="Logo Image"
                         style={{ minWidth: '100%' }}
                         rules={[
@@ -238,7 +267,7 @@ const EditCompany = (props) => {
                         ]}
                     >
                         <Input name="background_image" onChange={formik.handleChange} value={formik.values.background_image} />
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item
                         label="Enable"
@@ -249,7 +278,7 @@ const EditCompany = (props) => {
                             },
                         ]}
                     >
-                        <Select name="Enbable" onChange={handleChangeEnable} placeholder="Choose Enable" value={formik.values.enable}>
+                        <Select name="Enable" onChange={handleChangeEnable} placeholder="Choose Enable" value={formik.values.enable}>
                             <Option value={0}>On</Option>
                             <Option value={1}>Off</Option>
                         </Select>
@@ -267,6 +296,28 @@ const EditCompany = (props) => {
                         ]}
                     >
                         <Select value={formik.values.account} options={arrAccount?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeAccount} />
+                    </Form.Item>
+
+                    <Form.Item label="Logo Company">
+                        <input
+                            name="UploadFileLogo"
+                            type="file"
+                            onChange={handleChangeLogo}
+                            accept="image/png, image/jpeg,image/gif,image/png"
+                        />
+                        <br />
+                        <img style={{ width: 500, height: 400, objectFit: 'cover', borderRadius: '10%', border: "0.1px solid #ccc" }} src={logoSrc === '' ? `${formik.values.logo_image}` : logoSrc} alt="..." />
+                    </Form.Item>
+
+                    <Form.Item label="Background Image Company">
+                        <input
+                            name="UploadFileBackground"
+                            type="file"
+                            onChange={handleChangeBackgroundImage}
+                            accept="image/png, image/jpeg,image/gif,image/png"
+                        />
+                        <br />
+                        <img style={{ width: 500, height: 400, objectFit: 'cover', borderRadius: '10%', border: "0.1px solid #ccc" }} src={backgroundImageSrc === '' ? `${formik.values.background_image}` : backgroundImageSrc} alt="..." />
                     </Form.Item>
 
 

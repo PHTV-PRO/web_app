@@ -41,15 +41,10 @@ import OfferEdit from "./pages/Admin/OfferMng/OfferEdit";
 import IndustryMng from "./pages/Admin/IndustryMng/IndustryMng";
 import AddIndustry from "./pages/Admin/IndustryMng/AddIndustry";
 import EditIndustry from "./pages/Admin/IndustryMng/EditIndustry";
-
 //Skill
 import SkillMng from "./pages/Admin/SkillMng/SkillMng";
 import AddSkill from "./pages/Admin/SkillMng/AddSkill";
 import EditSkill from "./pages/Admin/SkillMng/EditSkill";
-
-
-
-
 // JobType
 import JobTypeMng from "./pages/Admin/JobTypeMng/JobTypeMng";
 import AddJobType from "./pages/Admin/JobTypeMng/AddNewJobType";
@@ -75,30 +70,26 @@ import AccountMng from "./pages/Admin/UserMng/AccountMng/AccountMng";
 import AddAccount from "./pages/Admin/UserMng/AccountMng/AddAccount";
 import AccountEdit from "./pages/Admin/UserMng/AccountMng/EditAccount";
 import Profile from "./pages/Profile/Profile";
-
-
 // User
 import UserMng from "./pages/Admin/UserMng/AdminUserMng";
 import UserEdit from "./pages/Admin/UserMng/UserEdit";
 import AddUser from "./pages/Admin/UserMng/AddUser";
-
 //Company
 import CompanyMng from "./pages/Admin/CompanyMng/CompanyMng";
 import AddNewCompany from "./pages/Admin/CompanyMng/AddCompany";
 import EditCompany from "./pages/Admin/CompanyMng/EditCompany";
-
 //Job
 import JobMng from "./pages/Admin/JobMng/JobMng";
-import AddJob from "./pages/Admin/JobMng/AddJob";
-
-
-//
-import UserTemplate from "./templates/UserTemplate";
-import Login from "./pages/Login/Login";
 import AddNewJob from "./pages/Admin/JobMng/AddJob";
+//Location
 import LocationMng from "./pages/Admin/LocationMng/LocationMng";
 import AddNewLocation from "./pages/Admin/LocationMng/AddNewLocation";
 import EditLocation from "./pages/Admin/LocationMng/EditLocation";
+//
+import UserTemplate from "./templates/UserTemplate";
+import Login from "./pages/Login/Login";
+
+
 import { ProfileTemplate } from "./templates/ProfileTemplate";
 
 
@@ -156,19 +147,16 @@ function App() {
         <AdminTemplate path='/admin/newsmng' exact Component={NewsMng} />
         <AdminTemplate path='/admin/newsmng/addnews' exact Component={AddNewNews} />
         <AdminTemplate path='/admin/newsmng/edit/:id' exact Component={NewsEdit} />
+        {/* -------------------------------------------------------------------------- */}
 
         {/* Industry */}
         <AdminTemplate path="/admin/industry" exact Component={IndustryMng} />
         <AdminTemplate path="/admin/industry/addindustry" exact Component={AddIndustry} />
         <AdminTemplate path="/admin/industry/edit/:id" exact Component={EditIndustry} />
-
         {/* Skill */}
         <AdminTemplate path="/admin/skillmng" exact Component={SkillMng} />
         <AdminTemplate path="/admin/skillmng/addskill" exact Component={AddSkill} />
         <AdminTemplate path="/admin/skillmng/edit/:id" exact Component={EditSkill} />
-
-
-
         {/* Job Type */}
         <AdminTemplate path="/admin/jobtypemng" exact Component={JobTypeMng} />
         <AdminTemplate path="/admin/jobtypemng/addjobtype" exact Component={AddJobType} />

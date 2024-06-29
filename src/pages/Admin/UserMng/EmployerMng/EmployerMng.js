@@ -160,7 +160,7 @@ export default function EmployerMng() {
       key: "avatar",
       render: (text, data, index) => {
         return data.image != null ? (
-          <img key={index} style={{ width: 40, height: 40, objectFit: "cover", borderRadius: "50%", }} src={`https://res.cloudinary.com/dj7xlmndj/image/upload/v1718241364/${data.image}`} alt={data.image} />
+          <img key={index} style={{ width: 40, height: 40, objectFit: "cover", borderRadius: "50%", }} src={`${data.image}`} alt={data.image} />
         ) : (
           <Avatar size={40} style={{ fontSize: "20px", display: "flex", justifyContent: "center", alignItems: "center" }} icon={data.email.substr(0, 1)} />
         );

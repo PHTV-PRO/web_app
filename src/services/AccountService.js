@@ -11,6 +11,9 @@ export class AccountService extends baseService {
     getAccountById = (id) => {
         return this.get(`/api/admin/account/${id}`);
     }
+    getEmployerOfCompanyById = (id) => {
+        return this.get(`/api/employer/company/${id}`);
+    }
     createAccount = (ac) => {
         return this.post(`/api/admin/account`, ac);
     };

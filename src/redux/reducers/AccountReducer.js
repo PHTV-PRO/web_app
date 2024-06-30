@@ -1,12 +1,15 @@
 import {
     GET_ACCOUNT_DETAIL,
-    GET_ACCOUNT_LIST
+    GET_ACCOUNT_LIST,
+    GET_EMPLOYER_COMPANY_DETAIL
 } from "../constants";
 
 
 const initialState = {
     arrAccount: [],
     accountDetail: {},
+    employerCompany: {},
+
 };
 
 export const AccountReducer = (state = initialState, action) => {
@@ -17,6 +20,10 @@ export const AccountReducer = (state = initialState, action) => {
 
         case GET_ACCOUNT_DETAIL:
             state.accountDetail = action.accountDetail;
+            return { ...state };
+
+        case GET_EMPLOYER_COMPANY_DETAIL:
+            state.employerCompany = action.employerCompany;
             return { ...state };
 
         // case GET_PROFILE_DETAIL:

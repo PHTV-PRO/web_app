@@ -1,4 +1,4 @@
-import { GET_ACCOUNT_DETAIL, GET_ACCOUNT_LIST } from "../constants";
+import { GET_ACCOUNT_DETAIL, GET_ACCOUNT_LIST, GET_EMPLOYER_COMPANY_DETAIL } from "../constants";
 import { history } from "../../App";
 import { accountService } from "../../services/AccountService";
 import { notification } from "antd";
@@ -62,6 +62,22 @@ export const getAccountByIdAction = (id) => {
                 dispatch({
                     type: GET_ACCOUNT_DETAIL,
                     accountDetail: result.data.data,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
+export const getEmployerOfCompanyByIAction = (id) => {
+    return async (dispatch) => {
+        try {
+            const result = await accountService.getEmployerOfCompanyById(id);
+            if (result.status === 200) {
+                dispatch({
+                    type: GET_EMPLOYER_COMPANY_DETAIL,
+                    employerCompany: result.data.data,
                 });
             }
         } catch (error) {

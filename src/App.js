@@ -85,6 +85,9 @@ import AddNewJob from "./pages/Admin/JobMng/AddJob";
 import LocationMng from "./pages/Admin/LocationMng/LocationMng";
 import AddNewLocation from "./pages/Admin/LocationMng/AddNewLocation";
 import EditLocation from "./pages/Admin/LocationMng/EditLocation";
+
+import EmployerProfile from "./pages/EmployerManager/EmployerProfile";
+
 //
 import UserTemplate from "./templates/UserTemplate";
 import Login from "./pages/Login/Login";
@@ -203,7 +206,10 @@ function App() {
         <AdminTemplate path="/admin/accmng/edit/:id" exact Component={AccountEdit} />
 
         {/* User */}
+        EmployerProfile
         <ProfileTemplate path="/users/profile" exact Component={Profile} />
+        <ProfileTemplate path="/employer/emprofile" exact Component={EmployerProfile} />
+
         <AdminTemplate path="/admin" exact Component={UserMng} />
         {/* <AdminTemplate path="/admin/adminusers" exact Component={AdminUserMng} /> */}
         <AdminTemplate path="/admin/users/edit/:id" exact Component={UserEdit} />

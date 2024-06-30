@@ -28,11 +28,11 @@ export const ProfileTemplate = (props) => { //path, exact, Component
   const { Component, ...restProps } = props;
   const [collapsed, setCollapsed] = useState(false);
   const { token: { colorBgContainer }, } = theme.useToken();
-  
+
   const selectedKeys = ['/users/profile', '/users/ordershistory']
   const selectedKey = (selectedKeys.indexOf(props.path) + 1).toString();
 
-  
+
   let accessToken = {}
   if (localStorage.getItem(TOKEN)) {
     accessToken = localStorage.getItem(TOKEN)
@@ -41,7 +41,7 @@ export const ProfileTemplate = (props) => { //path, exact, Component
   }
 
   useEffect(() => {
-    if(accessToken != null){
+    if (accessToken != null) {
       dispatch(getCurrentUserAction(accessToken))
     }
     window.scrollTo(0, 0);
@@ -57,18 +57,18 @@ export const ProfileTemplate = (props) => { //path, exact, Component
   ];
 
   const operations = <Fragment>
-  <div className="d-flex">
-    <Button type="link" href="/"><HomeOutlined style={{ fontSize: '24px' }} /></Button>
-    <UserAvatar/>
-  </div>
-</Fragment>
+    <div className="d-flex">
+      <Button type="link" href="/"><HomeOutlined style={{ fontSize: '24px' }} /></Button>
+      <UserAvatar />
+    </div>
+  </Fragment>
 
 
   return <Route {...restProps} render={(propsRoute) => { //props.location, props.history, props.match
     return <Fragment>
       <Layout style={{ minHeight: '100vh' }} >
         <Sider width={300} collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-          <div className="demo-logo-vertical text-white text-2xl text-center my-10" >User Profile</div>
+          <div className="demo-logo-vertical text-white text-2xl text-center my-10" >Employer Management</div>
           <Menu theme="dark" defaultSelectedKeys={selectedKey} mode="inline" items={items} />
         </Sider>
         <Layout>

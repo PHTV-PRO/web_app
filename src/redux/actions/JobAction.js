@@ -51,7 +51,7 @@ export const addJobAction = (formData) => {
                         <>Add new Job successfully.</>
                     ),
                 });
-                history.push('/admin/jobmng');
+                history.goBack();
             } else {
                 notification.error({
                     closeIcon: true,
@@ -66,6 +66,36 @@ export const addJobAction = (formData) => {
         }
     }
 }
+
+export const addJobOfEmployerAction = (formData) => {
+    return async (dispatch) => {
+        try {
+            const result = await jobService.createJob(formData)
+            console.log(result);
+            if (result.data.statusCode === 200) {
+                notification.success({
+                    closeIcon: true,
+                    message: 'Success',
+                    description: (
+                        <>Add new Job successfully.</>
+                    ),
+                });
+                history.push('/employer/emprofile');
+            } else {
+                notification.error({
+                    closeIcon: true,
+                    message: 'Error',
+                    description: (
+                        <>Add new Job fail.</>
+                    ),
+                });
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+
 
 export const updateJobByIdAction = (id, formData) => {
     return async (dispatch) => {

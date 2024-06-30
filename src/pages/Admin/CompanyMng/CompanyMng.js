@@ -179,7 +179,6 @@ export default function CompanyMng() {
             ...getColumnSearchProps('skill'),
             sorter: (a, b) => a.skill - b.skill,
             sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{'' || text.replace(/<[^>]+>/g, '')}</p> }
 
         },
         {

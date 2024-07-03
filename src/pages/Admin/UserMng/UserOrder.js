@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getTicketListForCustomerAction } from '../../../redux/actions/OrderAction'
+// import { getTicketListForCustomerAction } from '../../../redux/actions/SearchAction'
 import { Button, Input, Space, Table, Tag } from 'antd'
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
@@ -14,7 +14,7 @@ export default function UserOrder(props) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getTicketListForCustomerAction(id))
+    // dispatch(getTicketListForCustomerAction(id))
   }, [dispatch]);
 
   const [searchText, setSearchText] = useState('');

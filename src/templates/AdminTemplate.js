@@ -3,17 +3,22 @@ import { Route } from "react-router-dom";
 import {
   HomeOutlined, UserOutlined, SearchOutlined, AuditOutlined,
   ApartmentOutlined, BankOutlined, AimOutlined, CompassOutlined,
-  HomeFilled, ContainerOutlined, WalletOutlined, IssuesCloseOutlined
+  HomeFilled, ContainerOutlined, WalletOutlined, IssuesCloseOutlined,
+   EditOutlined,DeleteOutlined
 } from '@ant-design/icons';
 
-import { Layout, Menu, theme, Button, Input, Modal, Descriptions } from 'antd';
+import { Layout, Menu, theme, Button, Input, Modal, Table, Avatar } from 'antd';
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { TOKEN } from "../util/settings/config";
 import { history } from "../App";
 import UserAvatar from "../components/UserAvatar/UserAvatar";
 import { getCurrentUserAction } from "../redux/actions/UserAction";
-import { checkTicketAction } from "../redux/actions/OrderAction";
+import { search } from "../redux/actions/SearchAction";
+import {deleteAccountAction,} from "../redux/actions/AccountAction";
+import {  deleteCompanyAction } from '../redux/actions/CompanyAction';
+import {  deleteJobAction } from '../redux/actions/JobAction';
+
 import dayjs from "dayjs";
 const { Header, Content, Sider } = Layout;
 
@@ -30,7 +35,7 @@ function getItem(label, key, icon, children) {
 export const AdminTemplate = (props) => { //path, exact, Component
   const dispatch = useDispatch();
   let { userLogin } = useSelector(state => state.UserReducer);
-  let { ticketDetail } = useSelector(state => state.OrderReducer)
+  let { arrData } = useSelector(state => state.SearchReducer)
   const { Component, ...restProps } = props;
   const [collapsed, setCollapsed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,15 +63,15 @@ export const AdminTemplate = (props) => { //path, exact, Component
   };
 
   const handleOnChange = (e) => {
-    const searchCode = e.target.value;
-    setCode(searchCode.trim());
+    setCode(e.target.value);
   }
 
-  const handleCheckTicket = (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
     showModal()
     if (code !== null) {
-      dispatch(checkTicketAction(code.split(' ')));
+      dispatch(search(code));
+      console.log("check data search :", arrData);
     }
   }
 
@@ -82,7 +87,368 @@ export const AdminTemplate = (props) => { //path, exact, Component
     history.replace('/')
   }
 
+  
+  const columnsCompany = [
+    {
+       ellipsis: true,  
+      title: 'Id',
+        dataIndex: 'id',
+        key: 'id',
+       width: "5%", 
+        ellipsis: true, 
+        sorter: (a, b) => a.id - b.id,
+        sortDirections: ['descend', 'ascend'],
+    },
+    {
+       ellipsis: true,  
+      title: 'Benifit',
+        dataIndex: 'benefit',
+        key: 'benefit',
+        width: '12%',
+        // ...getColumnSearchProps('benefit'),
+        sorter: (a, b) => a.benefit - b.benefit,
+        sortDirections: ['descend', 'ascend'],
+        render: (text, index) => { return <span key={index} >{text != null? ('' || text.replace(/<[^>]+>/g, '')):''}</span> }
+    },
+    {
+       ellipsis: true,  
+      title: 'Enable',
+        dataIndex: 'enable',
+        key: 'enable',
+        width: '7%',
+        // ...getColumnSearchProps('enable'),
+        sorter: (a, b) => a.enable - b.enable,
+        sortDirections: ['descend', 'ascend'],
+    },
+    {
+       ellipsis: true,  
+      title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        width: '7%',
+        // ...getColumnSearchProps('name'),
+        sorter: (a, b) => a.name - b.name,
+        sortDirections: ['descend', 'ascend'],
+        render: (text, index) => { return <span key={index} >{text != null?( '' || text.replace(/<[^>]+>/g, '')):''}</span> }
 
+    },
+    {
+       ellipsis: true,  
+      title: 'Nationality',
+        dataIndex: 'nationnality',
+        key: 'nationnality',
+        width: '7%',
+        // ...getColumnSearchProps('nationnality'),
+        sorter: (a, b) => a.nationnality - b.nationnality,
+        sortDirections: ['descend', 'ascend'],
+    },
+    {
+       ellipsis: true,  
+      title: 'Profession',
+        dataIndex: 'profession',
+        key: 'profession',
+        width: '10%',
+        // ...getColumnSearchProps('profession'),
+        sorter: (a, b) => a.profession - b.profession,
+        sortDirections: ['descend', 'ascend'],
+    },
+    {
+       ellipsis: true,  
+      title: 'Skill',
+        dataIndex: 'skill',
+        key: 'skill',
+        width: '10%',
+        // ...getColumnSearchProps('skill'),
+        sorter: (a, b) => a.skill - b.skill,
+        sortDirections: ['descend', 'ascend'],
+
+    },
+    {
+       ellipsis: true,  
+      title: "Logo",
+        dataIndex: "logo_image",
+        key: "logo_image",
+        width: '7%',
+
+        render: (text, data, index) => {
+            return data.logo_image != "null" && data.logo_image != null ? (
+                <img key={index} style={{ width: 80, height: 80, objectFit: "cover", borderRadius: "10%", }}
+                    src={`${data.logo_image}`} alt={data.logo_image}
+                />
+            ) : (
+                <div>No Image</div>
+            );
+        },
+    },
+    {
+       ellipsis: true,  
+      title: "Background",
+        dataIndex: "background_image",
+        key: "background_image",
+        width: '10%',
+
+        render: (text, data, index) => {
+            return data.background_image != "null" && data.background_image != null ? (
+                <img key={index} style={{ width: 80, height: 80, objectFit: "cover", borderRadius: "10%", }}
+                    src={`${data.background_image}`} alt={data.background_image}
+                />
+            ) : (
+                <div>No Image</div>
+            );
+        },
+    },
+    {
+       ellipsis: true,  
+      title: 'Account',
+        dataIndex: 'account_id ',
+        key: 'account_id ',
+        width: '9%',
+        // ...getColumnSearchProps('account_id '),
+        sorter: (a, b) => a.account_id - b.account_id,
+        sortDirections: ['descend', 'ascend'],
+        render: (text, account) => {
+            return (<>
+                <span>{account.account?.name}</span>
+            </>)
+        },
+    },
+    {
+       ellipsis: true,  
+      title: 'Manage',
+        width: '10%',
+        render: (text, company) => {
+            return <>
+                <Button key={1} href={`/admin/companymng/edit/${company.id}`} type="link" icon={<EditOutlined />} onClick={() => {
+                }}></Button>
+                <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
+                    if (window.confirm('Do you want to delete ' + company.name + '?')) {
+                        dispatch(deleteCompanyAction(company.id))
+                    }
+                }}></Button>
+            </>
+
+        }
+    },
+]
+const columnsAccount = [
+  {
+     ellipsis: true,  
+    title: "ID",
+      dataIndex: "id",
+      key: "id",
+      width :"5%",
+      sorter: (a, b) => a.id - b.id,
+      sortDirections: ["descend", "ascend"],
+  },
+  {
+     ellipsis: true,  
+    title: "Name",
+      dataIndex: "name",
+      key: "name",
+      width:"20%",
+      // ...getColumnSearchProps("name"),
+      sorter: (a, b) => a.name.length - b.name.length,
+      sortDirections: ["descend", "ascend"],
+  },
+  {
+     ellipsis: true,  
+    title: "Email",
+      dataIndex: "email",
+      width:"20%",
+      key: "email",
+      // ...getColumnSearchProps("email"),
+      sorter: (a, b) => a.email.length - b.email.length,
+      sortDirections: ["descend", "ascend"],
+  },
+  {
+     ellipsis: true,  
+    title: "Gender",
+      dataIndex: "gender",
+      width:"10%",
+      key: "gender",
+      // ...getColumnSearchProps("gender"),
+      sorter: (a, b) => a.gender.length - b.gender.length,
+      sortDirections: ["descend", "ascend"],
+  },
+  {
+     ellipsis: true,  
+    title: "Address",
+      dataIndex: "address",
+      key: "address",
+      width:"15%",
+      // ...getColumnSearchProps("address"),
+      sorter: (a, b) => a.address.length - b.address.length,
+      sortDirections: ["descend", "ascend"],
+  },
+  {
+     ellipsis: true,  
+      width:"7%",
+      title: "Avatar",
+      dataIndex: "avatar",
+      key: "avatar",
+      render: (text, data, index) => {
+          return data.image != null ? (
+              <img key={index} style={{ width: 40, height: 40, objectFit: "cover", borderRadius: "50%", }} src={`${data.image}`} alt={data.image} />
+          ) : (
+              <Avatar size={40} style={{ fontSize: "20px", display: "flex", justifyContent: "center", alignItems: "center" }} icon={data.email.substr(0, 1)} />
+          );
+      },
+  },
+  {
+     ellipsis: true,  
+      width:"10%",
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+      // ...getColumnSearchProps("role")
+  },
+  {
+     ellipsis: true,  
+     width:"10%",
+    title: "Manage",
+      render: (text, data, index) => {
+          return (<>
+                  <Button
+                      key={1}
+                      href={`/admin/accmng/edit/` + data.id}
+                      type="link"
+                      icon={<EditOutlined />}
+                      onClick={() => {
+                          // dispatch(updateEmployerByIdAction(data.id));
+                      }}
+                  ></Button>
+                  <Button
+                      key={2}
+                      type="link"
+                      danger
+                      icon={<DeleteOutlined />}
+                      onClick={() => {
+                          if (
+                              window.confirm(
+                                  "Are you sure you want to delete " +
+                                  data.name +
+                                  "?"
+                              )
+                          ) {
+                              dispatch(deleteAccountAction(data.id));
+                          }
+                      }}
+                  ></Button></>
+          );
+      },
+  },
+];
+const columnsJob = [
+  {
+     ellipsis: true,  
+    title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
+      width: '5%',
+      sorter: (a, b) => a.id - b.id,
+      sortDirections: ['descend', 'ascend'],
+  },
+  {
+     ellipsis: true,  
+    title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+      width: '15%',
+      // ...getColumnSearchProps('title'),
+      sorter: (a, b) => a.title - b.title,
+      sortDirections: ['descend', 'ascend'],
+      render: (text, index) => { return <span key={index} >{'' || text.replace(/<[^>]+>/g, '')}</span> }
+
+  },
+  {
+      title: 'Skill Required',
+      dataIndex: 'skill_required',
+      ellipsis: true, 
+      key: 'skill_required',
+      width: '15%',
+      // ...getColumnSearchProps('skill_required'),
+      sorter: (a, b) => a.skill_required - b.skill_required,
+      sortDirections: ['descend', 'ascend'],
+      render: (text, index) => { return <span key={index} >{'' || text.replace(/<[^>]+>/g, '')}</span> }
+
+  },
+  {
+    ellipsis: true, 
+      title: 'Benefit',
+      dataIndex: 'benefit',
+      key: 'benefit',
+      width: '15%',
+      // ...getColumnSearchProps('benefit'),
+      sorter: (a, b) => a.benefit - b.benefit,
+      sortDirections: ['descend', 'ascend'],
+      render: (text, index) => { return <span key={index} >{'' || text.replace(/<[^>]+>/g, '')}</span> }
+
+  },
+  {
+    ellipsis: true, 
+      title: 'Company',
+      dataIndex: 'company_id ',
+      key: 'company_id ',
+      width: '15%',
+      // ...getColumnSearchProps('company_id '),
+      sorter: (a, b) => a.company_id - b.company_id,
+      sortDirections: ['descend', 'ascend'],
+      render: (text, company) => {
+          return (<>
+              <span>{company.company?.name}</span>
+          </>)
+      },
+  },
+  {
+    ellipsis: true, 
+
+      title: 'Location',
+      dataIndex: 'location_id ',
+      key: 'location_id ',
+      width: '15%',
+      // ...getColumnSearchProps('location_id '),
+      sorter: (a, b) => a.location_id - b.location_id,
+      sortDirections: ['descend', 'ascend'],
+      render: (text, location) => {
+          return (<>
+              <span>{location.location?.name}</span>
+          </>)
+      },
+  },
+  {
+      ellipsis: true, 
+      title: 'JobType',
+      dataIndex: 'job_type_id ',
+      key: 'job_type_id ',
+      width: '10%',
+      // ...getColumnSearchProps('job_type_id '),
+      sorter: (a, b) => a.job_type_id - b.job_type_id,
+      sortDirections: ['descend', 'ascend'],
+      render: (text, jobType) => {
+          return (<>
+              <span>{jobType.jobType?.name}</span>
+          </>)
+      },
+  },
+  {
+      ellipsis: true, 
+      title: 'Manage',
+      width: '10%',
+      render: (text, job) => {
+          return <>
+              <Button key={1} href={`/admin/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => {
+              }}></Button>
+
+              <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
+                  if (window.confirm('Do you want to delete ' + job.title + '?')) {
+                      dispatch(deleteJobAction(job.id))
+                  }
+              }}></Button>
+          </>
+
+      }
+  },
+]
 
   const itemsAdmin = [
     getItem('Industry Management', 'sub1', <IssuesCloseOutlined />, [
@@ -119,12 +485,12 @@ export const AdminTemplate = (props) => { //path, exact, Component
     getItem('Job Management', '8', <NavLink className='text-decoration-none' to="/admin/jobmng"><WalletOutlined /></NavLink>),
   ]
 
-  let remainHour = dayjs(ticketDetail?.trips?.startTime).diff(dayjs(new Date()), 'hour')
+  // let remainHour = dayjs(ticketDetail?.trips?.startTime).diff(dayjs(new Date()), 'hour')
 
   const operations = <Fragment>
     <div className="d-flex items-center">
-      <form className="m-auto" onSubmit={handleCheckTicket}>
-        <Input style={{ width: 350 }} onChange={handleOnChange} value={code} placeholder="Check ticket status" prefix={<SearchOutlined />}></Input>
+      <form className="m-auto" onSubmit={handleSearch}>
+        <Input style={{ width: 350 }} onChange={handleOnChange} value={code} placeholder="Search Account, Company or Job" prefix={<SearchOutlined />}></Input>
       </form>
       <Button type="link" href="/"><HomeOutlined style={{ fontSize: '24px' }} /></Button>
       <UserAvatar />
@@ -160,7 +526,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
           </Content>
         </Layout>
       </Layout>
-      <Modal title={`Check ticket ${ticketDetail?.code || code}`} open={isModalOpen} maskClosable={true} afterClose={() => { code = "" }} footer={null} width={850} onOk={handleOk} onCancel={handleCancel}>
+      {/* <Modal title={`Check ticket ${ticketDetail?.code || code}`} open={isModalOpen} maskClosable={true} afterClose={() => { code = "" }} footer={null} width={850} onOk={handleOk} onCancel={handleCancel}>
         {ticketDetail?.isCancel ?
           <Descriptions className="text-center mt-3" title="Ticket is already canceled"></Descriptions>
           : ticketDetail != null && ticketDetail != "undefined" ? <div className="pt-3">
@@ -174,6 +540,16 @@ export const AdminTemplate = (props) => { //path, exact, Component
               <Descriptions.Item label="Status"><span className="text-green-500 font-semibold">{remainHour < 0 ? "Your bus already departed" : `Your bus is going to depart on next ${remainHour} hour(s)`}</span>  </Descriptions.Item>
             </Descriptions>
           </div> : <Descriptions className="text-center mt-3" title="Ticket not found"></Descriptions>}
+      </Modal> */}
+       <Modal title={`Search: ${code}`} open={isModalOpen} maskClosable={true} afterClose={() => { code = "" }} footer={null} width={'90%'} onOk={handleOk} onCancel={handleCancel}>
+        {arrData?.companies?.length>0?<div>Company:<Table columns={columnsCompany} dataSource={arrData?.companies} rowKey={'id'} pagination= {false}  /></div> :""}
+        {arrData?.accounts?.length>0? <div> Account:<Table columns={columnsAccount} dataSource={arrData.accounts} rowKey={"id"}  pagination= {false} /></div>:""}
+        {arrData?.jobs?.length>0? <div>Job: <Table columns={columnsJob} dataSource={arrData.jobs} rowKey={"id"}  pagination= {false} /></div>:""}
+
+      
+      
+
+
       </Modal>
     </Fragment>
   }} />

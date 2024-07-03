@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getTicketByUserAction } from '../../../redux/actions/OrderAction'
+// import { getTicketByUserAction } from '../../../redux/actions/OrderAction'
 import { Button, Input, Space, Table, Tag, Modal } from 'antd'
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words'
@@ -10,7 +10,7 @@ var relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
 
 export default function OrderHistory() {
-  const { arrTicket } = useSelector(state => state.OrderReducer)
+  // const { arrTicket } = useSelector(state => state.OrderReducer)
   let { userLogin } = useSelector(state => state.UserReducer);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [donHang, setDonHang] = useState({});

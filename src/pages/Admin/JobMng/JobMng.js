@@ -121,7 +121,7 @@ export default function JobMng() {
             ...getColumnSearchProps('title'),
             sorter: (a, b) => a.title - b.title,
             sortDirections: ['descend', 'ascend'],
-            // render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{'' || text.replace(/<[^>]+>/g, '')}</p> }
+            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
 
         },
         {
@@ -132,7 +132,7 @@ export default function JobMng() {
             ...getColumnSearchProps('skill_required'),
             sorter: (a, b) => a.skill_required - b.skill_required,
             sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{'' || text.replace(/<[^>]+>/g, '')}</p> }
+            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
 
         },
         {
@@ -143,7 +143,7 @@ export default function JobMng() {
             ...getColumnSearchProps('benefit'),
             sorter: (a, b) => a.benefit - b.benefit,
             sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{'' || text.replace(/<[^>]+>/g, '')}</p> }
+            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
 
         },
         {

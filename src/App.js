@@ -86,7 +86,11 @@ import LocationMng from "./pages/Admin/LocationMng/LocationMng";
 import AddNewLocation from "./pages/Admin/LocationMng/AddNewLocation";
 import EditLocation from "./pages/Admin/LocationMng/EditLocation";
 
+// Proflie Employer
 import EmployerProfile from "./pages/EmployerManager/EmployerProfile";
+import EmployerJobMng from "./pages/EmployerManager/EmployerJob/EmployerJobMng";
+import CompanyEmpMng from "./pages/EmployerManager/EmployerCompany/CompanyEmpMng";
+
 
 //
 import UserTemplate from "./templates/UserTemplate";
@@ -111,11 +115,6 @@ function App() {
         <AdminTemplate path="/admin/regdrivermng" exact Component={RegisterDriverMng} />
         <AdminTemplate path="/admin/drivermng/edit/:id" exact Component={DriverEdit} />
         <AdminTemplate path="/admin/drivermng/adddriver" exact Component={AddDriver} />
-
-
-
-
-
 
         {/* Station */}
         <AdminTemplate path="/admin/stationmng" exact Component={StationMng} />
@@ -206,9 +205,14 @@ function App() {
         <AdminTemplate path="/admin/accmng/edit/:id" exact Component={AccountEdit} />
 
         {/* User */}
-        EmployerProfile
+        {/* EmployerProfile */}
         <ProfileTemplate path="/users/profile" exact Component={Profile} />
         <ProfileTemplate path="/employer/emprofile" exact Component={EmployerProfile} />
+        <ProfileTemplate path="/employer/jobempmng" exact Component={EmployerJobMng} />
+
+        <ProfileTemplate path="/employer/comempmng" exact Component={CompanyEmpMng} />
+
+
 
         <AdminTemplate path="/admin" exact Component={UserMng} />
         {/* <AdminTemplate path="/admin/adminusers" exact Component={AdminUserMng} /> */}

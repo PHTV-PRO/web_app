@@ -20,19 +20,25 @@ dayjs.extend(timezone)
 dayjs.tz.guess()
 const { Option } = Select;
 
-const NewJobEmployer = () => {
+const NewJobEmployer = (companyId) => {
     const dispatch = useDispatch();
     const [location, setLocation] = useState(0);
     const dateFormat = 'DD-MM-YYYY';
+    const company = companyId;
+    const idCompany = company?.companyId;
+
+
     const { companyDetail } = useSelector(state => state.CompanyReducer)
     let { arrJobType } = useSelector((state) => state.JobTypeReducer);
-    let { arrCompany } = useSelector((state) => state.CompanyReducer);
+    const listCompany = [companyDetail]
 
     useEffect(() => {
         dispatch(getCompanyListAction());
         dispatch(getJobTypeListAction());
-        dispatch(getCompanyIdAction(location));
-    }, [dispatch, location]);
+        dispatch(getCompanyIdAction(idCompany));
+    }, [dispatch, location, idCompany]);
+
+
 
     const formik = useFormik({
         initialValues: {
@@ -148,7 +154,7 @@ const NewJobEmployer = () => {
             >
                 <div className="">
                     <div className="">
-                        <h2 className="">Đăng Tin Tuyển Dụng :</h2>
+                        <h2 className="">Published Recruitment :</h2>
                         <Form.Item
                             label="Title"
                             name="title"
@@ -378,12 +384,18 @@ const NewJobEmployer = () => {
                             <Select
                                 rules={[{ required: true }]}
                                 options={
-                                    arrCompany
-                                        ? arrCompany?.data?.map((item, index) => ({
-                                            key: index,
-                                            label: item.name,
-                                            value: item.id,
-                                        }))
+                                    // companyDetail
+                                    //     ? companyDetail?.data?.map((item, index) => ({
+                                    //         key: index,
+                                    //         label: item.name,
+                                    //         value: item.id,
+                                    //     }))
+                                    //     : ""
+                                    listCompany ? listCompany?.map((item, index) => ({
+                                        key: index,
+                                        label: item.name,
+                                        value: item.id,
+                                    }))
                                         : ""
                                 }
                                 onChange={handleChangeCompany}
@@ -405,12 +417,11 @@ const NewJobEmployer = () => {
                             <Select
                                 rules={[{ required: true }]}
                                 options={
-                                    companyDetail
-                                        ? companyDetail?.locations?.map((item, index) => ({
-                                            key: index,
-                                            label: item.name,
-                                            value: item.id,
-                                        }))
+                                    companyDetail ? companyDetail?.locations?.map((item, index) => ({
+                                        key: index,
+                                        label: item.name,
+                                        value: item.id,
+                                    }))
                                         : ""
                                 }
                                 onChange={handleChangeLocation}

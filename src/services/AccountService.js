@@ -23,6 +23,9 @@ export class AccountService extends baseService {
     updateAccount = (id, ac) => {
         return this.put(`/api/admin/account/${id}`, ac);
     };
+    getCompanyandJob = (token) => {
+        return this.get(`/api/employer/account`, token);
+    }
 
 }
 

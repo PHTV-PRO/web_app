@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getListAccountAction, deleteAccountAction,
 } from "../../../../redux/actions/AccountAction";
-import { DOMAIN } from "../../../../util/settings/config";
 
 export default function EmployerMng() {
   const dispatch = useDispatch();

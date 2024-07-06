@@ -7,9 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCompanyListAction, deleteCompanyAction } from '../../../redux/actions/CompanyAction';
 
 
-export default function CompanyMng() {
+export default function CompanyEmpMng() {
     let { arrCompany } = useSelector(state => state.CompanyReducer);
-    console.log(arrCompany);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getCompanyListAction())

@@ -80,7 +80,7 @@ export const addJobOfEmployerAction = (formData) => {
                         <>Add new Job successfully.</>
                     ),
                 });
-                history.push('/employer/emprofile');
+                window.location.reload()
             } else {
                 notification.error({
                     closeIcon: true,

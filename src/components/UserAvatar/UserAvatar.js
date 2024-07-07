@@ -22,9 +22,6 @@ export default function UserAvatar(props) {
     const content = (
         <div style={{ width: 200 }}>
             {(userLogin?.role == 'Admin') ? <Button type="text" className='w-full text-left' href="/admin/tripmng">Super Admin</Button> : ''}
-            {(userLogin?.role == 'EMPLOYER') ? <Button type="text" className='w-full text-left' href="/admin/tripmng">Employer Page</Button> : ''}
-            <Button type="text" href="/users/profile" className='w-full text-left'>Profile</Button>
-            <Button type="text" href="/employer/emprofile" className='w-full text-left'>Employer Profile</Button>
 
             <Button type="text" href="/" className='w-full text-left' onClick={() => {
                 localStorage.removeItem(TOKEN)

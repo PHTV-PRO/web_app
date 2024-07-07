@@ -53,7 +53,7 @@ export const ProfileTemplate = (props) => { //path, exact, Component
 
   const items = [
     getItem('Your Profile Detail', '1', <NavLink className='text-decoration-none' to="/employer/emprofile"><i className="fa-solid fa-user"></i></NavLink>),
-    getItem('Your Company', '2', <NavLink className='text-decoration-none' to="/employer/comempmng"><i className="fa-solid fa-ticket"></i></NavLink>),
+    getItem('Your Job', '2', <NavLink className='text-decoration-none' to="/employer/empljobmng"><i className="fa-solid fa-ticket"></i></NavLink>),
   ];
 
   const operations = <Fragment>

@@ -5,37 +5,7 @@ import { Switch, Router } from "react-router-dom";
 
 import Loading from "./components/Loading/Loading";
 import { AdminTemplate } from "./templates/AdminTemplate";
-// import Edit from "./pages/Admin/IndustryMng/EditBus";
-
-import RevenueMonth from "./pages/Admin/Revenue/RevenueMonth";
 import UserOrder from "./pages/Admin/UserMng/UserOrder";
-import StationMng from "./pages/Admin/StationMng/StationMng";
-import TripMng from "./pages/Admin/TripMng/TripMng";
-// import AddNewBus from "./pages/Admin/IndustryMng/AddNewBus";
-// import BusTypeMng from "./pages/Admin/IndustryMng/BusTypeMng/BusTypeMng";
-// import AddNewBusType from "./pages/Admin/IndustryMng/BusTypeMng/AddNewBusType";
-// import EditBusType from "./pages/Admin/IndustryMng/BusTypeMng/EditBusType";
-import AddNewStation from "./pages/Admin/StationMng/AddNewStation";
-import EditStation from "./pages/Admin/StationMng/EditStation";
-import AddNewTrip from "./pages/Admin/TripMng/AddNewTrip";
-import DriverEdit from "./pages/Admin/DriverMng/DriverEdit";
-import AddDriver from "./pages/Admin/DriverMng/AddDriver";
-import DriverMng from "./pages/Admin/DriverMng/DriverMng";
-import FAQMng from "./pages/Admin/FAQMng/FAQMng";
-import EditFAQ from "./pages/Admin/FAQMng/EditFAQ";
-import AddNewFAQ from "./pages/Admin/FAQMng/AddNewFAQ";
-import RegisterDriverMng from "./pages/Admin/DriverMng/RegisterDriverMng";
-import PromoteTripMng from "./pages/Admin/PromoteTripMng/PromoteTripMng";
-import AddNewPromoteTrip from "./pages/Admin/PromoteTripMng/AddNewPromoteTrip";
-import EditPromoteTrip from "./pages/Admin/PromoteTripMng/EditPromoteTrip";
-import EditTrip from "./pages/Admin/TripMng/EditTrip";
-import NewsMng from './pages/Admin/NewsMng/NewsMng';
-import AddNewNews from './pages/Admin/NewsMng/AddNewNews';
-import NewsEdit from "./pages/Admin/NewsMng/NewsEdit";
-import RevenueRoute from "./pages/Admin/Revenue/RevenueRoute";
-import OfferMng from "./pages/Admin/OfferMng/OfferMng";
-import AddOffer from "./pages/Admin/OfferMng/AddOffer";
-import OfferEdit from "./pages/Admin/OfferMng/OfferEdit";
 
 //Industry
 import IndustryMng from "./pages/Admin/IndustryMng/IndustryMng";
@@ -89,8 +59,6 @@ import EditLocation from "./pages/Admin/LocationMng/EditLocation";
 // Proflie Employer
 import EmployerProfile from "./pages/EmployerManager/EmployerProfile";
 import EmployerJobMng from "./pages/EmployerManager/EmployerJob/EmployerJobMng";
-import CompanyEmpMng from "./pages/EmployerManager/EmployerCompany/CompanyEmpMng";
-
 
 //
 import UserTemplate from "./templates/UserTemplate";
@@ -98,6 +66,7 @@ import Login from "./pages/Login/Login";
 
 
 import { ProfileTemplate } from "./templates/ProfileTemplate";
+import NewJobEmployer from "./pages/EmployerManager/EmployerJob/NewJobEmployer";
 
 
 
@@ -110,45 +79,7 @@ function App() {
       <Loading />
 
       <Switch>
-        {/* Driver Management */}
-        <AdminTemplate path="/admin/drivermng" exact Component={DriverMng} />
-        <AdminTemplate path="/admin/regdrivermng" exact Component={RegisterDriverMng} />
-        <AdminTemplate path="/admin/drivermng/edit/:id" exact Component={DriverEdit} />
-        <AdminTemplate path="/admin/drivermng/adddriver" exact Component={AddDriver} />
 
-        {/* Station */}
-        <AdminTemplate path="/admin/stationmng" exact Component={StationMng} />
-        <AdminTemplate path="/admin/stationmng/addnew" exact Component={AddNewStation} />
-        <AdminTemplate path="/admin/stationmng/edit/:id" exact Component={EditStation} />
-
-        {/* Trip */}
-        <AdminTemplate path="/admin/tripmng" exact Component={TripMng} />
-        <AdminTemplate path="/admin/tripmng/addtrip" exact Component={AddNewTrip} />
-        <AdminTemplate path="/admin/tripmng/edit/:id" exact Component={EditTrip} />
-
-        {/* Promote Trip */}
-        <AdminTemplate path="/admin/promotripmng" exact Component={PromoteTripMng} />
-        <AdminTemplate path="/admin/promotripmng/addnew" exact Component={AddNewPromoteTrip} />
-        <AdminTemplate path="/admin/promotripmng/edit/:id" exact Component={EditPromoteTrip} />
-
-        {/* Offer */}
-        <AdminTemplate path="/admin/offermng" exact Component={OfferMng} />
-        <AdminTemplate path="/admin/offermng/addnew" exact Component={AddOffer} />
-        <AdminTemplate path="/admin/offermng/edit/:id" exact Component={OfferEdit} />
-
-        {/* Revenue */}
-        <AdminTemplate path="/admin/revenuemonth" exact Component={RevenueMonth} />
-        <AdminTemplate path="/admin/revenueroute" exact Component={RevenueRoute} />
-
-        {/* FAQ */}
-        <AdminTemplate path="/admin/faqmng" exact Component={FAQMng} />
-        <AdminTemplate path="/admin/faqmng/addnew" exact Component={AddNewFAQ} />
-        <AdminTemplate path="/admin/faqmng/edit/:id" exact Component={EditFAQ} />
-
-        {/* News */}
-        <AdminTemplate path='/admin/newsmng' exact Component={NewsMng} />
-        <AdminTemplate path='/admin/newsmng/addnews' exact Component={AddNewNews} />
-        <AdminTemplate path='/admin/newsmng/edit/:id' exact Component={NewsEdit} />
         {/* -------------------------------------------------------------------------- */}
 
         {/* Industry */}
@@ -208,14 +139,12 @@ function App() {
         {/* EmployerProfile */}
         <ProfileTemplate path="/users/profile" exact Component={Profile} />
         <ProfileTemplate path="/employer/emprofile" exact Component={EmployerProfile} />
-        <ProfileTemplate path="/employer/jobempmng" exact Component={EmployerJobMng} />
-
-        <ProfileTemplate path="/employer/comempmng" exact Component={CompanyEmpMng} />
-
+        {/* job employer */}
+        <ProfileTemplate path="/employer/empljobmng" exact Component={EmployerJobMng} />
+        <ProfileTemplate path="/employer/emplnewjob" exact Component={NewJobEmployer} />
 
 
         <AdminTemplate path="/admin" exact Component={UserMng} />
-        {/* <AdminTemplate path="/admin/adminusers" exact Component={AdminUserMng} /> */}
         <AdminTemplate path="/admin/users/edit/:id" exact Component={UserEdit} />
         <AdminTemplate path="/admin/users/adduser" exact Component={AddUser} />
         <AdminTemplate path="/admin/ordershistory/:id" exact Component={UserOrder} />

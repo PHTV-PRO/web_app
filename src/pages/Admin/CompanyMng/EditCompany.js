@@ -29,9 +29,8 @@ const EditCompany = (props) => {
             introduction: companyDetail?.introduction,
             benefit: companyDetail?.benefit,
             profession: companyDetail?.profession,
-            size_min: companyDetail?.size_min,
-            size_max: companyDetail?.size_max,
-            skill: companyDetail?.skill,
+            size: companyDetail?.size,
+            // skill: companyDetail?.skill,
             link_website: companyDetail?.link_website,
             nationnality: companyDetail?.nationnality,
             //chưa chuyển qua file image
@@ -172,34 +171,20 @@ const EditCompany = (props) => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Size Min"
+                        label="Size "
                         style={{ minWidth: '100%' }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Size Min is required!',
+                                message: 'Size  is required!',
                                 transform: (value) => value.trim(),
                             },
                         ]}
                     >
-                        <Input name="size_min" onChange={formik.handleChange} value={formik.values.size_min} />
+                        <Input name="size" onChange={formik.handleChange} value={formik.values.size} />
                     </Form.Item>
 
-                    <Form.Item
-                        label="Size Max"
-                        style={{ minWidth: '100%' }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Size Max is required!',
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Input name="size_max" onChange={formik.handleChange} value={formik.values.size_max} />
-                    </Form.Item>
-
-                    <Form.Item
+                    {/* <Form.Item
                         label="Skill"
                         style={{ minWidth: '100%' }}
                         rules={[
@@ -211,7 +196,7 @@ const EditCompany = (props) => {
                         ]}
                     >
                         <Input name="skill" onChange={formik.handleChange} value={formik.values.skill} />
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item
                         label="Link Website"
@@ -241,33 +226,6 @@ const EditCompany = (props) => {
                         <Input name="nationnality" onChange={formik.handleChange} value={formik.values.nationnality} />
                     </Form.Item>
 
-                    {/* <Form.Item
-                        label="Logo Image"
-                        style={{ minWidth: '100%' }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Logo Image is required!',
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Input name="logo_image" onChange={formik.handleChange} value={formik.values.logo_image} />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Background Image"
-                        style={{ minWidth: '100%' }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Background Image is required!',
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Input name="background_image" onChange={formik.handleChange} value={formik.values.background_image} />
-                    </Form.Item> */}
 
                     <Form.Item
                         label="Enable"

@@ -1,18 +1,22 @@
 import React, { useEffect } from 'react'
+import { SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table } from 'antd';
+import { useRef, useState } from 'react';
+import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { TOKEN } from '../../../util/settings/config';
+import { getCurrentUserAction } from '../../../redux/actions/UserAction';
+import { getCompanyAndJobByTokenAction } from '../../../redux/actions/AccountAction';
 import { deleteJobAction } from '../../../redux/actions/JobAction';
 
 
-
-import { getCompanyAndJobByTokenAction } from '../../../redux/actions/AccountAction';
-import { getCurrentUserAction } from '../../../redux/actions/UserAction';
-import { TOKEN } from '../../../util/settings/config';
-
-
 export default function EmployerJobMng() {
-    const dispatch = useDispatch();
     let { employerCompanyJob } = useSelector(state => state.AccountReducer);
+    console.log(employerCompanyJob);
+    const dispatch = useDispatch();
+
+
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
@@ -26,82 +30,201 @@ export default function EmployerJobMng() {
     }, [dispatch]);
 
 
-    return <div className="flex flex-col gap-6 ">
+    const [searchText, setSearchText] = useState('');
+    const [searchedColumn, setSearchedColumn] = useState('');
+    const searchInput = useRef(null);
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+    };
+
+    const resetSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0] = '');
+        setSearchedColumn(dataIndex);
+    };
+
+
+    const data = employerCompanyJob?.company?.jobs;
+
+    const getColumnSearchProps = (dataIndex) => ({
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+            <div style={{ padding: 8, }} onKeyDown={(e) => e.stopPropagation()} >
+                <Input
+                    ref={searchInput}
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    style={{
+                        marginBottom: 8,
+                        display: 'block',
+                    }}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        icon={<SearchOutlined />}
+                        size="small"
+                        className='bg-primary'
+                        style={{
+                            width: 90,
+                        }}
+                    >
+                        Search
+                    </Button>
+                    <Button
+                        onClick={() => clearFilters && resetSearch(selectedKeys, confirm, dataIndex)}
+                        size="small"
+                        style={{
+                            width: 90,
+                        }}
+                    >
+                        Reset
+                    </Button>
+
+                </Space>
+            </div>
+        ),
+        filterIcon: (filtered) => (
+            <SearchOutlined
+                style={{
+                    color: filtered ? '#1677ff' : undefined,
+                }}
+            />
+        ),
+        onFilter: (value, record) =>
+            record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+        onFilterDropdownOpenChange: (visible) => {
+            if (visible) {
+                setTimeout(() => searchInput.current?.select(), 100);
+            }
+        },
+        render: (text, index) =>
+            searchedColumn === dataIndex ? (
+                <Highlighter
+                    key={index}
+                    highlightStyle={{
+                        backgroundColor: '#ffc069',
+                        padding: 0,
+                    }}
+                    searchWords={[searchText]}
+                    autoEscape
+                    textToHighlight={text ? text.toString() : ''}
+                />
+            ) : (
+                text
+            ),
+    });
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'id',
+            key: 'id',
+            width: '5%',
+            sorter: (a, b) => a.id - b.id,
+            sortDirections: ['descend', 'ascend'],
+        },
+        {
+            title: 'Title',
+            dataIndex: 'title',
+            key: 'title',
+            width: '5%',
+            ...getColumnSearchProps('title'),
+            sorter: (a, b) => a.title - b.title,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text == null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
+
+        },
+        {
+            title: 'Skill Required',
+            dataIndex: 'skill_required',
+            key: 'skill_required',
+            width: '5%',
+            ...getColumnSearchProps('skill_required'),
+            sorter: (a, b) => a.skill_required - b.skill_required,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text == null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
+
+        },
+        {
+            title: 'Benefit',
+            dataIndex: 'benefit',
+            key: 'benefit',
+            width: '5%',
+            ...getColumnSearchProps('benefit'),
+            sorter: (a, b) => a.benefit - b.benefit,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
+
+        },
+        {
+            title: 'Company',
+            dataIndex: 'company_id',
+            key: 'company_id ',
+            width: '5%',
+            ...getColumnSearchProps('company_id '),
+            sorter: (a, b) => a.company_id - b.company_id,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, company) => {
+                return (<>
+                    <span>{company.company?.name}</span>
+                </>)
+            },
+        },
+        {
+            title: 'Location',
+            dataIndex: 'location_id ',
+            key: 'location_id ',
+            width: '5%',
+            ...getColumnSearchProps('location_id '),
+            sorter: (a, b) => a.location_id - b.location_id,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, location) => {
+                return (<>
+                    <span>{location.location?.name}</span>
+                </>)
+            },
+        },
+        {
+            title: 'JobType',
+            dataIndex: 'job_type_id ',
+            key: 'job_type_id ',
+            width: '5%',
+            ...getColumnSearchProps('job_type_id '),
+            sorter: (a, b) => a.job_type_id - b.job_type_id,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, jobType) => {
+                return (<>
+                    <span>{jobType.jobType?.name}</span>
+                </>)
+            },
+        },
+        {
+            title: 'Manage',
+            width: '5%',
+            render: (text, job) => {
+                return <>
+                    <Button key={1} href={`/admin/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => {
+                    }}></Button>
+
+                    <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
+                        if (window.confirm('Do you want to delete ' + job.title + '?')) {
+                            dispatch(deleteJobAction(job.id))
+                        }
+                    }}></Button>
+                </>
+
+            }
+        },
+    ]
+    return <div>
         <div className='d-flex mb-3'>
             <h3 className='text-lg'>Job Management</h3>
+            <Button href='/employer/emplnewjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
         </div>
-        <table className="w-[1700px] table-auto">
-            <thead>
-                <tr className="flex w-[1700px] bg-gray-100">
-                    <th className="border flex-1 p-2">Title</th>
-                    <th className="border flex-1 p-2">Benefit</th>
-                    <th className="border flex-1 p-2">Name Company</th>
-                    <th className="border flex-1 p-2">Experience Required</th>
-                    <th className="border flex-1 p-2">Skill Required</th>
-                    <th className="border flex-1 p-2">Reponsibility</th>
-                    <th className="border flex-1 p-2">Address Company</th>
-                    <th className="border flex-1 p-2">Tuỳ Chọn</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                {employerCompanyJob?.company?.jobs?.map((item, i) => {
-                    return (
-                        <tr className="flex h-28 w-[1700px]">
-                            <td className="border p-2 text-center whitespace-nowrap overflow-hidden text-ellipsis h-full flex-1">
-                                {item.title}
-                            </td>
-                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[212px] pt-2 pb-2 pr-1 pl-1">
-                                {item.benefit}
-                            </td>
-                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[212px] pt-2 pb-2 pr-1 pl-1">
-                                {item.company?.name}
-                            </td>
-                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[212px] pt-2 pb-2 pr-1 pl-1">
-                                {item.experience_required}
-                            </td>
-                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[212px] pt-2 pb-2 pr-1 pl-1">
-                                {item.skill_required}
-                            </td>
-                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[212px] pt-2 pb-2 pr-1 pl-1">
-                                {item.reponsibility}
-                            </td>
-                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[212px] pt-2 pb-2 pr-1 pl-1">
-                                {item.location?.name}
-                            </td>
-
-                            <td className="flex items-center text-center  justify-center gap-4 h-full flex-1 p-2 border">
-                                <Button
-                                    className='btn-primary bg-primary'
-                                    onClick={() => {
-                                    }}
-                                >Sửa</Button>
-
-                                <Button
-                                    className='btn-primary bg-primary' type='primary'
-                                    onClick={() => {
-                                        if (
-                                            window.confirm(
-                                                "Are you sure you want to delete " +
-                                                item.title +
-                                                "?"
-                                            )
-                                        ) {
-                                            dispatch(deleteJobAction(item.id));
-                                        }
-                                        window.location.reload()
-                                    }}
-                                >
-                                    Xoá
-                                </Button>
-                            </td>
-                        </tr>
-
-                    )
-                })}
-
-            </tbody>
-        </table>
-        {/* <Table columns={columns} dataSource={data} rowKey={'id'} /> */}
+        <Table columns={columns} dataSource={data} rowKey={'id'} />
     </div>
 }

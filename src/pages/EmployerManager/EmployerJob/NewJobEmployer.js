@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form, notification, Input, Select, DatePicker } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from "formik";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-
-import { getJobTypeListAction } from '../../redux/actions/JobTypeAction';
-import { getCompanyListAction, getCompanyIdAction } from '../../redux/actions/CompanyAction';
-import { addJobOfEmployerAction } from '../../redux/actions/JobAction';
+import { TOKEN } from '../../../util/settings/config';
+import { getCurrentUserAction } from '../../../redux/actions/UserAction';
+import { getCompanyAndJobByTokenAction } from '../../../redux/actions/AccountAction';
+import { getJobTypeListAction } from '../../../redux/actions/JobTypeAction';
+import { getCompanyListAction, getCompanyIdAction } from '../../../redux/actions/CompanyAction';
+import { addJobOfEmployerAction } from '../../../redux/actions/JobAction';
 
 
 
@@ -20,23 +24,36 @@ dayjs.extend(timezone)
 dayjs.tz.guess()
 const { Option } = Select;
 
-const NewJobEmployer = (companyId) => {
+const NewJobEmployer = () => {
     const dispatch = useDispatch();
     const [location, setLocation] = useState(0);
     const dateFormat = 'DD-MM-YYYY';
-    const company = companyId;
-    const idCompany = company?.companyId;
-
-
     const { companyDetail } = useSelector(state => state.CompanyReducer)
     let { arrJobType } = useSelector((state) => state.JobTypeReducer);
+    const { employerCompanyJob } = useSelector(state => state.AccountReducer);
+    console.log(companyDetail);
+    console.log(employerCompanyJob?.company?.id);
+
+    let accessToken = {}
+    if (localStorage.getItem(TOKEN)) {
+        accessToken = localStorage.getItem(TOKEN)
+    }
+
     const listCompany = [companyDetail]
+
+
+    useEffect(() => {
+        if (accessToken != null) {
+            dispatch(getCurrentUserAction(accessToken))
+            dispatch(getCompanyAndJobByTokenAction(accessToken))
+        }
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(getCompanyListAction());
         dispatch(getJobTypeListAction());
-        dispatch(getCompanyIdAction(idCompany));
-    }, [dispatch, location, idCompany]);
+        dispatch(getCompanyIdAction(employerCompanyJob?.company?.id));
+    }, [dispatch, location, employerCompanyJob?.company?.id]);
 
 
 
@@ -94,9 +111,11 @@ const NewJobEmployer = (companyId) => {
         formik.setFieldValue("location_id", value);
     };
 
+
     const handleChangeJobType = (value) => {
-        formik.setFieldValue("jobType_id", value);
+        formik.setFieldValue("job_type_id", value);
     };
+
     const handleChangeGender = (value) => {
         formik.setFieldValue("gender", value);
     };
@@ -104,6 +123,7 @@ const NewJobEmployer = (companyId) => {
     const handleChangeActive = (value) => {
         formik.setFieldValue("is_active", value);
     };
+
     const onOkBeginDate = (values) => {
         formik.setFieldValue('start_date', values);
     }
@@ -111,7 +131,19 @@ const NewJobEmployer = (companyId) => {
     const onChangeBeginDate = (values) => {
         formik.setFieldValue('start_date', values);
     }
-
+    const onChangeEndDate = (values) => {
+        if (values < formik.values.start_date) {
+            notification.error({
+                closeIcon: true,
+                message: 'Error',
+                description: (
+                    <>End Date must after Begin Date</>
+                ),
+            });
+        } else {
+            formik.setFieldValue('end_date', values);
+        }
+    }
     const onOkEndDate = (values) => {
         if (values < formik.values.start_date) {
             notification.error({
@@ -126,19 +158,37 @@ const NewJobEmployer = (companyId) => {
         }
     }
 
-    const onChangeEndDate = (values) => {
-        if (values < formik.values.start_date) {
-            notification.error({
-                closeIcon: true,
-                message: 'Error',
-                description: (
-                    <>End Date must after Begin Date</>
-                ),
-            });
-        } else {
-            formik.setFieldValue('end_date', values);
-        }
-    }
+    const handleChangeDescription = (e, editor) => {
+        const data = editor.getData();
+        formik.setFieldValue("description", data);
+    };
+
+    const handleChangeBenefit = (e, editor) => {
+        const data = editor.getData();
+        formik.setFieldValue("benefit", data);
+    };
+
+    const handleChangeReponsibility = (e, editor) => {
+        const data = editor.getData();
+        formik.setFieldValue("reponsibility", data);
+    };
+
+    const handleChangeSkillRequired = (e, editor) => {
+        const data = editor.getData();
+        formik.setFieldValue("skill_required", data);
+    };
+
+    const handleChangeInterviewSteps = (e, editor) => {
+        const data = editor.getData();
+        formik.setFieldValue("interview_steps", data);
+    };
+
+    const handleChangeExperienceRequired = (e, editor) => {
+        const data = editor.getData();
+        formik.setFieldValue("experience_required", data);
+    };
+
+
 
     return (
         <div >
@@ -154,7 +204,7 @@ const NewJobEmployer = (companyId) => {
             >
                 <div className="">
                     <div className="">
-                        <h2 className="">Published Recruitment :</h2>
+                        <h2 className="">Create Job :</h2>
                         <Form.Item
                             label="Title"
                             name="title"
@@ -170,83 +220,137 @@ const NewJobEmployer = (companyId) => {
                             <Input name="title" onChange={formik.handleChange} />
                         </Form.Item>
 
-                        <Form.Item
-                            label="Description"
-                            name="description"
-                            style={{ minWidth: "100%" }}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Description is required!",
-                                    transform: (value) => value.trim(),
-                                },
-                            ]}
-                        >
-                            <Input name="description" onChange={formik.handleChange} />
+                        <Form.Item label="Description">
+                            <CKEditor
+                                className="rounded-lg overflow-hidden"
+                                name="description"
+                                editor={ClassicEditor}
+                                onChange={(event, editor) => {
+                                    handleChangeDescription(event, editor);
+                                }}
+                                onReady={(editor) => {
+                                    editor.editing.view.change((writer) => {
+                                        writer.setStyle(
+                                            "height",
+                                            "200px",
+                                            editor.editing.view.document.getRoot()
+                                        );
+                                    });
+                                }}
+                            ></CKEditor>
                         </Form.Item>
 
-                        <Form.Item
-                            label="Reponsibility"
-                            name="reponsibility"
-                            style={{ minWidth: "100%" }}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Reponsibility is required!",
-                                    transform: (value) => value.trim(),
-                                },
-                            ]}
-                        >
-                            <Input name="reponsibility" onChange={formik.handleChange} />
+
+                        <Form.Item label="Reponsibility">
+                            <CKEditor
+                                className="rounded-lg overflow-hidden"
+                                name="reponsibility"
+                                editor={ClassicEditor}
+                                onChange={(event, editor) => {
+                                    handleChangeReponsibility(event, editor);
+                                }}
+                                onReady={(editor) => {
+                                    editor.editing.view.change((writer) => {
+                                        writer.setStyle(
+                                            "height",
+                                            "200px",
+                                            editor.editing.view.document.getRoot()
+                                        );
+                                    });
+                                }}
+                            ></CKEditor>
                         </Form.Item>
 
-                        <Form.Item
-                            label="Skill Required"
-                            name="skill_required"
-                            style={{ minWidth: "100%" }}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Skill Required is required!",
-                                    transform: (value) => value.trim(),
-                                },
-                            ]}
-                        >
-                            <Input name="skill_required" onChange={formik.handleChange} />
+                        <Form.Item label="Skill Required">
+                            <CKEditor
+                                className="rounded-lg overflow-hidden"
+                                name="skill_required"
+                                editor={ClassicEditor}
+                                onChange={(event, editor) => {
+                                    handleChangeSkillRequired(event, editor);
+                                }}
+                                onReady={(editor) => {
+                                    editor.editing.view.change((writer) => {
+                                        writer.setStyle(
+                                            "height",
+                                            "200px",
+                                            editor.editing.view.document.getRoot()
+                                        );
+                                    });
+                                }}
+                            ></CKEditor>
                         </Form.Item>
+
 
                         <Form.Item
                             label="Benefit"
-                            name="benefit"
-                            style={{ minWidth: "100%" }}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Benefit is required!",
-                                    transform: (value) => value.trim(),
-                                },
-                            ]}
                         >
-                            <Input name="benefit" onChange={formik.handleChange} />
+                            <CKEditor
+                                className="rounded-lg overflow-hidden"
+                                name="benefit"
+                                editor={ClassicEditor}
+                                onChange={(event, editor) => {
+                                    handleChangeBenefit(event, editor);
+                                }}
+                                onReady={(editor) => {
+                                    editor.editing.view.change((writer) => {
+                                        writer.setStyle(
+                                            "height",
+                                            "200px",
+                                            editor.editing.view.document.getRoot()
+                                        );
+                                    });
+                                }}
+                            ></CKEditor>
                         </Form.Item>
+
 
                         <Form.Item
                             label="Interview Steps"
-                            name="interview_steps"
-                            style={{ minWidth: "100%" }}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Intervie Steps is required!",
-                                    transform: (value) => value.trim(),
-                                },
-                            ]}
                         >
-                            <Input name="interview_steps" onChange={formik.handleChange} />
+                            <CKEditor
+                                className="rounded-lg overflow-hidden"
+                                name="interview_steps"
+                                editor={ClassicEditor}
+                                onChange={(event, editor) => {
+                                    handleChangeInterviewSteps(event, editor);
+                                }}
+                                onReady={(editor) => {
+                                    editor.editing.view.change((writer) => {
+                                        writer.setStyle(
+                                            "height",
+                                            "200px",
+                                            editor.editing.view.document.getRoot()
+                                        );
+                                    });
+                                }}
+                            ></CKEditor>
                         </Form.Item>
 
                         <Form.Item
-                            label="Amount"
+                            label="Experience Required"
+                        >
+                            <CKEditor
+                                className="rounded-lg overflow-hidden"
+                                name="experience_required"
+                                editor={ClassicEditor}
+                                onChange={(event, editor) => {
+                                    handleChangeExperienceRequired(event, editor);
+                                }}
+                                onReady={(editor) => {
+                                    editor.editing.view.change((writer) => {
+                                        writer.setStyle(
+                                            "height",
+                                            "200px",
+                                            editor.editing.view.document.getRoot()
+                                        );
+                                    });
+                                }}
+                            ></CKEditor>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Amount (* Phải là số ! . Vd: 1,2,3)"
                             name="amount"
                             style={{ minWidth: "100%" }}
                             rules={[
@@ -258,21 +362,6 @@ const NewJobEmployer = (companyId) => {
                             ]}
                         >
                             <Input name="amount" onChange={formik.handleChange} />
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Experience Required"
-                            name="experience_required"
-                            style={{ minWidth: "100%" }}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Experience Required is required!",
-                                    transform: (value) => value.trim(),
-                                },
-                            ]}
-                        >
-                            <Input name="experience_required" onChange={formik.handleChange} />
                         </Form.Item>
 
                         <Form.Item
@@ -384,13 +473,6 @@ const NewJobEmployer = (companyId) => {
                             <Select
                                 rules={[{ required: true }]}
                                 options={
-                                    // companyDetail
-                                    //     ? companyDetail?.data?.map((item, index) => ({
-                                    //         key: index,
-                                    //         label: item.name,
-                                    //         value: item.id,
-                                    //     }))
-                                    //     : ""
                                     listCompany ? listCompany?.map((item, index) => ({
                                         key: index,
                                         label: item.name,
@@ -457,7 +539,7 @@ const NewJobEmployer = (companyId) => {
                         </Form.Item>
 
                         <Form.Item label="Action">
-                            <Button htmlType="submit">Thêm Công Việc</Button>
+                            <Button htmlType="submit">Add New Job</Button>
                         </Form.Item>
                     </div>
                 </div>

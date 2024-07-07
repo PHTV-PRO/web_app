@@ -35,7 +35,7 @@ export const loginAction = (loginInfo) => {
                 </>
               ),
             });
-            history.push("/admin/levelmng");
+            history.push("/employer/emprofile");
           }
           else {
             notification.error({

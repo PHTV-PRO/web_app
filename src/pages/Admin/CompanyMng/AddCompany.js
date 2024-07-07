@@ -24,9 +24,8 @@ const AddNewCompany = () => {
             introduction: "",
             benefit: "",
             profession: "",
-            size_min: "",
-            size_max: "",
-            skill: "",
+            size: "",
+            // skill: "",
             link_website: "",
             nationnality: "",
             logo_image: "",
@@ -39,9 +38,8 @@ const AddNewCompany = () => {
                 values.introduction === "" ||
                 values.benefit === "" ||
                 values.profession === "" ||
-                values.size_min === "" ||
-                values.size_max === "" ||
-                values.skill === "" ||
+                values.size === "" ||
+                // values.skill === "" ||
                 values.nationnality === "" ||
                 // values.background_image === "" ||
                 values.introduction === ""
@@ -170,37 +168,24 @@ const AddNewCompany = () => {
                         <Input name="profession" onChange={formik.handleChange} />
                     </Form.Item>
 
+
+
                     <Form.Item
-                        label="Size Min"
-                        name="size_min"
+                        label="Size "
+                        name="size"
                         style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: "Size Min is required!",
+                                message: "Size  is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
                     >
-                        <Input name="size_min" onChange={formik.handleChange} />
+                        <Input name="size" onChange={formik.handleChange} />
                     </Form.Item>
 
-                    <Form.Item
-                        label="Size Max"
-                        name="size_max"
-                        style={{ minWidth: "100%" }}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Size Max is required!",
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Input name="size_max" onChange={formik.handleChange} />
-                    </Form.Item>
-
-                    <Form.Item
+                    {/* <Form.Item
                         label="Skill"
                         name="skill"
                         style={{ minWidth: "100%" }}
@@ -213,7 +198,7 @@ const AddNewCompany = () => {
                         ]}
                     >
                         <Input name="skill" onChange={formik.handleChange} />
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item
                         label="Link Website"

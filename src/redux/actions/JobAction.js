@@ -80,7 +80,7 @@ export const addJobOfEmployerAction = (formData) => {
                         <>Add new Job successfully.</>
                     ),
                 });
-                window.location.reload()
+                history.goBack();
             } else {
                 notification.error({
                     closeIcon: true,
@@ -126,7 +126,7 @@ export const deleteJobAction = (id) => {
                     <>Delete Job successfully</>
                 ),
             });
-            dispatch(getJobListAction())
+            history.goBack()
         } catch (error) {
             console.log('error', error);
         }

@@ -78,7 +78,7 @@ export const updateCompanyByIdAction = (id, formData) => {
                     <>Update Company successfully</>
                 ),
             });
-            history.push('/admin/companymng');
+            history.goBack();
         } catch (error) {
             console.log('error', error);
         }

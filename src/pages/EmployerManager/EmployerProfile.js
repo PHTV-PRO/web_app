@@ -21,7 +21,7 @@ const EmployerProfile = () => {
     }
 
     useEffect(() => {
-        if (accessToken != null) {
+        if (TOKEN != null) {
             dispatch(getCurrentUserAction(accessToken))
             dispatch(getCompanyAndJobByTokenAction(accessToken))
         }
@@ -61,7 +61,7 @@ const EmployerProfile = () => {
                         </Typography>
                     </div>
                     <div className=''>
-                        <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => {
+                        <Button href={`/admin/empmng/detail/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => {
                         }}>Update Information</Button>
                     </div>
                 </div>
@@ -71,9 +71,9 @@ const EmployerProfile = () => {
                     <h3 className='text-lg m-0'>Company Management : </h3>
                     <Button href='/employer/addjobempmng' className='ml-3 small bg-orange-500 text-white'>+ Add New Company</Button>
                 </div>
-                <table className="w-[1700px] table-auto">
+                <table className="table">
                     <thead>
-                        <tr className="flex w-[1700px] bg-gray-100">
+                        <tr className="flex w-[60%] bg-gray-100">
                             <th className="border flex-1 p-2">Name Company</th>
                             <th className="border flex-1 p-2">Introduction</th>
                             <th className="border flex-1 p-2">Name Company</th>
@@ -85,32 +85,32 @@ const EmployerProfile = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="flex h-28 w-[1700px]">
-                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3 pb-2 pl-2">
+                        <tr className="flex h-28  w-[60%]">
+                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
                                 {employerCompanyJob?.company?.name}
                             </td>
-                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[212.3px] pt-3 pb-2 pl-2">
+                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
                                 {employerCompanyJob?.company?.introduction}
                             </td>
-                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[212.3px] pt-3 pb-2 pl-2">
+                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
                                 {employerCompanyJob.company?.profession}
                             </td>
-                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[212.3px] pt-3 pb-2 pl-2">
+                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
                                 {employerCompanyJob.company?.link_website}
                             </td>
-                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[212.3px] pt-3 pb-2 pl-2">
+                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
                                 {employerCompanyJob.company?.nationnality}
                             </td>
-                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[212.3px] pt-3 pb-2 pl-2">
+                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
                                 {employerCompanyJob.company?.benefit}
                             </td>
-                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[212.3px] pt-3 pb-2 pl-2">
+                            <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
                                 {employerCompanyJob.company?.size || 'Không Có'}
                             </td>
 
-                            <td className="flex items-center text-center  justify-center gap-4 h-full flex-1 p-2 border">
+                            <td className="flex items-center text-center  justify-center  w-[213px]  h-full pl-1 border">
                                 <Button
-                                    className='btn-primary bg-primary'
+                                    className='btn-primary bg-primary mr-2'
                                     key={1} href={`/admin/companymng/edit/${employerCompanyJob.company?.id}`} type="link"
                                     onClick={() => {
 

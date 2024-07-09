@@ -11,7 +11,7 @@ export const JobReducer = (state = initialState, action) => {
             state.arrJob = action.arrJob;
             return { ...state }
         case GET_JOB_DETAIL: {
-            state.companyDetail = action.jobDetail;
+            state.jobDetail = action.jobDetail;
             return { ...state }
         }
         default:

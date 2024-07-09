@@ -30,14 +30,13 @@ const EditCompany = (props) => {
             benefit: companyDetail?.benefit,
             profession: companyDetail?.profession,
             size: companyDetail?.size,
-            // skill: companyDetail?.skill,
             link_website: companyDetail?.link_website,
             nationnality: companyDetail?.nationnality,
-            //chưa chuyển qua file image
             logo_image: companyDetail?.logo_image,
+            // chuyen thanh mang chua image
             background_image: companyDetail?.background_image,
             enable: companyDetail?.enable,
-            account: companyDetail?.account?.id
+            account: companyDetail?.account?.name
         },
         onSubmit: (values) => {
             if (values.name == '' || values.introduction == '' || values.benefit == '') {

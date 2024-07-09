@@ -9,11 +9,23 @@ import { deleteSkillAction, getSkillListAction } from '../../../redux/actions/Sk
 
 export default function SkillMng() {
     let { arrSkill } = useSelector(state => state.SkillReducer);
-    console.log(arrSkill);
+    // console.log(arrSkill);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getSkillListAction())
     }, [dispatch])
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+
+    const handlePageChange = (page, pageSize) => {
+        setCurrentPage(page);
+        setPageSize(pageSize);
+    };
+
+    console.log('page : ', currentPage);
+    console.log('page size : ', pageSize);
+
 
 
     const [searchText, setSearchText] = useState('');
@@ -158,6 +170,10 @@ export default function SkillMng() {
             <h3 className='text-lg'>Skill Management</h3>
             <Button href='/admin/skillmng/addskill' type="primary" className='ml-3 small bg-primary'>+ Add New Skill</Button>
         </div>
-        <Table columns={columns} dataSource={data} rowKey={'id'} />
+        <Table columns={columns} dataSource={data} rowKey={'id'} pagination={{
+            current: currentPage,
+            pageSize,
+            onChange: handlePageChange,
+        }} />
     </div>
 }

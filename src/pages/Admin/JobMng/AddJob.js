@@ -23,9 +23,6 @@ const AddNewJob = () => {
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
 
-console.log("check selected skill :", selectedSkills);
-console.log("check selected skill id :", selectedSkillsId);
-
     const dateFormat = 'DD-MM-YYYY';
     const dispatch = useDispatch();
     const { companyDetail } = useSelector(state => state.CompanyReducer)
@@ -33,13 +30,7 @@ console.log("check selected skill id :", selectedSkillsId);
     let { arrSkill } = useSelector(state => state.SkillReducer);
     let { arrJobType } = useSelector((state) => state.JobTypeReducer);
     let { arrCompany } = useSelector((state) => state.CompanyReducer);
-    console.log(location);
 
-
-
-    console.log(arrJobType);
-    console.log(arrCompany);
-    console.log(companyDetail);
     useEffect(() => {
         dispatch(getCompanyListAction());
         dispatch(getJobTypeListAction());
@@ -49,6 +40,7 @@ console.log("check selected skill id :", selectedSkillsId);
     }, [dispatch, location]);
 
     const formik = useFormik({
+        
         initialValues: {
             title: "",
             description: "",
@@ -64,16 +56,12 @@ console.log("check selected skill id :", selectedSkillsId);
             end_date: "",
             is_active: "",
         },
+
+        
         onSubmit: (values) => {
-            if(selectedSkillsId.length>0){
-                let ListId='';
-                selectedSkillsId.map(skill=>{
-                    ListId += skill.toString() +',';
-                })
+          
+            
                 
-                console.log("check id:", ListId);
-            }
-           
 
             if (
                 values.title === "" ||
@@ -96,6 +84,7 @@ console.log("check selected skill id :", selectedSkillsId);
                 for (let key in values) {
                     formData.append(key, values[key]);
                 }
+                
                 console.table("formData", [...formData]);
                 dispatch(addJobAction(formData));
             }
@@ -132,7 +121,7 @@ console.log("check selected skill id :", selectedSkillsId);
         formik.setFieldValue('start_date', values);
     }
 
-    const onOkEndDate = (values) => {
+    const onOkEndDate =  (values) => {
         if (values < formik.values.start_date) {
             notification.error({
                 closeIcon: true,
@@ -160,7 +149,7 @@ console.log("check selected skill id :", selectedSkillsId);
         }
     }
   
-    const toggleSkill = (skillName,id) => {
+    const toggleSkill = async(skillName,id) => {
       const newSelectedSkills = [...selectedSkills];
       const newSelectedSkillsId = [...selectedSkillsId];
 
@@ -175,7 +164,16 @@ console.log("check selected skill id :", selectedSkillsId);
       setSelectedSkills(newSelectedSkills);
       setSelectedSkillsId(newSelectedSkillsId);
 
+      let ListId='';
+      if(newSelectedSkillsId.length>0){
+          newSelectedSkillsId.map(skill => {
+              console.log("check");
+              ListId += skill.toString() + ",";
+          })
+      await formik.setFieldValue("skill_id",ListId);
     };
+
+    }
 
     const renderSelectedSkills = () => (
         <div>

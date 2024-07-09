@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, notification, Select, DatePicker } from "antd";
+import { Form, Input, Button, notification, Select, DatePicker,Checkbox } from "antd";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getJobTypeListAction } from "../../../redux/actions/JobTypeAction";
 import { getCompanyListAction, getCompanyIdAction } from "../../../redux/actions/CompanyAction";
 import { addJobAction } from "../../../redux/actions/JobAction";
-
+import { getSkillListAction } from '../../../redux/actions/SkillAction';
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { forEach } from "lodash";
@@ -20,10 +20,17 @@ const { Option } = Select;
 
 const AddNewJob = () => {
     const [location, setLocation] = useState(0);
+    const [selectedSkills, setSelectedSkills] = useState([]);
+    const [selectedSkillsId, setSelectedSkillsId] = useState([]);
+
+console.log("check selected skill :", selectedSkills);
+console.log("check selected skill id :", selectedSkillsId);
+
     const dateFormat = 'DD-MM-YYYY';
     const dispatch = useDispatch();
     const { companyDetail } = useSelector(state => state.CompanyReducer)
 
+    let { arrSkill } = useSelector(state => state.SkillReducer);
     let { arrJobType } = useSelector((state) => state.JobTypeReducer);
     let { arrCompany } = useSelector((state) => state.CompanyReducer);
     console.log(location);
@@ -37,6 +44,8 @@ const AddNewJob = () => {
         dispatch(getCompanyListAction());
         dispatch(getJobTypeListAction());
         dispatch(getCompanyIdAction(location))
+        dispatch(getSkillListAction());
+
     }, [dispatch, location]);
 
     const formik = useFormik({
@@ -56,6 +65,16 @@ const AddNewJob = () => {
             is_active: "",
         },
         onSubmit: (values) => {
+            if(selectedSkillsId.length>0){
+                let ListId='';
+                selectedSkillsId.map(skill=>{
+                    ListId += skill.toString() +',';
+                })
+                
+                console.log("check id:", ListId);
+            }
+           
+
             if (
                 values.title === "" ||
                 values.description === "" ||
@@ -87,6 +106,7 @@ const AddNewJob = () => {
     const handleChangeCompany = (value) => {
         setLocation(value);
         formik.setFieldValue("company_id", value);
+
     };
 
     const handleChangeLocation = (value) => {
@@ -139,7 +159,46 @@ const AddNewJob = () => {
             formik.setFieldValue('end_date', values);
         }
     }
+  
+    const toggleSkill = (skillName,id) => {
+      const newSelectedSkills = [...selectedSkills];
+      const newSelectedSkillsId = [...selectedSkillsId];
 
+      if (newSelectedSkills.includes(skillName)) {
+        newSelectedSkills.splice(newSelectedSkills.indexOf(skillName), 1);
+        newSelectedSkillsId.splice(newSelectedSkillsId.indexOf(id), 1);
+
+      } else {
+        newSelectedSkills.push(skillName);
+        newSelectedSkillsId.push(id);
+      }
+      setSelectedSkills(newSelectedSkills);
+      setSelectedSkillsId(newSelectedSkillsId);
+
+    };
+
+    const renderSelectedSkills = () => (
+        <div>
+          {selectedSkills.map((skillName) => (
+            <Button key={skillName}>
+              {skillName}
+            </Button>
+          ))}
+        </div>
+      );
+      const renderSkills = () => (
+        <div>
+          {arrSkill?.data?.map((skill) => (
+            <Checkbox
+              key={skill.id}
+              checked={selectedSkills.includes(skill.name)}
+              onChange={() => toggleSkill(skill.name, skill.id)}
+            >
+              {skill.name}
+            </Checkbox>
+          ))}
+        </div>
+      );
     return (
         <Form
             onSubmitCapture={formik.handleSubmit}
@@ -421,8 +480,24 @@ const AddNewJob = () => {
                             onChange={handleChangeLocation}
                         />
                     </Form.Item>
+                    <Form.Item
+                        label="Skill"
+                        name="Skill"
+                        style={{ minWidth: "100%" }}
+                        rules={[
+                            {
+                                required: true,
+                                message: "SKill is required!",
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                      {renderSkills()}
+                        <h2>Skill đã chọn</h2>
 
+                        {renderSelectedSkills()}
 
+                    </Form.Item>
                     <Form.Item
                         label="Job Type"
                         name="jobtype"

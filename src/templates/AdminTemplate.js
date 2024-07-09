@@ -508,7 +508,7 @@ const columnsJob = [
         </Sider>
         <Layout>
           <Header
-            style={{
+            style={{  
               padding: 0,
               background: colorBgContainer,
               display: 'flex',

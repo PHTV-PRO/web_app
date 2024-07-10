@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, notification, Select, DatePicker,Checkbox } from "antd";
+import { Form, Input, Button, notification, Select, DatePicker,Checkbox,Switch } from "antd";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,6 +18,8 @@ dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.tz.guess()
 const { Option } = Select;
+
+const { RangePicker } = DatePicker;
 
 const AddNewJob = () => {
     const [location, setLocation] = useState(0);
@@ -60,7 +62,7 @@ const AddNewJob = () => {
             salary_min: "",
             start_date: "",
             end_date: "",
-            is_active: "",
+            is_active: "true",
         },
         onSubmit: (values) => {
             if (
@@ -97,10 +99,6 @@ const AddNewJob = () => {
 
     };
 
-    const handleChangeLocation = (value) => {
-        setLocation(value);
-        formik.setFieldValue("location_id", value);
-    };
 
     const handleChangeJobType = (value) => {
         formik.setFieldValue("jobType_id", value);
@@ -109,44 +107,18 @@ const AddNewJob = () => {
         formik.setFieldValue("gender", value);
     };
 
-    const handleChangeActive = (value) => {
-        formik.setFieldValue("is_active", value);
+    const handleChangeActive = (checked) => {
+        formik.setFieldValue("is_active", checked.toString());
     };
-    const onOkBeginDate = (values) => {
-        formik.setFieldValue('start_date', values);
-    }
 
-    const onChangeBeginDate = (values) => {
-        formik.setFieldValue('start_date', values);
-    }
+    // const onChangeBeginDate = (values) => {
+    //     formik.setFieldValue('start_date', values);
+    // }
+    const onDateChange = (value) => {
+        formik.setFieldValue('end_date', value[0]);
+        formik.setFieldValue('start_date', value[1]);
 
-    const onOkEndDate =  (values) => {
-        if (values < formik.values.start_date) {
-            notification.error({
-                closeIcon: true,
-                message: 'Error',
-                description: (
-                    <>End Date must after Begin Date</>
-                ),
-            });
-        } else {
-            formik.setFieldValue('end_date', values);
-        }
-    }
-
-    const onChangeEndDate = (values) => {
-        if (values < formik.values.start_date) {
-            notification.error({
-                closeIcon: true,
-                message: 'Error',
-                description: (
-                    <>End Date must after Begin Date</>
-                ),
-            });
-        } else {
-            formik.setFieldValue('end_date', values);
-        }
-    }
+      };
   
     const toggleSkill = async(skillName,id) => {
       const newSelectedSkills = [...selectedSkills];
@@ -420,9 +392,10 @@ const AddNewJob = () => {
                             },
                         ]}
                     >
-                        <DatePicker name="start_date" rules={[{ required: true, message: 'Start Date can not be blank!' }]} format={day => day.tz("Asia/Saigon").format(dateFormat)} onChange={onChangeBeginDate} onOk={onOkBeginDate} />
+                        <RangePicker  format={day => day.tz("Asia/Saigon").format(dateFormat)}  rules={[{ required: true, message: 'Start Date can not be blank!' }]} onChange={onDateChange}/>
+                        {/* <DatePicker name="start_date"  format={day => day.tz("Asia/Saigon").format(dateFormat)}   /> */}
                     </Form.Item>
-
+{/* 
                     <Form.Item
                         label="End Date"
                         name=" end_date"
@@ -434,7 +407,7 @@ const AddNewJob = () => {
                         ]}
                     >
                         <DatePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} onChange={onChangeEndDate} onOk={onOkEndDate} />
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item
                         label="Active"
@@ -445,14 +418,15 @@ const AddNewJob = () => {
                             },
                         ]}
                     >
-                        <Select
+                        <Switch defaultChecked onChange={handleChangeActive} />
+                        {/* <Select
                             name="enable"
                             onChange={handleChangeActive}
                             placeholder="Choose Active"
                         >
                             <Option value={0}>On</Option>
                             <Option value={1}>Off</Option>
-                        </Select>
+                        </Select> */}
                     </Form.Item>
 
                     <Form.Item
@@ -501,32 +475,6 @@ const AddNewJob = () => {
                         />
                     </Form.Item>
 
-                    <Form.Item
-                        label="Location"
-                        name="location"
-                        style={{ minWidth: "100%" }}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Location is required!",
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Select
-                            rules={[{ required: true }]}
-                            options={
-                                companyDetail
-                                    ? companyDetail?.locations?.map((item, index) => ({
-                                        key: index,
-                                        label: item.name,
-                                        value: item.id,
-                                    }))
-                                    : ""
-                            }
-                            onChange={handleChangeLocation}
-                        />
-                    </Form.Item>
                     <Form.Item
                         label="Skill"
                         name="Skill"

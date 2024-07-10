@@ -67,9 +67,15 @@ const EmployerProfile = () => {
                 </div>
             </div>
             <div className='mt-20'>
-                <div className='d-flex mb-3'>
+                <div className='flex items-center  mb-3'>
                     <h3 className='text-lg m-0'>Company Management : </h3>
-                    <Button href='/employer/addjobempmng' className='ml-3 small bg-orange-500 text-white'>+ Add New Company</Button>
+                    <Button
+                        className='btn-primary bg-primary mr-2'
+                        key={1} href={`/admin/companymng/edit/${employerCompanyJob.company?.id}`} type="link"
+                        onClick={() => {
+
+                        }}
+                    >Sửa</Button>
                 </div>
                 <table className="table">
                     <thead>
@@ -87,25 +93,25 @@ const EmployerProfile = () => {
                     <tbody>
                         <tr className="flex h-28  w-[60%]">
                             <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
-                                {employerCompanyJob?.company?.name}
+                                {employerCompanyJob?.companyForEmployer?.name}
                             </td>
                             <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
-                                {employerCompanyJob?.company?.introduction}
+                                {employerCompanyJob?.companyForEmployer?.introduction}
                             </td>
                             <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
-                                {employerCompanyJob.company?.profession}
+                                {employerCompanyJob.companyForEmployer?.profession}
                             </td>
                             <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
-                                {employerCompanyJob.company?.link_website}
+                                {employerCompanyJob.companyForEmployer?.link_website}
                             </td>
                             <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
-                                {employerCompanyJob.company?.nationnality}
+                                {employerCompanyJob.companyForEmployer?.nationnality}
                             </td>
                             <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
-                                {employerCompanyJob.company?.benefit}
+                                {employerCompanyJob.companyForEmployer?.benefit}
                             </td>
                             <td className="text-ellipsis overflow-hidden line-clamp-6 border w-[213px] pt-3  pb-2 pl-1">
-                                {employerCompanyJob.company?.size || 'Không Có'}
+                                {employerCompanyJob.companyForEmployer?.size || 'Không Có'}
                             </td>
 
                             <td className="flex items-center text-center  justify-center  w-[213px]  h-full pl-1 border">

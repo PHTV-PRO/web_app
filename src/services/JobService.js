@@ -20,6 +20,10 @@ export class JobService extends baseService {
     updateJob = (id, job) => {
         return this.put(`/api/admin/job/${id}`, job);
     };
+
+    createJobEmployer = (job) => {
+        return this.post(`/api/employer/job`, job);
+    };
 }
 
 export const jobService = new JobService();

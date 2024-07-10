@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table } from 'antd';
+import { Button, Input, Space, Table, Tabs } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,7 +47,7 @@ export default function EmployerJobMng() {
     };
 
 
-    const data = employerCompanyJob?.company?.jobs;
+    const data = employerCompanyJob?.companyForEmployer;
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -221,11 +221,32 @@ export default function EmployerJobMng() {
             }
         },
     ]
+    const onChange = (key) => {
+        console.log(key);
+    };
+    const items = [
+        {
+            key: '1',
+            label: 'Tab 1',
+            children: <Table columns={columns} dataSource={data.jobsOpened} rowKey={'id'} />,
+        },
+        {
+            key: '2',
+            label: 'Tab 2',
+            children: <Table columns={columns} dataSource={data.jobsNotOpen} rowKey={'id'} />,
+        },
+        {
+            key: '3',
+            children: <Table columns={columns} dataSource={data.jobsOpening} rowKey={'id'} />,
+            label: 'Tab 3',
+        },
+    ];
+
     return <div>
         <div className='d-flex mb-3'>
             <h3 className='text-lg'>Job Management</h3>
             <Button href='/employer/emplnewjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
         </div>
-        <Table columns={columns} dataSource={data} rowKey={'id'} />
+        <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
     </div>
 }

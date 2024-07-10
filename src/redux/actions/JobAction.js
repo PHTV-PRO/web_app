@@ -68,7 +68,7 @@ export const addJobAction = (formData) => {
 export const addJobOfEmployerAction = (formData) => {
     return async (dispatch) => {
         try {
-            const result = await jobService.createJob(formData)
+            const result = await jobService.createJobEmployer(formData)
             console.log(result);
             if (result.data.statusCode === 200) {
                 notification.success({

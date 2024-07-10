@@ -61,7 +61,6 @@ const EditJob = (props) => {
             amount: jobDetail?.amount,
             salary_max: jobDetail?.salary_max,
             salary_min: jobDetail?.salary_min,
-            // tìm cách chuyển date thành string()
             start_date: jobDetail?.start_date,
             end_date: jobDetail?.end_date,
             gender: jobDetail?.gender,

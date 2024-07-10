@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Button, notification, Select, DatePicker,Checkbox,Switch } from "antd";
+import { Form, Input, Button, notification, Select, DatePicker, Checkbox, Switch } from "antd";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getJobTypeListAction } from "../../../redux/actions/JobTypeAction";
 import { getCompanyListAction, getCompanyIdAction } from "../../../redux/actions/CompanyAction";
-import {  getLevelListAction } from '../../../redux/actions/LevelAction';
+import { getLevelListAction } from '../../../redux/actions/LevelAction';
 import { addJobAction } from "../../../redux/actions/JobAction";
 import { getSkillListAction } from '../../../redux/actions/SkillAction';
 import dayjs from "dayjs";
@@ -48,7 +48,7 @@ const AddNewJob = () => {
     }, [dispatch, location]);
 
     const formik = useFormik({
-        
+
         initialValues: {
             title: "",
             description: "",
@@ -118,106 +118,107 @@ const AddNewJob = () => {
         formik.setFieldValue('end_date', value[0]);
         formik.setFieldValue('start_date', value[1]);
 
-      };
-  
-    const toggleSkill = async(skillName,id) => {
-      const newSelectedSkills = [...selectedSkills];
-      const newSelectedSkillsId = [...selectedSkillsId];
-
-      if (newSelectedSkills.includes(skillName)) {
-        newSelectedSkills.splice(newSelectedSkills.indexOf(skillName), 1);
-        newSelectedSkillsId.splice(newSelectedSkillsId.indexOf(id), 1);
-
-      } else {
-        newSelectedSkills.push(skillName);
-        newSelectedSkillsId.push(id);
-      }
-      setSelectedSkills(newSelectedSkills);
-      setSelectedSkillsId(newSelectedSkillsId);
-
-      let ListId='';
-      if(newSelectedSkillsId.length>0){
-          newSelectedSkillsId.map(skill => {
-              console.log("check");
-              ListId += skill.toString() + ",";
-          })
-      await formik.setFieldValue("skill_id",ListId);
     };
+
+
+    const toggleSkill = async (skillName, id) => {
+        const newSelectedSkills = [...selectedSkills];
+        const newSelectedSkillsId = [...selectedSkillsId];
+
+        if (newSelectedSkills.includes(skillName)) {
+            newSelectedSkills.splice(newSelectedSkills.indexOf(skillName), 1);
+            newSelectedSkillsId.splice(newSelectedSkillsId.indexOf(id), 1);
+
+        } else {
+            newSelectedSkills.push(skillName);
+            newSelectedSkillsId.push(id);
+        }
+        setSelectedSkills(newSelectedSkills);
+        setSelectedSkillsId(newSelectedSkillsId);
+
+        let ListId = '';
+        if (newSelectedSkillsId.length > 0) {
+            newSelectedSkillsId.map(skill => {
+                console.log("check");
+                ListId += skill.toString() + ",";
+            })
+            await formik.setFieldValue("skill_id", ListId);
+        };
 
     }
 
-    const toggleLevel = async(name,id) => {
+    const toggleLevel = async (name, id) => {
         const newSelectedLevels = [...selectedLevel];
         const newSelectedLevelId = [...selectedLevelId];
-  
+
         if (newSelectedLevels.includes(name)) {
-          newSelectedLevels.splice(newSelectedLevels.indexOf(name), 1);
-          newSelectedLevelId.splice(newSelectedLevelId.indexOf(id), 1);
-  
+            newSelectedLevels.splice(newSelectedLevels.indexOf(name), 1);
+            newSelectedLevelId.splice(newSelectedLevelId.indexOf(id), 1);
+
         } else {
-          newSelectedLevels.push(name);
-          newSelectedLevelId.push(id);
+            newSelectedLevels.push(name);
+            newSelectedLevelId.push(id);
         }
         setSelectedLevel(newSelectedLevels);
         setSelectedLevelId(newSelectedLevelId);
-  
-        let ListId='';
-        if(newSelectedLevelId.length>0){
+
+        let ListId = '';
+        if (newSelectedLevelId.length > 0) {
             newSelectedLevelId.map(level => {
                 console.log("check");
                 ListId += level.toString() + ",";
             })
-        await formik.setFieldValue("level_id",ListId);
-      };
-  
-      }
+            await formik.setFieldValue("level_id", ListId);
+        };
+
+    }
 
     const renderSelectedSkills = () => (
         <div>
-          {selectedSkills.map((skillName) => (
-            <Button key={skillName}>
-              {skillName}
-            </Button>
-          ))}
+            {selectedSkills.map((skillName) => (
+                <Button key={skillName}>
+                    {skillName}
+                </Button>
+            ))}
         </div>
-      );
-      const renderSkills = () => (
+    );
+    const renderSkills = () => (
         <div className="grid grid-cols-3">
-          {arrSkill?.data?.map((skill) => (
-            <Checkbox
-              key={skill.id}
-              checked={selectedSkills.includes(skill.name)}
-              onChange={() => toggleSkill(skill.name, skill.id)}
-              className="mr-2"
-            >
-              {skill.name}
-            </Checkbox>
-          ))}
+            {arrSkill?.data?.map((skill) => (
+                <Checkbox
+                    key={skill.id}
+                    checked={selectedSkills.includes(skill.name)}
+                    onChange={() => toggleSkill(skill.name, skill.id)}
+                    className="mr-2"
+                >
+                    {skill.name}
+                </Checkbox>
+            ))}
         </div>
-      );
-      const renderSelectedLevel = () => (
+    );
+    const renderSelectedLevel = () => (
         <div>
-          {selectedLevel.map((level) => (
-            <Button key={level}>
-              {level}
-            </Button>
-          ))}
+            {selectedLevel.map((level) => (
+                <Button key={level}>
+                    {level}
+                </Button>
+            ))}
         </div>
-      );
-      const renderLevel = () => (
+    );
+    const renderLevel = () => (
         <div className="grid grid-cols-3">
-          {arrLevel?.data?.map((level) => (
-            <Checkbox
-              key={level.id}
-              checked={selectedLevel.includes(level.name)}
-              onChange={() => toggleLevel(level.name, level.id)}
-              className="mr-2"
-            >
-              {level.name}
-            </Checkbox>
-          ))}
+            {arrLevel?.data?.map((level) => (
+                <Checkbox
+                    key={level.id}
+                    checked={selectedLevel.includes(level.name)}
+                    onChange={() => toggleLevel(level.name, level.id)}
+                    className="mr-2"
+                >
+                    {level.name}
+                </Checkbox>
+            ))}
         </div>
-      );
+    );
     return (
         <Form
             onSubmitCapture={formik.handleSubmit}
@@ -392,10 +393,10 @@ const AddNewJob = () => {
                             },
                         ]}
                     >
-                        <RangePicker  format={day => day.tz("Asia/Saigon").format(dateFormat)}  rules={[{ required: true, message: 'Start Date can not be blank!' }]} onChange={onDateChange}/>
+                        <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} rules={[{ required: true, message: 'Start Date can not be blank!' }]} onChange={onDateChange} />
                         {/* <DatePicker name="start_date"  format={day => day.tz("Asia/Saigon").format(dateFormat)}   /> */}
                     </Form.Item>
-{/* 
+                    {/* 
                     <Form.Item
                         label="End Date"
                         name=" end_date"
@@ -487,7 +488,7 @@ const AddNewJob = () => {
                             },
                         ]}
                     >
-                      {renderSkills()}
+                        {renderSkills()}
 
                     </Form.Item>
                     <Form.Item
@@ -505,6 +506,7 @@ const AddNewJob = () => {
                         {renderSelectedSkills()}
 
                     </Form.Item>
+
                     <Form.Item
                         label="Level"
                         name="Level"
@@ -517,9 +519,10 @@ const AddNewJob = () => {
                             },
                         ]}
                     >
-                      {renderLevel()}
+                        {renderLevel()}
 
                     </Form.Item>
+
                     <Form.Item
                         label="Level Selected"
                         name="Level"
@@ -535,6 +538,7 @@ const AddNewJob = () => {
                         {renderSelectedLevel()}
 
                     </Form.Item>
+
                     <Form.Item
                         label="Job Type"
                         name="jobtype"

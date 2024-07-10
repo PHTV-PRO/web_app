@@ -6,7 +6,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { TOKEN } from '../../../util/settings/config';
-import { getCurrentUserAction } from '../../../redux/actions/UserAction';
+// import { getCurrentUserAction } from '../../../redux/actions/UserAction';
 import { getCompanyAndJobByTokenAction } from '../../../redux/actions/AccountAction';
 import { getJobTypeListAction } from '../../../redux/actions/JobTypeAction';
 import { getCompanyListAction, getCompanyIdAction } from '../../../redux/actions/CompanyAction';
@@ -31,29 +31,34 @@ const NewJobEmployer = () => {
     const { companyDetail } = useSelector(state => state.CompanyReducer)
     let { arrJobType } = useSelector((state) => state.JobTypeReducer);
     const { employerCompanyJob } = useSelector(state => state.AccountReducer);
-    console.log(companyDetail);
-    console.log(employerCompanyJob?.company?.id);
-
-    let accessToken = {}
-    if (localStorage.getItem(TOKEN)) {
-        accessToken = localStorage.getItem(TOKEN)
-    }
-
     const listCompany = [companyDetail]
 
+    const [idCompany, setFieldCompany] = useState(0)
 
-    useEffect(() => {
-        if (accessToken != null) {
-            dispatch(getCurrentUserAction(accessToken))
-            dispatch(getCompanyAndJobByTokenAction(accessToken))
-        }
-    }, [dispatch]);
+    // console.log(companyDetail);
+    console.log(employerCompanyJob?.company?.id);
+
+
+    // let accessToken = {}
+    // if (localStorage.getItem(TOKEN)) {
+    //     accessToken = localStorage.getItem(TOKEN)
+    // }
+
+    // useEffect(() => {
+    //     if (accessToken != null) {
+    //         dispatch(getCurrentUserAction(accessToken))
+    //         dispatch(getCompanyAndJobByTokenAction(accessToken))
+
+    //     }
+    // }, [dispatch]);
 
     useEffect(() => {
         dispatch(getCompanyListAction());
         dispatch(getJobTypeListAction());
+        dispatch(getCompanyAndJobByTokenAction(TOKEN))
+
         dispatch(getCompanyIdAction(employerCompanyJob?.company?.id));
-    }, [dispatch, location, employerCompanyJob?.company?.id]);
+    }, [dispatch, location, employerCompanyJob?.company?.id, TOKEN]);
 
 
 
@@ -72,6 +77,8 @@ const NewJobEmployer = () => {
             start_date: "",
             end_date: "",
             is_active: "",
+            // company_id: setFieldCompany(employerCompanyJob?.company?.id),
+
         },
         onSubmit: (values) => {
             if (
@@ -460,7 +467,7 @@ const NewJobEmployer = () => {
 
                         <Form.Item
                             label="Company"
-                            name="company"
+                            name="company_id"
                             style={{ minWidth: "100%" }}
                             rules={[
                                 {
@@ -470,6 +477,8 @@ const NewJobEmployer = () => {
                                 },
                             ]}
                         >
+                            {/* <Input name="company_id" value={formik.setFieldCompany(employerCompanyJob?.company?.id)} /> */}
+
                             <Select
                                 rules={[{ required: true }]}
                                 options={

@@ -17,15 +17,16 @@ export default function EmployerJobMng() {
     const dispatch = useDispatch();
 
 
-    let accessToken = {}
-    if (localStorage.getItem(TOKEN)) {
-        accessToken = localStorage.getItem(TOKEN)
-    }
+    // let accessToken = {}
+    // if (localStorage.getItem(TOKEN)) {
+    //     accessToken = localStorage.getItem(TOKEN)
+    // }
+
 
     useEffect(() => {
-        if (accessToken != null) {
-            dispatch(getCurrentUserAction(accessToken))
-            dispatch(getCompanyAndJobByTokenAction(accessToken))
+        if (TOKEN != null) {
+            dispatch(getCompanyAndJobByTokenAction(TOKEN))
+            // dispatch(getCurrentUserAction(accessToken))
         }
     }, [dispatch]);
 

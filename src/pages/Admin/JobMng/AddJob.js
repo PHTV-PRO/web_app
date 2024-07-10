@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getJobTypeListAction } from "../../../redux/actions/JobTypeAction";
 import { getCompanyListAction, getCompanyIdAction } from "../../../redux/actions/CompanyAction";
+import {  getLevelListAction } from '../../../redux/actions/LevelAction';
 import { addJobAction } from "../../../redux/actions/JobAction";
 import { getSkillListAction } from '../../../redux/actions/SkillAction';
 import dayjs from "dayjs";
@@ -23,15 +24,20 @@ const AddNewJob = () => {
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
 
+    const [selectedLevel, setSelectedLevel] = useState([]);
+    const [selectedLevelId, setSelectedLevelId] = useState([]);
+
     const dateFormat = 'DD-MM-YYYY';
     const dispatch = useDispatch();
     const { companyDetail } = useSelector(state => state.CompanyReducer)
 
+    let { arrLevel } = useSelector(state => state.LevelReducer);
     let { arrSkill } = useSelector(state => state.SkillReducer);
     let { arrJobType } = useSelector((state) => state.JobTypeReducer);
     let { arrCompany } = useSelector((state) => state.CompanyReducer);
 
     useEffect(() => {
+        dispatch(getLevelListAction())
         dispatch(getCompanyListAction());
         dispatch(getJobTypeListAction());
         dispatch(getCompanyIdAction(location))
@@ -56,13 +62,7 @@ const AddNewJob = () => {
             end_date: "",
             is_active: "",
         },
-
-        
         onSubmit: (values) => {
-          
-            
-                
-
             if (
                 values.title === "" ||
                 values.description === "" ||
@@ -84,7 +84,6 @@ const AddNewJob = () => {
                 for (let key in values) {
                     formData.append(key, values[key]);
                 }
-                
                 console.table("formData", [...formData]);
                 dispatch(addJobAction(formData));
             }
@@ -175,6 +174,32 @@ const AddNewJob = () => {
 
     }
 
+    const toggleLevel = async(name,id) => {
+        const newSelectedLevels = [...selectedLevel];
+        const newSelectedLevelId = [...selectedLevelId];
+  
+        if (newSelectedLevels.includes(name)) {
+          newSelectedLevels.splice(newSelectedLevels.indexOf(name), 1);
+          newSelectedLevelId.splice(newSelectedLevelId.indexOf(id), 1);
+  
+        } else {
+          newSelectedLevels.push(name);
+          newSelectedLevelId.push(id);
+        }
+        setSelectedLevel(newSelectedLevels);
+        setSelectedLevelId(newSelectedLevelId);
+  
+        let ListId='';
+        if(newSelectedLevelId.length>0){
+            newSelectedLevelId.map(level => {
+                console.log("check");
+                ListId += level.toString() + ",";
+            })
+        await formik.setFieldValue("level_id",ListId);
+      };
+  
+      }
+
     const renderSelectedSkills = () => (
         <div>
           {selectedSkills.map((skillName) => (
@@ -185,14 +210,38 @@ const AddNewJob = () => {
         </div>
       );
       const renderSkills = () => (
-        <div>
+        <div className="grid grid-cols-3">
           {arrSkill?.data?.map((skill) => (
             <Checkbox
               key={skill.id}
               checked={selectedSkills.includes(skill.name)}
               onChange={() => toggleSkill(skill.name, skill.id)}
+              className="mr-2"
             >
               {skill.name}
+            </Checkbox>
+          ))}
+        </div>
+      );
+      const renderSelectedLevel = () => (
+        <div>
+          {selectedLevel.map((level) => (
+            <Button key={level}>
+              {level}
+            </Button>
+          ))}
+        </div>
+      );
+      const renderLevel = () => (
+        <div className="grid grid-cols-3">
+          {arrLevel?.data?.map((level) => (
+            <Checkbox
+              key={level.id}
+              checked={selectedLevel.includes(level.name)}
+              onChange={() => toggleLevel(level.name, level.id)}
+              className="mr-2"
+            >
+              {level.name}
             </Checkbox>
           ))}
         </div>
@@ -491,9 +540,51 @@ const AddNewJob = () => {
                         ]}
                     >
                       {renderSkills()}
-                        <h2>Skill đã chọn</h2>
 
+                    </Form.Item>
+                    <Form.Item
+                        label="Skill Selected"
+                        name="Skill"
+                        style={{ minWidth: "100%" }}
+                        rules={[
+                            {
+                                required: true,
+                                message: "SKill is required!",
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
                         {renderSelectedSkills()}
+
+                    </Form.Item>
+                    <Form.Item
+                        label="Level"
+                        name="Level"
+                        style={{ minWidth: "100%" }}
+                        rules={[
+                            {
+                                required: true,
+                                message: "SKill is required!",
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                      {renderLevel()}
+
+                    </Form.Item>
+                    <Form.Item
+                        label="Level Selected"
+                        name="Level"
+                        style={{ minWidth: "100%" }}
+                        rules={[
+                            {
+                                required: true,
+                                message: "SKill is required!",
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        {renderSelectedLevel()}
 
                     </Form.Item>
                     <Form.Item

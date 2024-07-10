@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getJobIdAction, updateJobByIdAction } from '../../../redux/actions/JobAction';
 import { getCompanyListAction, getCompanyIdAction } from '../../../redux/actions/CompanyAction';
 import { getJobTypeListAction } from "../../../redux/actions/JobTypeAction";
-
+import moment from 'moment'; 
 
 dayjs.extend(customParseFormat);
 var utc = require('dayjs/plugin/utc')
@@ -16,6 +16,7 @@ var timezone = require('dayjs/plugin/timezone')
 dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.tz.guess()
+const { RangePicker } = DatePicker;
 
 const { Option } = Select;
 
@@ -23,13 +24,16 @@ const EditJob = (props) => {
     const dispatch = useDispatch();
     const dateFormat = 'DD-MM-YYYY';
     const [location, setLocation] = useState(0);
-
+  
     let { jobDetail } = useSelector(state => state.JobReducer)
     let { arrCompany } = useSelector((state) => state.CompanyReducer);
     let { arrJobType } = useSelector((state) => state.JobTypeReducer);
     const { companyDetail } = useSelector(state => state.CompanyReducer);
-
-    console.log(companyDetail);
+    const [selectedDates, setSelectedDates] = useState([
+        dayjs( jobDetail?.start_date), // Initial start date (today)
+        dayjs(jobDetail?.end_date), // Initial end date (5 days from today)
+      ]);
+    console.log("check date for all:" ,selectedDates);
 
 
     let { id } = props.match.params;
@@ -61,8 +65,9 @@ const EditJob = (props) => {
             amount: jobDetail?.amount,
             salary_max: jobDetail?.salary_max,
             salary_min: jobDetail?.salary_min,
-            start_date: jobDetail?.start_date,
-            end_date: jobDetail?.end_date,
+            // tìm cách chuyển date thành string()
+            start_date:  dayjs(jobDetail?.start_date),
+            end_date: dayjs(jobDetail?.end_date),
             gender: jobDetail?.gender,
             experience_required: jobDetail?.experience_required,
             company_id: jobDetail?.company?.id,
@@ -90,42 +95,10 @@ const EditJob = (props) => {
         }
     })
 
-
-    const onOkBeginDate = (values) => {
-        formik.setFieldValue('start_date', values);
-    }
-
-    const onChangeBeginDate = (values) => {
-        formik.setFieldValue('start_date', values);
-    }
-
-    const onOkEndDate = (values) => {
-        if (values < formik.values.start_date) {
-            notification.error({
-                closeIcon: true,
-                message: 'Error',
-                description: (
-                    <>End Date must after Begin Date</>
-                ),
-            });
-        } else {
-            formik.setFieldValue('end_date', values);
-        }
-    }
-
-    const onChangeEndDate = (values) => {
-        if (values < formik.values.start_date) {
-            notification.error({
-                closeIcon: true,
-                message: 'Error',
-                description: (
-                    <>End Date must after Begin Date</>
-                ),
-            });
-        } else {
-            formik.setFieldValue('end_date', values);
-        }
-    }
+    const onDateChange = (value) => {
+        formik.setFieldValue('end_date', dayjs(value[0]));
+        formik.setFieldValue('start_date', dayjs(value[1]));
+    };
 
     const handleChangeGender = (value) => {
         formik.setFieldValue("gender", value);
@@ -305,27 +278,17 @@ const EditJob = (props) => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Start Date"
+                        label="Date"
+                        name="date"
                         rules={[
                             {
                                 required: true,
-                                message: 'Start Date can not be blank!',
+                                message: ' Date can not be blank!',
                             },
                         ]}
                     >
-                        <DatePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} onChange={onChangeBeginDate} onOk={onOkBeginDate} value={formik.values.start_date && dayjs(formik.values.start_date)} />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="End Date"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'End date can not be blank!',
-                            },
-                        ]}
-                    >
-                        <DatePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} onChange={onChangeEndDate} onOk={onOkEndDate} value={formik.values?.end_date && dayjs(formik.values?.end_date)} />
+                        <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} rules={[{ required: true, message: 'Date can not be blank!' }]} onChange={onDateChange} defaultValue={selectedDates}/>
+                        {/* <DatePicker name="start_date"  format={day => day.tz("Asia/Saigon").format(dateFormat)}   /> */}
                     </Form.Item>
 
                     {/* <Form.Item

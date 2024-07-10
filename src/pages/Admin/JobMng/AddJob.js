@@ -384,31 +384,19 @@ const AddNewJob = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Start Date"
-                        name="start_date"
+                        label="Date"
+                        name="date"
                         rules={[
                             {
                                 required: true,
-                                message: 'Start Date can not be blank!',
+                                message: ' Date can not be blank!',
                             },
                         ]}
                     >
-                        <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} rules={[{ required: true, message: 'Start Date can not be blank!' }]} onChange={onDateChange} />
+                        <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} rules={[{ required: true, message: 'Date can not be blank!' }]} onChange={onDateChange} />
                         {/* <DatePicker name="start_date"  format={day => day.tz("Asia/Saigon").format(dateFormat)}   /> */}
                     </Form.Item>
-                    {/* 
-                    <Form.Item
-                        label="End Date"
-                        name=" end_date"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'End date can not be blank!',
-                            },
-                        ]}
-                    >
-                        <DatePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} onChange={onChangeEndDate} onOk={onOkEndDate} />
-                    </Form.Item> */}
+                  
 
                     <Form.Item
                         label="Active"

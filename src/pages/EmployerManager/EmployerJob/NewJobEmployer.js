@@ -10,7 +10,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { getJobTypeListAction } from "../../../redux/actions/JobTypeAction";
 import { getCompanyListAction, getCompanyIdAction } from "../../../redux/actions/CompanyAction";
 import { getLevelListAction } from '../../../redux/actions/LevelAction';
-import { addJobAction } from "../../../redux/actions/JobAction";
+import { addJobOfEmployerAction } from "../../../redux/actions/JobAction";
 import { getSkillListAction } from '../../../redux/actions/SkillAction';
 import { getCompanyAndJobByTokenAction } from '../../../redux/actions/AccountAction';
 import { TOKEN } from '../../../util/settings/config';
@@ -50,11 +50,11 @@ const NewJobEmployer = () => {
         dispatch(getJobTypeListAction());
         dispatch(getSkillListAction());
         dispatch(getCompanyAndJobByTokenAction(TOKEN))
-        dispatch(getCompanyIdAction(employerCompanyJob?.company?.id));
+        dispatch(getCompanyIdAction(employerCompanyJob?.companyForEmployer?.id));
         handleChangeCompany();
+    }, [dispatch, location, employerCompanyJob?.companyForEmployer?.id]);
 
-    }, [dispatch, location, employerCompanyJob?.company?.id]);
-
+    console.log(employerCompanyJob?.companyForEmployer?.id);
     const formik = useFormik({
 
         initialValues: {
@@ -96,14 +96,14 @@ const NewJobEmployer = () => {
                     formData.append(key, values[key]);
                 }
                 console.table("formData", [...formData]);
-                dispatch(addJobAction(formData));
+                dispatch(addJobOfEmployerAction(formData));
             }
         },
     });
 
 
     const handleChangeCompany = () => {
-        formik.setFieldValue("company_id", employerCompanyJob?.company?.id);
+        formik.setFieldValue("company_id", employerCompanyJob?.companyForEmployer?.id);
 
     };
 
@@ -119,9 +119,7 @@ const NewJobEmployer = () => {
         formik.setFieldValue("is_active", checked.toString());
     };
 
-    // const onChangeBeginDate = (values) => {
-    //     formik.setFieldValue('start_date', values);
-    // }
+
     const onDateChange = (value) => {
         formik.setFieldValue('end_date', value[0]);
         formik.setFieldValue('start_date', value[1]);
@@ -184,7 +182,7 @@ const NewJobEmployer = () => {
     const renderSelectedSkills = () => (
         <div>
             {selectedSkills.map((skillName) => (
-                <Button key={skillName}>
+                <Button key={skillName} className="mr-2 mb-2">
                     {skillName}
                 </Button>
             ))}
@@ -207,7 +205,7 @@ const NewJobEmployer = () => {
     const renderSelectedLevel = () => (
         <div>
             {selectedLevel.map((level) => (
-                <Button key={level}>
+                <Button key={level} className="mr-2 mb-2">
                     {level}
                 </Button>
             ))}
@@ -234,35 +232,38 @@ const NewJobEmployer = () => {
         formik.setFieldValue("description", data);
     };
 
-    const test = (e, editor, name) => {
+    const handleChangeInput = (e, editor, name) => {
         const data = editor.getData();
         formik.setFieldValue(name, data);
     };
 
-    const handleChangeBenefit = (e, editor) => {
-        const data = editor.getData();
-        formik.setFieldValue("benefit", data);
-    };
 
-    const handleChangeReponsibility = (e, editor) => {
-        const data = editor.getData();
-        formik.setFieldValue("reponsibility", data);
-    };
+    // const handleChangeBenefit = (e, editor) => {
+    //     const data = editor.getData();
+    //     formik.setFieldValue("benefit", data);
+    // };
 
-    const handleChangeSkillRequired = (e, editor) => {
-        const data = editor.getData();
-        formik.setFieldValue("skill_required", data);
-    };
+    // const handleChangeReponsibility = (e, editor) => {
+    //     const data = editor.getData();
+    //     formik.setFieldValue("reponsibility", data);
+    // };
 
-    const handleChangeInterviewSteps = (e, editor) => {
-        const data = editor.getData();
-        formik.setFieldValue("interview_steps", data);
-    };
+    // const handleChangeSkillRequired = (e, editor) => {
+    //     const data = editor.getData();
+    //     formik.setFieldValue("skill_required", data);
+    // };
 
-    const handleChangeExperienceRequired = (e, editor) => {
-        const data = editor.getData();
-        formik.setFieldValue("experience_required", data);
-    };
+    // const handleChangeInterviewSteps = (e, editor) => {
+    //     const data = editor.getData();
+    //     formik.setFieldValue("interview_steps", data);
+    // };
+
+    // const handleChangeExperienceRequired = (e, editor) => {
+    //     const data = editor.getData();
+    //     formik.setFieldValue("experience_required", data);
+    // };
+
+
     return (
         <Form
             onSubmitCapture={formik.handleSubmit}
@@ -319,7 +320,7 @@ const NewJobEmployer = () => {
                             name="reponsibility"
                             editor={ClassicEditor}
                             onChange={(event, editor) => {
-                                handleChangeReponsibility(event, editor);
+                                handleChangeInput(event, editor, "reponsibility");
                             }}
                             onReady={(editor) => {
                                 editor.editing.view.change((writer) => {
@@ -339,7 +340,7 @@ const NewJobEmployer = () => {
                             name="skill_required"
                             editor={ClassicEditor}
                             onChange={(event, editor) => {
-                                handleChangeSkillRequired(event, editor);
+                                handleChangeInput(event, editor, "skill_required");
                             }}
                             onReady={(editor) => {
                                 editor.editing.view.change((writer) => {
@@ -362,7 +363,7 @@ const NewJobEmployer = () => {
                             name="benefit"
                             editor={ClassicEditor}
                             onChange={(event, editor) => {
-                                handleChangeBenefit(event, editor);
+                                handleChangeInput(event, editor, "benefit");
                             }}
                             onReady={(editor) => {
                                 editor.editing.view.change((writer) => {
@@ -385,7 +386,7 @@ const NewJobEmployer = () => {
                             name="interview_steps"
                             editor={ClassicEditor}
                             onChange={(event, editor) => {
-                                handleChangeInterviewSteps(event, editor);
+                                handleChangeInput(event, editor, "interview_steps");
                             }}
                             onReady={(editor) => {
                                 editor.editing.view.change((writer) => {
@@ -407,7 +408,7 @@ const NewJobEmployer = () => {
                             name="experience_required"
                             editor={ClassicEditor}
                             onChange={(event, editor) => {
-                                handleChangeExperienceRequired(event, editor);
+                                handleChangeInput(event, editor, "experience_required");
                             }}
                             onReady={(editor) => {
                                 editor.editing.view.change((writer) => {
@@ -477,21 +478,8 @@ const NewJobEmployer = () => {
                         ]}
                     >
                         <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} rules={[{ required: true, message: 'Start Date can not be blank!' }]} onChange={onDateChange} />
-                        {/* <DatePicker name="start_date"  format={day => day.tz("Asia/Saigon").format(dateFormat)}   /> */}
+
                     </Form.Item>
-                    {/* 
-                    <Form.Item
-                        label="End Date"
-                        name=" end_date"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'End date can not be blank!',
-                            },
-                        ]}
-                    >
-                        <DatePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} onChange={onChangeEndDate} onOk={onOkEndDate} />
-                    </Form.Item> */}
 
                     <Form.Item
                         label="Active"
@@ -503,14 +491,6 @@ const NewJobEmployer = () => {
                         ]}
                     >
                         <Switch defaultChecked onChange={handleChangeActive} />
-                        {/* <Select
-                            name="enable"
-                            onChange={handleChangeActive}
-                            placeholder="Choose Active"
-                        >
-                            <Option value={0}>On</Option>
-                            <Option value={1}>Off</Option>
-                        </Select> */}
                     </Form.Item>
 
                     <Form.Item
@@ -531,33 +511,6 @@ const NewJobEmployer = () => {
                             <Option value={2}>FeMale</Option>
                         </Select>
                     </Form.Item>
-
-                    {/* <Form.Item
-                        label="Company"
-                        name="company"
-                        style={{ minWidth: "100%" }}
-                        rules={[
-                            {
-                                required: true,
-                                message: "Company is required!",
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Select
-                            rules={[{ required: true }]}
-                            options={
-                                arrCompany
-                                    ? arrCompany?.data?.map((item, index) => ({
-                                        key: index,
-                                        label: item.name,
-                                        value: item.id,
-                                    }))
-                                    : ""
-                            }
-                            onChange={handleChangeCompany}
-                        />
-                    </Form.Item> */}
 
                     <Form.Item
                         label="Skill"

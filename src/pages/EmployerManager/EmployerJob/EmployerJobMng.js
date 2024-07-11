@@ -227,18 +227,18 @@ export default function EmployerJobMng() {
     const items = [
         {
             key: '1',
-            label: 'Tab 1',
+            label: 'Job Posted',
             children: <Table columns={columns} dataSource={data.jobsOpened} rowKey={'id'} />,
         },
         {
             key: '2',
-            label: 'Tab 2',
+            label: 'Upcoming Job',
             children: <Table columns={columns} dataSource={data.jobsNotOpen} rowKey={'id'} />,
         },
         {
             key: '3',
             children: <Table columns={columns} dataSource={data.jobsOpening} rowKey={'id'} />,
-            label: 'Tab 3',
+            label: 'Jobs Are Recruiting',
         },
     ];
 

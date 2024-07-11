@@ -101,7 +101,7 @@ const AddNewJob = () => {
 
 
     const handleChangeJobType = (value) => {
-        formik.setFieldValue("jobType_id", value);
+        formik.setFieldValue("job_type_id", value);
     };
     const handleChangeGender = (value) => {
         formik.setFieldValue("gender", value);
@@ -115,8 +115,8 @@ const AddNewJob = () => {
     //     formik.setFieldValue('start_date', values);
     // }
     const onDateChange = (value) => {
-        formik.setFieldValue('end_date', value[0]);
-        formik.setFieldValue('start_date', value[1]);
+        formik.setFieldValue('end_date', value[0].toString());
+        formik.setFieldValue('start_date', value[1].toString());
 
     };
 

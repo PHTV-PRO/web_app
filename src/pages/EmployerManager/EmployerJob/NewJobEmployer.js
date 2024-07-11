@@ -109,7 +109,7 @@ const NewJobEmployer = () => {
 
 
     const handleChangeJobType = (value) => {
-        formik.setFieldValue("jobType_id", value);
+        formik.setFieldValue("job_type_id", value);
     };
     const handleChangeGender = (value) => {
         formik.setFieldValue("gender", value);

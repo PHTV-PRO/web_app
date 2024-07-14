@@ -21,7 +21,7 @@ const { RangePicker } = DatePicker;
 
 const { Option } = Select;
 
-const EditJob = (props) => {
+const EmployerEditJob = (props) => {
     const dispatch = useDispatch();
     const dateFormat = 'DD-MM-YYYY';
     const [location, setLocation] = useState(0);
@@ -108,19 +108,21 @@ const EditJob = (props) => {
     //     formik.setFieldValue("is_active", value);
     // };
 
-    const handleChangeCompany = (value) => {
-        setLocation(value);
-        formik.setFieldValue('company_id', value)
-    }
+    // const handleChangeCompany = (value) => {
+    //     setLocation(value);
+    //     formik.setFieldValue('company_id', value)
+    // }
+
+    // const handleChangeLocation = (value) => {
+    //     setLocation(value);
+    //     formik.setFieldValue("location_id", value);
+    // };
 
     const handleChangeJobType = (value) => {
         formik.setFieldValue('job_type_id', value)
     }
 
-    const handleChangeLocation = (value) => {
-        setLocation(value);
-        formik.setFieldValue("location_id", value);
-    };
+
 
 
     const handleChangeInput = (e, editor, name) => {
@@ -365,7 +367,7 @@ const EditJob = (props) => {
                         </Select>
                     </Form.Item>
 
-                    <Form.Item
+                    {/* <Form.Item
                         label="Company"
                         style={{ minWidth: '100%' }}
                         rules={[
@@ -392,7 +394,7 @@ const EditJob = (props) => {
                         ]}
                     >
                         <Select value={formik.values.locations} options={companyDetail?.locations?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeLocation} />
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item
                         label="Job Type"
@@ -419,4 +421,4 @@ const EditJob = (props) => {
     );
 };
 
-export default EditJob;
+export default EmployerEditJob;

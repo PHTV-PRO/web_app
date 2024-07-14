@@ -6,7 +6,7 @@ import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TOKEN } from '../../../util/settings/config';
-import { getCurrentUserAction } from '../../../redux/actions/UserAction';
+// import { getCurrentUserAction } from '../../../redux/actions/UserAction';
 import { getCompanyAndJobByTokenAction } from '../../../redux/actions/AccountAction';
 import { deleteJobAction } from '../../../redux/actions/JobAction';
 
@@ -208,7 +208,7 @@ export default function EmployerJobMng() {
             width: '5%',
             render: (text, job) => {
                 return <>
-                    <Button key={1} href={`/admin/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => {
+                    <Button key={1} href={`/employer/employerupdatejob/detail/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => {
                     }}></Button>
 
                     <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
@@ -228,7 +228,7 @@ export default function EmployerJobMng() {
         {
             key: '1',
             label: 'Job Posted',
-            children: <Table columns={columns} dataSource={data.jobsOpened} rowKey={'id'} />,
+            children: <Table columns={columns} dataSource={data.jobsOpened} defaultDataSource={[]} rowKey={'id'} />,
         },
         {
             key: '2',

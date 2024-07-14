@@ -69,6 +69,8 @@ import Login from "./pages/Login/Login";
 
 import { ProfileTemplate } from "./templates/ProfileTemplate";
 import NewJobEmployer from "./pages/EmployerManager/EmployerJob/NewJobEmployer";
+import EmployerCompanyEdit from "./pages/EmployerManager/EmployerCompany/EmployerCompanyEdit";
+import EmployerEditJob from "./pages/EmployerManager/EmployerJob/EditEmployerJob";
 // import NewJobEmployer from "./pages/EmployerManager/EmployerJob/NewJobEmployer";
 
 
@@ -143,10 +145,12 @@ function App() {
         {/* EmployerProfile */}
         <ProfileTemplate path="/users/profile" exact Component={Profile} />
         <ProfileTemplate path="/employer/emprofile" exact Component={EmployerProfile} />
+        <ProfileTemplate path="/employer/employerupdate/detail/edit/:id" exact Component={EmployerCompanyEdit} />
+
         {/* job employer */}
         <ProfileTemplate path="/employer/empljobmng" exact Component={EmployerJobMng} />
         <ProfileTemplate path="/employer/emplnewjob" exact Component={NewJobEmployer} />
-        <ProfileTemplate path="/admin/empmng/detail/edit/:id" exact Component={EmployerEdit} />
+        <ProfileTemplate path="/employer/employerupdatejob/detail/edit/:id" exact Component={EmployerEditJob} />
 
 
         <AdminTemplate path="/admin" exact Component={UserMng} />

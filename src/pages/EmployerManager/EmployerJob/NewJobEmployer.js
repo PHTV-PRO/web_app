@@ -46,7 +46,7 @@ const NewJobEmployer = () => {
 
     useEffect(() => {
         dispatch(getLevelListAction())
-        dispatch(getCompanyListAction());
+        // dispatch(getCompanyListAction());
         dispatch(getJobTypeListAction());
         dispatch(getSkillListAction());
         dispatch(getCompanyAndJobByTokenAction(TOKEN))

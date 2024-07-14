@@ -106,7 +106,7 @@ export const updateJobByIdAction = (id, formData) => {
                     <>Update Job successfully</>
                 ),
             });
-            history.push('/admin/jobmng');
+            history.goBack();
         } catch (error) {
             console.log('error', error);
         }

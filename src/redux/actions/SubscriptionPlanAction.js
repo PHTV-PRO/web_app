@@ -1,4 +1,4 @@
-import { GET_SUBSCRIPTION_PLAN_DETAIL, GET_SUBSCRIPTION_PLAN_LIST } from "../constants";
+import { GET_SUBSCRIPTION_PLAN_DETAIL, GET_SUBSCRIPTION_PLAN_LIST, GET_SUBSCRIPTION_PLAN_BY_ACCOUNT } from "../constants";
 import { history } from "../../App";
 import { subcriptionPlanService } from "../../services/SubscriptionPlanService";
 import { notification } from "antd";
@@ -36,6 +36,21 @@ export const getSubscriptionPlanByIdAction = (id) => {
         }
     }
 }
+
+export const getSubscriptionPlanByAccountAction = (token) => {
+    return async (dispatch) => {
+        try {
+            const result = await subcriptionPlanService.getSubcriptionPlanByAccount(token);
+            dispatch({
+                type: GET_SUBSCRIPTION_PLAN_BY_ACCOUNT,
+                subscriptionPlanByAccount: result.data.data
+            })
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+
 
 
 export const addSubscriptionPlanAction = (formData) => {

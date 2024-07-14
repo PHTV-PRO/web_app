@@ -14,6 +14,10 @@ export class SubcriptionPlanService extends baseService {
         return this.get(`/api/general/subcription_plan/${id}`);
     }
 
+    getSubcriptionPlanByAccount = (token) => {
+        return this.get(`/api/employer/subcription_plan`, token);
+    }
+
     addNewSubcriptionPlan = (formData) => {
         return this.post(`/api/admin/subcription_plan`, formData);
     }

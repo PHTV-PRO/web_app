@@ -6,6 +6,8 @@ import { TOKEN } from '../../util/settings/config';
 
 import { getCurrentUserAction } from '../../redux/actions/UserAction';
 import { getCompanyAndJobByTokenAction } from '../../redux/actions/AccountAction';
+import { getSubscriptionPlanByAccountAction } from '../../redux/actions/SubscriptionPlanAction';
+
 import { history } from '../../App';
 
 
@@ -14,6 +16,9 @@ const EmployerProfile = () => {
     const dispatch = useDispatch();
     let { userLogin } = useSelector(state => state.UserReducer);
     let { employerCompanyJob } = useSelector(state => state.AccountReducer);
+    let { subscriptionPlanByAccount } = useSelector(state => state.SubscriptionPlanReducer);
+    console.log(subscriptionPlanByAccount);
+
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
@@ -23,6 +28,7 @@ const EmployerProfile = () => {
         if (TOKEN != null) {
             dispatch(getCurrentUserAction(accessToken))
             dispatch(getCompanyAndJobByTokenAction(accessToken))
+            dispatch(getSubscriptionPlanByAccountAction(accessToken))
         }
     }, [dispatch]);
 
@@ -45,7 +51,11 @@ const EmployerProfile = () => {
                         }
 
                         <div className='shadow-md shadow-yellow-300 w-24 text-center mx-12 mt-4 text-gray-400 bg-opacity-70 bg-yellow-400 rounded-md'>
-                            <p className='flex items-center justify-center m-0 p-2'>COMBO 30</p>
+                            {/* {subscriptionPlanByAccount?.} */}
+                            {subscriptionPlanByAccount?.subcriptionPlanDTOs?.map((s, index) =>
+                                <p className='flex items-center justify-center m-0 p-2' key={index}>{s.name}</p>
+                            )}
+
                         </div>
                     </div>
                 </div>
@@ -68,7 +78,7 @@ const EmployerProfile = () => {
                         </Typography>
                     </div>
                     <div className=''>
-                        <Button href={`/admin/empmng/detail/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => {
+                        <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => {
                         }}>Update Information</Button>
                     </div>
                 </div>

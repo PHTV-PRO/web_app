@@ -17,18 +17,16 @@ export default function EmployerJobMng() {
     const dispatch = useDispatch();
 
 
-    // let accessToken = {}
-    // if (localStorage.getItem(TOKEN)) {
-    //     accessToken = localStorage.getItem(TOKEN)
-    // }
+    let accessToken = {}
+    if (localStorage.getItem(TOKEN)) {
+        accessToken = localStorage.getItem(TOKEN)
+    }
 
 
     useEffect(() => {
-        if (TOKEN != null) {
-            dispatch(getCompanyAndJobByTokenAction(TOKEN))
+            dispatch(getCompanyAndJobByTokenAction(accessToken))
             // dispatch(getCurrentUserAction(accessToken))
-        }
-    }, [dispatch]);
+    }, []);
 
 
     const [searchText, setSearchText] = useState('');
@@ -228,16 +226,16 @@ export default function EmployerJobMng() {
         {
             key: '1',
             label: 'Job Posted',
-            children: <Table columns={columns} dataSource={data.jobsOpened} defaultDataSource={[]} rowKey={'id'} />,
+            children: data?.jobsOpened? <Table columns={columns} dataSource={data.jobsOpened} defaultDataSource={[]} rowKey={'id'} />:"",
         },
         {
             key: '2',
             label: 'Upcoming Job',
-            children: <Table columns={columns} dataSource={data.jobsNotOpen} rowKey={'id'} />,
+            children: data?.jobsNotOpen? <Table columns={columns} dataSource={data.jobsNotOpen} rowKey={'id'} />:"",
         },
         {
             key: '3',
-            children: <Table columns={columns} dataSource={data.jobsOpening} rowKey={'id'} />,
+            children: data?.jobsOpening ?<Table columns={columns} dataSource={data.jobsOpening} rowKey={'id'} />:"",
             label: 'Jobs Are Recruiting',
         },
     ];

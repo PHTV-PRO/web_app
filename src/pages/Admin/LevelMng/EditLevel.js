@@ -54,7 +54,7 @@ const EditLevel = (props) => {
         >
             <h3 className="text-2xl">Edit Level:</h3>
             <div className='row'>
-                <div className='col-8'>
+                <div className='col-12'>
                     <Form.Item
                         label="Name"
                         style={{ minWidth: '100%' }}

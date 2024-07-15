@@ -142,7 +142,7 @@ const EditJob = (props) => {
         >
             <h3 className="text-2xl">Edit Job: {formik.values.title}</h3>
             <div className='row'>
-                <div className='col-8'>
+                <div className='col-12'>
                     <Form.Item
                         label="Title"
                         style={{ minWidth: '100%' }}

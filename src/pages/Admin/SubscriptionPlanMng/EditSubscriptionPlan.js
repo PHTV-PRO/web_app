@@ -44,7 +44,7 @@ const EditSubscriptionPlan = (props) => {
         >
             <h3 className="text-2xl">Edit SubcriptionPlan:</h3>
             <div className='row'>
-                <div className='col-8'>
+                <div className='col-12'>
                     <Form.Item
                         label="Expiry"
                         style={{ minWidth: '100%' }}

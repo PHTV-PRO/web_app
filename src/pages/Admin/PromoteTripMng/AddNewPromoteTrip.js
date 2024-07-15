@@ -82,7 +82,7 @@ const AddNewPromoteTrip = () => {
     >
       <h3 className="text-2xl">Add New Promote Trip</h3>
       <div className='row'>
-        <div className='col-8'>
+        <div className='col-12'>
           <Form.Item label="Image">
             <input type="file" name='UploadImage' onChange={handleChangeFile} accept="image/png, image/jpeg,image/gif,image/png" />
             <br />

@@ -48,7 +48,7 @@ const AddNewIndustry = () => {
         >
             <h3 className="text-2xl">Add New Job Type</h3>
             <div className='row'>
-                <div className='col-8'>
+                <div className='col-12'>
                     <Form.Item
                         label="Name"
                         name="name"

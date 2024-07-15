@@ -30,7 +30,7 @@ const Profile = () => {
             : <div style={{ minWidth: '40px', minHeight: 40, width: 200, height: 200, backgroundSize: 'cover', borderRadius: '50%', backgroundImage: `url(${IMAGE + "/image/upload/" + userLogin.image})` }} />
           }
         </div>
-        <div className='col-8'>
+        <div className='col-12'>
           <div className='col-6'>
             <Typography>
               <pre>Account: {userLogin?.email}</pre>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Select, Button, notification,Image } from 'antd';
+import { Form, Input, Select, Button, notification, Image } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -8,6 +8,8 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { TOKEN } from '../../../util/settings/config';
 import { getCompanyIdAction, updateCompanyForEmployerAction } from '../../../redux/actions/CompanyAction';
 import { getCompanyAndJobByTokenAction } from '../../../redux/actions/AccountAction';
+import Loading from '../../../components/Loading/Loading';
+import LoadingImage from '../../../components/LoadingImage';
 // import { getListAccountAction } from '../../../redux/actions/AccountAction';
 
 const { Option } = Select;
@@ -47,7 +49,7 @@ const EmployerCompanyEdit = (props) => {
             // account: companyDetail?.account?.name
         },
         onSubmit: (values) => {
-            
+
             if (values.name == '' || values.introduction == '' || values.benefit == '') {
                 notification.error({
                     closeIcon: true,
@@ -58,8 +60,8 @@ const EmployerCompanyEdit = (props) => {
                 });
             } else {
                 let formData = new FormData();
-                    formData.append('fileCompany', ListImageCompany);
-                    
+                formData.append('fileCompany', ListImageCompany);
+
                 for (let key in values) {
                     formData.append(key, values[key]);
                 }
@@ -113,22 +115,22 @@ const EmployerCompanyEdit = (props) => {
             formik.setFieldValue("UploadFileBackground", file);
         }
     };
-    const handleChangeCompanyList = (e) => {
-        let file = e.target.files[0];
-        let newList =  ListImageCompany;
-        if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png') {
-            let reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = (e) => {
-                newList.push(e.target.result);
-                setListImageCompany(newList); //Hình base 64
-            };
-            // console.log("check value image", ListImageCompany);
-            // formik.setFieldValue("fileCompany", ListImageCompany);
-        }
-    };
+    // const handleChangeCompanyList = (e) => {
+    //     let file = e.target.files[0];
+    //     let newList =  ListImageCompany;
+    //     if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png') {
+    //         let reader = new FileReader();
+    //         reader.readAsDataURL(file);
+    //         reader.onload = (e) => {
+    //             newList.push(e.target.result);
+    //             setListImageCompany(newList); //Hình base 64
+    //         };
+    //         // console.log("check value image", ListImageCompany);
+    //         // formik.setFieldValue("fileCompany", ListImageCompany);
+    //     }
+    // };
 
-  
+
 
 
     return (
@@ -328,25 +330,8 @@ const EmployerCompanyEdit = (props) => {
                         <br />
                         <img style={{ width: 180, height: 120, objectFit: 'cover', borderRadius: '10%', border: "0.1px solid #ccc" }} src={backgroundImageSrc === '' ? `${formik.values.background_image}` : backgroundImageSrc} alt="..." />
                     </Form.Item>
-                    <Form.Item label="List Image Company">
-                        <input
-                            name="UploadFileBackground"
-                            type="file"
-                            onChange={handleChangeCompanyList}
-                            accept="image/png, image/jpeg,image/gif,image/png"
-                        />
-                        <br />
-                            {ListImageCompany?.map((url) => (
-                                  <Image  preview={false}   style={{ width: 180, height: 120, objectFit: 'cover', borderRadius: '10%',display:"inline-block", border: "0.1px solid #ccc" ,}} src={url} alt="..."/>
-                                  
-                            ))}
-                    </Form.Item>
 
-                    <Form.Item label="Action">
-                        <Button htmlType="submit" >Update Company</Button>
-                    </Form.Item>
 
-                    
                 </div>
             </div>
 

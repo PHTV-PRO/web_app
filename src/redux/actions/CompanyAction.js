@@ -3,6 +3,8 @@ import { history } from "../../App";
 import { companyService } from "../../services/CompanyService";
 import { notification } from "antd";
 
+import axios from "axios";
+
 
 export const getCompanyListAction = () => {
     return async (dispatch) => {
@@ -120,3 +122,20 @@ export const deleteCompanyAction = (id) => {
         }
     }
 }
+
+export const apiUploadImages = (images) => new Promise(async (resolve, reject) => {
+    console.log(images);
+    try {
+        const response = await axios({
+            method: 'post',
+            url: `https://api.cloudinary.com/v1_1/delgfr7a0/image/upload/`,
+            data: images,
+        })
+        resolve(response)
+
+    } catch (error) {
+        reject(error)
+    }
+})
+
+

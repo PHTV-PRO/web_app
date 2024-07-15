@@ -43,7 +43,7 @@ const EmployerProfile = () => {
             </div>
 
             <div className='row mx-10 mb-5'>
-                <div className='col-4 flex flex-col justify-items-center'>
+                <div className='col-6 flex flex-col justify-items-center'>
                     <div className='text-center'>
                         {employerCompanyJob?.image == null || employerCompanyJob?.image == ""
                             ? <Avatar size={200} style={{ fontSize: '80px', display: 'flex', justifyContent: 'center', alignItems: 'center' }} icon={employerCompanyJob?.email?.substr(0, 1)} />
@@ -91,13 +91,13 @@ const EmployerProfile = () => {
                     </div>
                     <Button
                         className='btn-primary bg-primary ml-4'
-                        key={1} href={`/employer/employerupdate/detail/edit/${employerCompanyJob.companyForEmployer?.id}`} type="link"
+                        key={1} href={`/employer/company/edit/${employerCompanyJob.companyForEmployer?.id}`} type="link"
                         onClick={() => {
 
                         }}
                     >Update Company</Button>
                 </div>
-                <div className=' bg-gray-300 p-2 w-[60%] rounded-xl'>
+                <div className=' bg-gray-300 p-2 w-[100%] rounded-xl'>
                     <div>
                         <h2 className='font-bold text-lg'>Introduction :
                             <text className='text-base font-normal ml-2'

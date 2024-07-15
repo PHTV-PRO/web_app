@@ -143,14 +143,14 @@ function App() {
 
         {/* User */}
         {/* EmployerProfile */}
-        <ProfileTemplate path="/users/profile" exact Component={Profile} />
-        <ProfileTemplate path="/employer/emprofile" exact Component={EmployerProfile} />
-        <ProfileTemplate path="/employer/employerupdate/detail/edit/:id" exact Component={EmployerCompanyEdit} />
+        <AdminTemplate path="/users/profile" exact Component={Profile} />
+        <AdminTemplate path="/employer/emprofile" exact Component={EmployerProfile} />
+        <AdminTemplate path="/employer/company/edit/:id" exact Component={EmployerCompanyEdit} />
 
         {/* job employer */}
-        <ProfileTemplate path="/employer/empljobmng" exact Component={EmployerJobMng} />
-        <ProfileTemplate path="/employer/emplnewjob" exact Component={NewJobEmployer} />
-        <ProfileTemplate path="/employer/employerupdatejob/detail/edit/:id" exact Component={EmployerEditJob} />
+        <AdminTemplate path="/employer/empljobmng" exact Component={EmployerJobMng} />
+        <AdminTemplate path="/employer/emplnewjob" exact Component={NewJobEmployer} />
+        <AdminTemplate path="/employer/job/edit/:id" exact Component={EmployerEditJob} />
 
 
         <AdminTemplate path="/admin" exact Component={UserMng} />

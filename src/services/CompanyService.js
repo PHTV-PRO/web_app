@@ -20,6 +20,15 @@ export class CompanyService extends baseService {
     updateCompany = (id, company) => {
         return this.put(`/api/admin/company/${id}`, company);
     };
+    createCompanyForEmployer = (Company) => {
+        return this.post(`/api/employer/company`, Company);
+    };
+    deleteCompanyForEmployer = (id) => {
+        return this.delete(`/api/employer/company/${id}`);
+    };
+    updateCompanyForEmployer = (id, company) => {
+        return this.put(`/api/employer/company/${id}`, company);
+    };
 }
 
 export const companyService = new CompanyService();

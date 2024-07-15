@@ -24,6 +24,12 @@ export class JobService extends baseService {
     createJobEmployer = (job) => {
         return this.post(`/api/employer/job`, job);
     };
+    deleteJobforEmployer = (id) => {
+        return this.delete(`/api/employer/job/${id}`);
+    };
+    updateJobForEmployer = (id, job) => {
+        return this.put(`/api/employer/company/${id}`, job);
+    };
 }
 
 export const jobService = new JobService();

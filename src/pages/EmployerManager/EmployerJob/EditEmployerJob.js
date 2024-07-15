@@ -144,7 +144,7 @@ const EmployerEditJob = (props) => {
         >
             <h3 className="text-2xl">Edit Job: {formik.values.title}</h3>
             <div className='row'>
-                <div className='col-8'>
+                <div className='col-12'>
                     <Form.Item
                         label="Title"
                         style={{ minWidth: '100%' }}
@@ -366,35 +366,6 @@ const EmployerEditJob = (props) => {
                             <Option value={2}>FeMale</Option>
                         </Select>
                     </Form.Item>
-
-                    {/* <Form.Item
-                        label="Company"
-                        style={{ minWidth: '100%' }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Company is required!',
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Select value={formik.values.company} options={arrCompany?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeCompany} />
-                    </Form.Item>
-
-
-                    <Form.Item
-                        label="Locations"
-                        style={{ minWidth: '100%' }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Location is required!',
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Select value={formik.values.locations} options={companyDetail?.locations?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeLocation} />
-                    </Form.Item> */}
 
                     <Form.Item
                         label="Job Type"

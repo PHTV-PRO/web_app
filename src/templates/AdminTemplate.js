@@ -473,19 +473,11 @@ const columnsJob = [
 
 
   const itemsEmployer = [
-    getItem('Level Management', '1', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
-    getItem('Areea Management', 'sub1', <CompassOutlined />, [
-      getItem('City Province ', '2', <NavLink className='text-decoration-none' to="/admin/cityprovincemng"><BankOutlined /></NavLink>),
-      getItem('Location ', '3', <NavLink className='text-decoration-none' to="/admin/locationmng"><AimOutlined /></NavLink>),
-    ]),
-    getItem('Job Type Management', '4', <NavLink className='text-decoration-none' to="/admin/jobtypemng"><AuditOutlined /></NavLink>),
-    getItem('Level Management', '5', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
+    getItem('Your Profile Detail', '1', <NavLink className='text-decoration-none' to="/employer/emprofile"><i className="fa-solid fa-user"></i></NavLink>),
+    getItem('Your Job', '2', <NavLink className='text-decoration-none' to="/employer/empljobmng"><i className="fa-solid fa-ticket"></i></NavLink>),
     getItem('SubscriptionPlan Management', '6', <NavLink className='text-decoration-none' to="/admin/subplanmng"><ContainerOutlined /></NavLink>),
-    getItem('Company Management', '7', <NavLink className='text-decoration-none' to="/admin/companymng"><HomeFilled /></NavLink>),
-    getItem('Job Management', '8', <NavLink className='text-decoration-none' to="/admin/jobmng"><WalletOutlined /></NavLink>),
   ]
 
-  // let remainHour = dayjs(ticketDetail?.trips?.startTime).diff(dayjs(new Date()), 'hour')
 
   const operations = <Fragment>
     <div className="d-flex items-center">
@@ -526,30 +518,10 @@ const columnsJob = [
           </Content>
         </Layout>
       </Layout>
-      {/* <Modal title={`Check ticket ${ticketDetail?.code || code}`} open={isModalOpen} maskClosable={true} afterClose={() => { code = "" }} footer={null} width={850} onOk={handleOk} onCancel={handleCancel}>
-        {ticketDetail?.isCancel ?
-          <Descriptions className="text-center mt-3" title="Ticket is already canceled"></Descriptions>
-          : ticketDetail != null && ticketDetail != "undefined" ? <div className="pt-3">
-            <Descriptions title="Ticket Info">
-              <Descriptions.Item label="Customer">{ticketDetail.users.email}</Descriptions.Item>
-              <Descriptions.Item label="Seat List">{ticketDetail.seatsList}</Descriptions.Item>
-              <Descriptions.Item label="Route">{ticketDetail.trips.fromStation.name} - {ticketDetail.trips.toStation.name}</Descriptions.Item>
-              <Descriptions.Item label="Departure Time">{dayjs(ticketDetail.trips.startTime).format("DD-MM-YYYY h:mm A")}</Descriptions.Item>
-              <Descriptions.Item label="Arrival Time">{dayjs(ticketDetail.trips.finishTime).format("DD-MM-YYYY h:mm A")}</Descriptions.Item>
-              <Descriptions.Item label="Bus Number">{ticketDetail.trips.bus.busPlate}</Descriptions.Item>
-              <Descriptions.Item label="Status"><span className="text-green-500 font-semibold">{remainHour < 0 ? "Your bus already departed" : `Your bus is going to depart on next ${remainHour} hour(s)`}</span>  </Descriptions.Item>
-            </Descriptions>
-          </div> : <Descriptions className="text-center mt-3" title="Ticket not found"></Descriptions>}
-      </Modal> */}
        <Modal title={`Search: ${code}`} open={isModalOpen} maskClosable={true} afterClose={() => { code = "" }} footer={null} width={'90%'} onOk={handleOk} onCancel={handleCancel}>
         {arrData?.companies?.length>0?<div>Company:<Table columns={columnsCompany} dataSource={arrData?.companies} rowKey={'id'} pagination= {false}  /></div> :""}
         {arrData?.accounts?.length>0? <div> Account:<Table columns={columnsAccount} dataSource={arrData.accounts} rowKey={"id"}  pagination= {false} /></div>:""}
         {arrData?.jobs?.length>0? <div>Job: <Table columns={columnsJob} dataSource={arrData.jobs} rowKey={"id"}  pagination= {false} /></div>:""}
-
-      
-      
-
-
       </Modal>
     </Fragment>
   }} />

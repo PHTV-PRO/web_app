@@ -85,6 +85,24 @@ export const updateCompanyByIdAction = (id, formData) => {
     }
 }
 
+export const updateCompanyForEmployerAction = (id, formData) => {
+    return async (dispatch) => {
+        try {
+            const result = await companyService.updateCompanyForEmployer(id, formData);
+            notification.success({
+                closeIcon: true,
+                message: 'Success',
+                description: (
+                    <>Update Company successfully</>
+                ),
+            });
+            history.goBack();
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+
 export const deleteCompanyAction = (id) => {
     return async (dispatch) => {
         try {

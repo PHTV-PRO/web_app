@@ -1,23 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Select, Button, notification } from 'antd';
+import { Form, Input, Select, Button, notification, Checkbox } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCompanyIdAction, updateCompanyByIdAction } from '../../../redux/actions/CompanyAction';
 import { getListAccountAction } from '../../../redux/actions/AccountAction';
-
+import { getLevelListAction } from '../../../redux/actions/LevelAction';
+import { getSkillListAction } from '../../../redux/actions/SkillAction';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const { Option } = Select;
 
 const EditCompany = (props) => {
     const [logoSrc, setLogoSrc] = useState("");
     const [backgroundImageSrc, setBackgroundImageSrc] = useState("");
+    const [selectedSkills, setSelectedSkills] = useState([]);
+    const [selectedSkillsId, setSelectedSkillsId] = useState([]);
+
+    const [selectedLevel, setSelectedLevel] = useState([]);
+    const [selectedLevelId, setSelectedLevelId] = useState([]);
 
     const dispatch = useDispatch();
     const { companyDetail } = useSelector(state => state.CompanyReducer)
     let { arrAccount } = useSelector(state => state.AccountReducer);
+    let { arrLevel } = useSelector(state => state.LevelReducer);
+    let { arrSkill } = useSelector(state => state.SkillReducer);
 
     let { id } = props.match.params;
     useEffect(() => {
         dispatch(getListAccountAction())
+         dispatch(getLevelListAction())
+        dispatch(getSkillListAction());
         dispatch(getCompanyIdAction(id))
     }, [dispatch, id])
 
@@ -93,10 +105,107 @@ const EditCompany = (props) => {
             formik.setFieldValue("UploadFileBackground", file);
         }
     };
+    const handleChangeInput = (e, editor, name) => {
+        const data = editor.getData();
+        formik.setFieldValue(name, data);
+    };
+    const renderSelectedSkills = () => (
+        <div>
+            {selectedSkills.map((skillName) => (
+                <Button key={skillName} className="mr-2 mb-2">
+                    {skillName}
+                </Button>
+            ))}
+        </div>
+    );
+    const renderSkills = () => (
+        <div className="grid grid-cols-3">
+            {arrSkill?.data?.map((skill) => (
+                <Checkbox
+                    key={skill.id}
+                    checked={selectedSkills.includes(skill.name)}
+                    onChange={() => toggleSkill(skill.name, skill.id)}
+                    className="mr-2"
+                >
+                    {skill.name}
+                </Checkbox>
+            ))}
+        </div>
+    );
+    const toggleSkill = async (skillName, id) => {
+        const newSelectedSkills = [...selectedSkills];
+        const newSelectedSkillsId = [...selectedSkillsId];
 
-    // const handleChangeStation = (value) => {
-    //     formik.setFieldValue('stationId', value)
-    // };
+        if (newSelectedSkills.includes(skillName)) {
+            newSelectedSkills.splice(newSelectedSkills.indexOf(skillName), 1);
+            newSelectedSkillsId.splice(newSelectedSkillsId.indexOf(id), 1);
+
+        } else {
+            newSelectedSkills.push(skillName);
+            newSelectedSkillsId.push(id);
+        }
+        setSelectedSkills(newSelectedSkills);
+        setSelectedSkillsId(newSelectedSkillsId);
+
+        let ListId = '';
+        if (newSelectedSkillsId.length > 0) {
+            newSelectedSkillsId.map(skill => {
+                console.log("check");
+                ListId += skill.toString() + ",";
+            })
+            await formik.setFieldValue("skill_id", ListId);
+        };
+
+    }
+
+    const toggleLevel = async (name, id) => {
+        const newSelectedLevels = [...selectedLevel];
+        const newSelectedLevelId = [...selectedLevelId];
+
+        if (newSelectedLevels.includes(name)) {
+            newSelectedLevels.splice(newSelectedLevels.indexOf(name), 1);
+            newSelectedLevelId.splice(newSelectedLevelId.indexOf(id), 1);
+
+        } else {
+            newSelectedLevels.push(name);
+            newSelectedLevelId.push(id);
+        }
+        setSelectedLevel(newSelectedLevels);
+        setSelectedLevelId(newSelectedLevelId);
+
+        let ListId = '';
+        if (newSelectedLevelId.length > 0) {
+            newSelectedLevelId.map(level => {
+                console.log("check");
+                ListId += level.toString() + ",";
+            })
+            await formik.setFieldValue("level_id", ListId);
+        };
+
+    }
+    const renderSelectedLevel = () => (
+        <div>
+            {selectedLevel.map((level) => (
+                <Button key={level} className="mr-2 mb-2">
+                    {level}
+                </Button>
+            ))}
+        </div>
+    );
+    const renderLevel = () => (
+        <div className="grid grid-cols-3">
+            {arrLevel?.data?.map((level) => (
+                <Checkbox
+                    key={level.id}
+                    checked={selectedLevel.includes(level.name)}
+                    onChange={() => toggleLevel(level.name, level.id)}
+                    className="mr-2"
+                >
+                    {level.name}
+                </Checkbox>
+            ))}
+        </div>
+    );
 
 
     return (
@@ -113,46 +222,67 @@ const EditCompany = (props) => {
             <h3 className="text-2xl">Edit Company: {formik.values.name}</h3>
             <div className='row'>
                 <div className='col-12'>
-                    <Form.Item
+                <Form.Item
                         label="Name"
-                        style={{ minWidth: '100%' }}
+                        name="name"
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Name is required!',
+                                message: "Name is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
                     >
-                        <Input name="name" onChange={formik.handleChange} value={formik.values.name} />
+                        <Input name="name" onChange={formik.handleChange} values={formik.values.name}  />
                     </Form.Item>
 
                     <Form.Item
                         label="Introduction"
-                        style={{ minWidth: '100%' }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Introduction is required!',
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
                     >
-                        <Input name="introduction" onChange={formik.handleChange} value={formik.values.introduction} />
+                        <CKEditor
+                            className="rounded-lg overflow-hidden"
+                            data={formik.values.introduction}
+                            name="introduction"
+                            editor={ClassicEditor}
+                            onChange={(event, editor) => {
+                                handleChangeInput(event, editor, 'introduction')
+                            }}
+                            onReady={(editor) => {
+                                editor.editing.view.change((writer) => {
+                                    writer.setStyle(
+                                        "height",
+                                        "200px",
+                                        editor.editing.view.document.getRoot()
+                                    );
+                                });
+                            }}
+                        ></CKEditor>
+                        {/* <Input name="introduction" onChange={formik.handleChange} value={formik.values.introduction} /> */}
                     </Form.Item>
 
                     <Form.Item
                         label="Benefit"
-                        style={{ minWidth: '100%' }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Benefit is required!',
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
                     >
-                        <Input name="benefit" onChange={formik.handleChange} value={formik.values.benefit} />
+                        <CKEditor
+                            className="rounded-lg overflow-hidden"
+                            name="benefit"
+                            data={formik.values.benefit}
+                            editor={ClassicEditor}
+                            onChange={(event, editor) => {
+                                handleChangeInput(event, editor, 'benefit')
+                            }}
+                            onReady={(editor) => {
+                                editor.editing.view.change((writer) => {
+                                    writer.setStyle(
+                                        "height",
+                                        "200px",
+                                        editor.editing.view.document.getRoot()
+                                    );
+                                });
+                            }}
+                        ></CKEditor>
+                        {/* <Input name="benefit" onChange={formik.handleChange} value={formik.values.benefit} /> */}
                     </Form.Item>
 
                     <Form.Item
@@ -239,6 +369,68 @@ const EditCompany = (props) => {
                             <Option value={0}>On</Option>
                             <Option value={1}>Off</Option>
                         </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Skill"
+                        name="Skill"
+                        style={{ minWidth: "100%" }}
+                        rules={[
+                            {
+                                required: true,
+                                message: "SKill is required!",
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        {renderSkills()}
+
+                    </Form.Item>
+                    <Form.Item
+                        label="Skill Selected"
+                        name="Skill"
+                        style={{ minWidth: "100%" }}
+                        rules={[
+                            {
+                                required: true,
+                                message: "SKill is required!",
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        {renderSelectedSkills()}
+
+                    </Form.Item>
+                    <Form.Item
+                        label="Level"
+                        name="Level"
+                        style={{ minWidth: "100%" }}
+                        rules={[
+                            {
+                                required: true,
+                                message: "SKill is required!",
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        {renderLevel()}
+
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Level Selected"
+                        name="Level"
+                        style={{ minWidth: "100%" }}
+                        rules={[
+                            {
+                                required: true,
+                                message: "SKill is required!",
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        {renderSelectedLevel()}
+
                     </Form.Item>
 
                     <Form.Item

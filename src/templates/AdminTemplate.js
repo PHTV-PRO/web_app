@@ -436,7 +436,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
       width: '10%',
       render: (text, job) => {
         return <>
-          <Button key={1} href={`/admin/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => {
+          <Button key={1} href={`/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => {
           }}></Button>
 
           <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {

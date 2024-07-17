@@ -5,13 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import dayjs from "dayjs";
+import { getCurrentUserAction } from '../../../redux/actions/UserAction';
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
-import { getJobIdAction, updateJobByIdAction } from '../../../redux/actions/JobAction';
+import { getJobIdAction, updateJobByIdAction,updateJobByIdForEmployerAction } from '../../../redux/actions/JobAction';
 import { getCompanyListAction, getCompanyIdAction } from '../../../redux/actions/CompanyAction';
 import { getLevelListAction } from '../../../redux/actions/LevelAction';
 import { getSkillListAction } from '../../../redux/actions/SkillAction';
 import { getJobTypeListAction } from "../../../redux/actions/JobTypeAction";
+import { TOKEN } from '../../../util/settings/config';
 
 dayjs.extend(customParseFormat);
 var utc = require('dayjs/plugin/utc')
@@ -44,6 +46,10 @@ const EditJob = (props) => {
     ]);
     let { userLogin } = useSelector(state => state.UserReducer);
     let { id } = props.match.params;
+    let accessToken = {}
+    if (localStorage.getItem(TOKEN)) {
+        accessToken = localStorage.getItem(TOKEN)
+    }
     useEffect(() => {
         dispatch(getCompanyListAction())
         dispatch(getLevelListAction())
@@ -51,7 +57,7 @@ const EditJob = (props) => {
         dispatch(getJobIdAction(id))
         dispatch(getJobTypeListAction())
         dispatch(getCompanyIdAction(location))
-        //  dispatch(getCurrentUserAction(accessToken))
+        dispatch(getCurrentUserAction(accessToken))
         
     }, [dispatch, id, location])
    useEffect(()=>{
@@ -103,7 +109,12 @@ const EditJob = (props) => {
                     formData.append(key, values[key]);
                 }
                 console.table('formData', [...formData])
-                dispatch(updateJobByIdAction(id, formData))
+                if(userLogin?.role==="ADMIN"){
+                    dispatch(updateJobByIdAction(id, formData))
+                }
+                else{
+                    dispatch(updateJobByIdForEmployerAction(id, formData))
+                }
             }
         }
     })
@@ -500,10 +511,7 @@ const EditJob = (props) => {
                             <Option value={2}>FeMale</Option>
                         </Select>
                     </Form.Item>
-                        {/* {userLogin?.role== "ADMIN"?
-                        
-                        } */}
-                    <Form.Item
+                        {userLogin?.role== "ADMIN"? <Form.Item
                         label="Company"
                         style={{ minWidth: '100%' }}
                         rules={[
@@ -515,7 +523,9 @@ const EditJob = (props) => {
                         ]}
                     >
                         <Select value={formik.values.company_id} options={arrCompany?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeCompany} />
-                    </Form.Item>
+                    </Form.Item> :""
+                        }
+                   
                     <Form.Item
                         label="Skill"
                         name="Skill"

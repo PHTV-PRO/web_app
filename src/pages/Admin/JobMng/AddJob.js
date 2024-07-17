@@ -31,7 +31,6 @@ const AddNewJob = () => {
 
     const dateFormat = 'DD-MM-YYYY';
     const dispatch = useDispatch();
-    const { companyDetail } = useSelector(state => state.CompanyReducer)
 
     let { arrLevel } = useSelector(state => state.LevelReducer);
     let { arrSkill } = useSelector(state => state.SkillReducer);

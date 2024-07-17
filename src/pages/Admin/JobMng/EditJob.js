@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Select, Button, notification, DatePicker } from 'antd';
+import { Form, Input, Select, Button, notification, DatePicker, Checkbox } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -9,6 +9,8 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 
 import { getJobIdAction, updateJobByIdAction } from '../../../redux/actions/JobAction';
 import { getCompanyListAction, getCompanyIdAction } from '../../../redux/actions/CompanyAction';
+import { getLevelListAction } from '../../../redux/actions/LevelAction';
+import { getSkillListAction } from '../../../redux/actions/SkillAction';
 import { getJobTypeListAction } from "../../../redux/actions/JobTypeAction";
 
 dayjs.extend(customParseFormat);
@@ -29,22 +31,33 @@ const EditJob = (props) => {
     let { jobDetail } = useSelector(state => state.JobReducer)
     let { arrCompany } = useSelector((state) => state.CompanyReducer);
     let { arrJobType } = useSelector((state) => state.JobTypeReducer);
-    const { companyDetail } = useSelector(state => state.CompanyReducer);
+    let { arrLevel } = useSelector(state => state.LevelReducer);
+    let { arrSkill } = useSelector(state => state.SkillReducer);
+    const [selectedSkills, setSelectedSkills] = useState([]);
+    const [selectedSkillsId, setSelectedSkillsId] = useState([]);
+
+    const [selectedLevel, setSelectedLevel] = useState([]);
+    const [selectedLevelId, setSelectedLevelId] = useState([]);
     const [selectedDates, setSelectedDates] = useState([
         dayjs(jobDetail?.start_date), // Initial start date (today)
         dayjs(jobDetail?.end_date), // Initial end date (5 days from today)
     ]);
-    console.log("check date for all:", selectedDates);
 
 
     let { id } = props.match.params;
     useEffect(() => {
         dispatch(getCompanyListAction())
+        dispatch(getLevelListAction())
+        dispatch(getSkillListAction());
         dispatch(getJobIdAction(id))
         dispatch(getJobTypeListAction())
         dispatch(getCompanyIdAction(location))
+        
     }, [dispatch, id, location])
-
+   useEffect(()=>{
+    defaultSkill()
+    defaultLevel()
+   },[jobDetail])
     // const parseEnddateToString = jobDetail?.end_date?.toString();
     // const parseStartdateToString = jobDetail?.start_date?.toString();
     // console.log(location);
@@ -127,6 +140,128 @@ const EditJob = (props) => {
         const data = editor.getData();
         formik.setFieldValue(name, data);
     };
+    const toggleSkill = async (skillName, id) => {
+        const newSelectedSkills = [...selectedSkills];
+        const newSelectedSkillsId = [...selectedSkillsId];
+
+        if (newSelectedSkills.includes(skillName)) {
+            newSelectedSkills.splice(newSelectedSkills.indexOf(skillName), 1);
+            newSelectedSkillsId.splice(newSelectedSkillsId.indexOf(id), 1);
+
+        } else {
+            newSelectedSkills.push(skillName);
+            newSelectedSkillsId.push(id);
+        }
+        setSelectedSkills(newSelectedSkills);
+        setSelectedSkillsId(newSelectedSkillsId);
+
+        let ListId = '';
+        if (newSelectedSkillsId.length > 0) {
+            newSelectedSkillsId.map(skill => {
+                console.log("check");
+                ListId += skill.toString() + ",";
+            })
+            await formik.setFieldValue("skill_id", ListId);
+        };
+
+    }
+    const defaultSkill = async () => {
+        const newSelectedSkills = [];
+        const newSelectedSkillsId = [];
+        for (let index = 0; index < jobDetail?.skills?.length; index++) {
+            const element = jobDetail?.skills[index];
+            newSelectedSkills.push(element.name);
+            newSelectedSkillsId.push(element.id)
+        }
+        setSelectedSkills(newSelectedSkills);
+        setSelectedSkillsId(newSelectedSkillsId);
+        
+    }
+    const defaultLevel = async  => {
+        const newSelectedLevels = [...selectedLevel];
+        const newSelectedLevelId = [...selectedLevelId];
+        for (let index = 0; index < jobDetail?.levels?.length; index++) {
+            const element = jobDetail?.levels[index];
+            newSelectedLevels.push(element.name);
+            newSelectedLevelId.push(element.id)
+        }
+        setSelectedLevel(newSelectedLevels);
+        setSelectedLevelId(newSelectedLevelId);
+
+    }
+
+    const toggleLevel = async (name, id) => {
+        const newSelectedLevels = [...selectedLevel];
+        const newSelectedLevelId = [...selectedLevelId];
+
+        if (newSelectedLevels.includes(name)) {
+            newSelectedLevels.splice(newSelectedLevels.indexOf(name), 1);
+            newSelectedLevelId.splice(newSelectedLevelId.indexOf(id), 1);
+
+        } else {
+            newSelectedLevels.push(name);
+            newSelectedLevelId.push(id);
+        }
+        setSelectedLevel(newSelectedLevels);
+        setSelectedLevelId(newSelectedLevelId);
+
+        let ListId = '';
+        if (newSelectedLevelId.length > 0) {
+            newSelectedLevelId.map(level => {
+                console.log("check");
+                ListId += level.toString() + ",";
+            })
+            await formik.setFieldValue("level_id", ListId);
+        };
+
+    }
+
+    const renderSelectedSkills = () => (
+        <div>
+            {selectedSkills.map((skillName) => (
+                <Button key={skillName}>
+                    {skillName}
+                </Button>
+            ))}
+        </div>
+    );
+    const renderSkills = () => (
+        <div className="grid grid-cols-3">
+            {arrSkill?.data?.map((skill) => (
+                <Checkbox
+                    key={skill.id}
+                    checked={selectedSkills.includes(skill.name)}
+                    onChange={() => toggleSkill(skill.name, skill.id)}
+                    className="mr-2"
+                >
+                    {skill.name}
+                </Checkbox>
+            ))}
+        </div>
+    );
+    const renderSelectedLevel = () => (
+        <div>
+            {selectedLevel.map((level) => (
+                <Button key={level}>
+                    {level}
+                </Button>
+            ))}
+        </div>
+    );
+    const renderLevel = () => (
+        <div className="grid grid-cols-3">
+            {arrLevel?.data?.map((level) => (
+                <Checkbox
+                    key={level.id}
+                    checked={selectedLevel.includes(level.name)}
+                    onChange={() => toggleLevel(level.name, level.id)}
+                    className="mr-2"
+                >
+                    {level.name}
+                </Checkbox>
+            ))}
+        </div>
+    );
 
 
     return (
@@ -321,7 +456,7 @@ const EditJob = (props) => {
                             { type: 'number', min: 0, max: 99999 },
                         ]}
                     >
-                        <Input name="salary_min" type="number" onChange={formik.handleChange} value={formik.values.salary_min} />
+                        <Input name="salary_min" type="number" onChange={formik.handleChange} value={formik?.values?.salary_min} />
                     </Form.Item>
 
                     <Form.Item
@@ -332,7 +467,7 @@ const EditJob = (props) => {
                             { type: 'number', min: 0, max: 99999 },
                         ]}
                     >
-                        <Input name="salary_max" type="number" onChange={formik.handleChange} value={formik.values.salary_max} />
+                        <Input name="salary_max" type="number" onChange={formik.handleChange} value={formik?.values?.salary_max} />
                     </Form.Item>
 
                     <Form.Item
@@ -359,7 +494,8 @@ const EditJob = (props) => {
                             },
                         ]}
                     >
-                        <Select name="gender" onChange={handleChangeGender} placeholder="Choose Gender" value={formik.values.gender}>
+                        <Select name="gender" onChange={handleChangeGender} placeholder="Choose Gender" value={formik.values.gender ==0 ?"ALL":(formik.values.gender==1?"Male":"Female")}>
+                            <Option value={0}>ALl</Option>
                             <Option value={1}>Male</Option>
                             <Option value={2}>FeMale</Option>
                         </Select>
@@ -376,24 +512,70 @@ const EditJob = (props) => {
                             },
                         ]}
                     >
-                        <Select value={formik.values.company} options={arrCompany?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeCompany} />
+                        <Select value={formik.values.company_id} options={arrCompany?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeCompany} />
                     </Form.Item>
-
-
                     <Form.Item
-                        label="Locations"
-                        style={{ minWidth: '100%' }}
+                        label="Skill"
+                        name="Skill"
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Location is required!',
+                                message: "SKill is required!",
                                 transform: (value) => value.trim(),
                             },
                         ]}
                     >
-                        <Select value={formik.values.locations} options={companyDetail?.locations?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeLocation} />
+                        {renderSkills()}
+
+                    </Form.Item>
+                    <Form.Item
+                        label="Skill Selected"
+                        name="Skill"
+                        style={{ minWidth: "100%" }}
+                        rules={[
+                            {
+                                required: true,
+                                message: "SKill is required!",
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        {renderSelectedSkills()}
+
                     </Form.Item>
 
+                    <Form.Item
+                        label="Level"
+                        name="Level"
+                        style={{ minWidth: "100%" }}
+                        rules={[
+                            {
+                                required: true,
+                                message: "SKill is required!",
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        {renderLevel()}
+
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Level Selected"
+                        name="Level"
+                        style={{ minWidth: "100%" }}
+                        rules={[
+                            {
+                                required: true,
+                                message: "SKill is required!",
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        {renderSelectedLevel()}
+
+                    </Form.Item>
                     <Form.Item
                         label="Job Type"
                         style={{ minWidth: '100%' }}
@@ -405,7 +587,7 @@ const EditJob = (props) => {
                             },
                         ]}
                     >
-                        <Select value={formik.values.jobType} options={arrJobType?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeJobType} />
+                        <Select value={formik.values.job_type_id} options={arrJobType?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeJobType} />
                     </Form.Item>
 
 

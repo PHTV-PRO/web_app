@@ -112,6 +112,23 @@ export const updateJobByIdAction = (id, formData) => {
         }
     }
 }
+export const updateJobByIdForEmployerAction = (id, formData) => {
+    return async (dispatch) => {
+        try {
+            const result = await jobService.updateJobForEmployer(id, formData);
+            notification.success({
+                closeIcon: true,
+                message: 'Success',
+                description: (
+                    <>Update Job successfully</>
+                ),
+            });
+            history.goBack();
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
 
 export const deleteJobAction = (id) => {
     return async (dispatch) => {

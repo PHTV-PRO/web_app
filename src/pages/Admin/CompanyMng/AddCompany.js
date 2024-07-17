@@ -127,7 +127,6 @@ const AddNewCompany = () => {
         setIsLoading(true);
         let images = [];
         const files = e.target.files;
-        console.log(files);
 
         const formData = new FormData();
         for (let i of files) {
@@ -137,25 +136,17 @@ const AddNewCompany = () => {
                 "m7gp003p"
             );
             const response = await apiUploadImages(formData);
-            console.log(response);
             if (response.status === 200)
                 images = [...images, response.data?.secure_url];
         }
-        console.log(images);
         setIsLoading(false);
         setImagePreview((pre) => [...pre, ...images]);
 
-        // setPayload((pre) => ({ ...pre, images: [...pre.images, ...images] }));
-        // formik.setFieldValue("imagesTest", images);
-        // setPayload((pre) => ({ ...pre, images: [...pre.formik?.images, ...formik?.images] }));
-        let imageCurrent = formik.values.imagesTest;
+        let imageCurrent = formik?.values?.imagesTest;
 
-        formik.setFieldValue("imagesTest", [...formik.values.imagesTest, ...images]);
-        formik.setFieldValue("imagesTest",);
+        formik.setFieldValue("imagesTest", [...formik?.values?.imagesTest, ...images]);
 
 
-        console.log(images);
-        console.log(typeof (images));
     };
 
     const handleDeleteImage = (image) => {
@@ -163,8 +154,6 @@ const AddNewCompany = () => {
         setImagePreview((pre) => pre?.filter((item) => item !== image));
         let a = formik.values.imagesTest
 
-        console.log("testImage", a);
-        console.log(image);
         // formik.setFieldValue("imagesTest", JSON.stringify(JSON.parse(a)?.filter((item) => item !== image)));
         formik.setFieldValue("imagesTest", a?.filter((item) => item !== image));
     };

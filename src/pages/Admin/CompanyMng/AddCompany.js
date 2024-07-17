@@ -21,6 +21,7 @@ const AddNewCompany = () => {
     const [loading, setIsLoading] = useState(false);
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
+    const [inputImage, setInputImage] = useState([]);
 
     const [selectedLevel, setSelectedLevel] = useState([]);
     const [selectedLevelId, setSelectedLevelId] = useState([]);
@@ -83,7 +84,6 @@ const AddNewCompany = () => {
         },
     });
 
-    const [payload, setPayload] = useState();
 
     const handleChangeAccount = (value) => {
         formik.setFieldValue("account_id", value);
@@ -123,8 +123,6 @@ const AddNewCompany = () => {
     };
 
     const handleFiles = async (e) => {
-        console.log("//////", imagePreview);
-
         e.stopPropagation();
         setIsLoading(true);
         let images = [];
@@ -150,7 +148,11 @@ const AddNewCompany = () => {
         // setPayload((pre) => ({ ...pre, images: [...pre.images, ...images] }));
         // formik.setFieldValue("imagesTest", images);
         // setPayload((pre) => ({ ...pre, images: [...pre.formik?.images, ...formik?.images] }));
-        formik.setFieldValue((pre) => ({ ...pre, "imagesTest": [...pre.imagesTest, ...images] }));
+        let imageCurrent = formik.values.imagesTest;
+
+        formik.setFieldValue("imagesTest", [...formik.values.imagesTest, ...images]);
+        formik.setFieldValue("imagesTest",);
+
 
         console.log(images);
         console.log(typeof (images));
@@ -165,13 +167,6 @@ const AddNewCompany = () => {
         console.log(image);
         // formik.setFieldValue("imagesTest", JSON.stringify(JSON.parse(a)?.filter((item) => item !== image)));
         formik.setFieldValue("imagesTest", a?.filter((item) => item !== image));
-
-
-        // console.log();
-        // setPayload((pre) => ({
-        //     ...pre,
-        //     images: pre.images?.filter((item) => item !== image),
-        // }));
     };
 
     const handleChangeInput = (e, editor, name) => {

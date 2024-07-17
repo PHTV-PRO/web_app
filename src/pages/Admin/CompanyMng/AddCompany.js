@@ -111,7 +111,7 @@ const AddNewCompany = () => {
             reader.onload = (e) => {
                 setLogoSrc(e.target.result); //Hình base 64
             };
-            formik.setFieldValue("UploadFileLogo", file);
+            formik.setFieldValue("logo", file);
         }
     };
 
@@ -124,7 +124,7 @@ const AddNewCompany = () => {
             reader.onload = (e) => {
                 setBackgroundSrc(e.target.result); //Hình base 64
             };
-            formik.setFieldValue("UploadFileBackground", file);
+            formik.setFieldValue("background", file);
         }
     };
 
@@ -151,7 +151,7 @@ const AddNewCompany = () => {
         setIsLoading(false);
         setImagePreview((pre) => [...pre, ...images]);
         // setPayload((pre) => ({ ...pre, images: [...pre.formik?.images, ...formik?.images] }));
-        formik.setFieldValue("imagesTest", JSON.stringify(images));
+        formik.setFieldValue("list_image", JSON.stringify(images));
         console.log(images);
         console.log(typeof (images));
     };

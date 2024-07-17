@@ -65,14 +65,13 @@ const EmployerProfile = () => {
                         
                         {employerCompanyJob?.image == null || employerCompanyJob?.image == ""
                             ? <Avatar size={200} style={{ fontSize: '80px', display: 'flex', justifyContent: 'center', alignItems: 'center' }} icon={employerCompanyJob?.email?.substr(0, 1)} />
-                            : <div style={{ minWidth: '40px', minHeight: 40, width: 250, height: 200, backgroundSize: 'cover', borderRadius: '50%', backgroundImage: `url(${employerCompanyJob.image})` }} />
+                            : <div style={{width: 250, height: 200, backgroundSize: 'cover', borderRadius: '50%', backgroundImage: `url(${employerCompanyJob.image})` }} />
                         }
                       
-                        <div className='w-50 cursor-pointer'>  <div onClick={showModal}  className='shadow-md shadow-yellow-300   text-center mx-12 mt-4 p-2 bg-opacity-70 bg-yellow-400 rounded-md'>
-                            {subscriptionPlanByAccount?.subcriptionPlanDTO?.name!= null ?subscriptionPlanByAccount?.subcriptionPlanDTO?.name :
-                             <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => { }}>Buy subscription plan</Button> }
-                        </div></div>
-                      
+                      {  subscriptionPlanByAccount?.subcriptionPlanDTO? <div className='w-50 cursor-pointer'>  <div onClick={showModal}  className='shadow-md shadow-yellow-300   text-center mx-12 mt-4 p-2 bg-opacity-70 bg-yellow-400 rounded-md'>
+                            {subscriptionPlanByAccount?.subcriptionPlanDTO?.name }
+                        </div></div>: 
+                             <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => { }}>Buy subscription plan</Button>}
                       
                         <Modal title="Current subscription plan" open={isModalOpen} footer={
                             <>

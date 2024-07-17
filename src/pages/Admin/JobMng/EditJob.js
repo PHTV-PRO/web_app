@@ -42,8 +42,7 @@ const EditJob = (props) => {
         dayjs(jobDetail?.start_date), // Initial start date (today)
         dayjs(jobDetail?.end_date), // Initial end date (5 days from today)
     ]);
-
-
+    let { userLogin } = useSelector(state => state.UserReducer);
     let { id } = props.match.params;
     useEffect(() => {
         dispatch(getCompanyListAction())
@@ -52,6 +51,7 @@ const EditJob = (props) => {
         dispatch(getJobIdAction(id))
         dispatch(getJobTypeListAction())
         dispatch(getCompanyIdAction(location))
+        //  dispatch(getCurrentUserAction(accessToken))
         
     }, [dispatch, id, location])
    useEffect(()=>{
@@ -500,7 +500,9 @@ const EditJob = (props) => {
                             <Option value={2}>FeMale</Option>
                         </Select>
                     </Form.Item>
-
+                        {/* {userLogin?.role== "ADMIN"?
+                        
+                        } */}
                     <Form.Item
                         label="Company"
                         style={{ minWidth: '100%' }}

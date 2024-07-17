@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Button, Typography,Modal } from 'antd';
+import { Avatar, Button, Typography, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { TOKEN } from '../../util/settings/config';
 
@@ -42,15 +42,15 @@ const EmployerProfile = () => {
     }
 
     const showModal = () => {
-      setIsModalOpen(true);
+        setIsModalOpen(true);
     };
-  
+
     const handleOk = () => {
-      setIsModalOpen(false);
+        setIsModalOpen(false);
     };
-  
+
     const handleCancel = () => {
-      setIsModalOpen(false);
+        setIsModalOpen(false);
     };
     return (
         <div >
@@ -60,39 +60,39 @@ const EmployerProfile = () => {
             </div>
 
             <div className='row mx-10 mb-5'>
-                <div className='col-6 flex flex-col justify-items-center'>
-                    <div className='text-center'>
-                        
+                <div className='col-2 flex flex-col justify-items-center'>
+                    <div className='text-center flex flex-col '>
+
                         {employerCompanyJob?.image == null || employerCompanyJob?.image == ""
                             ? <Avatar size={200} style={{ fontSize: '80px', display: 'flex', justifyContent: 'center', alignItems: 'center' }} icon={employerCompanyJob?.email?.substr(0, 1)} />
-                            : <div style={{width: 250, height: 200, backgroundSize: 'cover', borderRadius: '50%', backgroundImage: `url(${employerCompanyJob.image})` }} />
+                            : <div style={{ width: 250, height: 200, backgroundSize: 'cover', borderRadius: '50%', backgroundImage: `url(${employerCompanyJob.image})` }} />
                         }
-                      
-                      {  subscriptionPlanByAccount?.subcriptionPlanDTO? <div className='w-50 cursor-pointer'>  <div onClick={showModal}  className='shadow-md shadow-yellow-300   text-center mx-12 mt-4 p-2 bg-opacity-70 bg-yellow-400 rounded-md'>
-                            {subscriptionPlanByAccount?.subcriptionPlanDTO?.name }
-                        </div></div>: 
-                             <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => { }}>Buy subscription plan</Button>}
-                      
+
+                        {subscriptionPlanByAccount?.subcriptionPlanDTO ? <div className='w-50 cursor-pointer'>  <div onClick={showModal} className='shadow-md shadow-yellow-300   text-center mx-12 mt-4 p-2 bg-opacity-70 bg-yellow-400 rounded-md'>
+                            {subscriptionPlanByAccount?.subcriptionPlanDTO?.name}
+                        </div></div> :
+                            <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => { }}>Buy subscription plan</Button>}
+
                         <Modal title="Current subscription plan" open={isModalOpen} footer={
                             <>
-                            <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => { }}>Renew subscription plan</Button> 
-                            <Button  className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={handleOk}>OK</Button> 
-                            </> } >
-                        <div >
-                        Start date:{dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.start_date).format("DD-MM-YYYY")}
-                        </div><div >
-                        End date:{dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.end_date).format("DD-MM-YYYY")}
-                        </div><div >
-                        Price:{(subscriptionPlanByAccount?.subcriptionPlanDTO?.price)} $
-                        </div><div >
-                        Expiry:{(dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.end_date).diff(dayjs(),"days"))} Days
-                        </div>
+                                <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => { }}>Renew subscription plan</Button>
+                                <Button className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={handleOk}>OK</Button>
+                            </>} >
+                            <div >
+                                Start date:{dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.start_date).format("DD-MM-YYYY")}
+                            </div><div >
+                                End date:{dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.end_date).format("DD-MM-YYYY")}
+                            </div><div >
+                                Price:{(subscriptionPlanByAccount?.subcriptionPlanDTO?.price)} $
+                            </div><div >
+                                Expiry:{(dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.end_date).diff(dayjs(), "days"))} Days
+                            </div>
                         </Modal>
 
                     </div>
                 </div>
 
-                <div className='col-6'>
+                <div className='col-6 ml-[200px]'>
                     <div className='col-6'>
                         <h2 className='text-xl font-bold'>Information of Employer : </h2>
                         <Typography>

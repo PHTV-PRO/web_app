@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { faCamera, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, Input, Button, notification, Select,Checkbox } from "antd";
+import { Form, Input, Button, notification, Select, Checkbox } from "antd";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useFormik } from "formik";
@@ -52,7 +52,8 @@ const AddNewCompany = () => {
             logo_image: "",
             background_image: "",
             enable: "",
-            // images: ""
+            images: "",
+            imagesTest: ""
         },
         onSubmit: (values) => {
             if (
@@ -92,14 +93,7 @@ const AddNewCompany = () => {
         formik.setFieldValue("enable", value);
     };
 
-    const handleDeleteImage = (image) => {
-        // 20:14/64
-        setImagePreview((pre) => pre?.filter((item) => item !== image));
-        setPayload((pre) => ({
-            ...pre,
-            images: pre.images?.filter((item) => item !== image),
-        }));
-    };
+
 
 
     const handleChangeFileLogo = (e) => {
@@ -111,7 +105,7 @@ const AddNewCompany = () => {
             reader.onload = (e) => {
                 setLogoSrc(e.target.result); //Hình base 64
             };
-            formik.setFieldValue("logo", file);
+            formik.setFieldValue("UploadFileLogo", file);
         }
     };
 
@@ -124,12 +118,14 @@ const AddNewCompany = () => {
             reader.onload = (e) => {
                 setBackgroundSrc(e.target.result); //Hình base 64
             };
-            formik.setFieldValue("background", file);
+            formik.setFieldValue("UploadFileBackground", file);
         }
     };
 
     const handleFiles = async (e) => {
-        // e.stopPropagation();
+        console.log("//////", imagePreview);
+
+        e.stopPropagation();
         setIsLoading(true);
         let images = [];
         const files = e.target.files;
@@ -150,11 +146,34 @@ const AddNewCompany = () => {
         console.log(images);
         setIsLoading(false);
         setImagePreview((pre) => [...pre, ...images]);
+
+        // setPayload((pre) => ({ ...pre, images: [...pre.images, ...images] }));
+        // formik.setFieldValue("imagesTest", images);
         // setPayload((pre) => ({ ...pre, images: [...pre.formik?.images, ...formik?.images] }));
-        formik.setFieldValue("list_image", JSON.stringify(images));
+        formik.setFieldValue((pre) => ({ ...pre, "imagesTest": [...pre.imagesTest, ...images] }));
+
         console.log(images);
         console.log(typeof (images));
     };
+
+    const handleDeleteImage = (image) => {
+        // 20:14/64
+        setImagePreview((pre) => pre?.filter((item) => item !== image));
+        let a = formik.values.imagesTest
+
+        console.log("testImage", a);
+        console.log(image);
+        // formik.setFieldValue("imagesTest", JSON.stringify(JSON.parse(a)?.filter((item) => item !== image)));
+        formik.setFieldValue("imagesTest", a?.filter((item) => item !== image));
+
+
+        // console.log();
+        // setPayload((pre) => ({
+        //     ...pre,
+        //     images: pre.images?.filter((item) => item !== image),
+        // }));
+    };
+
     const handleChangeInput = (e, editor, name) => {
         const data = editor.getData();
         formik.setFieldValue(name, data);

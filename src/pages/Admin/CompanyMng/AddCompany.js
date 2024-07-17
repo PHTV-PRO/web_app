@@ -143,8 +143,13 @@ const AddNewCompany = () => {
         setImagePreview((pre) => [...pre, ...images]);
 
         let imageCurrent = formik?.values?.imagesTest;
+        if(imageCurrent===""){
+            formik.setFieldValue("imagesTest",JSON.stringify( [...formik?.values?.imagesTest, ...images]));
+        }
+        else{
+            formik.setFieldValue("imagesTest",JSON.stringify( [...JSON.parse(formik?.values?.imagesTest), ...images]));
 
-        formik.setFieldValue("imagesTest", [...formik?.values?.imagesTest, ...images]);
+        }
 
 
     };

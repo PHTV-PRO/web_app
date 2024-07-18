@@ -104,7 +104,6 @@ const NewJobEmployer = () => {
 
     const handleChangeCompany = () => {
         formik.setFieldValue("company_id", employerCompanyJob?.companyForEmployer?.id);
-
     };
 
 
@@ -275,7 +274,8 @@ const NewJobEmployer = () => {
             }}
             layout="horizontal"
         >
-            <h3 className="text-2xl">Add New Job</h3>
+            <h3 className="text-2xl">Add New Job:  {companyDetail?.name}</h3>
+           
             <div className="row">
                 <div className="col-12">
                     <Form.Item

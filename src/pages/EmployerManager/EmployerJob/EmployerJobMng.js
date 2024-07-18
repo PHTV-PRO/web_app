@@ -243,7 +243,7 @@ export default function EmployerJobMng() {
     return <div>
         <div className='d-flex mb-3'>
             <h3 className='text-lg'>Job Management</h3>
-            <Button href='/employer/emplnewjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
+            <Button href='/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
         </div>
         <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
     </div>

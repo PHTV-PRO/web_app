@@ -127,7 +127,7 @@ function App() {
 
         {/* Job */}
         <AdminTemplate path="/admin/jobmng" exact Component={JobMng} />
-        <AdminTemplate path="/admin/jobmng/addjob" exact Component={AddNewJob} />
+        <AdminTemplate path="/jobmng/addjob" exact Component={AddNewJob} />
         <AdminTemplate path="/jobmng/edit/:id" exact Component={EditJob} />
 
         {/* Employer */}

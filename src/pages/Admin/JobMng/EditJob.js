@@ -40,10 +40,6 @@ const EditJob = (props) => {
 
     const [selectedLevel, setSelectedLevel] = useState([]);
     const [selectedLevelId, setSelectedLevelId] = useState([]);
-    const [selectedDates, setSelectedDates] = useState([
-        dayjs(jobDetail?.start_date), // Initial start date (today)
-        dayjs(jobDetail?.end_date), // Initial end date (5 days from today)
-    ]);
     let { userLogin } = useSelector(state => state.UserReducer);
     let { id } = props.match.params;
     let accessToken = {}
@@ -60,10 +56,10 @@ const EditJob = (props) => {
         dispatch(getCurrentUserAction(accessToken))
         
     }, [dispatch, id, location])
-   useEffect(()=>{
-    defaultSkill()
-    defaultLevel()
-   },[jobDetail])
+    useEffect(()=>{
+        defaultSkill()
+        defaultLevel()
+    },[jobDetail])
     // const parseEnddateToString = jobDetail?.end_date?.toString();
     // const parseStartdateToString = jobDetail?.start_date?.toString();
     // console.log(location);
@@ -491,7 +487,7 @@ const EditJob = (props) => {
                             },
                         ]}
                     >
-                        <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} rules={[{ required: true, message: 'Date can not be blank!' }]} onChange={onDateChange} defaultValue={selectedDates} />
+                        <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} rules={[{ required: true, message: 'Date can not be blank!' }]} onChange={onDateChange} value={[formik?.values?.start_date, formik?.values?.end_date]} />
                         {/* <DatePicker name="start_date"  format={day => day.tz("Asia/Saigon").format(dateFormat)}   /> */}
                     </Form.Item>
 

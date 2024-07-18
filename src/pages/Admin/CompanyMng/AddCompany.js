@@ -21,7 +21,7 @@ const AddNewCompany = () => {
     const [loading, setIsLoading] = useState(false);
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
-    const [inputImage, setInputImage] = useState([]);
+
 
     const [selectedLevel, setSelectedLevel] = useState([]);
     const [selectedLevelId, setSelectedLevelId] = useState([]);
@@ -46,7 +46,7 @@ const AddNewCompany = () => {
             introduction: "",
             benefit: "",
             profession: "",
-            size: "",
+            // size: "",
             // skill: "",
             link_website: "",
             nationnality: "",
@@ -54,7 +54,7 @@ const AddNewCompany = () => {
             background_image: "",
             enable: "",
             images: "",
-            imagesTest: ""
+            list_image: ""
         },
         onSubmit: (values) => {
             if (
@@ -62,10 +62,7 @@ const AddNewCompany = () => {
                 values.introduction === "" ||
                 values.benefit === "" ||
                 values.profession === "" ||
-                values.size === "" ||
-                // values.skill === "" ||
                 values.nationnality === "" ||
-                // values.background_image === "" ||
                 values.introduction === ""
             ) {
                 notification.error({
@@ -93,7 +90,9 @@ const AddNewCompany = () => {
         formik.setFieldValue("enable", value);
     };
 
-
+    const handleChangeSize = (value) => {
+        formik.setFieldValue("size", value);
+    };
 
 
     const handleChangeFileLogo = (e) => {
@@ -142,25 +141,25 @@ const AddNewCompany = () => {
         setIsLoading(false);
         setImagePreview((pre) => [...pre, ...images]);
 
-        let imageCurrent = formik?.values?.imagesTest;
-        if(imageCurrent===""){
-            formik.setFieldValue("imagesTest",JSON.stringify( [...formik?.values?.imagesTest, ...images]));
+        let imageCurrent = formik?.values?.list_image;
+        if (imageCurrent === "") {
+            formik.setFieldValue("list_image", JSON.stringify([...formik?.values?.list_image, ...images]));
         }
-        else{
-            formik.setFieldValue("imagesTest",JSON.stringify( [...JSON.parse(formik?.values?.imagesTest), ...images]));
+        else {
+            formik.setFieldValue("list_image", JSON.stringify([...JSON.parse(formik?.values?.list_image), ...images]));
 
         }
 
 
     };
 
-    const handleDeleteImage = (image) => {
-        // 20:14/64
-        setImagePreview((pre) => pre?.filter((item) => item !== image));
-        let a = formik.values.imagesTest
 
-        // formik.setFieldValue("imagesTest", JSON.stringify(JSON.parse(a)?.filter((item) => item !== image)));
-        formik.setFieldValue("imagesTest", a?.filter((item) => item !== image));
+
+    const handleDeleteImage = (image) => {
+        setImagePreview((pre) => pre?.filter((item) => item !== image));
+        let a = JSON.parse(formik?.values?.list_image)
+        formik.setFieldValue("list_image", a?.filter((item) => item !== image));
+
     };
 
     const handleChangeInput = (e, editor, name) => {
@@ -368,8 +367,27 @@ const AddNewCompany = () => {
                             },
                         ]}
                     >
-                        <Input name="size" onChange={formik.handleChange} value={formik.values.size} />
+                        <Select name="size" onChange={handleChangeSize} placeholder="Choose Szie" value={formik.values.size}>
+                            <Option value={"1 - 100"}>1 - 100</Option>
+                            <Option value={'100 - 500'}>100 - 500</Option>
+                            <Option value={'500 - 1000'}>500 - 1000</Option>
+                            <Option value={'1000 - 5000'}>1000 - 5000</Option>
+                            <Option value={'5000 - 9000'}>5000 - 9000</Option>
+
+                        </Select>
                     </Form.Item>
+
+                    {/* <Form.Item
+                        label="Enable"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Enable cannot be blank!",
+                            },
+                        ]}
+                    >
+                        
+                    </Form.Item> */}
 
                     {/* <Form.Item
                         label="Skill"

@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, Select, Button, notification, Checkbox } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCompanyIdAction, updateCompanyByIdAction } from '../../../redux/actions/CompanyAction';
+import { faCamera, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
+import { getCompanyIdAction, updateCompanyByIdAction, apiUploadImages } from '../../../redux/actions/CompanyAction';
 import { getListAccountAction } from '../../../redux/actions/AccountAction';
 import { getLevelListAction } from '../../../redux/actions/LevelAction';
 import { getSkillListAction } from '../../../redux/actions/SkillAction';
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import LoadingImage from "../../../components/LoadingImage";
 const { Option } = Select;
 
 const EditCompany = (props) => {
@@ -15,9 +19,10 @@ const EditCompany = (props) => {
     const [backgroundImageSrc, setBackgroundImageSrc] = useState("");
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
-
     const [selectedLevel, setSelectedLevel] = useState([]);
     const [selectedLevelId, setSelectedLevelId] = useState([]);
+    const [imagePreview, setImagePreview] = useState([]);
+    const [loading, setIsLoading] = useState(false);
 
     const dispatch = useDispatch();
     const { companyDetail } = useSelector(state => state.CompanyReducer)
@@ -28,7 +33,7 @@ const EditCompany = (props) => {
     let { id } = props.match.params;
     useEffect(() => {
         dispatch(getListAccountAction())
-         dispatch(getLevelListAction())
+        dispatch(getLevelListAction())
         dispatch(getSkillListAction());
         dispatch(getCompanyIdAction(id))
     }, [dispatch, id])
@@ -48,7 +53,9 @@ const EditCompany = (props) => {
             // chuyen thanh mang chua image
             background_image: companyDetail?.background_image,
             enable: companyDetail?.enable,
-            account: companyDetail?.account?.name
+            account: companyDetail?.account?.name,
+            list_image: companyDetail?.list_image ? JSON.parse(companyDetail?.list_image) : ''
+            // backgroundImageSrc:companyDetail?.
         },
         onSubmit: (values) => {
             if (values.name == '' || values.introduction == '' || values.benefit == '') {
@@ -71,10 +78,27 @@ const EditCompany = (props) => {
         }
     })
 
+    console.log(companyDetail?.list_image);
+
+
+
+
+    // hàm lấy imge khi update
+    useEffect(() => {
+        const images = companyDetail?.list_image ? JSON.parse(companyDetail?.list_image) : [];
+        console.log(images);
+        images && setImagePreview(images);
+    }, [companyDetail?.list_image])
+
+
     const handleChangeEnable = (value) => {
         formik.setFieldValue("enable", value);
     };
 
+
+    const handleChangeSize = (value) => {
+        formik.setFieldValue("size", value);
+    };
 
     const handleChangeAccount = (value) => {
         formik.setFieldValue('account_id', value)
@@ -118,6 +142,46 @@ const EditCompany = (props) => {
             ))}
         </div>
     );
+
+    const handleFiles = async (e) => {
+        // setImagePreview(companyDetail?.list_image);
+        e.stopPropagation();
+        setIsLoading(true);
+        let images = [];
+        const files = e.target.files;
+
+        const formData = new FormData();
+        for (let i of files) {
+            formData.append("file", i);
+            formData.append(
+                "upload_preset",
+                "m7gp003p"
+            );
+            const response = await apiUploadImages(formData);
+            if (response.status === 200)
+                images = [...images, response.data?.secure_url];
+        }
+        setIsLoading(false);
+        setImagePreview((pre) => [...pre, ...images]);
+
+        let imageCurrent = formik?.values?.list_image;
+        if (imageCurrent === "") {
+            formik.setFieldValue("list_image", JSON.stringify([...formik?.values?.list_image, ...images]));
+        }
+        else {
+            formik.setFieldValue("list_image", JSON.stringify([...formik?.values?.list_image, ...images]));
+        }
+    };
+
+    const handleDeleteImage = (image) => {
+        // 20:14/64
+        setImagePreview((pre) => pre?.filter((item) => item !== image));
+        let a = JSON.parse(formik?.values?.list_image)
+
+        // formik.setFieldValue("imagesTest", JSON.stringify(JSON.parse(a)?.filter((item) => item !== image)));
+        formik.setFieldValue("list_image", (a)?.filter((item) => item !== image));
+    };
+
     const renderSkills = () => (
         <div className="grid grid-cols-3">
             {arrSkill?.data?.map((skill) => (
@@ -220,11 +284,11 @@ const EditCompany = (props) => {
             layout="horizontal"
         >
             <h3 className="text-2xl">Edit Company: {formik.values.name}</h3>
+
             <div className='row'>
                 <div className='col-12'>
-                <Form.Item
+                    <Form.Item
                         label="Name"
-                        name="name"
                         style={{ minWidth: "100%" }}
                         rules={[
                             {
@@ -234,8 +298,9 @@ const EditCompany = (props) => {
                             },
                         ]}
                     >
-                        <Input name="name" onChange={formik.handleChange} values={formik.values.name}  />
+                        <Input name="name" onChange={formik.handleChange} value={formik.values.name} />
                     </Form.Item>
+
 
                     <Form.Item
                         label="Introduction"
@@ -310,7 +375,14 @@ const EditCompany = (props) => {
                             },
                         ]}
                     >
-                        <Input name="size" onChange={formik.handleChange} value={formik.values.size} />
+                        <Select name="size" onChange={handleChangeSize} placeholder="Choose Szie" value={formik.values.size}>
+                            <Option value={"1 - 100"}>1 - 100</Option>
+                            <Option value={'100 - 500'}>100 - 500</Option>
+                            <Option value={'500 - 1000'}>500 - 1000</Option>
+                            <Option value={'1000 - 5000'}>1000 - 5000</Option>
+                            <Option value={'5000 - 9000'}>5000 - 9000</Option>
+
+                        </Select>
                     </Form.Item>
 
                     {/* <Form.Item
@@ -468,6 +540,70 @@ const EditCompany = (props) => {
                         <br />
                         <img style={{ width: 500, height: 400, objectFit: 'cover', borderRadius: '10%', border: "0.1px solid #ccc" }} src={backgroundImageSrc === '' ? `${formik.values.background_image}` : backgroundImageSrc} alt="..." />
                     </Form.Item>
+
+                    <Form.Item label="List Image">
+                        <div className="w-full mb-6">
+                            {/* <h2 className="font-semibold text-xl py-2">Hình Ảnh</h2> */}
+                            <span className="italic">
+                                Cập Nhật Hình Ảnh Rõ Ràng Sẽ Cho Thuê Nhanh Hơn
+                            </span>
+                            <div className="w-full">
+                                <label
+                                    className="w-full border-4 border-blue-200 text-5xl text-gray-300 flex-col gap-6  my-4 items-center justify-center h-[300px] flex border-dashed rounded-md"
+                                    htmlFor="file"
+                                >
+                                    {loading ? (
+                                        <LoadingImage></LoadingImage>
+                                    ) : (
+                                        <span className="flex flex-col items-center justify-center gap-6">
+                                            <FontAwesomeIcon icon={faCamera}></FontAwesomeIcon>
+                                            <div className="text-black text-3xl">Thêm Ảnh</div>
+                                        </span>
+                                    )}
+                                </label>
+                                <input
+                                    onChange={handleFiles}
+                                    type="file"
+                                    id="file"
+                                    hidden
+                                    multiple
+                                ></input>
+                                {/* <small className="text-red-500 block w-full">
+                                    {invalidFields?.some((item) => item.name === "images") &&
+                                        invalidFields?.find((item) => item.name === "images")
+                                            ?.message}
+                                </small> */}
+                                <h3 className="font-medium py-2 text-xl">Ảnh Đã Chọn</h3>
+                                <div className="flex gap-4 items-center">
+                                    {imagePreview?.map((item) => {
+                                        return (
+                                            <div className="relative " key={item}>
+                                                <img
+                                                    key={item}
+                                                    alt="img-preview"
+                                                    src={item}
+                                                    className="w-60 h-60 object-cover rounded-md"
+                                                ></img>
+                                                <span
+                                                    title="Xoá"
+                                                    className="top-0 text-2xl bg-gray-700 hover:bg-slate-900 text-white rounded-[60%] cursor-pointer right-0 p-2 absolute "
+                                                    onClick={() => handleDeleteImage(item)}
+                                                >
+                                                    <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+                    </Form.Item>
+
+
+
+
+
+
 
 
                     <Form.Item label="Action">

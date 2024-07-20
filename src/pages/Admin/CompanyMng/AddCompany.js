@@ -158,7 +158,7 @@ const AddNewCompany = () => {
     const handleDeleteImage = (image) => {
         setImagePreview((pre) => pre?.filter((item) => item !== image));
         let a = JSON.parse(formik?.values?.list_image)
-        formik.setFieldValue("list_image", a?.filter((item) => item !== image));
+        formik.setFieldValue("list_image", [a?.filter((item) => item !== image)]);
 
     };
 

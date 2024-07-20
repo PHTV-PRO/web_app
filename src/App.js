@@ -61,6 +61,8 @@ import EditLocation from "./pages/Admin/LocationMng/EditLocation";
 // Proflie Employer
 import EmployerProfile from "./pages/EmployerManager/EmployerProfile";
 import EmployerJobMng from "./pages/EmployerManager/EmployerJob/EmployerJobMng";
+import EmployerSubcriptionPlanMng from "./pages/EmployerManager/EmployerSubcriptionPlanMng";
+
 
 //
 import UserTemplate from "./templates/UserTemplate";
@@ -144,6 +146,8 @@ function App() {
         {/* EmployerProfile */}
         <AdminTemplate path="/users/profile" exact Component={Profile} />
         <AdminTemplate path="/employer/emprofile" exact Component={EmployerProfile} />
+        <AdminTemplate path="/employer/employersubmng" exact Component={EmployerSubcriptionPlanMng} />
+
 
         {/* job employer */}
         <AdminTemplate path="/employer/empljobmng" exact Component={EmployerJobMng} />

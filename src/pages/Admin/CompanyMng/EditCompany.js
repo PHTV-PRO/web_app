@@ -175,9 +175,14 @@ const EditCompany = (props) => {
 
     const handleDeleteImage = (image) => {
         // 20:14/64
+
+        // let a = formik?.values?.list_image
+        // console.log('before', a);
+        // const filter = a?.filter((item) => item !== image)
+        // console.log('after', filter);
+
         setImagePreview((pre) => pre?.filter((item) => item !== image));
         let a = JSON.parse(formik?.values?.list_image)
-
         // formik.setFieldValue("imagesTest", JSON.stringify(JSON.parse(a)?.filter((item) => item !== image)));
         formik.setFieldValue("list_image", (a)?.filter((item) => item !== image));
     };

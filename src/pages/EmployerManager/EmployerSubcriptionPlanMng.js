@@ -1,20 +1,29 @@
 import React, { useEffect } from 'react'
-import { SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteSubscriptionPlanAction, getSubscriptionPlanListAction } from '../../../redux/actions/SubscriptionPlanAction';
+
+import { getSubscriptionPlanByAccountAction } from '../../redux/actions/SubscriptionPlanAction';
+import { TOKEN } from '../../util/settings/config';
 
 
-export default function SubcriptionPlanMng() {
-    let { arrSubscriptionPlan } = useSelector(state => state.SubscriptionPlanReducer);
-    console.log(arrSubscriptionPlan);
+
+export default function EmployerSubcriptionPlanMng() {
+    let { subscriptionPlanByAccount } = useSelector(state => state.SubscriptionPlanReducer);
+
+    console.log(subscriptionPlanByAccount);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getSubscriptionPlanListAction())
+        dispatch(getSubscriptionPlanByAccountAction(accessToken))
     }, [dispatch])
 
+
+    let accessToken = {}
+    if (localStorage.getItem(TOKEN)) {
+        accessToken = localStorage.getItem(TOKEN)
+    }
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
@@ -31,8 +40,12 @@ export default function SubcriptionPlanMng() {
         setSearchedColumn(dataIndex);
     };
 
+    const parseSubsObjecTotArray = [subscriptionPlanByAccount?.subcriptionPlanDTO]
+    console.log(parseSubsObjecTotArray);
+    const data2 = parseSubsObjecTotArray;
 
-    const data = arrSubscriptionPlan.data;
+    const data1 = subscriptionPlanByAccount?.subcriptionPlanDTOs;
+    console.log(data1);
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -140,28 +153,22 @@ export default function SubcriptionPlanMng() {
             sorter: (a, b) => a.price - b.price,
             sortDirections: ['descend', 'ascend'],
         },
-        {
-            title: 'Manage',
-            width: '15%',
-            render: (text, subpl) => {
-                return <>
-                    <Button key={1} href={`/admin/subplanmng/edit/${subpl.id}`} type="link" icon={<EditOutlined />} onClick={() => {
-                    }}></Button>
-                    <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
-                        if (window.confirm('Do you want to delete ' + subpl.name + '?')) {
-                            dispatch(deleteSubscriptionPlanAction(subpl.id))
-                        }
-                    }}></Button>
-                </>
 
-            }
-        },
     ]
     return <div>
         <div className='d-flex mb-3'>
-            <h3 className='text-lg'>SubcriptionPlan Management</h3>
-            <Button href='/admin/subplanmng/addsubplan' type="primary" className='ml-3 small bg-primary'>+ Add New SubcriptionPlan</Button>
+            <h3 className='text-xl'>SubcriptionPlan Management</h3>
+            {/* <Button href='/admin/subplanmng/addsubplan' type="primary" className='ml-3 small bg-primary'>+ Add New SubcriptionPlan</Button> */}
         </div>
-        <Table columns={columns} dataSource={data} rowKey={'id'} />
+        <div>
+            <div className='mb-20'>
+                <h3 className='text-lg italic text-gray-500'>Registered</h3>
+                <Table columns={columns} dataSource={data2} rowKey={'id'} />
+            </div>
+            <div>
+                <h3 className='text-lg italic text-gray-500'>Out of Date</h3>
+                <Table columns={columns} dataSource={data1} rowKey={'id'} />
+            </div>
+        </div>
     </div>
 }

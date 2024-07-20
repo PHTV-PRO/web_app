@@ -61,15 +61,18 @@ const EmployerProfile = () => {
 
             <div className='row mx-10 mb-5'>
                 <div className='col-2 flex flex-col justify-items-center'>
-                    <div className='text-center flex flex-col '>
+                    <div className='items-center flex flex-col '>
 
                         {employerCompanyJob?.image == null || employerCompanyJob?.image == ""
                             ? <Avatar size={200} style={{ fontSize: '80px', display: 'flex', justifyContent: 'center', alignItems: 'center' }} icon={employerCompanyJob?.email?.substr(0, 1)} />
-                            : <div style={{ width: 250, height: 200, backgroundSize: 'cover', borderRadius: '50%', backgroundImage: `url(${employerCompanyJob.image})` }} />
+                            : <div style={{ width: 200, height: 150, backgroundSize: 'cover', borderRadius: '50%', backgroundImage: `url(${employerCompanyJob.image})` }} />
                         }
 
-                        {subscriptionPlanByAccount?.subcriptionPlanDTO ? <div className='w-50 cursor-pointer'>  <div onClick={showModal} className='shadow-md shadow-yellow-300   text-center mx-12 mt-4 p-2 bg-opacity-70 bg-yellow-400 rounded-md'>
-                            {subscriptionPlanByAccount?.subcriptionPlanDTO?.name}
+                        {subscriptionPlanByAccount?.subcriptionPlanDTO ? <div className='w-50 cursor-pointer'>  <div onClick={showModal} className='bg-yellow-400 mt-4  rounded-md shadow-md  p-2 shadow-yellow-300   text-center'>
+
+                            <text>
+                                {subscriptionPlanByAccount?.subcriptionPlanDTO?.name}
+                            </text>
                         </div></div> :
                             <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => { }}>Buy subscription plan</Button>}
 

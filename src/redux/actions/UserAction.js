@@ -211,6 +211,10 @@ export const getCurrentUserAction = (token) => {
         });
       } else {
         localStorage.removeItem(TOKEN)
+        dispatch({
+          type: GET_CURRENT_USER_ACTION,
+          userLogin: null,
+        });
       }
     } catch (error) {
       localStorage.removeItem(TOKEN)

@@ -6,7 +6,7 @@ import { TOKEN } from '../../util/settings/config';
 
 import { getCurrentUserAction } from '../../redux/actions/UserAction';
 import { getCompanyAndJobByTokenAction } from '../../redux/actions/AccountAction';
-import { getSubscriptionPlanByAccountAction } from '../../redux/actions/SubscriptionPlanAction';
+import { getSubscriptionPlanByAccountAction,returnBuyScriptionPlan } from '../../redux/actions/SubscriptionPlanAction';
 
 import { history } from '../../App';
 import dayjs from 'dayjs';
@@ -23,7 +23,6 @@ const EmployerProfile = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
@@ -36,6 +35,20 @@ const EmployerProfile = () => {
             dispatch(getSubscriptionPlanByAccountAction(accessToken))
         }
     }, [dispatch]);
+    let URL = window.location.href;
+    useEffect(()=>{
+        const paymentIdRegex = /paymentId=([^&]+)/;
+        const payerIdRegex = /PayerID=([^&]+)/;
+        const paymentIdMatch = URL.match(paymentIdRegex);
+        const payerIdMatch = URL.match(payerIdRegex);
+        const paymentId = paymentIdMatch ? paymentIdMatch[1] : null;
+        const payerId = payerIdMatch ? payerIdMatch[1] : null;
+        if(payerId!=null && paymentId!= null){
+            dispatch(returnBuyScriptionPlan(paymentId,payerId))
+            
+        }
+            
+    },[URL])
 
     if (userLogin && (userLogin?.role !== 'EMPLOYER')) {
         history.replace('/')
@@ -74,7 +87,7 @@ const EmployerProfile = () => {
                                 {subscriptionPlanByAccount?.subcriptionPlanDTO?.name}
                             </text>
                         </div></div> :
-                            <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => { }}>Buy subscription plan</Button>}
+                            <Button href={`/employer/buyScPl`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => { }}>Buy subscription plan</Button>}
 
                         <Modal title="Current subscription plan" open={isModalOpen} footer={
                             <>

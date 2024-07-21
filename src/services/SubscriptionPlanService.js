@@ -13,6 +13,12 @@ export class SubcriptionPlanService extends baseService {
     getSubcriptionPlanById = (id) => {
         return this.get(`/api/general/subcription_plan/${id}`);
     }
+    getBuySubcriptionPlan = (id,price) => {
+        return this.post(`/api/employer/paypal/pay?id=${id}&price=${price}`);
+    }
+    getReturnSubcriptionPlan = (paymentId,payerId) => {
+        return this.get(`/api/employer/paypal/?paymentId=${paymentId}&PayerID=${payerId}`);
+    }
 
     getSubcriptionPlanByAccount = (token) => {
         return this.get(`/api/employer/subcription_plan`, token);

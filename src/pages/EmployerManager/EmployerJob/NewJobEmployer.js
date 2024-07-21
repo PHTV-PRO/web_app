@@ -96,7 +96,6 @@ const NewJobEmployer = () => {
                     formData.append(key, values[key]);
                 }
                 console.table("formData", [...formData]);
-                dispatch(addJobOfEmployerAction(formData));
             }
         },
     });

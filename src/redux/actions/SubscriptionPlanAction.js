@@ -2,7 +2,9 @@ import { GET_SUBSCRIPTION_PLAN_DETAIL, GET_SUBSCRIPTION_PLAN_LIST, GET_SUBSCRIPT
 import { history } from "../../App";
 import { subcriptionPlanService } from "../../services/SubscriptionPlanService";
 import { notification } from "antd";
-
+import { getCompanyAndJobByTokenAction } from '../../redux/actions/AccountAction';
+import {  GET_COMPANY_JOB } from "../constants";
+import { accountService } from "../../services/AccountService";
 
 export const getSubscriptionPlanListAction = () => {
     return async (dispatch) => {
@@ -31,6 +33,47 @@ export const getSubscriptionPlanByIdAction = (id) => {
                 type: GET_SUBSCRIPTION_PLAN_DETAIL,
                 subscriptionPlanDetail: result.data.data
             })
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+export const buyScriptionPlan = (id,price) => {
+    return async (dispatch) => {
+        try {
+            const result = await subcriptionPlanService.getBuySubcriptionPlan(id,price);
+            if(result.status===200){
+                window.open(result.data.data, '_parent').focus();
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+export const returnBuyScriptionPlan = (paymentId,payerId) => {
+    return async (dispatch) => {
+        try {
+            const result = await subcriptionPlanService.getReturnSubcriptionPlan(paymentId,payerId);
+            console.log("check result: ", result);
+            if(result.status === 200){
+                notification.success({
+                    closeIcon: true,
+                    message: 'Buy Subscription Plan Success',
+                    description: (
+                        <>Add new station successfully.</>
+                    ),
+                })
+                window.open("http://localhost:3000/employer/emprofile", '_parent').focus()
+            }else{
+                notification.error({
+                    closeIcon: true,
+                    message: 'Buy Subscription Plan Fail. plase try again!!',
+                    description: (
+                        <>Add new station successfully.</>
+                    ),
+                })
+            history.push("/employer/emprofile")
+            }
         } catch (error) {
             console.log('error', error);
         }

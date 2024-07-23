@@ -20,7 +20,7 @@ export class UserService extends baseService {
 
     getCurrentUser = (token) => {
         if (token != null) {
-            return this.postNotBearer(`/api/general/check_token`, token);
+            return this.postNotBearer(`/api/general/check_token_web`, token);
         }
     }
 

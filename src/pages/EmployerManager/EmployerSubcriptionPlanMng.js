@@ -7,13 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getSubscriptionPlanByAccountAction } from '../../redux/actions/SubscriptionPlanAction';
 import { TOKEN } from '../../util/settings/config';
+import { render } from '@testing-library/react';
+import dayjs from 'dayjs';
 
 
 
 export default function EmployerSubcriptionPlanMng() {
     let { subscriptionPlanByAccount } = useSelector(state => state.SubscriptionPlanReducer);
 
-    console.log(subscriptionPlanByAccount);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getSubscriptionPlanByAccountAction(accessToken))
@@ -41,11 +42,10 @@ export default function EmployerSubcriptionPlanMng() {
     };
 
     const parseSubsObjecTotArray = [subscriptionPlanByAccount?.subcriptionPlanDTO]
-    console.log(parseSubsObjecTotArray);
     const data2 = parseSubsObjecTotArray;
 
     const data1 = subscriptionPlanByAccount?.subcriptionPlanDTOs;
-    console.log(data1);
+    console.log(data2);
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -130,7 +130,7 @@ export default function EmployerSubcriptionPlanMng() {
             title: 'Expiry',
             dataIndex: 'expiry',
             key: 'expiry',
-            width: '20%',
+            width: '10%',
             ...getColumnSearchProps('expiry'),
             sorter: (a, b) => a.expiry - b.expiry,
             sortDirections: ['descend', 'ascend'],
@@ -139,9 +139,17 @@ export default function EmployerSubcriptionPlanMng() {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
-            width: '30%',
+            width: '15%',
             ...getColumnSearchProps('name'),
             sorter: (a, b) => a.name - b.name,
+            render: (a)=>{
+                if (data2[0]?.name == a) {
+                    return <div className='bg-yellow-300 rounded-md shadow-md  p-2 shadow-yellow-300   text-center'> {a} </div>
+                  } else {
+                    return <div className='bg-gray-200 rounded-md shadow-md  p-2 shadow-gray-300   text-center'> {a} </div>
+                  }
+               
+            },
             sortDirections: ['descend', 'ascend'],
         },
         {
@@ -153,20 +161,44 @@ export default function EmployerSubcriptionPlanMng() {
             sorter: (a, b) => a.price - b.price,
             sortDirections: ['descend', 'ascend'],
         },
+        {
+            title: 'Start date',
+            dataIndex: 'start_date',
+            key: 'start_date',
+            width: '20%',
+            ...getColumnSearchProps('start_date'),
+            sorter: (a, b) => a.start_date - b.start_date,
+            render:(data)=>{
+                return <>{dayjs(data).format("DD-MM-YYYY")}</>
+            },
+            sortDirections: ['descend', 'ascend'],
+        },
+        {
+            title: 'End date',
+            dataIndex: 'end_date',
+            key: 'end_date',
+            width: '20%',
+            ...getColumnSearchProps('end_date'),
+            sorter: (a, b) => a.end_date - b.end_date,
+            render:(data)=>{
+                return <>{dayjs(data).format("DD-MM-YYYY")}</>
+            },
+            sortDirections: ['descend', 'ascend'],
+        },
 
     ]
     return <div>
-        <div className='d-flex mb-3'>
+        <div className='d-flex mb-3 h-15'>
             <h3 className='text-xl'>SubcriptionPlan Management</h3>
             {/* <Button href='/admin/subplanmng/addsubplan' type="primary" className='ml-3 small bg-primary'>+ Add New SubcriptionPlan</Button> */}
         </div>
         <div>
-            <div className='mb-20'>
+            <div className='mb-5'>
                 <h3 className='text-lg italic text-gray-500'>Registered</h3>
-                <Table columns={columns} dataSource={data2} rowKey={'id'} />
+                <Table columns={columns} dataSource={data2} rowKey={'id'} pagination={false} />
             </div>
-            <div>
-                <h3 className='text-lg italic text-gray-500'>Out of Date</h3>
+            <div className=''> 
+                <h3 className='text-lg italic text-gray-500 '>Out of Date</h3>
                 <Table columns={columns} dataSource={data1} rowKey={'id'} />
             </div>
         </div>

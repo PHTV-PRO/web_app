@@ -73,7 +73,7 @@ const EmployerProfile = () => {
             </div>
 
             <div className='row mx-10 mb-5'>
-                <div className='col-2 flex flex-col justify-items-center'>
+                <div className='col-3 flex flex-col justify-items-center'>
                     <div className='items-center flex flex-col '>
 
                         {employerCompanyJob?.image == null || employerCompanyJob?.image == ""
@@ -81,7 +81,7 @@ const EmployerProfile = () => {
                             : <div style={{ width: 200, height: 150, backgroundSize: 'cover', borderRadius: '50%', backgroundImage: `url(${employerCompanyJob.image})` }} />
                         }
 
-                        {subscriptionPlanByAccount?.subcriptionPlanDTO ? <div className='w-50 cursor-pointer'>  <div onClick={showModal} className='bg-yellow-400 mt-4  rounded-md shadow-md  p-2 shadow-yellow-300   text-center'>
+                        {subscriptionPlanByAccount?.subcriptionPlanDTO ? <div className='w-100 cursor-pointer'>  <div onClick={showModal} className='bg-yellow-300 mt-4  rounded-md shadow-md  p-2 shadow-yellow-300   text-center'>
 
                             <text>
                                 {subscriptionPlanByAccount?.subcriptionPlanDTO?.name}
@@ -126,7 +126,7 @@ const EmployerProfile = () => {
                         </Typography>
                     </div>
                     <div className=''>
-                        <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => {
+                        <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 ml-3 px-5' type='primary' onClick={() => {
                         }}>Update Information</Button>
                     </div>
                 </div>

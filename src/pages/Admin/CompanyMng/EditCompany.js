@@ -54,7 +54,7 @@ const EditCompany = (props) => {
             background_image: companyDetail?.background_image,
             enable: companyDetail?.enable,
             account: companyDetail?.account?.name,
-            list_image: companyDetail?.list_image ? JSON.parse(companyDetail?.list_image) : ''
+            list_image: companyDetail?.list_image ? companyDetail?.list_image : null
             // backgroundImageSrc:companyDetail?.
         },
         onSubmit: (values) => {
@@ -73,12 +73,12 @@ const EditCompany = (props) => {
                 }
                 console.table('formData', [...formData])
                 dispatch(updateCompanyByIdAction(id, formData))
-                // localStorage.removeItem("busStaionDefault");
+
             }
         }
     })
 
-    console.log(companyDetail?.list_image);
+
 
 
 
@@ -164,27 +164,23 @@ const EditCompany = (props) => {
         setIsLoading(false);
         setImagePreview((pre) => [...pre, ...images]);
 
-        let imageCurrent = formik?.values?.list_image;
-        if (imageCurrent === "") {
-            formik.setFieldValue("list_image", JSON.stringify([...formik?.values?.list_image, ...images]));
+        if (formik?.values?.list_image !== null) {
+            formik.setFieldValue("list_image", JSON.stringify([...JSON.parse(formik?.values?.list_image), ...images]));
         }
         else {
-            formik.setFieldValue("list_image", JSON.stringify([...formik?.values?.list_image, ...images]));
+            formik.setFieldValue("list_image", JSON.stringify([...images]));
         }
     };
 
     const handleDeleteImage = (image) => {
         // 20:14/64
 
-        // let a = formik?.values?.list_image
-        // console.log('before', a);
-        // const filter = a?.filter((item) => item !== image)
-        // console.log('after', filter);
+        let a = formik?.values?.list_image
+        console.log("Toan ngaooo:", a);
+        console.log("checkkkkkkkk:", JSON.parse(a));
 
         setImagePreview((pre) => pre?.filter((item) => item !== image));
-        let a = JSON.parse(formik?.values?.list_image)
-        // formik.setFieldValue("imagesTest", JSON.stringify(JSON.parse(a)?.filter((item) => item !== image)));
-        formik.setFieldValue("list_image", (a)?.filter((item) => item !== image));
+        formik.setFieldValue("list_image", JSON.stringify(JSON.parse((a))?.filter((item) => item !== image)));
     };
 
     const renderSkills = () => (

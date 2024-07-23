@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getJobTypeListAction } from "../../../redux/actions/JobTypeAction";
-import { getCompanyListAction, getCompanyIdAction } from "../../../redux/actions/CompanyAction";
+import { getCompanyIdAction } from "../../../redux/actions/CompanyAction";
 import { getLevelListAction } from '../../../redux/actions/LevelAction';
 import { addJobAction } from "../../../redux/actions/JobAction";
 import { getSkillListAction } from '../../../redux/actions/SkillAction';
@@ -34,7 +34,7 @@ const AddNewJob = () => {
 
     const [selectedLevel, setSelectedLevel] = useState([]);
     const [selectedLevelId, setSelectedLevelId] = useState([]);
-    
+
 
     const dateFormat = 'DD-MM-YYYY';
     const dispatch = useDispatch();
@@ -57,10 +57,10 @@ const AddNewJob = () => {
         dispatch(getLevelListAction())
         dispatch(getSkillListAction());
     }, [dispatch, location]);
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getCompanyIdAction(employerCompanyJob?.companyForEmployer?.id));
         handleChangeCompany();
-    },[employerCompanyJob])
+    }, [employerCompanyJob])
 
     const formik = useFormik({
 
@@ -102,19 +102,17 @@ const AddNewJob = () => {
                     formData.append(key, values[key]);
                 }
                 console.table("formData", [...formData]);
-                if(userLogin?.role ==="ADMIN"){
+                if (userLogin?.role === "ADMIN") {
                     dispatch(addJobAction(formData));
                 }
-                else{
+                else {
                     dispatch(addJobOfEmployerAction(formData));
                 }
             }
         },
     });
-    
 
 
-   
 
 
     const handleChangeJobType = (value) => {
@@ -241,6 +239,16 @@ const AddNewJob = () => {
             ))}
         </div>
     );
+
+    const checkSalary = (value, salaryMin) => {
+        console.log(value);
+        if (value <= salaryMin) {
+            return "Salary Max must be greater than Salary Min";
+        }
+        return true;
+    };
+    const salaryMin = formik.values.salary_min
+
     return (
         <Form
             onSubmitCapture={formik.handleSubmit}
@@ -255,7 +263,7 @@ const AddNewJob = () => {
             <h3 className="text-2xl">Add New Job : {companyDetail?.name}</h3>
             <div className="row">
                 <div className="col-12">
-                <Form.Item
+                    <Form.Item
                         label="Title"
                         style={{ minWidth: '100%' }}
                         rules={[
@@ -266,7 +274,7 @@ const AddNewJob = () => {
                             },
                         ]}
                     >
-                        <Input name="title" onChange={formik.handleChange}  />
+                        <Input name="title" onChange={formik.handleChange} />
                     </Form.Item>
 
                     <Form.Item
@@ -393,7 +401,7 @@ const AddNewJob = () => {
                             { type: 'number', min: 0, max: 99999 },
                         ]}
                     >
-                        <Input name="amount" type="number" onChange={formik.handleChange}/>
+                        <Input name="amount" type="number" onChange={formik.handleChange} />
                     </Form.Item>
 
                     <Form.Item
@@ -427,7 +435,7 @@ const AddNewJob = () => {
                             { type: 'number', min: 0, max: 99999 },
                         ]}
                     >
-                        <Input name="salary_min" type="number" onChange={formik.handleChange}  />
+                        <Input name="salary_min" type="number" onChange={formik.handleChange} />
                     </Form.Item>
 
                     <Form.Item
@@ -436,9 +444,13 @@ const AddNewJob = () => {
                         rules={[
                             { required: true, message: 'Salary Max is required !', transform: (value) => value.trim() },
                             { type: 'number', min: 0, max: 99999 },
+                            {
+                                validator: checkSalary
+                            },
                         ]}
+
                     >
-                        <Input name="salary_max" type="number" onChange={formik.handleChange}  />
+                        <Input name="salary_max" type="number" onChange={formik.handleChange} />
                     </Form.Item>
 
                     <Form.Item
@@ -465,7 +477,7 @@ const AddNewJob = () => {
                             },
                         ]}
                     >
-                        <Select name="gender" onChange={handleChangeGender} placeholder="Choose Gender" value={formik.values.gender ==0 ?"ALL":(formik.values.gender==1?"Male":"Female")}>
+                        <Select name="gender" onChange={handleChangeGender} placeholder="Choose Gender" value={formik.values.gender == 0 ? "ALL" : (formik.values.gender == 1 ? "Male" : "Female")}>
                             <Option value={0}>ALl</Option>
                             <Option value={1}>Male</Option>
                             <Option value={2}>FeMale</Option>

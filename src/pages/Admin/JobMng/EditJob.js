@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import { getCurrentUserAction } from '../../../redux/actions/UserAction';
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
-import { getJobIdAction, updateJobByIdAction,updateJobByIdForEmployerAction } from '../../../redux/actions/JobAction';
+import { getJobIdAction, updateJobByIdAction, updateJobByIdForEmployerAction } from '../../../redux/actions/JobAction';
 import { getCompanyListAction, getCompanyIdAction } from '../../../redux/actions/CompanyAction';
 import { getLevelListAction } from '../../../redux/actions/LevelAction';
 import { getSkillListAction } from '../../../redux/actions/SkillAction';
@@ -54,12 +54,12 @@ const EditJob = (props) => {
         dispatch(getJobTypeListAction())
         dispatch(getCompanyIdAction(location))
         dispatch(getCurrentUserAction(accessToken))
-        
+
     }, [dispatch, id, location])
-    useEffect(()=>{
+    useEffect(() => {
         defaultSkill()
         defaultLevel()
-    },[jobDetail])
+    }, [jobDetail])
     // const parseEnddateToString = jobDetail?.end_date?.toString();
     // const parseStartdateToString = jobDetail?.start_date?.toString();
     // console.log(location);
@@ -88,7 +88,7 @@ const EditJob = (props) => {
             company_id: jobDetail?.company?.id,
             location_id: jobDetail?.location?.id,
             job_type_id: jobDetail?.jobType?.id,
-            _active: jobDetail?._active
+            _active: true
         },
         onSubmit: (values) => {
             if (values.name == '' || values.introduction == '' || values.benefit == '') {
@@ -105,10 +105,10 @@ const EditJob = (props) => {
                     formData.append(key, values[key]);
                 }
                 console.table('formData', [...formData])
-                if(userLogin?.role==="ADMIN"){
+                if (userLogin?.role === "ADMIN") {
                     dispatch(updateJobByIdAction(id, formData))
                 }
-                else{
+                else {
                     dispatch(updateJobByIdForEmployerAction(id, formData))
                 }
             }
@@ -182,9 +182,9 @@ const EditJob = (props) => {
         }
         setSelectedSkills(newSelectedSkills);
         setSelectedSkillsId(newSelectedSkillsId);
-        
+
     }
-    const defaultLevel = async  => {
+    const defaultLevel = async => {
         const newSelectedLevels = [...selectedLevel];
         const newSelectedLevelId = [...selectedLevelId];
         for (let index = 0; index < jobDetail?.levels?.length; index++) {
@@ -501,13 +501,13 @@ const EditJob = (props) => {
                             },
                         ]}
                     >
-                        <Select name="gender" onChange={handleChangeGender} placeholder="Choose Gender" value={formik.values.gender ==0 ?"ALL":(formik.values.gender==1?"Male":"Female")}>
+                        <Select name="gender" onChange={handleChangeGender} placeholder="Choose Gender" value={formik.values.gender == 0 ? "ALL" : (formik.values.gender == 1 ? "Male" : "Female")}>
                             <Option value={0}>ALl</Option>
                             <Option value={1}>Male</Option>
                             <Option value={2}>FeMale</Option>
                         </Select>
                     </Form.Item>
-                        {userLogin?.role== "ADMIN"? <Form.Item
+                    {userLogin?.role == "ADMIN" ? <Form.Item
                         label="Company"
                         style={{ minWidth: '100%' }}
                         rules={[
@@ -519,9 +519,9 @@ const EditJob = (props) => {
                         ]}
                     >
                         <Select value={formik.values.company_id} options={arrCompany?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeCompany} />
-                    </Form.Item> :""
-                        }
-                   
+                    </Form.Item> : ""
+                    }
+
                     <Form.Item
                         label="Skill"
                         name="Skill"

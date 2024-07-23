@@ -209,7 +209,7 @@ export default function JobMng() {
     return <div>
         <div className='d-flex mb-3'>
             <h3 className='text-lg'>Job Management</h3>
-            <Button href='/admin/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
+            <Button href='/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
         </div>
         <Table columns={columns} dataSource={data} rowKey={'id'} />
     </div>

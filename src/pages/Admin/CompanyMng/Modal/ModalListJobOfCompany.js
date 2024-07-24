@@ -1,22 +1,23 @@
-import React, { useEffect } from 'react'
-import { SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Input, Modal, Space, Table } from 'antd';
-import { useRef, useState } from 'react';
-import Highlighter from 'react-highlight-words';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCompanyListAction, deleteCompanyAction } from '../../../redux/actions/CompanyAction';
-import ModalListJobOfCompany from './Modal/ModalListJobOfCompany';
+import React, { useEffect, useRef, useState } from "react";
+import { deleteCompanyAction, getCompanyIdAction } from "../../../../redux/actions/CompanyAction";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Input, Space, Table } from "antd";
+import { SearchOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+
+import Highlighter from "react-highlight-words";
+// import { getCompanyIdAction } from '../../../redux/actions/CompanyAction';
 
 
-export default function CompanyMng() {
-    let { arrCompany } = useSelector(state => state.CompanyReducer);
-    console.log(arrCompany);
-    const [companyId, setCompanyId] = useState();
+const ModalListJobOfCompany = (props) => {
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getCompanyListAction())
-    }, [dispatch])
+    const { companyDetail } = useSelector(state => state.CompanyReducer)
 
+    const id = props.companyId;
+    useEffect(() => {
+        dispatch(getCompanyIdAction(id))
+    }, [dispatch, id])
+
+    const data = [companyDetail]
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
@@ -31,21 +32,6 @@ export default function CompanyMng() {
         confirm();
         setSearchText(selectedKeys[0] = '');
         setSearchedColumn(dataIndex);
-    };
-    const data = arrCompany.data;
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
     };
 
     const getColumnSearchProps = (dataIndex) => ({
@@ -118,6 +104,7 @@ export default function CompanyMng() {
                 text
             ),
     });
+
     const columns = [
         {
             title: 'Id',
@@ -135,7 +122,7 @@ export default function CompanyMng() {
             ...getColumnSearchProps('benefit'),
             sorter: (a, b) => a.benefit - b.benefit,
             sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
+            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text == null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
         },
         // {
         //     title: 'Enable',
@@ -154,7 +141,7 @@ export default function CompanyMng() {
             ...getColumnSearchProps('name'),
             sorter: (a, b) => a.name - b.name,
             sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
+            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text == null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
 
         },
         {
@@ -183,7 +170,7 @@ export default function CompanyMng() {
             ...getColumnSearchProps('introduction'),
             sorter: (a, b) => a.introduction - b.introduction,
             sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-6'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
+            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-6'>{text == null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
         },
         {
             title: "Logo Company",
@@ -192,7 +179,7 @@ export default function CompanyMng() {
             width: '5%',
 
             render: (text, data, index) => {
-                return data.logo_image != "null" && data.logo_image != null ? (
+                return data.logo_image !== "null" && data.logo_image != null ? (
                     <img key={index} style={{ width: 80, height: 80, objectFit: "cover", borderRadius: "10%", }}
                         src={`${data.logo_image}`} alt={data.logo_image}
                     />
@@ -243,24 +230,20 @@ export default function CompanyMng() {
                             dispatch(deleteCompanyAction(company.id))
                         }
                     }}></Button>
-                    <Button key={3} onClick={() => {
-                        setCompanyId(company.id)
-                        showModal()
-                    }}>Show Detail Job</Button>
                 </>
 
             }
         },
     ]
+
     return <div>
         <div className='d-flex mb-3'>
-            <h3 className='text-lg'>Company Management</h3>
-            <Button href='/admin/companymng/addcom' type="primary" className='ml-3 small bg-primary'>+ Add New Company</Button>
+            <h3 className='text-lg'>Job Management</h3>
+            <Button href='/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
         </div>
         <Table columns={columns} dataSource={data} rowKey={'id'} />
-
-        <Modal width={'90%'} title="" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-            <ModalListJobOfCompany companyId={companyId}></ModalListJobOfCompany>
-        </Modal>
     </div>
-}
+
+};
+
+export default ModalListJobOfCompany;

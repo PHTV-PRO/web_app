@@ -4,7 +4,7 @@ import {
   HomeOutlined, UserOutlined, SearchOutlined, AuditOutlined,
   ApartmentOutlined, BankOutlined, AimOutlined, CompassOutlined,
   HomeFilled, ContainerOutlined, WalletOutlined, IssuesCloseOutlined,
-  EditOutlined, DeleteOutlined
+  EditOutlined, DeleteOutlined, BarChartOutlined
 } from '@ant-design/icons';
 
 import { Layout, Menu, theme, Button, Input, Modal, Table, Avatar } from 'antd';
@@ -20,6 +20,7 @@ import { deleteCompanyAction } from '../redux/actions/CompanyAction';
 import { deleteJobAction } from '../redux/actions/JobAction';
 
 import dayjs from "dayjs";
+import { Chart } from "chart.js";
 const { Header, Content, Sider } = Layout;
 
 function getItem(label, key, icon, children) {
@@ -469,6 +470,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
     getItem('SubscriptionPlan Management', '8', <NavLink className='text-decoration-none' to="/admin/subplanmng"><ContainerOutlined /></NavLink>),
     getItem('Company Management', '9', <NavLink className='text-decoration-none' to="/admin/companymng"><HomeFilled /></NavLink>),
     getItem('Job Management', '10', <NavLink className='text-decoration-none' to="/admin/jobmng"><WalletOutlined /></NavLink>),
+    getItem('Chart Management', '11', <NavLink className='text-decoration-none' to="/admin/chartmng"><BarChartOutlined /></NavLink>),
   ]
 
 

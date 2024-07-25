@@ -17,6 +17,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { TOKEN } from '../../../util/settings/config';
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { forEach } from "lodash";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 dayjs.extend(customParseFormat);
 var utc = require('dayjs/plugin/utc')
 var timezone = require('dayjs/plugin/timezone')
@@ -27,17 +28,15 @@ const { Option } = Select;
 
 const { RangePicker } = DatePicker;
 
-const AddNewJob = () => {
+const AddNewJob = (props) => {
     const [location, setLocation] = useState(0);
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
-
     const [selectedLevel, setSelectedLevel] = useState([]);
     const [selectedLevelId, setSelectedLevelId] = useState([]);
-
-
     const dateFormat = 'DD-MM-YYYY';
     const dispatch = useDispatch();
+    let { id } = props.match.params;
 
     let { arrLevel } = useSelector(state => state.LevelReducer);
     let { arrSkill } = useSelector(state => state.SkillReducer);
@@ -46,6 +45,7 @@ const AddNewJob = () => {
     const { companyDetail } = useSelector(state => state.CompanyReducer)
     const { employerCompanyJob } = useSelector(state => state.AccountReducer);
 
+    console.log(companyDetail.id);
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
@@ -58,9 +58,10 @@ const AddNewJob = () => {
         dispatch(getSkillListAction());
     }, [dispatch, location]);
     useEffect(() => {
-        dispatch(getCompanyIdAction(employerCompanyJob?.companyForEmployer?.id));
+        dispatch(getCompanyIdAction(id));
         handleChangeCompany();
-    }, [employerCompanyJob])
+    }, [companyDetail.id])
+
 
     const formik = useFormik({
 
@@ -122,7 +123,7 @@ const AddNewJob = () => {
         formik.setFieldValue("gender", value);
     };
     const handleChangeCompany = () => {
-        formik.setFieldValue("company_id", employerCompanyJob?.companyForEmployer?.id);
+        formik.setFieldValue("company_id", companyDetail.id);
     };
 
 
@@ -562,6 +563,7 @@ const AddNewJob = () => {
                     <Form.Item label="Action">
                         <Button htmlType="submit">Add Job</Button>
                     </Form.Item>
+
                 </div>
             </div>
         </Form>

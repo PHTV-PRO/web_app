@@ -39,7 +39,7 @@ const NewJobEmployer = () => {
     let { arrLevel } = useSelector(state => state.LevelReducer);
     let { arrSkill } = useSelector(state => state.SkillReducer);
     let { arrJobType } = useSelector((state) => state.JobTypeReducer);
-    let { arrCompany } = useSelector((state) => state.CompanyReducer);
+    // let { arrCompany } = useSelector((state) => state.CompanyReducer);
     const { employerCompanyJob } = useSelector(state => state.AccountReducer);
 
     console.log(employerCompanyJob);
@@ -236,31 +236,6 @@ const NewJobEmployer = () => {
     };
 
 
-    // const handleChangeBenefit = (e, editor) => {
-    //     const data = editor.getData();
-    //     formik.setFieldValue("benefit", data);
-    // };
-
-    // const handleChangeReponsibility = (e, editor) => {
-    //     const data = editor.getData();
-    //     formik.setFieldValue("reponsibility", data);
-    // };
-
-    // const handleChangeSkillRequired = (e, editor) => {
-    //     const data = editor.getData();
-    //     formik.setFieldValue("skill_required", data);
-    // };
-
-    // const handleChangeInterviewSteps = (e, editor) => {
-    //     const data = editor.getData();
-    //     formik.setFieldValue("interview_steps", data);
-    // };
-
-    // const handleChangeExperienceRequired = (e, editor) => {
-    //     const data = editor.getData();
-    //     formik.setFieldValue("experience_required", data);
-    // };
-
 
     return (
         <Form
@@ -274,7 +249,7 @@ const NewJobEmployer = () => {
             layout="horizontal"
         >
             <h3 className="text-2xl">Add New Job:  {companyDetail?.name}</h3>
-           
+
             <div className="row">
                 <div className="col-12">
                     <Form.Item

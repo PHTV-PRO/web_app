@@ -42,6 +42,7 @@ const EditJob = (props) => {
     const [selectedLevelId, setSelectedLevelId] = useState([]);
     let { userLogin } = useSelector(state => state.UserReducer);
     let { id } = props.match.params;
+
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
@@ -60,13 +61,6 @@ const EditJob = (props) => {
         defaultSkill()
         defaultLevel()
     }, [jobDetail])
-    // const parseEnddateToString = jobDetail?.end_date?.toString();
-    // const parseStartdateToString = jobDetail?.start_date?.toString();
-    // console.log(location);
-    // console.log(jobDetail?.company?.id);
-    // console.log(jobDetail?.location?.id);
-    // console.log(typeof (parseEnddateToString));
-    // console.log(parseStartdateToString);
 
 
     const formik = useFormik({

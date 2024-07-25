@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { deleteCompanyAction, getCompanyIdAction } from "../../../../redux/actions/CompanyAction";
+import { getCompanyIdAction } from "../../../../redux/actions/CompanyAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Input, Space, Table } from "antd";
 import { SearchOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 import Highlighter from "react-highlight-words";
-// import { getCompanyIdAction } from '../../../redux/actions/CompanyAction';
+import { deleteJobAction } from "../../../../redux/actions/JobAction";
 
 
 const ModalListJobOfCompany = (props) => {
@@ -17,7 +17,9 @@ const ModalListJobOfCompany = (props) => {
         dispatch(getCompanyIdAction(id))
     }, [dispatch, id])
 
-    const data = [companyDetail]
+    const data = companyDetail.jobs
+
+
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
@@ -115,119 +117,91 @@ const ModalListJobOfCompany = (props) => {
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Benifit',
+            title: 'Title',
+            dataIndex: 'title',
+            key: 'title',
+            width: '5%',
+            ...getColumnSearchProps('title'),
+            sorter: (a, b) => a.title - b.title,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
+
+        },
+        {
+            title: 'Skill Required',
+            dataIndex: 'skill_required',
+            key: 'skill_required',
+            width: '5%',
+            ...getColumnSearchProps('skill_required'),
+            sorter: (a, b) => a.skill_required - b.skill_required,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
+
+        },
+        {
+            title: 'Benefit',
             dataIndex: 'benefit',
             key: 'benefit',
-            width: '10%',
+            width: '5%',
             ...getColumnSearchProps('benefit'),
             sorter: (a, b) => a.benefit - b.benefit,
             sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text == null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
-        },
-        // {
-        //     title: 'Enable',
-        //     dataIndex: 'enable',
-        //     key: 'enable',
-        //     width: '5%',
-        //     ...getColumnSearchProps('enable'),
-        //     sorter: (a, b) => a.enable - b.enable,
-        //     sortDirections: ['descend', 'ascend'],
-        // },
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            width: '5%',
-            ...getColumnSearchProps('name'),
-            sorter: (a, b) => a.name - b.name,
-            sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text == null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
+            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
 
         },
         {
-            title: 'Nationality',
-            dataIndex: 'nationnality',
-            key: 'nationnality',
+            title: 'Company',
+            dataIndex: 'company_id ',
+            key: 'company_id ',
             width: '5%',
-            ...getColumnSearchProps('nationnality'),
-            sorter: (a, b) => a.nationnality - b.nationnality,
+            ...getColumnSearchProps('company_id '),
+            sorter: (a, b) => a.company_id - b.company_id,
             sortDirections: ['descend', 'ascend'],
-        },
-        {
-            title: 'Profession',
-            dataIndex: 'profession',
-            key: 'profession',
-            width: '5%',
-            ...getColumnSearchProps('profession'),
-            sorter: (a, b) => a.profession - b.profession,
-            sortDirections: ['descend', 'ascend'],
-        },
-        {
-            title: 'Introduction',
-            dataIndex: 'introduction',
-            key: 'introduction',
-            width: '5%',
-            ...getColumnSearchProps('introduction'),
-            sorter: (a, b) => a.introduction - b.introduction,
-            sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-6'>{text == null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
-        },
-        {
-            title: "Logo Company",
-            dataIndex: "logo_image",
-            key: "logo_image",
-            width: '5%',
-
-            render: (text, data, index) => {
-                return data.logo_image !== "null" && data.logo_image != null ? (
-                    <img key={index} style={{ width: 80, height: 80, objectFit: "cover", borderRadius: "10%", }}
-                        src={`${data.logo_image}`} alt={data.logo_image}
-                    />
-                ) : (
-                    <div>No Image</div>
-                );
-            },
-        },
-        {
-            title: "Background Company",
-            dataIndex: "background_image",
-            key: "background_image",
-            width: '5%',
-
-            render: (text, data, index) => {
-                return data.background_image != "null" && data.background_image != null ? (
-                    <img key={index} style={{ width: 80, height: 80, objectFit: "cover", borderRadius: "10%", }}
-                        src={`${data.background_image}`} alt={data.background_image}
-                    />
-                ) : (
-                    <div>No Image</div>
-                );
-            },
-        },
-        {
-            title: 'Account',
-            dataIndex: 'account_id ',
-            key: 'account_id ',
-            width: '5%',
-            ...getColumnSearchProps('account_id '),
-            sorter: (a, b) => a.account_id - b.account_id,
-            sortDirections: ['descend', 'ascend'],
-            render: (text, account) => {
+            render: (text, company) => {
                 return (<>
-                    <span>{account.account?.name}</span>
+                    <span>{company.company?.name}</span>
+                </>)
+            },
+        },
+        {
+            title: 'Location',
+            dataIndex: 'location_id ',
+            key: 'location_id ',
+            width: '5%',
+            ...getColumnSearchProps('location_id '),
+            sorter: (a, b) => a.location_id - b.location_id,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, location) => {
+                return (<>
+                    <span>{location.location?.name}</span>
+                </>)
+            },
+        },
+        {
+            title: 'JobType',
+            dataIndex: 'job_type_id ',
+            key: 'job_type_id ',
+            width: '5%',
+            ...getColumnSearchProps('job_type_id '),
+            sorter: (a, b) => a.job_type_id - b.job_type_id,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, jobType) => {
+                return (<>
+                    <span>{jobType.jobType?.name}</span>
                 </>)
             },
         },
         {
             title: 'Manage',
-            width: '10%',
-            render: (text, company) => {
+            width: '5%',
+            render: (text, job) => {
                 return <>
-                    <Button key={1} href={`/admin/companymng/edit/${company.id}`} type="link" icon={<EditOutlined />} onClick={() => {
+                    <Button key={1} href={`/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => {
                     }}></Button>
+
                     <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
-                        if (window.confirm('Do you want to delete ' + company.name + '?')) {
-                            dispatch(deleteCompanyAction(company.id))
+                        if (window.confirm('Do you want to delete ' + job.title + '?')) {
+                            dispatch(deleteJobAction(job.id))
                         }
                     }}></Button>
                 </>
@@ -235,11 +209,10 @@ const ModalListJobOfCompany = (props) => {
             }
         },
     ]
-
     return <div>
         <div className='d-flex mb-3'>
             <h3 className='text-lg'>Job Management</h3>
-            <Button href='/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
+            <Button href={`/employer/emplnewjob/${companyDetail.id}`} type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
         </div>
         <Table columns={columns} dataSource={data} rowKey={'id'} />
     </div>

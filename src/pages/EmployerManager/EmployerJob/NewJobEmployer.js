@@ -51,7 +51,7 @@ const NewJobEmployer = () => {
         dispatch(getSkillListAction());
         dispatch(getCompanyAndJobByTokenAction(TOKEN))
         dispatch(getCompanyIdAction(employerCompanyJob?.companyForEmployer?.id));
-        handleChangeCompany();
+        // handleChangeCompany();   
     }, [dispatch, location, employerCompanyJob?.companyForEmployer?.id]);
 
     console.log(employerCompanyJob?.companyForEmployer?.id);
@@ -71,6 +71,7 @@ const NewJobEmployer = () => {
             start_date: "",
             end_date: "",
             is_active: "true",
+            company_id: employerCompanyJob?.companyForEmployer?.id
 
         },
         onSubmit: (values) => {
@@ -101,9 +102,10 @@ const NewJobEmployer = () => {
     });
 
 
-    const handleChangeCompany = () => {
-        formik.setFieldValue("company_id", employerCompanyJob?.companyForEmployer?.id);
-    };
+    console.log(employerCompanyJob?.companyForEmployer?.id);
+    // const handleChangeCompany = () => {
+    //     formik.setFieldValue("company_id", employerCompanyJob?.companyForEmployer?.id);
+    // };
 
 
     const handleChangeJobType = (value) => {

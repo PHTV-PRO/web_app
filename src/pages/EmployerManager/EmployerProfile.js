@@ -6,7 +6,7 @@ import { TOKEN } from '../../util/settings/config';
 
 import { getCurrentUserAction } from '../../redux/actions/UserAction';
 import { getCompanyAndJobByTokenAction } from '../../redux/actions/AccountAction';
-import { getSubscriptionPlanByAccountAction,returnBuyScriptionPlan } from '../../redux/actions/SubscriptionPlanAction';
+import { getSubscriptionPlanByAccountAction, returnBuyScriptionPlan } from '../../redux/actions/SubscriptionPlanAction';
 
 import { history } from '../../App';
 import dayjs from 'dayjs';
@@ -36,19 +36,19 @@ const EmployerProfile = () => {
         }
     }, [dispatch]);
     let URL = window.location.href;
-    useEffect(()=>{
+    useEffect(() => {
         const paymentIdRegex = /paymentId=([^&]+)/;
         const payerIdRegex = /PayerID=([^&]+)/;
         const paymentIdMatch = URL.match(paymentIdRegex);
         const payerIdMatch = URL.match(payerIdRegex);
         const paymentId = paymentIdMatch ? paymentIdMatch[1] : null;
         const payerId = payerIdMatch ? payerIdMatch[1] : null;
-        if(payerId!=null && paymentId!= null){
-            dispatch(returnBuyScriptionPlan(paymentId,payerId))
-            
+        if (payerId != null && paymentId != null) {
+            dispatch(returnBuyScriptionPlan(paymentId, payerId))
+
         }
-            
-    },[URL])
+
+    }, [URL])
 
     if (userLogin && (userLogin?.role !== 'EMPLOYER')) {
         history.replace('/')
@@ -139,7 +139,7 @@ const EmployerProfile = () => {
                     </div>
                     <Button
                         className='btn-primary bg-primary ml-4'
-                        key={1} href={`/employer/company/edit/${employerCompanyJob.companyForEmployer?.id}`} type="link"
+                        key={1} href={`/employer/job/edit/${employerCompanyJob.companyForEmployer?.id}`} type="link"
                         onClick={() => {
 
                         }}

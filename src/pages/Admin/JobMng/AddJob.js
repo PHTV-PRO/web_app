@@ -50,10 +50,10 @@ const AddNewJob = (props) => {
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
     }
+
     useEffect(() => {
         dispatch(getJobTypeListAction());
         dispatch(getCompanyAndJobByTokenAction(TOKEN))
-
         dispatch(getLevelListAction())
         dispatch(getSkillListAction());
     }, [dispatch, location]);

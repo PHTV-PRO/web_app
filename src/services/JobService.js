@@ -30,6 +30,9 @@ export class JobService extends baseService {
     updateJobForEmployer = (id, job) => {
         return this.put(`/api/employer/company/${id}`, job);
     };
+    getChartOfEmployer = (token) => {
+        return this.get(`/api/employer/chart`);
+    };
 }
 
 export const jobService = new JobService();

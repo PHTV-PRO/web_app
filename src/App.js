@@ -159,6 +159,8 @@ function App() {
         <AdminTemplate path="/employer/emplnewjob" exact Component={NewJobEmployer} />
         <AdminTemplate path="/employer/job/edit/:id" exact Component={EmployerEditJob} />
         <AdminTemplate path="/employer/emplnewjob/:id" exact Component={AddNewJob} />
+        <AdminTemplate path="/employer/chartmng" exact Component={GeneralChart} />
+
 
         <AdminTemplate path="/employer/buyScPl" exact Component={BuySubcriptionPlan} />
 

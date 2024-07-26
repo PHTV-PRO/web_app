@@ -543,16 +543,18 @@ const EditCompany = (props) => {
                     </Form.Item>
 
                     <Form.Item label="List Image">
-                        <div className="w-full mb-6">
+                        <div className="w-[70%] mb-6">
                             {/* <h2 className="font-semibold text-xl py-2">Hình Ảnh</h2> */}
-                            <span className="italic">
-                                Cập Nhật Hình Ảnh Rõ Ràng Sẽ Cho Thuê Nhanh Hơn
-                            </span>
+
                             <div className="w-full">
+
                                 <label
                                     className="w-full border-4 border-blue-200 text-5xl text-gray-300 flex-col gap-6  my-4 items-center justify-center h-[300px] flex border-dashed rounded-md"
                                     htmlFor="file"
                                 >
+                                    <text className='italic text-gray-700'>
+                                        Cập Nhật Hình Ảnh Rõ Ràng
+                                    </text>
                                     {loading ? (
                                         <LoadingImage></LoadingImage>
                                     ) : (

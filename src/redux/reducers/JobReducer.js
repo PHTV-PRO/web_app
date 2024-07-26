@@ -1,8 +1,9 @@
-import { GET_JOB_DETAIL, GET_JOB_LIST } from "../constants";
+import { GET_JOB_DETAIL, GET_JOB_LIST, GET_CHART_OF_EMPLOYER } from "../constants";
 
 const initialState = {
     arrJob: [],
-    jobDetail: {}
+    jobDetail: {},
+    arrDataChart: {}
 }
 
 export const JobReducer = (state = initialState, action) => {
@@ -14,6 +15,9 @@ export const JobReducer = (state = initialState, action) => {
             state.jobDetail = action.jobDetail;
             return { ...state }
         }
+        case GET_CHART_OF_EMPLOYER:
+            state.arrDataChart = action.arrDataChart;
+            return { ...state }
         default:
             return { ...state }
     }

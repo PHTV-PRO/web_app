@@ -10,14 +10,13 @@ import { addJobAction } from "../../../redux/actions/JobAction";
 import { getSkillListAction } from '../../../redux/actions/SkillAction';
 import { addJobOfEmployerAction } from "../../../redux/actions/JobAction";
 import { getCompanyAndJobByTokenAction } from '../../../redux/actions/AccountAction';
+import { getCurrentUserAction } from '../../../redux/actions/UserAction';
 
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { TOKEN } from '../../../util/settings/config';
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { forEach } from "lodash";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 dayjs.extend(customParseFormat);
 var utc = require('dayjs/plugin/utc')
 var timezone = require('dayjs/plugin/timezone')
@@ -36,16 +35,16 @@ const AddNewJob = (props) => {
     const [selectedLevelId, setSelectedLevelId] = useState([]);
     const dateFormat = 'DD-MM-YYYY';
     const dispatch = useDispatch();
-    let { id } = props.match.params;
 
     let { arrLevel } = useSelector(state => state.LevelReducer);
     let { arrSkill } = useSelector(state => state.SkillReducer);
     let { arrJobType } = useSelector((state) => state.JobTypeReducer);
     let { userLogin } = useSelector(state => state.UserReducer);
+    let { arrCompany } = useSelector((state) => state.CompanyReducer);
+
     const { companyDetail } = useSelector(state => state.CompanyReducer)
     const { employerCompanyJob } = useSelector(state => state.AccountReducer);
 
-    console.log(companyDetail.id);
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
@@ -55,13 +54,19 @@ const AddNewJob = (props) => {
         dispatch(getJobTypeListAction());
         dispatch(getCompanyAndJobByTokenAction(TOKEN))
         dispatch(getLevelListAction())
-        dispatch(getSkillListAction());
+            dispatch(getCurrentUserAction(accessToken))
+            dispatch(getSkillListAction());
+       
     }, [dispatch, location]);
     useEffect(() => {
-        dispatch(getCompanyIdAction(id));
+        // dispatch(getCompanyIdAction(id));
         handleChangeCompany();
-    }, [companyDetail.id])
-
+        if (userLogin?.role =="EMPLOYER") {
+            dispatch(getCompanyAndJobByTokenAction(accessToken))
+        console.log("check data",formik?.values?.company_id);
+    
+            } 
+    }, [userLogin])
 
     const formik = useFormik({
 
@@ -79,6 +84,8 @@ const AddNewJob = (props) => {
             start_date: "",
             end_date: "",
             is_active: "true",
+            company_id: employerCompanyJob?.companyForEmployer?.id
+
         },
         onSubmit: (values) => {
             if (
@@ -123,7 +130,7 @@ const AddNewJob = (props) => {
         formik.setFieldValue("gender", value);
     };
     const handleChangeCompany = () => {
-        formik.setFieldValue("company_id", companyDetail.id);
+        formik.setFieldValue("company_id", employerCompanyJob?.companyForEmployer?.id);
     };
 
 
@@ -484,6 +491,21 @@ const AddNewJob = (props) => {
                             <Option value={2}>FeMale</Option>
                         </Select>
                     </Form.Item>
+
+                    {userLogin?.role == "ADMIN" ? <Form.Item
+                        label="Company"
+                        style={{ minWidth: '100%' }}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Company is required!',
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        <Select value={formik.values.company_id} options={arrCompany?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeCompany} />
+                    </Form.Item> : ""
+                    }
                     <Form.Item
                         label="Skill"
                         name="Skill"

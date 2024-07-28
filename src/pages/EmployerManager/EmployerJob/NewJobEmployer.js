@@ -42,7 +42,7 @@ const NewJobEmployer = () => {
     // let { arrCompany } = useSelector((state) => state.CompanyReducer);
     const { employerCompanyJob } = useSelector(state => state.AccountReducer);
 
-    console.log(employerCompanyJob);
+    console.log("check company id: ",employerCompanyJob);
 
     useEffect(() => {
         dispatch(getLevelListAction())

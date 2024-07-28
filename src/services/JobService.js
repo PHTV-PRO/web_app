@@ -33,6 +33,9 @@ export class JobService extends baseService {
     getChartOfEmployer = (token) => {
         return this.get(`/api/employer/chart`);
     };
+    getChartOfAdmin = () => {
+        return this.get(`/api/admin/chart`);
+    };
 }
 
 export const jobService = new JobService();

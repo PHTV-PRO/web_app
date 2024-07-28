@@ -14,18 +14,17 @@ import { deleteJobAction } from '../../../redux/actions/JobAction';
 export default function EmployerJobMng() {
     let { employerCompanyJob } = useSelector(state => state.AccountReducer);
     console.log(employerCompanyJob);
+    console.log(employerCompanyJob?.limit_job);
+    console.log(employerCompanyJob?.count_jobs);
+
+
     const dispatch = useDispatch();
-
-
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
     }
-
-
     useEffect(() => {
-            dispatch(getCompanyAndJobByTokenAction(accessToken))
-            // dispatch(getCurrentUserAction(accessToken))
+        dispatch(getCompanyAndJobByTokenAction(accessToken))
     }, []);
 
 
@@ -226,24 +225,38 @@ export default function EmployerJobMng() {
         {
             key: '1',
             label: 'Job Posted',
-            children: data?.jobsOpened? <Table columns={columns} dataSource={data.jobsOpened} defaultDataSource={[]} rowKey={'id'} />:"",
+            children: data?.jobsOpened ? <Table columns={columns} dataSource={data.jobsOpened} defaultDataSource={[]} rowKey={'id'} /> : "",
         },
         {
             key: '2',
             label: 'Upcoming Job',
-            children: data?.jobsNotOpen? <Table columns={columns} dataSource={data.jobsNotOpen} rowKey={'id'} />:"",
+            children: data?.jobsNotOpen ? <Table columns={columns} dataSource={data.jobsNotOpen} rowKey={'id'} /> : "",
         },
         {
             key: '3',
-            children: data?.jobsOpening ?<Table columns={columns} dataSource={data.jobsOpening} rowKey={'id'} />:"",
+            children: data?.jobsOpening ? <Table columns={columns} dataSource={data.jobsOpening} rowKey={'id'} /> : "",
             label: 'Jobs Are Recruiting',
         },
     ];
 
     return <div>
-        <div className='d-flex mb-3'>
-            <h3 className='text-lg'>Job Management</h3>
-            <Button href='/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
+        {/* d-flex mb-3 items-center */}
+        <div className=''>
+            <div className='d-flex mb-1 items-center'>
+                <h3 className='text-lg'>Job Management : </h3>
+                {
+                    employerCompanyJob?.count_jobs >= employerCompanyJob?.limit_job ?
+                        <h3 className=' ml-2 text-base text-gray-500 italic underline'>
+                            <a href='/employer/buyScPl'>You've reached your creation limit for job. Upgrade to create more job.</a>
+                        </h3> :
+                        <Button href='/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
+                }
+            </div>
+            <div className='flex items-center '>
+                <h3 className='text-lg text-gray-600 italic'> Jobs created : </h3>
+                <h5 className='ml-2 text-base text-gray-500'>{employerCompanyJob?.count_jobs} / {employerCompanyJob?.limit_job}</h5>
+            </div>
+
         </div>
         <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
     </div>

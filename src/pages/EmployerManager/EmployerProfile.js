@@ -145,7 +145,8 @@ const EmployerProfile = () => {
                         }}
                     >Update Company</Button>
                 </div>
-                <div className=' bg-gray-300 p-2 w-[100%] rounded-xl'>
+
+                <div className=' bg-gray-100 px-20 py-3 w-[100%] rounded-xl'>
                     <div>
                         <h2 className='font-bold text-lg'>Introduction :
                             <text className='text-base font-normal ml-2'

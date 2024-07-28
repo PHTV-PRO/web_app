@@ -1,4 +1,4 @@
-import { GET_JOB_LIST, GET_JOB_DETAIL, GET_CHART_OF_EMPLOYER } from "../constants";
+import { GET_JOB_LIST, GET_JOB_DETAIL, GET_CHART_OF_EMPLOYER, GET_CHART_OF_ADMIN } from "../constants";
 import { history } from "../../App";
 import { jobService } from "../../services/JobService";
 import { notification } from "antd";
@@ -152,11 +152,27 @@ export const getDataChartOfEmployer = (token) => {
     return async (dispatch) => {
         try {
             const result = await jobService.getChartOfEmployer(token);
-            console.log(result);
             if (result.status === 200) {
                 dispatch({
                     type: GET_CHART_OF_EMPLOYER,
                     arrDataChart: result.data
+                })
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+
+export const getDataChartOfAdmin = () => {
+    return async (dispatch) => {
+        try {
+            const result = await jobService.getChartOfAdmin();
+            console.log(result);
+            if (result.status === 200) {
+                dispatch({
+                    type: GET_CHART_OF_ADMIN,
+                    chartAdmin: result.data
                 })
             }
         } catch (error) {

@@ -54,18 +54,18 @@ const AddNewJob = (props) => {
         dispatch(getJobTypeListAction());
         dispatch(getCompanyAndJobByTokenAction(TOKEN))
         dispatch(getLevelListAction())
-            dispatch(getCurrentUserAction(accessToken))
-            dispatch(getSkillListAction());
-       
+        dispatch(getCurrentUserAction(accessToken))
+        dispatch(getSkillListAction());
+
     }, [dispatch, location]);
+
     useEffect(() => {
         // dispatch(getCompanyIdAction(id));
         handleChangeCompany();
-        if (userLogin?.role =="EMPLOYER") {
+        if (userLogin?.role == "EMPLOYER") {
             dispatch(getCompanyAndJobByTokenAction(accessToken))
-        console.log("check data",formik?.values?.company_id);
-    
-            } 
+            console.log("check data", formik?.values?.company_id);
+        }
     }, [userLogin])
 
     const formik = useFormik({

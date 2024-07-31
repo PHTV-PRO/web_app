@@ -80,55 +80,17 @@ const GeneralChart = () => {
         ]
     };
 
-    const dataSource = [
-        {
-            key: '1',
-            name: 'Mike',
-            age: 32,
-            address: '10 Downing Street',
-        },
-        {
-            key: '2',
-            name: 'John',
-            age: 42,
-            address: '10 Downing Street',
-        },
-    ];
-
-    const columns = [
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
-        },
-        {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-        },
-    ];
-
     return (
         <div>
             <div className="grid gap-4 grid-cols-2">
-                <div className="rounded-xl p-4 border border-gray-300 shadow-xl shadow-gray-300">
+                <div className="rounded-xl p-4 border-2 border-gray-300 ">
                     <div className="mb-10 font-bold">Chart Example</div>
                     <Bar data={data} />
                 </div>
-                <div className="rounded-xl p-4  border border-gray-30 shadow-xl shadow-gray-300">
+                <div className="rounded-xl p-4  border-2 border-gray-300 ">
                     <div className="mb-10 font-bold">Chart Example</div>
                     <Line data={data2} />
                 </div>
-
-            </div>
-            <div className="mt-20 rounded-xl p-4  border border-gray-30 shadow-xl shadow-gray-300">
-                <div className="mb-10 font-bold ">DataTable Example :</div>
-                <Table dataSource={dataSource} columns={columns} />
             </div>
         </div>
     );

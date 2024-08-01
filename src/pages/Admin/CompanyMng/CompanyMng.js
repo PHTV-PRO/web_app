@@ -11,6 +11,7 @@ import ModalListJobOfCompany from './Modal/ModalListJobOfCompany';
 export default function CompanyMng() {
     let { arrCompany } = useSelector(state => state.CompanyReducer);
     console.log(arrCompany);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [companyId, setCompanyId] = useState();
     const dispatch = useDispatch();
     useEffect(() => {
@@ -34,7 +35,6 @@ export default function CompanyMng() {
     };
     const data = arrCompany.data;
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showModal = () => {
         setIsModalOpen(true);

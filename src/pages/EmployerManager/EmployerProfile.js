@@ -129,6 +129,7 @@ const EmployerProfile = () => {
                                 // setCompanyId(company.id)
                                 showModalOfCompany()
                             }}> Click Here ! .Show Detail Company</Button>
+                            {/* Modal of Company Detail */}
                             <Modal width={'90%'} title="Your Company Detail" open={isModalOfCompanyOpen} onOk={handleOfCompanyOk} onCancel={handleOfCompanyCancel}>
                                 <div className='mt-1'>
                                     <div className='w-[100%] h-[100%] px-20 bg-white mb-10'>

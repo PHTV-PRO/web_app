@@ -476,12 +476,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
 
   const itemsEmployer = [
     getItem('Your Profile Detail', '1', <NavLink className='text-decoration-none' to="/employer/emprofile"><i className="fa-solid fa-user"></i></NavLink>),
-    getItem('Your Job', '2', <NavLink className='text-decoration-none' to="/employer/empljobmng"><i className="fa fa-suitcase"></i></NavLink>),
-    getItem('Your SubcriptionPlan', '3', <NavLink className='text-decoration-none' to="/employer/employersubmng"><i className="fa fa-tags"></i></NavLink>),
-    getItem('Your Chart Management', '11', <NavLink className='text-decoration-none' to="/employer/chartmng"><BarChartOutlined /></NavLink>),
-
-
-
+    getItem('Your SubcriptionPlan', '2', <NavLink className='text-decoration-none' to="/employer/employersubmng"><i className="fa fa-tags"></i></NavLink>),
     // getItem('SubscriptionPlan Management', '6', <NavLink className='text-decoration-none' to="/admin/subplanmng"><ContainerOutlined /></NavLink>),
   ]
 

@@ -1,23 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getCompanyIdAction } from "../../../../redux/actions/CompanyAction";
+// import { getCompanyIdAction } from "../../../../redux/actions/CompanyAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Input, Space, Table } from "antd";
 import { SearchOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 import Highlighter from "react-highlight-words";
-import { deleteJobAction } from "../../../../redux/actions/JobAction";
+import { getApplicationByJob } from "../../../redux/actions/JobAction";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 
-const ModalListJobOfCompany = (props) => {
+const ModalApplicationByJob = (props) => {
+    console.log(props);
     const dispatch = useDispatch();
-    const { companyDetail } = useSelector(state => state.CompanyReducer)
-
-    const id = props.companyId;
+    const { arrApplication } = useSelector(state => state.JobReducer)
+    const id = props.jobId;
     useEffect(() => {
-        dispatch(getCompanyIdAction(id))
+        dispatch(getApplicationByJob(id))
     }, [dispatch, id])
 
-    const data = companyDetail.jobs
+    console.log(arrApplication);
+
+    const data = arrApplication?.data;
 
 
 
@@ -117,107 +120,73 @@ const ModalListJobOfCompany = (props) => {
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Title',
-            dataIndex: 'title',
-            key: 'title',
-            width: '5%',
-            ...getColumnSearchProps('title'),
-            sorter: (a, b) => a.title - b.title,
+            title: 'Content',
+            dataIndex: 'note',
+            key: 'note',
+            width: '10%',
+            ...getColumnSearchProps('note'),
+            sorter: (a, b) => a.note - b.note,
             sortDirections: ['descend', 'ascend'],
             render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text == null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
 
         },
         {
-            title: 'Skill Required',
-            dataIndex: 'skill_required',
-            key: 'skill_required',
+            title: 'Name of Candidate',
+            dataIndex: 'account',
+            key: 'account',
             width: '5%',
-            ...getColumnSearchProps('skill_required'),
-            sorter: (a, b) => a.skill_required - b.skill_required,
+            ...getColumnSearchProps('account'),
+            sorter: (a, b) => a.account - b.account,
             sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text == null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
-
-        },
-        {
-            title: 'Benefit',
-            dataIndex: 'benefit',
-            key: 'benefit',
-            width: '5%',
-            ...getColumnSearchProps('benefit'),
-            sorter: (a, b) => a.benefit - b.benefit,
-            sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text == null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
-
-        },
-        {
-            title: 'Company',
-            dataIndex: 'company_id ',
-            key: 'company_id ',
-            width: '5%',
-            ...getColumnSearchProps('company_id '),
-            sorter: (a, b) => a.company_id - b.company_id,
-            sortDirections: ['descend', 'ascend'],
-            render: (text, company) => {
+            render: (text, account) => {
                 return (<>
-                    <span>{company.company?.name}</span>
+                    <span>{account.account?.name}</span>
                 </>)
             },
+
         },
         {
-            title: 'Location',
-            dataIndex: 'location_id ',
-            key: 'location_id ',
+            title: 'Email of Candidate',
+            dataIndex: 'account',
+            key: 'account',
             width: '5%',
-            ...getColumnSearchProps('location_id '),
-            sorter: (a, b) => a.location_id - b.location_id,
+            ...getColumnSearchProps('account'),
+            sorter: (a, b) => a.account - b.account,
             sortDirections: ['descend', 'ascend'],
-            render: (text, location) => {
+            render: (text, account) => {
                 return (<>
-                    <span>{location.location?.name}</span>
+                    <span>{account.account?.email}</span>
                 </>)
             },
+
         },
         {
-            title: 'JobType',
-            dataIndex: 'job_type_id ',
-            key: 'job_type_id ',
+            title: 'Curriculum Vitae of Candidate',
+            dataIndex: 'account',
+            key: 'account',
             width: '5%',
-            ...getColumnSearchProps('job_type_id '),
-            sorter: (a, b) => a.job_type_id - b.job_type_id,
+            ...getColumnSearchProps('account'),
+            sorter: (a, b) => a.account - b.account,
             sortDirections: ['descend', 'ascend'],
-            render: (text, jobType) => {
+            render: (text, cv) => {
                 return (<>
-                    <span>{jobType.jobType?.name}</span>
+                    {/* <Link to={cv.cv?.file_name}>Xem CV</Link> */}
+                    <a href={cv.cv?.file_name} target="_blank" rel="noopener noreferrer">
+                        View Of Curriculum Vitae of Candidate
+                    </a>
                 </>)
             },
-        },
-        {
-            title: 'Manage',
-            width: '5%',
-            render: (text, job) => {
-                return <>
-                    <Button key={1} href={`/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => {
-                    }}></Button>
 
-                    <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
-                        if (window.confirm('Do you want to delete ' + job.title + '?')) {
-                            dispatch(deleteJobAction(job.id))
-                        }
-                    }}></Button>
-
-                </>
-
-            }
         },
     ]
     return <div>
         <div className='d-flex mb-3'>
-            <h3 className='text-lg'>Job Management</h3>
-            <Button href={`/employer/emplnewjob/${companyDetail.id}`} type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
+            <h3 className='text-lg'>Applcation Job Management</h3>
+            {/* <Button href={`/employer/emplnewjob/${companyDetail.id}`} type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button> */}
         </div>
         <Table columns={columns} dataSource={data} rowKey={'id'} />
     </div>
 
 };
 
-export default ModalListJobOfCompany;
+export default ModalApplicationByJob;

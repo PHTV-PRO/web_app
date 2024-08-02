@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tabs } from 'antd';
+import { Button, Input, Space, Table, Tabs, Modal } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,15 +9,13 @@ import { TOKEN } from '../../../util/settings/config';
 // import { getCurrentUserAction } from '../../../redux/actions/UserAction';
 import { getCompanyAndJobByTokenAction } from '../../../redux/actions/AccountAction';
 import { deleteJobAction } from '../../../redux/actions/JobAction';
+import ModalApplicationByJob from '../Modal/ModalApplicationJob';
 
 
 export default function EmployerJobMng() {
     let { employerCompanyJob } = useSelector(state => state.AccountReducer);
-    console.log(employerCompanyJob);
-    console.log(employerCompanyJob?.limit_job);
-    console.log(employerCompanyJob?.count_jobs);
-
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [idJob, setIdJob] = useState(0);
     const dispatch = useDispatch();
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
@@ -27,7 +25,8 @@ export default function EmployerJobMng() {
         dispatch(getCompanyAndJobByTokenAction(accessToken))
     }, []);
 
-
+    console.log(employerCompanyJob);
+    console.log(idJob);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
@@ -36,15 +35,26 @@ export default function EmployerJobMng() {
         setSearchText(selectedKeys[0]);
         setSearchedColumn(dataIndex);
     };
-
     const resetSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0] = '');
         setSearchedColumn(dataIndex);
     };
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
 
     const data = employerCompanyJob?.companyForEmployer;
+
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -202,7 +212,7 @@ export default function EmployerJobMng() {
         },
         {
             title: 'Manage',
-            width: '5%',
+            width: '15%',
             render: (text, job) => {
                 return <>
                     <Button key={1} href={`/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => {
@@ -213,6 +223,10 @@ export default function EmployerJobMng() {
                             dispatch(deleteJobAction(job.id))
                         }
                     }}></Button>
+                    <Button key={3} onClick={() => {
+                        setIdJob(job.id)
+                        showModal()
+                    }}>Show Application Job</Button>
                 </>
 
             }
@@ -259,5 +273,9 @@ export default function EmployerJobMng() {
 
         </div>
         <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+
+        <Modal width={'90%'} title="" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <ModalApplicationByJob jobId={idJob}></ModalApplicationByJob>
+        </Modal>
     </div>
 }

@@ -138,12 +138,12 @@ export default function EmployerSubcriptionPlanMng() {
         {
             title: 'Name',
             dataIndex: 'name',
-            key: 'name',
+            key: 'name', 
             width: '15%',
             ...getColumnSearchProps('name'),
             sorter: (a, b) => a.name - b.name,
             render: (a)=>{
-                if (data2[0]?.name == a) {
+                if (data2[0]?.id == a) {
                     return <div className='bg-yellow-300 rounded-md shadow-md  p-2 shadow-yellow-300   text-center'> {a} </div>
                   } else {
                     return <div className='bg-gray-200 rounded-md shadow-md  p-2 shadow-gray-300   text-center'> {a} </div>

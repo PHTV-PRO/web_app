@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 // import { getCompanyIdAction } from "../../../../redux/actions/CompanyAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Input, Space, Table } from "antd";
-import { SearchOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 
 import Highlighter from "react-highlight-words";
 import { getApplicationByJob } from "../../../redux/actions/JobAction";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+
 
 
 const ModalApplicationByJob = (props) => {

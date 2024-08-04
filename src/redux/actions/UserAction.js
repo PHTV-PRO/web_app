@@ -23,7 +23,7 @@ export const loginAction = (loginInfo) => {
               </>
             ),
           });
-          history.push("/admin/industry");
+          history.push("/admin/chartmng");
         } else
           if (user.data.data.role == "EMPLOYER") {
             notification.success({

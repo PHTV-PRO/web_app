@@ -126,14 +126,14 @@ const EmployerProfile = () => {
                         </Modal>
                         <div className=''>
                             <Button onClick={() => {
-                                // setCompanyId(company.id)
+
                                 showModalOfCompany()
                             }}> Click Here ! .Show Detail Company</Button>
                             {/* Modal of Company Detail */}
                             <Modal width={'90%'} title="Your Company Detail" open={isModalOfCompanyOpen} onOk={handleOfCompanyOk} onCancel={handleOfCompanyCancel}>
                                 <div className='mt-1'>
                                     <div className='w-[100%] h-[100%] px-20 bg-white mb-10'>
-                                        <Carousel style={{ padding: '20px' }} afterChange={onChange} autoplay>
+                                        <Carousel style={{ padding: '20px' }} autoplay>
                                             <div className=''>
                                                 <img className=' w-[100%] object-cover  rounded-lg border-solid border-gray-300 flex items-center h-[700px]' src="https://assets.topdev.vn/images/2020/11/09/iris-media-tuyen-dung-viec-lam-IT-headline_photo-1512606.jpg" alt="..." />
                                             </div>

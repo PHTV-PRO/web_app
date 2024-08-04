@@ -29,6 +29,9 @@ export class CompanyService extends baseService {
     updateCompanyForEmployer = (id, company) => {
         return this.put(`/api/employer/company/${id}`, company);
     };
+    getDataChartByCompanyIdOfEmployer = (id) => {
+        return this.get(`/api/admin/employer_chart/${id}`);
+    };
 }
 
 export const companyService = new CompanyService();

@@ -1,4 +1,4 @@
-import { GET_COMPANY_LIST, GET_COMPANY_DETAIL } from "../constants";
+import { GET_COMPANY_LIST, GET_COMPANY_DETAIL, GET_DATA_CHART_BY_COMPANYID_OF_EMPLOYER } from "../constants";
 import { history } from "../../App";
 import { companyService } from "../../services/CompanyService";
 import { notification } from "antd";
@@ -38,6 +38,8 @@ export const getCompanyIdAction = (id) => {
         }
     }
 }
+
+
 
 
 export const addCompanyAction = (formData) => {
@@ -117,6 +119,22 @@ export const deleteCompanyAction = (id) => {
                 ),
             });
             dispatch(getCompanyListAction())
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+
+export const getDataChartByCompanyIdOfEmployerAction = (id) => {
+    return async (dispatch) => {
+        try {
+            const result = await companyService.getDataChartByCompanyIdOfEmployer(id);
+            console.log(result);
+            console.log(result.data.data);
+            dispatch({
+                type: GET_DATA_CHART_BY_COMPANYID_OF_EMPLOYER,
+                dataChartByCompanyIdForEmployer: result.data.data
+            })
         } catch (error) {
             console.log('error', error);
         }

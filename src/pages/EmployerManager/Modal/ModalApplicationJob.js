@@ -172,7 +172,7 @@ const ModalApplicationByJob = (props) => {
                 return (<>
                     {/* <Link to={cv.cv?.file_name}>Xem CV</Link> */}
                     <a href={cv.cv?.file_name} target="_blank" rel="noopener noreferrer">
-                        View Of Curriculum Vitae of Candidate
+                        Click Here ! . Show View Of Curriculum Vitae of Candidate
                     </a>
                 </>)
             },

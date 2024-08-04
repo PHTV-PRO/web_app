@@ -85,7 +85,8 @@ const EmployerProfile = () => {
         setIsModalOfCompany(false);
     };
 
-    console.log(employerCompanyJob?.company?.name);
+    // console.log(employerCompanyJob?.company?.name);
+    // console.log('image :', JSON.parse(employerCompanyJob?.companyForEmployer?.list_image.length));
     return (
         <div >
             <div className='flex mb-4'>
@@ -123,10 +124,10 @@ const EmployerProfile = () => {
                             </div><div >
                                 Expiry:{(dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.end_date).diff(dayjs(), "days"))} Days
                             </div>
+
                         </Modal>
                         <div className=''>
                             <Button onClick={() => {
-
                                 showModalOfCompany()
                             }}> Click Here ! .Show Detail Company</Button>
                             {/* Modal of Company Detail */}
@@ -134,7 +135,22 @@ const EmployerProfile = () => {
                                 <div className='mt-1'>
                                     <div className='w-[100%] h-[100%] px-20 bg-white mb-10'>
                                         <Carousel style={{ padding: '20px' }} autoplay>
-                                            <div className=''>
+                                            {employerCompanyJob?.companyForEmployer?.list_image?.length > 0 ? JSON.parse(employerCompanyJob?.companyForEmployer?.list_image).map((image, i) => {
+                                                return (
+                                                    <div className=''>
+                                                        <img
+                                                            key={i}
+                                                            className=' w-[100%] object-cover  rounded-lg border-solid border-gray-300 flex items-center h-[700px]'
+                                                            src={image}
+                                                            alt="..." />
+
+                                                    </div>
+                                                )
+                                            }) :
+                                                <img className=' w-[100%] object-cover  rounded-lg border-solid border-gray-300 flex items-center h-[700px]' src="/img/placeholder-image.jpg" alt="..." />
+                                            }
+
+                                            {/* <div className=''>
                                                 <img className=' w-[100%] object-cover  rounded-lg border-solid border-gray-300 flex items-center h-[700px]' src="https://assets.topdev.vn/images/2020/11/09/iris-media-tuyen-dung-viec-lam-IT-headline_photo-1512606.jpg" alt="..." />
                                             </div>
                                             <div className=''>
@@ -147,7 +163,7 @@ const EmployerProfile = () => {
                                             </div>
                                             <div className=''>
                                                 <img className=' w-[100%] object-cover  rounded-lg border-solid border-gray-300 flex items-center h-[700px]' src="/img/placeholder-image.jpg" alt="..." />
-                                            </div>
+                                            </div> */}
                                         </Carousel>
                                     </div>
                                     <div className='flex items-center px-20 mt-10 mb-4'>
@@ -219,23 +235,23 @@ const EmployerProfile = () => {
                 </div>
 
                 <div className='col-5 '>
-                    <div className='w-[100%]'>
+                    <div className='w-[70%]'>
                         <h2 className='text-lg font-bold'>Information of Employer : </h2>
                         <Typography>
                             <pre className='mr-2'>Account: {employerCompanyJob?.email}</pre>
                         </Typography>
                     </div>
-                    <div className='w-[100%] '>
+                    <div className='w-[70%] '>
                         <Typography>
                             <pre className='mr-2'>Address: {employerCompanyJob?.address}</pre>
                         </Typography>
                     </div>
-                    <div className='w-[100%] '>
+                    <div className='w-[70%] '>
                         <Typography>
                             <pre className='mr-2'>Role: {employerCompanyJob?.role}</pre>
                         </Typography>
                     </div>
-                    <div className='w-[100%] flex items-center justify-center'>
+                    <div className='w-[70%] flex items-center justify-center'>
                         <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3  px-5 text-center' type='primary' onClick={() => {
                         }}>Update Information</Button>
                     </div>
@@ -244,7 +260,6 @@ const EmployerProfile = () => {
 
             {/* Chart */}
             <div className='mt-20'>
-                <h2 className='text-lg font-bold my-4 mr-2 p-0'>Your Chart  : </h2>
                 <GeneralChart></GeneralChart>
             </div>
             <div className='mt-20 rounded-xl p-4 border-2  border-gray-300'>

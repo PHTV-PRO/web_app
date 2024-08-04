@@ -1,8 +1,9 @@
-import { GET_COMPANY_DETAIL, GET_COMPANY_LIST } from "../constants";
+import { GET_COMPANY_DETAIL, GET_COMPANY_LIST, GET_DATA_CHART_BY_COMPANYID_OF_EMPLOYER } from "../constants";
 
 const initialState = {
     arrCompany: [],
-    companyDetail: {}
+    companyDetail: {},
+    dataChartByCompanyIdForEmployer: {}
 }
 
 export const CompanyReducer = (state = initialState, action) => {
@@ -12,6 +13,10 @@ export const CompanyReducer = (state = initialState, action) => {
             return { ...state }
         case GET_COMPANY_DETAIL: {
             state.companyDetail = action.companyDetail;
+            return { ...state }
+        }
+        case GET_DATA_CHART_BY_COMPANYID_OF_EMPLOYER: {
+            state.dataChartByCompanyIdForEmployer = action.dataChartByCompanyIdForEmployer;
             return { ...state }
         }
         default:

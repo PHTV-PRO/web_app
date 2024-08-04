@@ -452,9 +452,10 @@ export const AdminTemplate = (props) => { //path, exact, Component
   ]
 
   const itemsAdmin = [
+    getItem('Chart Management', '1', <NavLink className='text-decoration-none' to="/admin/chartmng"><BarChartOutlined /></NavLink>),
     getItem('Industry Management', 'sub1', <IssuesCloseOutlined />, [
-      getItem('Industry ', '1', <NavLink className='text-decoration-none' to="/admin/industry"><i className="fa fa-check"></i></NavLink>),
-      getItem('Skill ', '11', <NavLink className='text-decoration-none' to="/admin/skillmng"><i className="fa fa-check"></i></NavLink>),
+      getItem('Industry ', '11', <NavLink className='text-decoration-none' to="/admin/industry"><i className="fa fa-check"></i></NavLink>),
+      getItem('Skill ', '12', <NavLink className='text-decoration-none' to="/admin/skillmng"><i className="fa fa-check"></i></NavLink>),
     ]),
 
     getItem('User Management', 'sub2', <UserOutlined />, [
@@ -469,8 +470,8 @@ export const AdminTemplate = (props) => { //path, exact, Component
     getItem('Level Management', '7', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
     getItem('SubscriptionPlan Management', '8', <NavLink className='text-decoration-none' to="/admin/subplanmng"><ContainerOutlined /></NavLink>),
     getItem('Company Management', '9', <NavLink className='text-decoration-none' to="/admin/companymng"><HomeFilled /></NavLink>),
-    getItem('Job Management', '10', <NavLink className='text-decoration-none' to="/admin/jobmng"><WalletOutlined /></NavLink>),
-    getItem('Chart Management', '11', <NavLink className='text-decoration-none' to="/admin/chartmng"><BarChartOutlined /></NavLink>),
+    // getItem('Job Management', '10', <NavLink className='text-decoration-none' to="/admin/jobmng"><WalletOutlined /></NavLink>),
+
   ]
 
 

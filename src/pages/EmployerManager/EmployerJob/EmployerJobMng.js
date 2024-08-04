@@ -13,10 +13,8 @@ import ModalApplicationByJob from '../Modal/ModalApplicationJob';
 
 
 export default function EmployerJobMng() {
-    let { employerCompanyJob } = useSelector(state => state.AccountReducer);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [idJob, setIdJob] = useState(0);
     const dispatch = useDispatch();
+    let { employerCompanyJob } = useSelector(state => state.AccountReducer);
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
@@ -25,8 +23,8 @@ export default function EmployerJobMng() {
         dispatch(getCompanyAndJobByTokenAction(accessToken))
     }, []);
 
-    console.log(employerCompanyJob);
-    console.log(idJob);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [idJob, setIdJob] = useState(0);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
@@ -43,19 +41,13 @@ export default function EmployerJobMng() {
     const showModal = () => {
         setIsModalOpen(true);
     };
-
     const handleOk = () => {
         setIsModalOpen(false);
     };
-
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
-
     const data = employerCompanyJob?.companyForEmployer;
-
-
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
             <div style={{ padding: 8, }} onKeyDown={(e) => e.stopPropagation()} >
@@ -233,7 +225,7 @@ export default function EmployerJobMng() {
         },
     ]
     const onChange = (key) => {
-        console.log(key);
+        // console.log(key);
     };
     const items = [
         {

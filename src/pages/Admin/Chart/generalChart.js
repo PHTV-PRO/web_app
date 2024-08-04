@@ -2,12 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Modal, Table, Tabs } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import TabPane from "antd/es/tabs/TabPane";
-
-import ModalOfCompanyDetail from "./Modal/ModalOfCompanyDetail";
-import SummaryDetail from "./Summary/summaryDetail";
-import { getDataChartOfAdmin, getDataChartOfEmployer } from '../../../redux/actions/JobAction';
-import { getCurrentUserAction } from '../../../redux/actions/UserAction';
-import { TOKEN } from "../../../util/settings/config";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -18,10 +12,19 @@ import {
     Title,
     Tooltip,
     Legend,
-  } from 'chart.js'
-  import { Bar,Line } from 'react-chartjs-2'
-  
-  ChartJS.register(
+} from 'chart.js'
+import { Bar, Line } from 'react-chartjs-2'
+
+import SummaryDetail from "./Summary/summaryDetail";
+import { getDataChartOfAdmin, getDataChartOfEmployer } from '../../../redux/actions/JobAction';
+import { getCurrentUserAction } from '../../../redux/actions/UserAction';
+import { TOKEN } from "../../../util/settings/config";
+import { getDataChartByCompanyIdOfEmployerAction } from "../../../redux/actions/CompanyAction";
+import { getCompanyAndJobByTokenAction } from "../../../redux/actions/AccountAction";
+
+
+
+ChartJS.register(
     CategoryScale,
     LinearScale,
     PointElement,
@@ -30,62 +33,25 @@ import {
     Title,
     Tooltip,
     Legend
-  )
+)
 
 const GeneralChart = () => {
-    const dispatch = useDispatch();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [idCompany, setIdCompany] = useState(0);
+
+    // const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [idCompany, setIdCompany] = useState(0);
 
     let { arrDataChart } = useSelector(state => state.JobReducer);
     let { chartAdmin } = useSelector(state => state.JobReducer);
     let { userLogin } = useSelector(state => state.UserReducer);
-    console.log(userLogin?.role);
+    let { employerCompanyJob } = useSelector(state => state.AccountReducer);
+    let { dataChartByCompanyIdForEmployer } = useSelector(state => state.CompanyReducer)
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
     }
-    // data table
-    console.log(chartAdmin);
-    const dataSourceOfCompanyApplication = chartAdmin?.data?.top_3_company_by_application;
-    const columnsOfCompanyApplication = [
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: 'National',
-            dataIndex: 'nationnality',
-            key: 'nationnality',
-        },
-        {
-            title: 'Link Website',
-            dataIndex: 'link_website',
-            key: 'link_website',
-        },
-    ];
-    const dataSourceOfCompanyView = chartAdmin?.data?.top_3_company_by_save;
-    const columnsOfCompanyView = [
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: 'National',
-            dataIndex: 'nationnality',
-            key: 'nationnality',
-        },
-        {
-            title: 'Link Website',
-            dataIndex: 'link_website',
-            key: 'link_website',
-        },
-    ];
 
-    // console.log(arrDataChart?.data?.number_of_job_applicated);
-    // console.log(chartAdmin?.data?.number_of_job_applicated);
+    const dispatch = useDispatch();
+    const idOfCompanyEmployer = employerCompanyJob?.companyForEmployer?.id
 
     useEffect(() => {
         dispatch(getCurrentUserAction(accessToken));
@@ -94,12 +60,14 @@ const GeneralChart = () => {
     useEffect(() => {
         if (userLogin?.role === "EMPLOYER") {
             dispatch(getDataChartOfEmployer(accessToken))
+            dispatch(getCompanyAndJobByTokenAction(accessToken))
+            dispatch(getDataChartByCompanyIdOfEmployerAction(idOfCompanyEmployer))
         } else if (userLogin?.role === "ADMIN") {
             dispatch(getDataChartOfAdmin())
         }
     }, [userLogin])
 
-
+    // Data chart
     const labels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const data = {
         labels: labels,
@@ -140,23 +108,11 @@ const GeneralChart = () => {
     function callback(key) {
         console.log(key);
     }
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
-
 
     return (
         <div>
-            {userLogin?.role == "ADMIN" &&
-                <SummaryDetail chartAdmin={chartAdmin}></SummaryDetail>
-            }
-
+            <SummaryDetail chartAdmin={chartAdmin} dataChartOfEmployer={dataChartByCompanyIdForEmployer}></SummaryDetail>
+            <h2 className='text-lg font-bold my-4 mr-2 p-0'>Your Chart  : </h2>
             <div className="grid gap-4 grid-cols-2">
                 <div className="rounded-xl p-4 border-2 border-gray-300 ">
                     <div className="mb-10 font-bold">Manager Price Of Subcription Plan </div>
@@ -167,69 +123,6 @@ const GeneralChart = () => {
                     <Line data={data2} />
                 </div>
             </div>
-
-            {userLogin?.role == "ADMIN" && <div className="mt-10 border-2 border-gray-300 rounded-md py-3 px-4 ">
-                <h2 className="text-base text-gray-500 italic mb-4"> Top Company :</h2>
-                <Tabs defaultActiveKey="1" onChange={callback}>
-                    <TabPane tab="Top Company With The Most Applcation " key="1">
-                        <div>
-                            <div className="flex gap-4 justify-center  items-end">
-                                <div className="w-60 hover:cursor-pointer" onClick={() => {
-                                    showModal()
-                                    setIdCompany(dataSourceOfCompanyApplication[1]?.id)
-                                }}>
-                                    <div className="text-center mb-6">
-                                        {dataSourceOfCompanyApplication?.length > 0 &&
-                                            dataSourceOfCompanyApplication[1]?.name}
-                                    </div>
-                                    <div className="py-[80px]  rounded-lg mb-10 bg-gray-400">
-                                        <div className=" text-6xl flex items-center justify-center font-bold text-white ">
-                                            2
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-60 hover:cursor-pointer" onClick={() => {
-                                    showModal()
-                                    setIdCompany(dataSourceOfCompanyApplication[0]?.id)
-                                }}>
-                                    <div className="text-center mb-6 hover:cursor-pointer">
-                                        {dataSourceOfCompanyApplication?.length > 0
-                                            ? dataSourceOfCompanyApplication[0]?.name
-                                            : "None"}
-                                    </div>
-                                    <div className="py-[120px]  rounded-lg mb-10 bg-yellow-500">
-                                        <div className=" text-6xl flex items-center justify-center font-bold text-white ">
-                                            1
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-60 hover:cursor-pointer " onClick={() => {
-                                    showModal()
-                                    setIdCompany(dataSourceOfCompanyApplication[2]?.id)
-                                }}>
-                                    <div className="text-center mb-6 hover:cursor-pointer" >
-                                        {dataSourceOfCompanyApplication?.length > 0
-                                            ? dataSourceOfCompanyApplication[2]?.name
-                                            : "None"}
-                                    </div>
-                                    <div className="py-[60px]   rounded-lg mb-10 bg-yellow-700">
-                                        <div className="  text-6xl flex items-center justify-center font-bold text-white">
-                                            3
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </TabPane>
-
-                    <TabPane tab="Top Company With The Most Save" key="2"><Table dataSource={dataSourceOfCompanyView} columns={columnsOfCompanyView} /></TabPane>
-                </Tabs>
-                <Modal title="" width="50%" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                    <ModalOfCompanyDetail idCompany={idCompany}></ModalOfCompanyDetail>
-                </Modal>
-            </div>}
-
-
         </div>
     );
 };

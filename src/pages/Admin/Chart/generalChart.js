@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Table, Tabs } from "antd";
-import { Bar } from "react-chartjs-2";
-import { Line } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import TabPane from "antd/es/tabs/TabPane";
 
@@ -10,7 +8,29 @@ import SummaryDetail from "./Summary/summaryDetail";
 import { getDataChartOfAdmin, getDataChartOfEmployer } from '../../../redux/actions/JobAction';
 import { getCurrentUserAction } from '../../../redux/actions/UserAction';
 import { TOKEN } from "../../../util/settings/config";
-
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    BarElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js'
+  import { Bar,Line } from 'react-chartjs-2'
+  
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    BarElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  )
 
 const GeneralChart = () => {
     const dispatch = useDispatch();
@@ -140,11 +160,11 @@ const GeneralChart = () => {
             <div className="grid gap-4 grid-cols-2">
                 <div className="rounded-xl p-4 border-2 border-gray-300 ">
                     <div className="mb-10 font-bold">Manager Price Of Subcription Plan </div>
-                    {/* <Bar data={data} /> */}
+                    <Bar data={data} />
                 </div>
                 <div className="rounded-xl p-4  border-2 border-gray-300 ">
                     <div className="mb-10 font-bold">Manager Jobs</div>
-                    {/* <Line data={data2} /> */}
+                    <Line data={data2} />
                 </div>
             </div>
 

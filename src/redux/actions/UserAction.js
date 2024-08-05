@@ -9,6 +9,7 @@ export const loginAction = (loginInfo) => {
   return async (dispatch) => {
     try {
       dispatch(displayLoadingAction);
+      await new Promise(resolve => setTimeout(resolve, 2000));
       const result = await userService.login(loginInfo);
       localStorage.setItem(TOKEN, result.data.data.token);
       if (result.status === 200) {
@@ -50,11 +51,14 @@ export const loginAction = (loginInfo) => {
             history.replace("login");
           }
       } else {
+        await new Promise(resolve => setTimeout(resolve, 2000));
         await dispatch(hideLoadingAction);
         history.replace("login");
       }
+      await new Promise(resolve => setTimeout(resolve, 2000));
       await dispatch(hideLoadingAction);
     } catch (error) {
+      await new Promise(resolve => setTimeout(resolve, 2000));
       dispatch(hideLoadingAction);
       notification.error({
         closeIcon: true,

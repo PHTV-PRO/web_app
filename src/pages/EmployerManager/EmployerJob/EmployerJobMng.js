@@ -249,10 +249,9 @@ export default function EmployerJobMng() {
         {/* d-flex mb-3 items-center */}
         <div className=''>
             <div className='d-flex mb-1 items-center'>
-                <h3 className='text-lg'>Job Management : </h3>
                 {
                     employerCompanyJob?.count_jobs >= employerCompanyJob?.limit_job ?
-                        <h3 className=' ml-2 text-base text-gray-500 italic underline'>
+                        <h3 className='alert ml-2 text-base text-yellow-800 rounded-lg bg-yellow-50 w-100 text-center'>
                             <a href='/employer/buyScPl'>You've reached your creation limit for job. Upgrade to create more job.</a>
                         </h3> :
                         <Button href='/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>

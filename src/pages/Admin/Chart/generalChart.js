@@ -111,16 +111,14 @@ const GeneralChart = () => {
 
     return (
         <div>
-            <SummaryDetail chartAdmin={chartAdmin} dataChartOfEmployer={dataChartByCompanyIdForEmployer}></SummaryDetail>
-            <h2 className='text-lg font-bold my-4 mr-2 p-0'>Your Chart  : </h2>
             <div className="grid gap-4 grid-cols-2">
-                <div className="rounded-xl p-4 border-2 border-gray-300 ">
+                <div className="rounded-xl p-8 mr-4 border-2 border-gray-300 ">
                     <div className="mb-10 font-bold">Manager Price Of Subcription Plan </div>
-                    <Bar data={data} />
+                    <Bar height={100} data={data} />
                 </div>
-                <div className="rounded-xl p-4  border-2 border-gray-300 ">
+                <div className="rounded-xl p-8 ml-4 border-2 border-gray-300 ">
                     <div className="mb-10 font-bold">Manager Jobs</div>
-                    <Line data={data2} />
+                    <Line height={100} data={data2} />
                 </div>
             </div>
         </div>

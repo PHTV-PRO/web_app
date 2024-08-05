@@ -4,7 +4,7 @@ import './LoadingLogo.css'
 export default function LoadingLogo() {
     return (
         <div>
-            <img src='../../img/shuttle_bus.gif' alt='loading'/>
+            <img width={150} src='../../img/team-work.gif' alt='loading'/>
         </div>
     )
 }

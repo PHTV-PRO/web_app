@@ -143,8 +143,8 @@ const AddNewJob = (props) => {
         formik.setFieldValue(name, data);
     };
     const onDateChange = (value) => {
-        formik.setFieldValue('end_date', value[0].toString());
-        formik.setFieldValue('start_date', value[1].toString());
+        formik.setFieldValue('end_date', value[1].toString());
+        formik.setFieldValue('start_date', value[0].toString());
 
     };
 

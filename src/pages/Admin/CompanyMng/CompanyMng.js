@@ -238,15 +238,13 @@ export default function CompanyMng() {
                 return <>
                     <Button key={1} href={`/admin/companymng/edit/${company.id}`} type="link" icon={<EditOutlined />} onClick={() => {
                     }}></Button>
+
                     <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
                         if (window.confirm('Do you want to delete ' + company.name + '?')) {
                             dispatch(deleteCompanyAction(company.id))
                         }
                     }}></Button>
-                    <Button key={3} onClick={() => {
-                        setCompanyId(company.id)
-                        showModal()
-                    }}>Show Detail Job</Button>
+                    <Button key={3} href={`/employer/emprofile/${company?.account?.id}`} >Show Employer Detail</Button>
                 </>
 
             }
@@ -258,9 +256,5 @@ export default function CompanyMng() {
             <Button href='/admin/companymng/addcom' type="primary" className='ml-3 small bg-primary'>+ Add New Company</Button>
         </div>
         <Table columns={columns} dataSource={data} rowKey={'id'} />
-
-        <Modal width={'90%'} title="" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-            <ModalListJobOfCompany companyId={companyId}></ModalListJobOfCompany>
-        </Modal>
     </div>
 }

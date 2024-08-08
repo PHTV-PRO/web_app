@@ -26,7 +26,7 @@ export const loginAction = (loginInfo) => {
           });
           history.push("/admin/chartmng");
         } else
-          if (user.data.data.role == "EMPLOYER") {
+          if (user.data.data.role === "EMPLOYER") {
             notification.success({
               closeIcon: true,
               message: "Success",

@@ -452,7 +452,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
   ]
 
   const itemsAdmin = [
-    getItem('Chart Management', '1', <NavLink className='text-decoration-none' to="/admin/chartmng"><BarChartOutlined /></NavLink>),
+    getItem('Dashboard', '1', <NavLink className='text-decoration-none' to="/admin/chartmng"><BarChartOutlined /></NavLink>),
     getItem('Industry Management', 'sub1', <IssuesCloseOutlined />, [
       getItem('Industry ', '11', <NavLink className='text-decoration-none' to="/admin/industry"><i className="fa fa-check"></i></NavLink>),
       getItem('Skill ', '12', <NavLink className='text-decoration-none' to="/admin/skillmng"><i className="fa fa-check"></i></NavLink>),

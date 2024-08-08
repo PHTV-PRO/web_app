@@ -15,13 +15,10 @@ import {
 } from 'chart.js'
 import { Bar, Line } from 'react-chartjs-2'
 
-import SummaryDetail from "./Summary/summaryDetail";
-import { getDataChartOfAdmin, getDataChartOfEmployer } from '../../../redux/actions/JobAction';
+
+import { getDataChartOfEmployer, getDataChartOfEmployerFromAdminById } from '../../../redux/actions/JobAction';
 import { getCurrentUserAction } from '../../../redux/actions/UserAction';
 import { TOKEN } from "../../../util/settings/config";
-import { getDataChartByCompanyIdOfEmployerAction } from "../../../redux/actions/CompanyAction";
-import { getCompanyAndJobByTokenAction } from "../../../redux/actions/AccountAction";
-
 
 
 ChartJS.register(
@@ -35,53 +32,51 @@ ChartJS.register(
     Legend
 )
 
-const GeneralChart = () => {
-
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-    // const [idCompany, setIdCompany] = useState(0);
-
-    let { arrDataChart } = useSelector(state => state.JobReducer);
-    let { chartAdmin } = useSelector(state => state.JobReducer);
+const ChartOfEmployer = (props) => {
+    const dispatch = useDispatch();
+    const idOfEmployer = props?.idOfEmployer?.id
     let { userLogin } = useSelector(state => state.UserReducer);
-    let { employerCompanyJob } = useSelector(state => state.AccountReducer);
-    let { dataChartByCompanyIdForEmployer } = useSelector(state => state.CompanyReducer)
+    let { dataChartOfEmployerById } = useSelector(state => state.JobReducer);
+    let { chartEmployerFromAdminById } = useSelector(state => state.JobReducer);
+    // console.log(dataChartOfEmployerById);
+    // console.log(dataChartOfEmployerById?.data?.price_for_subcription_plan);
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
     }
 
-    const dispatch = useDispatch();
-    const idOfCompanyEmployer = employerCompanyJob?.companyForEmployer?.id
-
     useEffect(() => {
         dispatch(getCurrentUserAction(accessToken));
-    }, [])
+    }, [dispatch])
+
 
     useEffect(() => {
         if (userLogin?.role === "EMPLOYER") {
-            dispatch(getDataChartOfEmployer(accessToken))
-            dispatch(getCompanyAndJobByTokenAction(accessToken))
-            dispatch(getDataChartByCompanyIdOfEmployerAction(idOfCompanyEmployer))
+            dispatch(getDataChartOfEmployer(userLogin?.id))
         } else if (userLogin?.role === "ADMIN") {
-            dispatch(getDataChartOfAdmin())
+            dispatch(getDataChartOfEmployerFromAdminById(idOfEmployer))
+
         }
     }, [userLogin])
 
+
+
     // Data chart
     const labels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const data = {
+    const dataChartOfEmployerFromAdmin = {
         labels: labels,
         datasets: [
             {
                 label: "Price Subcription Plan By Month",
                 backgroundColor: "rgb(255, 99, 132)",
                 borderColor: "rgb(255, 99, 132)",
-                data: userLogin?.role === "EMPLOYER" ? arrDataChart?.data?.price_for_subcription_plan : chartAdmin?.data?.price_for_subcription_plan,
+                data: chartEmployerFromAdminById?.data?.price_for_subcription_plan || dataChartOfEmployerById?.data?.price_for_subcription_plan,
+
             },
         ],
     };
 
-    const data2 = {
+    const dataChartLineOfEmployerFromAdmin = {
         labels: labels,
         datasets: [
             {
@@ -89,40 +84,37 @@ const GeneralChart = () => {
                     "Job Applicated By Month ",
                 backgroundColor: "rgb(255, 99, 132)",
                 borderColor: "rgb(255, 99, 132)",
-                data: userLogin?.role === "EMPLOYER" ? arrDataChart?.data?.number_of_job_applicated : chartAdmin?.data?.number_of_job_applicated
+                data: chartEmployerFromAdminById?.data?.number_of_job_applicated || dataChartOfEmployerById?.data?.number_of_job_applicated
             },
             {
                 label: "Job Save By Month",
                 backgroundColor: "rgb(75, 192, 192)",
                 borderColor: "rgb(75, 192, 192)",
-                data: userLogin?.role === "EMPLOYER" ? arrDataChart?.data?.number_of_job_saved : chartAdmin?.data?.number_of_job_saved
+                data: chartEmployerFromAdminById?.data?.number_of_job_saved || dataChartOfEmployerById?.data?.number_of_job_saved
             },
             {
                 label: "Job Viewed By Month",
                 backgroundColor: "rgb(255, 205, 86)",
                 borderColor: "rgb(255, 205, 86)",
-                data: userLogin?.role === "EMPLOYER" ? arrDataChart?.data?.number_of_job_viewed : chartAdmin?.data?.number_of_job_viewed
+                data: chartEmployerFromAdminById?.data?.number_of_job_viewed || dataChartOfEmployerById?.data?.number_of_job_viewed
             }
         ]
     };
-    function callback(key) {
-        console.log(key);
-    }
 
     return (
         <div>
             <div className="grid gap-4 grid-cols-2">
                 <div className="rounded-xl p-8 mr-4 border-2 border-gray-300 ">
                     <div className="mb-10 font-bold">Manager Price Of Subcription Plan </div>
-                    <Bar height={100} data={data} />
+                    <Bar height={100} data={dataChartOfEmployerFromAdmin} />
                 </div>
                 <div className="rounded-xl p-8 ml-4 border-2 border-gray-300 ">
                     <div className="mb-10 font-bold">Manager Jobs</div>
-                    <Line height={100} data={data2} />
+                    <Line height={100} data={dataChartLineOfEmployerFromAdmin} />
                 </div>
             </div>
         </div>
     );
 };
 
-export default GeneralChart;
+export default ChartOfEmployer;

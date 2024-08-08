@@ -1,4 +1,4 @@
-import { GET_ACCOUNT_DETAIL, GET_ACCOUNT_LIST, GET_COMPANY_JOB, GET_EMPLOYER_COMPANY_DETAIL } from "../constants";
+import { GET_ACCOUNT_DETAIL, GET_ACCOUNT_LIST, GET_COMPANY_FOR_EMPLOYER_FROM_ADMIN, GET_COMPANY_JOB, GET_EMPLOYER_COMPANY_DETAIL } from "../constants";
 import { history } from "../../App";
 import { accountService } from "../../services/AccountService";
 import { notification } from "antd";
@@ -54,6 +54,7 @@ export const deleteAccountAction = (id) => {
         }
     };
 };
+
 export const getAccountByIdAction = (id) => {
     return async (dispatch) => {
         try {
@@ -101,6 +102,24 @@ export const getEmployerOfCompanyByIAction = (id) => {
         }
     };
 };
+
+
+export const getCompanyForEmployerFromAdminById = (id) => {
+    return async (dispatch) => {
+        try {
+            const result = await accountService.getCompanyForEmployerFromAdminById(id);
+            if (result.status === 200) {
+                dispatch({
+                    type: GET_COMPANY_FOR_EMPLOYER_FROM_ADMIN,
+                    dataCompanyForEmployerFromAdmin: result.data.data,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
 export const updateAccountByIdAction = (id, formData) => {
     return async (dispatch) => {
         try {

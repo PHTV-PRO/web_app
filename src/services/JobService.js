@@ -33,8 +33,11 @@ export class JobService extends baseService {
     getChartOfAdmin = () => {
         return this.get(`/api/admin/chart`);
     };
-    getChartOfEmployer = (token) => {
-        return this.get(`/api/employer/chart`);
+    getChartOfEmployerById = (id) => {
+        return this.get(`/api/employer/chart/${id}`);
+    };
+    getChartOfEmployerFromAdminById = (id) => {
+        return this.get(`/api/admin/employer_chart/${id}`);
     };
     getApplicationByJob = (id) => {
         return this.get(`/api/employer/application_by_job?job_id=${id}&size=5&page=1`);

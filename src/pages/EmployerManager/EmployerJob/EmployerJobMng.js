@@ -6,22 +6,31 @@ import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TOKEN } from '../../../util/settings/config';
-// import { getCurrentUserAction } from '../../../redux/actions/UserAction';
-import { getCompanyAndJobByTokenAction } from '../../../redux/actions/AccountAction';
+import { getCompanyAndJobByTokenAction, getCompanyForEmployerFromAdminById } from '../../../redux/actions/AccountAction';
 import { deleteJobAction } from '../../../redux/actions/JobAction';
 import ModalApplicationByJob from '../Modal/ModalApplicationJob';
 
 
-export default function EmployerJobMng() {
+export default function EmployerJobMng(props) {
+    const idOfEmployer = props?.idOfEmployer?.id
+
     const dispatch = useDispatch();
     let { employerCompanyJob } = useSelector(state => state.AccountReducer);
+    let { userLogin } = useSelector(state => state.UserReducer);
+    let { dataCompanyForEmployerFromAdmin } = useSelector(state => state.AccountReducer);
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
     }
     useEffect(() => {
-        dispatch(getCompanyAndJobByTokenAction(accessToken))
-    }, []);
+        if (userLogin?.role === "EMPLOYER") {
+            dispatch(getCompanyAndJobByTokenAction(accessToken))
+        } else if (userLogin?.role === "ADMIN") {
+            dispatch(getCompanyForEmployerFromAdminById(idOfEmployer))
+        }
+    }, [userLogin])
+
+
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [idJob, setIdJob] = useState(0);
@@ -47,7 +56,7 @@ export default function EmployerJobMng() {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-    const data = employerCompanyJob?.companyForEmployer;
+    const data = employerCompanyJob?.companyForEmployer || dataCompanyForEmployerFromAdmin?.companyForEmployer;
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
             <div style={{ padding: 8, }} onKeyDown={(e) => e.stopPropagation()} >
@@ -250,21 +259,23 @@ export default function EmployerJobMng() {
         <div className=''>
             <div className='d-flex mb-1 items-center'>
                 {
-                    employerCompanyJob?.count_jobs >= employerCompanyJob?.limit_job ?
+                    userLogin?.role === "EMPLOYER" ? employerCompanyJob?.count_jobs >= employerCompanyJob?.limit_job ?
                         <h3 className='alert ml-2 text-base text-yellow-800 rounded-lg bg-yellow-50 w-100 text-center'>
                             <a href='/employer/buyScPl'>You've reached your creation limit for job. Upgrade to create more job.</a>
                         </h3> :
+                        <Button href='/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button> :
                         <Button href='/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
                 }
             </div>
-            <div className='flex items-center '>
+            {userLogin?.role === "EMPLOYER" && <div className='flex items-center '>
                 <h3 className='text-lg text-gray-600 italic'> Jobs created : </h3>
                 <h5 className='ml-2 text-base text-gray-500'>{employerCompanyJob?.count_jobs} / {employerCompanyJob?.limit_job}</h5>
-            </div>
+            </div>}
 
         </div>
         <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
 
+        {/* Application from Job */}
         <Modal width={'90%'} title="" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
             <ModalApplicationByJob jobId={idJob}></ModalApplicationByJob>
         </Modal>

@@ -125,21 +125,7 @@ export const deleteCompanyAction = (id) => {
     }
 }
 
-export const getDataChartByCompanyIdOfEmployerAction = (id) => {
-    return async (dispatch) => {
-        try {
-            const result = await companyService.getDataChartByCompanyIdOfEmployer(id);
-            console.log(result);
-            console.log(result.data.data);
-            dispatch({
-                type: GET_DATA_CHART_BY_COMPANYID_OF_EMPLOYER,
-                dataChartByCompanyIdForEmployer: result.data.data
-            })
-        } catch (error) {
-            console.log('error', error);
-        }
-    }
-}
+
 
 export const apiUploadImages = (images) => new Promise(async (resolve, reject) => {
     console.log(images);

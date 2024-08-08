@@ -1,4 +1,4 @@
-import { GET_JOB_LIST, GET_JOB_DETAIL, GET_CHART_OF_EMPLOYER, GET_CHART_OF_ADMIN, GET_APPLICATION_BY_JOB } from "../constants";
+import { GET_JOB_LIST, GET_JOB_DETAIL, GET_CHART_OF_EMPLOYER, GET_CHART_OF_ADMIN, GET_APPLICATION_BY_JOB, GET_CHART_OF_EMPLOYER_BY_ID } from "../constants";
 import { history } from "../../App";
 import { jobService } from "../../services/JobService";
 import { notification } from "antd";
@@ -148,14 +148,15 @@ export const deleteJobAction = (id) => {
     }
 }
 
-export const getDataChartOfEmployer = (token) => {
+// Get Data chat of Employer By Id
+export const getDataChartOfEmployer = (id) => {
     return async (dispatch) => {
         try {
-            const result = await jobService.getChartOfEmployer(token);
+            const result = await jobService.getChartOfEmployerById(id);
             if (result.status === 200) {
                 dispatch({
                     type: GET_CHART_OF_EMPLOYER,
-                    arrDataChart: result.data
+                    dataChartOfEmployerById: result.data
                 })
             }
         } catch (error) {
@@ -163,6 +164,24 @@ export const getDataChartOfEmployer = (token) => {
         }
     }
 }
+
+export const getDataChartOfEmployerFromAdminById = (id) => {
+    return async (dispatch) => {
+        try {
+            const result = await jobService.getChartOfEmployerFromAdminById(id);
+            if (result.status === 200) {
+                dispatch({
+                    type: GET_CHART_OF_EMPLOYER_BY_ID,
+                    chartEmployerFromAdminById: result.data
+                })
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+
+
 
 export const getDataChartOfAdmin = () => {
     return async (dispatch) => {

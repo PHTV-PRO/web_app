@@ -79,10 +79,6 @@ const EditCompany = (props) => {
     })
 
 
-
-
-
-
     // hàm lấy imge khi update
     useEffect(() => {
         const images = companyDetail?.list_image ? JSON.parse(companyDetail?.list_image) : [];

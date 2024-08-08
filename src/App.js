@@ -73,7 +73,7 @@ import { ProfileTemplate } from "./templates/ProfileTemplate";
 import NewJobEmployer from "./pages/EmployerManager/EmployerJob/NewJobEmployer";
 import EmployerEditJob from "./pages/EmployerManager/EmployerJob/EditEmployerJob";
 import BuySubcriptionPlan from "./pages/EmployerManager/BuySubcriptionPlan";
-import GeneralChart from "./pages/Admin/Chart/generalChart";
+import GeneralChart from "./pages/Admin/Chart/ChartAdmin";
 // import NewJobEmployer from "./pages/EmployerManager/EmployerJob/NewJobEmployer";
 
 
@@ -147,10 +147,11 @@ function App() {
         {/* chart */}
         <AdminTemplate path="/admin/chartmng" exact Component={GeneralChart} />
 
-        {/* User */}
+
         {/* EmployerProfile */}
         <AdminTemplate path="/users/profile" exact Component={Profile} />
         <AdminTemplate path="/employer/emprofile" exact Component={EmployerProfile} />
+        <AdminTemplate path="/employer/emprofile/:id" exact Component={EmployerProfile} />
         <AdminTemplate path="/employer/employersubmng" exact Component={EmployerSubcriptionPlanMng} />
 
 
@@ -158,10 +159,9 @@ function App() {
         <AdminTemplate path="/employer/empljobmng" exact Component={EmployerJobMng} />
         <AdminTemplate path="/employer/emplnewjob" exact Component={NewJobEmployer} />
         <AdminTemplate path="/employer/job/edit/:id" exact Component={EmployerEditJob} />
-        <AdminTemplate path="/employer/emplnewjob/:id" exact Component={AddNewJob} />
+
+        {/* Chart */}
         <AdminTemplate path="/employer/chartmng" exact Component={GeneralChart} />
-
-
         <AdminTemplate path="/employer/buyScPl" exact Component={BuySubcriptionPlan} />
 
 

@@ -48,9 +48,9 @@ const EditCompany = (props) => {
             profession: companyDetail?.profession,
             size: companyDetail?.size,
             link_website: companyDetail?.link_website,
+            location: companyDetail?.location,
             nationnality: companyDetail?.nationnality,
             logo_image: companyDetail?.logo_image,
-            // chuyen thanh mang chua image
             background_image: companyDetail?.background_image,
             enable: companyDetail?.enable,
             account: companyDetail?.account?.name,
@@ -88,6 +88,7 @@ const EditCompany = (props) => {
 
 
     const handleChangeEnable = (value) => {
+        console.log(value);
         formik.setFieldValue("enable", value);
     };
 
@@ -172,9 +173,6 @@ const EditCompany = (props) => {
         // 20:14/64
 
         let a = formik?.values?.list_image
-        console.log("Toan ngaooo:", a);
-        console.log("checkkkkkkkk:", JSON.parse(a));
-
         setImagePreview((pre) => pre?.filter((item) => item !== image));
         formik.setFieldValue("list_image", JSON.stringify(JSON.parse((a))?.filter((item) => item !== image)));
     };
@@ -244,6 +242,7 @@ const EditCompany = (props) => {
         };
 
     }
+
     const renderSelectedLevel = () => (
         <div>
             {selectedLevel.map((level) => (
@@ -424,20 +423,18 @@ const EditCompany = (props) => {
                         <Input name="nationnality" onChange={formik.handleChange} value={formik.values.nationnality} />
                     </Form.Item>
 
-
                     <Form.Item
-                        label="Enable"
+                        label="Location"
+                        style={{ minWidth: "100%" }}
                         rules={[
                             {
                                 required: true,
-                                message: "Enable cannot be blank!",
+                                message: "Location is required!",
+                                transform: (value) => value.trim(),
                             },
                         ]}
                     >
-                        <Select name="Enable" onChange={handleChangeEnable} placeholder="Choose Enable" value={formik.values.enable}>
-                            <Option value={0}>On</Option>
-                            <Option value={1}>Off</Option>
-                        </Select>
+                        <Input name="location" onChange={formik.handleChange} value={formik.values.location} />
                     </Form.Item>
 
                     <Form.Item
@@ -598,11 +595,20 @@ const EditCompany = (props) => {
                         </div>
                     </Form.Item>
 
-
-
-
-
-
+                    <Form.Item
+                        label="Enable"
+                        rules={[
+                            {
+                                required: true,
+                                message: "Enable cannot be blank!",
+                            },
+                        ]}
+                    >
+                        <Select name="Enable" onChange={handleChangeEnable} placeholder="Choose Enable" value={formik.values.enable}>
+                            <Option value={0}>Off</Option>
+                            <Option value={1}>On</Option>
+                        </Select>
+                    </Form.Item>
 
 
                     <Form.Item label="Action">

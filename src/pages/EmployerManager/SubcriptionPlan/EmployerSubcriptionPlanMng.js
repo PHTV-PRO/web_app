@@ -5,8 +5,8 @@ import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getSubscriptionPlanByAccountAction } from '../../redux/actions/SubscriptionPlanAction';
-import { TOKEN } from '../../util/settings/config';
+import { getSubscriptionPlanByAccountAction } from '../../../redux/actions/SubscriptionPlanAction';
+import { TOKEN } from '../../../util/settings/config';
 import { render } from '@testing-library/react';
 import dayjs from 'dayjs';
 
@@ -45,7 +45,7 @@ export default function EmployerSubcriptionPlanMng() {
     const data2 = parseSubsObjecTotArray;
 
     const data1 = subscriptionPlanByAccount?.subcriptionPlanDTOs;
-    console.log(data2);
+
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -138,17 +138,17 @@ export default function EmployerSubcriptionPlanMng() {
         {
             title: 'Name',
             dataIndex: 'name',
-            key: 'name', 
+            key: 'name',
             width: '15%',
             ...getColumnSearchProps('name'),
             sorter: (a, b) => a.name - b.name,
-            render: (a)=>{
+            render: (a) => {
                 if (data2[0]?.id == a) {
                     return <div className='bg-yellow-300 rounded-md shadow-md  p-2 shadow-yellow-300   text-center'> {a} </div>
-                  } else {
+                } else {
                     return <div className='bg-gray-200 rounded-md shadow-md  p-2 shadow-gray-300   text-center'> {a} </div>
-                  }
-               
+                }
+
             },
             sortDirections: ['descend', 'ascend'],
         },
@@ -168,7 +168,7 @@ export default function EmployerSubcriptionPlanMng() {
             width: '20%',
             ...getColumnSearchProps('start_date'),
             sorter: (a, b) => a.start_date - b.start_date,
-            render:(data)=>{
+            render: (data) => {
                 return <>{dayjs(data).format("DD-MM-YYYY")}</>
             },
             sortDirections: ['descend', 'ascend'],
@@ -180,7 +180,7 @@ export default function EmployerSubcriptionPlanMng() {
             width: '20%',
             ...getColumnSearchProps('end_date'),
             sorter: (a, b) => a.end_date - b.end_date,
-            render:(data)=>{
+            render: (data) => {
                 return <>{dayjs(data).format("DD-MM-YYYY")}</>
             },
             sortDirections: ['descend', 'ascend'],
@@ -197,7 +197,7 @@ export default function EmployerSubcriptionPlanMng() {
                 <h3 className='text-lg italic text-gray-500'>Registered</h3>
                 <Table columns={columns} dataSource={data2} rowKey={'id'} pagination={false} />
             </div>
-            <div className=''> 
+            <div className=''>
                 <h3 className='text-lg italic text-gray-500 '>Out of Date</h3>
                 <Table columns={columns} dataSource={data1} rowKey={'id'} />
             </div>

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Typography, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { TOKEN } from '../../util/settings/config';
-import "./BuySubcriptionPlan.css"
+import { TOKEN } from '../../../util/settings/config';
 
 
-import { getCurrentUserAction } from '../../redux/actions/UserAction';
-import { getCompanyAndJobByTokenAction } from '../../redux/actions/AccountAction';
-import { buyScriptionPlan, getSubscriptionPlanListAction } from '../../redux/actions/SubscriptionPlanAction';
 
-import { history } from '../../App';
+import { getCurrentUserAction } from '../../../redux/actions/UserAction';
+import { getCompanyAndJobByTokenAction } from '../../../redux/actions/AccountAction';
+import { buyScriptionPlan, getSubscriptionPlanListAction } from '../../../redux/actions/SubscriptionPlanAction';
+
+import { history } from '../../../App';
 import dayjs from 'dayjs';
 import { now } from 'moment/moment';
 
@@ -71,11 +71,9 @@ const BuySubcriptionPlan = () => {
                                         <h1 className='text-center text-gray-400 text-lg'>
                                             {pk.name}
                                         </h1>
-                                        <div className='flex items-center justify-center'>
-                                            <h1 className='text-gray-600 text-lg my-0 mr-2'>
-                                                ${pk.price} /
-                                            </h1>
-                                            <p className='text-sm text-gray-400 m-0'>month</p>
+                                        <div className='flex items-center justify-center mt-3'>
+                                            <h1 className='text-base'>{pk.price}</h1>
+                                            <h4 className='text-sm ml-2 text-gray-400'>/Month</h4>
                                         </div>
 
                                         <div className='flex items-center  justify-center mt-3 p-2 bg-green-400  rounded-sm hover:bg-green-300'>
@@ -93,9 +91,9 @@ const BuySubcriptionPlan = () => {
                                             <h1 className='text-base'>{pk.expiry}</h1>
                                             <h4 className='text-sm ml-2 text-gray-400'>Jobs</h4>
                                         </div>
-                                        <div className="text-center">
-                                            <h1 className='text-base m-0'>Description</h1>
-                                            <h4 className='text-sm ml-2 text-gray-400'>
+                                        <div className="text-center ">
+                                            <h1 className='text-base m-0'>Description : </h1>
+                                            <h4 className='text-sm ml-2 text-gray-400 text-ellipsis overflow-hidden line-clamp-2'>
                                                 {pk.description}
                                             </h4>
                                         </div>
@@ -109,7 +107,6 @@ const BuySubcriptionPlan = () => {
                         <div className="flex flex-col items-center justify-center">
                             {(arrSubscriptionPlan?.data)?.map((packageName) => (
                                 <>
-
                                     {packageName.id == selectedPackage ? <> <hr /> <h2 className='text-center text-lg'>Your choose</h2>
                                         <div className='col-5 mb-3 flex flex-col justify-center'>
                                             <div className="flex items-center justify-center">

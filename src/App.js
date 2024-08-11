@@ -52,7 +52,8 @@ import EditCompany from "./pages/Admin/CompanyMng/EditCompany";
 import JobMng from "./pages/Admin/JobMng/JobMng";
 import AddNewJob from "./pages/Admin/JobMng/AddJob";
 import EditJob from "./pages/Admin/JobMng/EditJob";
-
+// Chart
+import GeneralChart from "./pages/Admin/Chart/ChartAdmin";
 //Location
 import LocationMng from "./pages/Admin/LocationMng/LocationMng";
 import AddNewLocation from "./pages/Admin/LocationMng/AddNewLocation";
@@ -61,20 +62,16 @@ import EditLocation from "./pages/Admin/LocationMng/EditLocation";
 // Proflie Employer
 import EmployerProfile from "./pages/EmployerManager/EmployerProfile";
 import EmployerJobMng from "./pages/EmployerManager/EmployerJob/EmployerJobMng";
-import EmployerSubcriptionPlanMng from "./pages/EmployerManager/EmployerSubcriptionPlanMng";
+import EmployerSubcriptionPlanMng from "./pages/EmployerManager/SubcriptionPlan/EmployerSubcriptionPlanMng";
+// Task Employer
+import BuySubcriptionPlan from "./pages/EmployerManager/SubcriptionPlan/BuySubcriptionPlan";
+import ShowSubcriptionPlan from "./pages/EmployerManager/SubcriptionPlan/ShowSubcriptionPlan";
 
-
-//
 import UserTemplate from "./templates/UserTemplate";
 import Login from "./pages/Login/Login";
-
-
 import { ProfileTemplate } from "./templates/ProfileTemplate";
-import NewJobEmployer from "./pages/EmployerManager/EmployerJob/NewJobEmployer";
-import EmployerEditJob from "./pages/EmployerManager/EmployerJob/EditEmployerJob";
-import BuySubcriptionPlan from "./pages/EmployerManager/BuySubcriptionPlan";
-import GeneralChart from "./pages/Admin/Chart/ChartAdmin";
-// import NewJobEmployer from "./pages/EmployerManager/EmployerJob/NewJobEmployer";
+
+
 
 
 
@@ -133,6 +130,7 @@ function App() {
         <AdminTemplate path="/admin/jobmng" exact Component={JobMng} />
         <AdminTemplate path="/jobmng/addjob" exact Component={AddNewJob} />
         <AdminTemplate path="/jobmng/edit/:id" exact Component={EditJob} />
+        <AdminTemplate path="/jobmng/addjob/:id" exact Component={AddNewJob} />
 
         {/* Employer */}
         <AdminTemplate path="/admin/empmng" exact Component={EmployerMng} />
@@ -157,14 +155,13 @@ function App() {
 
         {/* job employer */}
         <AdminTemplate path="/employer/empljobmng" exact Component={EmployerJobMng} />
-        <AdminTemplate path="/employer/emplnewjob" exact Component={NewJobEmployer} />
-        <AdminTemplate path="/employer/job/edit/:id" exact Component={EmployerEditJob} />
+        {/* <AdminTemplate path="/employer/job/edit/:id" exact Component={EmployerEditJob} /> */}
+        <AdminTemplate path="/employer/buyScPl" exact Component={BuySubcriptionPlan} />
+        <AdminTemplate path="/employer/showsubcriptionplan" exact Component={ShowSubcriptionPlan} />
+
 
         {/* Chart */}
         <AdminTemplate path="/employer/chartmng" exact Component={GeneralChart} />
-        <AdminTemplate path="/employer/buyScPl" exact Component={BuySubcriptionPlan} />
-
-
 
 
         <AdminTemplate path="/admin" exact Component={UserMng} />

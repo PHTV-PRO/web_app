@@ -1,20 +1,24 @@
 import React, { useEffect } from 'react'
 import { SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tabs, Modal } from 'antd';
+import { Button, Input, Space, Table, Tabs, Modal, Switch } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TOKEN } from '../../../util/settings/config';
 import { getCompanyAndJobByTokenAction, getCompanyForEmployerFromAdminById } from '../../../redux/actions/AccountAction';
-import { deleteJobAction } from '../../../redux/actions/JobAction';
+import { deleteJobAction, updateEnableOfJobByAdmin, updateEnableOfJobByEmployer } from '../../../redux/actions/JobAction';
 import ModalApplicationByJob from '../Modal/ModalApplicationJob';
+import moment from 'moment';
+
 
 
 export default function EmployerJobMng(props) {
-    const idOfEmployer = props?.idOfEmployer?.id
 
     const dispatch = useDispatch();
+    const idOfEmployer = props?.idOfEmployer?.id
+    const today = moment();
+    const currentDay = today.format("YYYY-MM-DD")
     let { employerCompanyJob } = useSelector(state => state.AccountReducer);
     let { userLogin } = useSelector(state => state.UserReducer);
     let { dataCompanyForEmployerFromAdmin } = useSelector(state => state.AccountReducer);
@@ -29,9 +33,6 @@ export default function EmployerJobMng(props) {
             dispatch(getCompanyForEmployerFromAdminById(idOfEmployer))
         }
     }, [userLogin])
-
-
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [idJob, setIdJob] = useState(0);
     const [searchText, setSearchText] = useState('');
@@ -57,6 +58,7 @@ export default function EmployerJobMng(props) {
         setIsModalOpen(false);
     };
     const data = employerCompanyJob?.companyForEmployer || dataCompanyForEmployerFromAdmin?.companyForEmployer;
+    console.log(data?.jobsOpened);
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
             <div style={{ padding: 8, }} onKeyDown={(e) => e.stopPropagation()} >
@@ -151,7 +153,7 @@ export default function EmployerJobMng(props) {
             title: 'Skill Required',
             dataIndex: 'skill_required',
             key: 'skill_required',
-            width: '5%',
+            width: '15%',
             ...getColumnSearchProps('skill_required'),
             sorter: (a, b) => a.skill_required - b.skill_required,
             sortDirections: ['descend', 'ascend'],
@@ -162,7 +164,7 @@ export default function EmployerJobMng(props) {
             title: 'Benefit',
             dataIndex: 'benefit',
             key: 'benefit',
-            width: '5%',
+            width: '15%',
             ...getColumnSearchProps('benefit'),
             sorter: (a, b) => a.benefit - b.benefit,
             sortDirections: ['descend', 'ascend'],
@@ -178,9 +180,9 @@ export default function EmployerJobMng(props) {
             sorter: (a, b) => a.company_id - b.company_id,
             sortDirections: ['descend', 'ascend'],
             render: (text, company) => {
-                return (<>
+                return (<div className='text-ellipsis overflow-hidden line-clamp-2'>
                     <span>{company.company?.name}</span>
-                </>)
+                </div>)
             },
         },
         {
@@ -191,10 +193,12 @@ export default function EmployerJobMng(props) {
             ...getColumnSearchProps('location_id '),
             sorter: (a, b) => a.location_id - b.location_id,
             sortDirections: ['descend', 'ascend'],
-            render: (text, location) => {
-                return (<>
-                    <span>{location.location?.name}</span>
-                </>)
+            render: (text, company) => {
+                return (
+                    <div className='text-ellipsis overflow-hidden line-clamp-2'>
+                        <span>{company.company?.location}</span>
+                    </div>
+                )
             },
         },
         {
@@ -212,18 +216,34 @@ export default function EmployerJobMng(props) {
             },
         },
         {
+            title: 'Enable',
+            dataIndex: '_active',
+            width: '5%',
+            key: '_active',
+            sortDirections: ['descend', 'ascend'],
+            render: (text, job) => {
+                return <Switch size="small" defaultChecked={job?._active} checked={job?.job?._active} onClick={() => {
+                    userLogin?.role === 'ADMIN' ? dispatch(updateEnableOfJobByAdmin(job?.id)) : dispatch(updateEnableOfJobByEmployer(job?.id))
+                }} />
+            },
+        },
+        {
             title: 'Manage',
             width: '15%',
             render: (text, job) => {
                 return <>
-                    <Button key={1} href={`/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => {
-                    }}></Button>
+                    {
+                        job?.start_date >= currentDay ?
+                            <Button key={1} href={`/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => { }}></Button> :
+                            <div></div>
+                    }
 
-                    <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
+                    {job?.end_date >= currentDay ? <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
                         if (window.confirm('Do you want to delete ' + job.title + '?')) {
                             dispatch(deleteJobAction(job.id))
                         }
-                    }}></Button>
+                    }}></Button> : <div></div>}
+
                     <Button key={3} onClick={() => {
                         setIdJob(job.id)
                         showModal()
@@ -244,13 +264,13 @@ export default function EmployerJobMng(props) {
         },
         {
             key: '2',
-            label: 'Upcoming Job',
-            children: data?.jobsNotOpen ? <Table columns={columns} dataSource={data.jobsNotOpen} rowKey={'id'} /> : "",
+            children: data?.jobsOpening ? <Table columns={columns} dataSource={data.jobsOpening} rowKey={'id'} /> : "",
+            label: 'Jobs Are Recruiting',
         },
         {
             key: '3',
-            children: data?.jobsOpening ? <Table columns={columns} dataSource={data.jobsOpening} rowKey={'id'} /> : "",
-            label: 'Jobs Are Recruiting',
+            label: 'Upcoming Job',
+            children: data?.jobsNotOpen ? <Table columns={columns} dataSource={data.jobsNotOpen} rowKey={'id'} /> : "",
         },
     ];
 
@@ -264,7 +284,7 @@ export default function EmployerJobMng(props) {
                             <a href='/employer/buyScPl'>You've reached your creation limit for job. Upgrade to create more job.</a>
                         </h3> :
                         <Button href='/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button> :
-                        <Button href='/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
+                        <Button href={`/jobmng/addjob/${dataCompanyForEmployerFromAdmin?.companyForEmployer?.id}`} type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
                 }
             </div>
             {userLogin?.role === "EMPLOYER" && <div className='flex items-center '>

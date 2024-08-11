@@ -143,3 +143,24 @@ export const apiUploadImages = (images) => new Promise(async (resolve, reject) =
 })
 
 
+export const updateEnableOfCompanyByAdmin = (id) => {
+    return async (dispatch) => {
+        try {
+            const result = await companyService.updateEnableFromAdmin(id);
+            console.log(result);
+            console.log(result.data.data.enable);
+            notification.success({
+                closeIcon: true,
+                message: 'Success',
+                description: (
+                    <>{result.data.data.enable ? "Enable successfully" : "Disable successfully"}</>
+                ),
+            });
+            dispatch(getCompanyListAction())
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+
+

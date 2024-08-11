@@ -216,3 +216,46 @@ export const getApplicationByJob = (id) => {
         }
     }
 }
+
+export const updateEnableOfJobByAdmin = (id) => {
+    return async (dispatch) => {
+        try {
+            const result = await jobService.putEnableOfJobByAdmin(id);
+            console.log(result);
+            console.log(result.data.data._active);
+            notification.success({
+                closeIcon: true,
+                message: 'Success',
+                description: (
+                    <>{result.data.data._active ? "Enable successfully" : "Disable successfully"}</>
+                ),
+            });
+            dispatch(getJobListAction())
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+
+export const updateEnableOfJobByEmployer = (id) => {
+    return async (dispatch) => {
+        try {
+            const result = await jobService.putEnableOfJobByEmployer(id);
+            console.log(result);
+            console.log(result.data.data._active);
+            notification.success({
+                closeIcon: true,
+                message: 'Success',
+                description: (
+                    <>{result.data.data._active ? "Enable successfully" : "Disable successfully"}</>
+                ),
+            });
+            dispatch(getJobListAction())
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+
+
+

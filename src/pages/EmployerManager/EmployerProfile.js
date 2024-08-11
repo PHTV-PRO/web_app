@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import { TOKEN } from '../../util/settings/config';
 import { getCurrentUserAction } from '../../redux/actions/UserAction';
 import { getCompanyAndJobByTokenAction, getCompanyForEmployerFromAdminById } from '../../redux/actions/AccountAction';
-import { getSubscriptionPlanByAccountAction, returnBuyScriptionPlan } from '../../redux/actions/SubscriptionPlanAction';
+import { getSubscriptionPlanByAccountAction, getSubscriptionPlanFromAdminByIdAccountAction, returnBuyScriptionPlan } from '../../redux/actions/SubscriptionPlanAction';
 import { getDataChartOfEmployer, getDataChartOfEmployerFromAdminById } from '../../redux/actions/JobAction';
 import EmployerJobMng from './EmployerJob/EmployerJobMng';
 import ChartOfEmployer from './Chart/ChartOfEmployer';
@@ -24,6 +24,7 @@ const EmployerProfile = (props) => {
     let { dataCompanyForEmployerFromAdmin } = useSelector(state => state.AccountReducer);
     let { chartEmployerFromAdminById } = useSelector(state => state.JobReducer);
     let { dataChartOfEmployerById } = useSelector(state => state.JobReducer);
+    let { arrDataSubcriptionPlanFromAdmin } = useSelector(state => state.SubscriptionPlanReducer);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOfCompanyOpen, setIsModalOfCompany] = useState(false);
@@ -46,7 +47,7 @@ const EmployerProfile = (props) => {
         } else if (userLogin?.role === "ADMIN") {
             dispatch(getCompanyForEmployerFromAdminById(id?.id))
             dispatch(getDataChartOfEmployerFromAdminById(id?.id))
-
+            dispatch(getSubscriptionPlanFromAdminByIdAccountAction(id?.id))
         }
     }, [userLogin])
 
@@ -104,9 +105,8 @@ const EmployerProfile = (props) => {
                 <div className=''>
                     <div className='bg-gray-100 p-6 rounded-md shadow-md'>
                         <div className='d-flex justify-between'>
-
                             {
-                                userLogin?.role === "ADMIN" ? <div className='mr-2 font-extrabold text-lg'>Hello {dataCompanyForEmployerFromAdmin?.name}</div>
+                                userLogin?.role === "ADMIN" ? <div className='mr-2 font-extrabold text-lg'>Hello {dataCompanyForEmployerFromAdmin?.email}</div>
                                     : <div className='mr-2 font-extrabold text-lg'>Hello {employerCompanyJob?.email}</div>
                             }
                             <div >
@@ -180,6 +180,13 @@ const EmployerProfile = (props) => {
                                                     </h2>
                                                 </div>
                                                 <div>
+                                                    <h2 className='font-bold text-lg'>Location :
+                                                        <text className='text-base font-normal ml-2'>
+                                                            {employerCompanyJob.companyForEmployer?.location || dataCompanyForEmployerFromAdmin?.companyForEmployer?.location}
+                                                        </text>
+                                                    </h2>
+                                                </div>
+                                                <div>
                                                     <h2 className='font-bold text-lg'>Benefit :
                                                         <text className='text-base font-normal ml-2'
                                                             dangerouslySetInnerHTML={{ __html: employerCompanyJob.companyForEmployer?.benefit || dataCompanyForEmployerFromAdmin?.companyForEmployer?.benefit }}
@@ -204,7 +211,8 @@ const EmployerProfile = (props) => {
                         {/* Subcription Plan */}
                         {userLogin?.role === "EMPLOYER" ? <div>
                             {subscriptionPlanByAccount?.subcriptionPlanDTO
-                                ? <div className='w-[30%] cursor-pointer'>
+                                ?
+                                <div className='w-[30%] cursor-pointer'>
                                     <div onClick={showModal} className='bg-yellow-300  rounded-md shadow-md  p-2 shadow-yellow-300   text-center'>
                                         <text>{subscriptionPlanByAccount?.subcriptionPlanDTO?.name}</text>
                                     </div>
@@ -227,7 +235,13 @@ const EmployerProfile = (props) => {
                                 </div>
 
                             </Modal>
-                        </div> : <div></div>}
+                        </div> :
+                            <div className='w-[30%]'>
+                                <div className='bg-yellow-300  rounded-md shadow-md  p-2 shadow-yellow-300   text-center'>
+                                    <text>{arrDataSubcriptionPlanFromAdmin?.subcriptionPlanDTO?.name}</text>
+                                </div>
+                            </div>
+                        }
 
                     </div>
                 </div>

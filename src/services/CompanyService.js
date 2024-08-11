@@ -30,6 +30,9 @@ export class CompanyService extends baseService {
         return this.put(`/api/employer/company/${id}`, company);
     };
 
+    updateEnableFromAdmin = (id) => {
+        return this.put(`/api/admin/company/on_or_off/${id}`);
+    };
 }
 
 export const companyService = new CompanyService();

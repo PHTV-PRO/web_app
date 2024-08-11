@@ -1,9 +1,9 @@
-import { GET_SUBSCRIPTION_PLAN_DETAIL, GET_SUBSCRIPTION_PLAN_LIST, GET_SUBSCRIPTION_PLAN_BY_ACCOUNT } from "../constants";
+import { GET_SUBSCRIPTION_PLAN_DETAIL, GET_SUBSCRIPTION_PLAN_LIST, GET_SUBSCRIPTION_PLAN_BY_ACCOUNT, GET_SUBSCRIPTION_PLAN_FROM_ADMIN_BY_ID_ACCOUNT } from "../constants";
 import { history } from "../../App";
 import { subcriptionPlanService } from "../../services/SubscriptionPlanService";
 import { notification } from "antd";
 import { getCompanyAndJobByTokenAction } from '../../redux/actions/AccountAction';
-import {  GET_COMPANY_JOB } from "../constants";
+import { GET_COMPANY_JOB } from "../constants";
 import { accountService } from "../../services/AccountService";
 
 export const getSubscriptionPlanListAction = () => {
@@ -38,11 +38,11 @@ export const getSubscriptionPlanByIdAction = (id) => {
         }
     }
 }
-export const buyScriptionPlan = (id,price) => {
+export const buyScriptionPlan = (id, price) => {
     return async (dispatch) => {
         try {
-            const result = await subcriptionPlanService.getBuySubcriptionPlan(id,price);
-            if(result.status===200){
+            const result = await subcriptionPlanService.getBuySubcriptionPlan(id, price);
+            if (result.status === 200) {
                 window.open(result.data.data, '_parent').focus();
             }
         } catch (error) {
@@ -50,12 +50,12 @@ export const buyScriptionPlan = (id,price) => {
         }
     }
 }
-export const returnBuyScriptionPlan = (paymentId,payerId) => {
+export const returnBuyScriptionPlan = (paymentId, payerId) => {
     return async (dispatch) => {
         try {
-            const result = await subcriptionPlanService.getReturnSubcriptionPlan(paymentId,payerId);
+            const result = await subcriptionPlanService.getReturnSubcriptionPlan(paymentId, payerId);
             console.log("check result: ", result);
-            if(result.status === 200){
+            if (result.status === 200) {
                 notification.success({
                     closeIcon: true,
                     message: 'Buy Subscription Plan Success',
@@ -64,7 +64,7 @@ export const returnBuyScriptionPlan = (paymentId,payerId) => {
                     ),
                 })
                 window.open("http://localhost:3000/employer/emprofile", '_parent').focus()
-            }else{
+            } else {
                 notification.error({
                     closeIcon: true,
                     message: 'Buy Subscription Plan Fail. plase try again!!',
@@ -72,7 +72,7 @@ export const returnBuyScriptionPlan = (paymentId,payerId) => {
                         <>Add new station successfully.</>
                     ),
                 })
-            history.push("/employer/emprofile")
+                history.push("/employer/emprofile")
             }
         } catch (error) {
             console.log('error', error);
@@ -94,7 +94,19 @@ export const getSubscriptionPlanByAccountAction = (token) => {
     }
 }
 
-
+export const getSubscriptionPlanFromAdminByIdAccountAction = (id) => {
+    return async (dispatch) => {
+        try {
+            const result = await subcriptionPlanService.getSubcriptionPlanFromAdminByIdAccount(id);
+            dispatch({
+                type: GET_SUBSCRIPTION_PLAN_FROM_ADMIN_BY_ID_ACCOUNT,
+                arrDataSubcriptionPlanFromAdmin: result.data.data
+            })
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
 
 export const addSubscriptionPlanAction = (formData) => {
     return async (dispatch) => {

@@ -28,7 +28,9 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 const AddNewJob = (props) => {
-    const [location, setLocation] = useState(0);
+    let { id } = props.match.params;
+
+    // const [location, setLocation] = useState(0);
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
     const [selectedLevel, setSelectedLevel] = useState([]);
@@ -40,10 +42,9 @@ const AddNewJob = (props) => {
     let { arrSkill } = useSelector(state => state.SkillReducer);
     let { arrJobType } = useSelector((state) => state.JobTypeReducer);
     let { userLogin } = useSelector(state => state.UserReducer);
-    let { arrCompany } = useSelector((state) => state.CompanyReducer);
-
     const { companyDetail } = useSelector(state => state.CompanyReducer)
     const { employerCompanyJob } = useSelector(state => state.AccountReducer);
+    console.log(companyDetail?.id);
 
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
@@ -56,20 +57,18 @@ const AddNewJob = (props) => {
         dispatch(getLevelListAction())
         dispatch(getCurrentUserAction(accessToken))
         dispatch(getSkillListAction());
-
-    }, [dispatch, location]);
+    }, [dispatch]);
 
     useEffect(() => {
-        // dispatch(getCompanyIdAction(id));
         handleChangeCompany();
-        if (userLogin?.role == "EMPLOYER") {
+        dispatch(getCompanyIdAction(id));
+        if (userLogin?.role === "EMPLOYER") {
             dispatch(getCompanyAndJobByTokenAction(accessToken))
             console.log("check data", formik?.values?.company_id);
         }
     }, [userLogin])
 
     const formik = useFormik({
-
         initialValues: {
             title: "",
             description: "",
@@ -77,15 +76,14 @@ const AddNewJob = (props) => {
             skill_required: "",
             benefit: "",
             interview_steps: "",
-            amount: 10,
+            amount: "",
             experience_required: "",
             salary_max: "",
             salary_min: "",
             start_date: "",
             end_date: "",
             is_active: "true",
-            company_id: employerCompanyJob?.companyForEmployer?.id
-
+            company_id: userLogin?.role === "EMPLOYER" ? employerCompanyJob?.companyForEmployer?.id : companyDetail?.id
         },
         onSubmit: (values) => {
             if (
@@ -120,20 +118,16 @@ const AddNewJob = (props) => {
         },
     });
 
-
-
-
     const handleChangeJobType = (value) => {
         formik.setFieldValue("job_type_id", value);
     };
     const handleChangeGender = (value) => {
         formik.setFieldValue("gender", value);
     };
+
     const handleChangeCompany = () => {
-        formik.setFieldValue("company_id", employerCompanyJob?.companyForEmployer?.id);
+        formik.setFieldValue("company_id", companyDetail?.id);
     };
-
-
     const handleChangeActive = (checked) => {
         formik.setFieldValue("is_active", checked.toString());
     };
@@ -306,7 +300,6 @@ const AddNewJob = (props) => {
                                 });
                             }}
                         ></CKEditor>
-                        {/* <Input name="description" onChange={formik.handleChange} value={formik.values.description} /> */}
                     </Form.Item>
 
                     <Form.Item
@@ -329,7 +322,6 @@ const AddNewJob = (props) => {
                                 });
                             }}
                         ></CKEditor>
-                        {/* <Input name="reponsibility" onChange={formik.handleChange} value={formik.values.reponsibility} /> */}
                     </Form.Item>
 
                     <Form.Item
@@ -352,7 +344,7 @@ const AddNewJob = (props) => {
                                 });
                             }}
                         ></CKEditor>
-                        {/* <Input name="skill_required" onChange={formik.handleChange} value={formik.values.skill_required} /> */}
+
                     </Form.Item>
 
                     <Form.Item
@@ -375,7 +367,7 @@ const AddNewJob = (props) => {
                                 });
                             }}
                         ></CKEditor>
-                        {/* <Input name="benefit" onChange={formik.handleChange} value={formik.values.benefit} /> */}
+
                     </Form.Item>
 
                     <Form.Item
@@ -398,7 +390,7 @@ const AddNewJob = (props) => {
                                 });
                             }}
                         ></CKEditor>
-                        {/* <Input name="interview_steps" onChange={formik.handleChange} value={formik.values.interview_steps} /> */}
+
                     </Form.Item>
 
                     <Form.Item
@@ -432,7 +424,6 @@ const AddNewJob = (props) => {
                                 });
                             }}
                         ></CKEditor>
-                        {/* <Input name="experience_required" onChange={formik.handleChange} value={formik.values.experience_required} /> */}
                     </Form.Item>
 
                     <Form.Item
@@ -472,7 +463,7 @@ const AddNewJob = (props) => {
                         ]}
                     >
                         <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} rules={[{ required: true, message: 'Date can not be blank!' }]} onChange={onDateChange} />
-                        {/* <DatePicker name="start_date"  format={day => day.tz("Asia/Saigon").format(dateFormat)}   /> */}
+
                     </Form.Item>
 
 
@@ -486,26 +477,12 @@ const AddNewJob = (props) => {
                         ]}
                     >
                         <Select name="gender" onChange={handleChangeGender} placeholder="Choose Gender" value={formik.values.gender == 0 ? "ALL" : (formik.values.gender == 1 ? "Male" : "Female")}>
-                            <Option value={0}>ALl</Option>
+                            <Option value={0}>ALL</Option>
                             <Option value={1}>Male</Option>
                             <Option value={2}>FeMale</Option>
                         </Select>
                     </Form.Item>
 
-                    {userLogin?.role == "ADMIN" ? <Form.Item
-                        label="Company"
-                        style={{ minWidth: '100%' }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Company is required!',
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Select value={formik.values.company_id} options={arrCompany?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeCompany} />
-                    </Form.Item> : ""
-                    }
                     <Form.Item
                         label="Skill"
                         name="Skill"

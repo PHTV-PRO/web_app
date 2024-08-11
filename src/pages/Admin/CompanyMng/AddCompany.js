@@ -46,12 +46,11 @@ const AddNewCompany = () => {
             introduction: "",
             benefit: "",
             profession: "",
-            // size: "",
-            // skill: "",
             link_website: "",
             nationnality: "",
             logo_image: "",
             background_image: "",
+            location: "",
             enable: "",
             images: "",
             list_image: ""

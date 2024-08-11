@@ -28,7 +28,7 @@ export class JobService extends baseService {
         return this.delete(`/api/employer/job/${id}`);
     };
     updateJobForEmployer = (id, job) => {
-        return this.put(`/api/employer/company/${id}`, job);
+        return this.put(`/api/employer/job/${id}`, job);
     };
     getChartOfAdmin = () => {
         return this.get(`/api/admin/chart`);
@@ -41,6 +41,13 @@ export class JobService extends baseService {
     };
     getApplicationByJob = (id) => {
         return this.get(`/api/employer/application_by_job?job_id=${id}&size=5&page=1`);
+    };
+    putEnableOfJobByAdmin = (id) => {
+        return this.put(`/api/admin/job/on_or_off/${id}`);
+    };
+    1
+    putEnableOfJobByEmployer = (id) => {
+        return this.put(`/api/employer/job/on_or_off/${id}`);
     };
 
 }

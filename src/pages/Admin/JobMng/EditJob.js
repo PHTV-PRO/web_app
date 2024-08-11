@@ -55,7 +55,6 @@ const EditJob = (props) => {
         dispatch(getJobTypeListAction())
         dispatch(getCompanyIdAction(location))
         dispatch(getCurrentUserAction(accessToken))
-
     }, [dispatch, id, location])
     useEffect(() => {
         defaultSkill()
@@ -80,9 +79,8 @@ const EditJob = (props) => {
             gender: jobDetail?.gender,
             experience_required: jobDetail?.experience_required,
             company_id: jobDetail?.company?.id,
-            location_id: jobDetail?.location?.id,
             job_type_id: jobDetail?.jobType?.id,
-            _active: true
+            _active: jobDetail?._active
         },
         onSubmit: (values) => {
             if (values.name == '' || values.introduction == '' || values.benefit == '') {
@@ -117,11 +115,6 @@ const EditJob = (props) => {
     const handleChangeGender = (value) => {
         formik.setFieldValue("gender", value);
     };
-
-    // const handleChangeActive = (value) => {
-    //     formik.setFieldValue("is_active", value);
-    // };
-
     const handleChangeCompany = (value) => {
         setLocation(value);
         formik.setFieldValue('company_id', value)
@@ -131,10 +124,7 @@ const EditJob = (props) => {
         formik.setFieldValue('job_type_id', value)
     }
 
-    const handleChangeLocation = (value) => {
-        setLocation(value);
-        formik.setFieldValue("location_id", value);
-    };
+
 
 
     const handleChangeInput = (e, editor, name) => {

@@ -1,18 +1,16 @@
 import React, { useEffect } from 'react'
 import { SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Input, Modal, Space, Table } from 'antd';
+import { Button, Input, Space, Switch, Table } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCompanyListAction, deleteCompanyAction } from '../../../redux/actions/CompanyAction';
-import ModalListJobOfCompany from './Modal/ModalListJobOfCompany';
+import { getCompanyListAction, deleteCompanyAction, updateEnableOfCompanyByAdmin } from '../../../redux/actions/CompanyAction';
+// import ModalListJobOfCompany from './Modal/ModalListJobOfCompany';
 
 
 export default function CompanyMng() {
     let { arrCompany } = useSelector(state => state.CompanyReducer);
-    console.log(arrCompany);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [companyId, setCompanyId] = useState();
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getCompanyListAction())
@@ -34,19 +32,7 @@ export default function CompanyMng() {
         setSearchedColumn(dataIndex);
     };
     const data = arrCompany.data;
-
-
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
+    const [isChecked, setIsChecked] = useState();
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -167,15 +153,6 @@ export default function CompanyMng() {
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Profession',
-            dataIndex: 'profession',
-            key: 'profession',
-            width: '5%',
-            ...getColumnSearchProps('profession'),
-            sorter: (a, b) => a.profession - b.profession,
-            sortDirections: ['descend', 'ascend'],
-        },
-        {
             title: 'Introduction',
             dataIndex: 'introduction',
             key: 'introduction',
@@ -229,6 +206,21 @@ export default function CompanyMng() {
                 return (<>
                     <span>{account.account?.name}</span>
                 </>)
+            },
+        },
+        {
+            title: 'Enable',
+            dataIndex: '_active',
+            width: '5%',
+            key: '_active',
+            sortDirections: ['descend', 'ascend'],
+            render: (text, company) => {
+                return <Switch size="small"
+                    defaultChecked={company?.enable === 1 ? true : false}
+                    checked={company?.company?.enable} onClick={() => {
+                        dispatch(updateEnableOfCompanyByAdmin(company?.id),
+                        )
+                    }} />
             },
         },
         {

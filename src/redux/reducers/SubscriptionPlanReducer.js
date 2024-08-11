@@ -1,10 +1,10 @@
-import { GET_SUBSCRIPTION_PLAN_DETAIL, GET_SUBSCRIPTION_PLAN_LIST, GET_SUBSCRIPTION_PLAN_BY_ACCOUNT } from "../constants";
+import { GET_SUBSCRIPTION_PLAN_DETAIL, GET_SUBSCRIPTION_PLAN_LIST, GET_SUBSCRIPTION_PLAN_BY_ACCOUNT, GET_SUBSCRIPTION_PLAN_FROM_ADMIN_BY_ID_ACCOUNT } from "../constants";
 
 const initialState = {
     arrSubscriptionPlan: [],
     subscriptionPlanDetail: {},
-    subscriptionPlanByAccount: {}
-
+    subscriptionPlanByAccount: {},
+    arrDataSubcriptionPlanFromAdmin: {},
 }
 
 export const SubscriptionPlanReducer = (state = initialState, action) => {
@@ -20,7 +20,10 @@ export const SubscriptionPlanReducer = (state = initialState, action) => {
             state.subscriptionPlanByAccount = action.subscriptionPlanByAccount;
             return { ...state }
         }
-
+        case GET_SUBSCRIPTION_PLAN_FROM_ADMIN_BY_ID_ACCOUNT: {
+            state.arrDataSubcriptionPlanFromAdmin = action.arrDataSubcriptionPlanFromAdmin;
+            return { ...state }
+        }
         default:
             return { ...state }
     }

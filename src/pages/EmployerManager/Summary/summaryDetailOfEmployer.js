@@ -6,13 +6,8 @@ import {
 
 
 const SummaryDetailOfEmployer = (props) => {
-    console.log(props);
     const dataChartOfEmployerFromAdminById = props.chartEmployerFromAdminById?.data
     const dataChartOfEmployer = props.dataChartOfEmployer?.data
-
-    console.log(dataChartOfEmployerFromAdminById?.total_applicated_by_month);
-    console.log(dataChartOfEmployer);
-
 
     return <div className="mb-10">
         <div className='grid gap-4 grid-cols-3'>
@@ -27,7 +22,7 @@ const SummaryDetailOfEmployer = (props) => {
                 <div className="bg-red-400 mr-4  py-4 px-8 rounded-2xl text-2xl text-white"><CreditCardFilled /></div>
                 <div>
                     <h1 className="text-base text-gray-400 font-bold">Overall Payment</h1>
-                    <h4 className="text-gray-700 text-2xl font-bold">{dataChartOfEmployerFromAdminById?.overall_payment || dataChartOfEmployer?.overall_payment}</h4>
+                    <h4 className="text-gray-700 text-2xl font-bold">{dataChartOfEmployerFromAdminById?.overall_payment || dataChartOfEmployer?.overall_payment} $</h4>
                 </div>
             </div>
             <div className="flex items-center  my-6 bg-gray-100 p-6 rounded-md shadow-md">

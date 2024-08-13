@@ -84,19 +84,24 @@ const ChartOfEmployer = (props) => {
                     "Job Applicated By Month ",
                 backgroundColor: "rgb(255, 99, 132)",
                 borderColor: "rgb(255, 99, 132)",
-                data: chartEmployerFromAdminById?.data?.number_of_job_applicated || dataChartOfEmployerById?.data?.number_of_job_applicated
+                tension: 0.4,
+                data: chartEmployerFromAdminById?.data?.number_of_job_applicated || dataChartOfEmployerById?.data?.number_of_job_applicated,
             },
             {
                 label: "Job Save By Month",
                 backgroundColor: "rgb(75, 192, 192)",
                 borderColor: "rgb(75, 192, 192)",
-                data: chartEmployerFromAdminById?.data?.number_of_job_saved || dataChartOfEmployerById?.data?.number_of_job_saved
+                data: chartEmployerFromAdminById?.data?.number_of_job_saved || dataChartOfEmployerById?.data?.number_of_job_saved,
+                tension: 0.4,
+
             },
             {
                 label: "Job Viewed By Month",
                 backgroundColor: "rgb(255, 205, 86)",
                 borderColor: "rgb(255, 205, 86)",
-                data: chartEmployerFromAdminById?.data?.number_of_job_viewed || dataChartOfEmployerById?.data?.number_of_job_viewed
+                data: chartEmployerFromAdminById?.data?.number_of_job_viewed || dataChartOfEmployerById?.data?.number_of_job_viewed,
+                tension: 0.4,
+
             }
         ]
     };

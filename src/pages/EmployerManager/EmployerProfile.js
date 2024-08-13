@@ -115,7 +115,7 @@ const EmployerProfile = (props) => {
                                 }}> <i class="fa-solid fa-arrow-up-right-from-square"></i></Button>
                                 {/* Modal of Company Detail */}
                                 <Modal width={'90%'} title="Your Company Detail" open={isModalOfCompanyOpen} onOk={handleOfCompanyOk} onCancel={handleOfCompanyCancel}>
-                                    <div className='mt-1'>
+                                    <div className='mt-1 '>
                                         <div className='w-[100%] h-[100%] px-20 bg-white mb-10'>
                                             <Carousel style={{ padding: '20px' }} autoplay>
                                                 {employerCompanyJob?.companyForEmployer?.list_image?.length || dataCompanyForEmployerFromAdmin?.companyForEmployer?.list_image?.length > 0 ? JSON.parse(employerCompanyJob?.companyForEmployer?.list_image || dataCompanyForEmployerFromAdmin?.companyForEmployer?.list_image).map((image, i) => {
@@ -212,9 +212,10 @@ const EmployerProfile = (props) => {
                         {userLogin?.role === "EMPLOYER" ? <div>
                             {subscriptionPlanByAccount?.subcriptionPlanDTO
                                 ?
-                                <div className='w-[30%] cursor-pointer'>
-                                    <div onClick={showModal} className='bg-yellow-300  rounded-md shadow-md  p-2 shadow-yellow-300   text-center'>
+                                <div className='w-[60%] cursor-pointer'>
+                                    <div onClick={showModal} className='bg-yellow-300  rounded-md shadow-md  p-2 shadow-yellow-300 flex flex-col gap-2 text-center'>
                                         <text>{subscriptionPlanByAccount?.subcriptionPlanDTO?.name}</text>
+                                        <text>From {dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.start_date).format("DD-MM-YYYY")} To {dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.end_date).format("DD-MM-YYYY")} </text>
                                     </div>
                                 </div>
                                 : <Button href={`/employer/buyScPl`} className='btn-primary bg-primary mt-1 px-5' type='primary' onClick={() => { }}>Buy subscription plan</Button>}

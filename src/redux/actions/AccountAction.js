@@ -1,4 +1,4 @@
-import { GET_ACCOUNT_DETAIL, GET_ACCOUNT_LIST, GET_COMPANY_FOR_EMPLOYER_FROM_ADMIN, GET_COMPANY_JOB, GET_EMPLOYER_COMPANY_DETAIL } from "../constants";
+import { GET_ACCOUNT_CANDIDATE_LIST, GET_ACCOUNT_DETAIL, GET_ACCOUNT_EMPLOYER_LIST, GET_ACCOUNT_LIST, GET_COMPANY_FOR_EMPLOYER_FROM_ADMIN, GET_COMPANY_JOB, GET_EMPLOYER_COMPANY_DETAIL } from "../constants";
 import { history } from "../../App";
 import { accountService } from "../../services/AccountService";
 import { notification } from "antd";
@@ -12,6 +12,37 @@ export const getListAccountAction = () => {
                 dispatch({
                     type: GET_ACCOUNT_LIST,
                     arrAccount: result.data,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+export const getListAccountCandidateAction = () => {
+    return async (dispatch) => {
+        try {
+            const result = await accountService.getListAccountCandidate();
+            if (result.status === 200) {
+                dispatch({
+                    type: GET_ACCOUNT_CANDIDATE_LIST,
+                    arrAccountCandidate: result.data,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+export const getListAccountEmployerAction = () => {
+    return async (dispatch) => {
+        try {
+            const result = await accountService.getListAccountEmployer();
+            console.log(result);
+            if (result.status === 200) {
+                dispatch({
+                    type: GET_ACCOUNT_EMPLOYER_LIST,
+                    arrAccountEmployer: result.data,
                 });
             }
         } catch (error) {

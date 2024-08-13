@@ -70,6 +70,7 @@ import ShowSubcriptionPlan from "./pages/EmployerManager/SubcriptionPlan/ShowSub
 import UserTemplate from "./templates/UserTemplate";
 import Login from "./pages/Login/Login";
 import { ProfileTemplate } from "./templates/ProfileTemplate";
+import RegisterCompany from "./pages/Admin/CompanyMng/RegisterCompany";
 
 
 
@@ -125,6 +126,8 @@ function App() {
         <AdminTemplate path="/admin/companymng" exact Component={CompanyMng} />
         <AdminTemplate path="/admin/companymng/addcom" exact Component={AddNewCompany} />
         <AdminTemplate path="/admin/companymng/edit/:id" exact Component={EditCompany} />
+        <UserTemplate path="/registerCompany" exact Component={RegisterCompany} />
+
 
         {/* Job */}
         <AdminTemplate path="/admin/jobmng" exact Component={JobMng} />

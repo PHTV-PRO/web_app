@@ -9,16 +9,17 @@ import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    getListAccountAction, deleteAccountAction,
+    deleteAccountAction, getListAccountCandidateAction
 } from "../../../../redux/actions/AccountAction";
-import { DOMAIN } from "../../../../util/settings/config";
 
 export default function AccountMng() {
     const dispatch = useDispatch();
-    let { arrAccount } = useSelector((state) => state.AccountReducer);
-    console.log(arrAccount);
+    // let { arrAccount } = useSelector((state) => state.AccountReducer);
+    let { arrAccountCandidate } = useSelector((state) => state.AccountReducer);
+    console.log(arrAccountCandidate);
     useEffect(() => {
-        dispatch(getListAccountAction());
+        // dispatch(getListAccountAction());
+        dispatch(getListAccountCandidateAction())
     }, [dispatch]);
 
     const [searchText, setSearchText] = useState("");
@@ -36,7 +37,7 @@ export default function AccountMng() {
         setSearchedColumn(dataIndex);
     };
 
-    const data = arrAccount.data;
+    const data = arrAccountCandidate?.data;
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({
@@ -210,14 +211,14 @@ export default function AccountMng() {
     return (
         <div>
             <div className="d-flex mb-3">
-                <h3 className="text-lg">Account management</h3>
+                <h3 className="text-lg">Candidate Management</h3>
                 <Button
                     href="/admin/accmng/addacc"
                     type="primary"
                     className="ml-3 small bg-primary"
                 >
                     {" "}
-                    + Add New Account{" "}
+                    + Add New Candidate{" "}
                 </Button>
             </div>
             <Table columns={columns} dataSource={data} rowKey={"id"} />

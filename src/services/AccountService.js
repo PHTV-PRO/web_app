@@ -5,8 +5,11 @@ export class AccountService extends baseService {
     constructor() {
         super();
     }
-    getListAccount = () => {
-        return this.get(`/api/admin/account`);
+    getListAccountCandidate = () => {
+        return this.get(`/api/admin/account/candidate`);
+    };
+    getListAccountEmployer = () => {
+        return this.get(`/api/admin/account/employer`);
     };
     getAccountById = (id) => {
         return this.get(`/api/admin/account/${id}`);

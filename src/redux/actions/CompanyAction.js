@@ -164,3 +164,34 @@ export const updateEnableOfCompanyByAdmin = (id) => {
 }
 
 
+
+export const registerCompanyAction = (formData) => {
+    return async (dispatch) => {
+        try {
+            const result = await companyService.registerCompany(formData)
+            console.log(result);
+            if (result.data.statusCode === 200) {
+                notification.success({
+                    closeIcon: true,
+                    message: 'Success',
+                    description: (
+                        <>Register Company successfully.</>
+                    ),
+                });
+                history.push('/');
+            } else {
+                notification.error({
+                    closeIcon: true,
+                    message: 'Error',
+                    description: (
+                        <>Register Company fail.</>
+                    ),
+                });
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+
+

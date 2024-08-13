@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-// import { getCompanyIdAction } from "../../../../redux/actions/CompanyAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Input, Space, Table } from "antd";
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, EyeOutlined } from '@ant-design/icons';
 
 import Highlighter from "react-highlight-words";
 import { getApplicationByJob } from "../../../redux/actions/JobAction";
@@ -171,8 +170,8 @@ const ModalApplicationByJob = (props) => {
             render: (text, cv) => {
                 return (<>
                     {/* <Link to={cv.cv?.file_name}>Xem CV</Link> */}
-                    <a href={cv.cv?.file_name} target="_blank" rel="noopener noreferrer">
-                        Click Here ! . Show View Of Curriculum Vitae of Candidate
+                    <a href={cv.cv?.file_name} target="_blank" rel="noopener noreferrer" className="text-xl  flex items-end justify-center hover:cursor-pointer">
+                        <EyeOutlined />
                     </a>
                 </>)
             },
@@ -182,7 +181,6 @@ const ModalApplicationByJob = (props) => {
     return <div>
         <div className='d-flex mb-3'>
             <h3 className='text-lg'>Applcation Job Management</h3>
-            {/* <Button href={`/employer/emplnewjob/${companyDetail.id}`} type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button> */}
         </div>
         <Table columns={columns} dataSource={data} rowKey={'id'} />
     </div>

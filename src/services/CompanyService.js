@@ -33,6 +33,10 @@ export class CompanyService extends baseService {
     updateEnableFromAdmin = (id) => {
         return this.put(`/api/admin/company/on_or_off/${id}`);
     };
+    // 'http://localhost:8080/api/general/company/register
+    registerCompany = (Company) => {
+        return this.post(`/api/general/company/register`, Company);
+    };
 }
 
 export const companyService = new CompanyService();

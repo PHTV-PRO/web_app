@@ -61,25 +61,29 @@ const GeneralChart = () => {
                     "COMBO 30 ",
                 backgroundColor: "rgb(255, 99, 132)",
                 borderColor: "rgb(255, 99, 132)",
-                data: chartAdmin?.data?.number_subcription_by_month_subcription_plan[0]
+                data: chartAdmin?.data?.number_subcription_by_month_subcription_plan[0],
+                tension: 0.5,
             },
             {
                 label: "COMBO 50",
                 backgroundColor: "rgb(75, 192, 192)",
                 borderColor: "rgb(75, 192, 192)",
-                data: chartAdmin?.data?.number_subcription_by_month_subcription_plan[1]
+                data: chartAdmin?.data?.number_subcription_by_month_subcription_plan[1],
+                tension: 0.5,
             },
             {
                 label: "COMBO 100",
                 backgroundColor: "rgb(255, 205, 86)",
                 borderColor: "rgb(255, 205, 86)",
-                data: chartAdmin?.data?.number_subcription_by_month_subcription_plan[2]
+                data: chartAdmin?.data?.number_subcription_by_month_subcription_plan[2],
+                tension: 0.5,
             },
             {
                 label: "COMBO 360",
                 backgroundColor: "rgb(191, 154, 255)",
                 borderColor: "rgb(191, 154, 255)",
-                data: chartAdmin?.data?.number_subcription_by_month_subcription_plan[3]
+                data: chartAdmin?.data?.number_subcription_by_month_subcription_plan[3],
+                tension: 0.5,
             }
         ]
     };

@@ -20,7 +20,7 @@ export default function Login(props) {
 
   return (
 
-    <div className="py-8 px-8 rounded-2xl shadow-xl z-20" style={{backgroundColor: "rgb(255 255 255 / 80%)"}}>
+    <div className="py-8 px-8 rounded-2xl shadow-xl z-20" style={{ backgroundColor: "rgb(255 255 255 / 80%)" }}>
 
       <Form
         name="basic"
@@ -50,7 +50,7 @@ export default function Login(props) {
         <Form.Item
           label=""
           name="email"
-          style={{minWidth: '100%'}}
+          style={{ minWidth: '100%' }}
           rules={[
             {
               type: 'email',
@@ -80,11 +80,11 @@ export default function Login(props) {
           <Input.Password className="d-flex block text-sm py-2.5 px-4 mt-3 rounded-lg w-full border outline-none" placeholder="Password" />
         </Form.Item>
 
-  
+
 
         <div className="text-center">
           <button type="submit" className="py-2 w-64 text-base text-white bg-red-400 rounded-full">Sign In</button>
-          <div className="mt-2 text-sm">Don't have account yet? <a href='register' className="underline  cursor-pointer"> Sign Up</a></div>
+          <div className="mt-2 text-sm">You want to register company?  <a href='registerCompany' className="underline  cursor-pointer"> Sign Up Company</a></div>
         </div>
       </Form>
     </div>

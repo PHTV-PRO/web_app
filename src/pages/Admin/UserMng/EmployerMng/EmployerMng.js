@@ -9,15 +9,15 @@ import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getListAccountAction, deleteAccountAction,
+  getListAccountEmployerAction, deleteAccountAction,
 } from "../../../../redux/actions/AccountAction";
 
 export default function EmployerMng() {
   const dispatch = useDispatch();
-  let { arrAccount } = useSelector((state) => state.AccountReducer);
-  console.log(arrAccount);
+  let { arrAccountEmployer } = useSelector((state) => state.AccountReducer);
+  console.log(arrAccountEmployer);
   useEffect(() => {
-    dispatch(getListAccountAction());
+    dispatch(getListAccountEmployerAction());
   }, [dispatch]);
 
   const [searchText, setSearchText] = useState("");
@@ -35,7 +35,7 @@ export default function EmployerMng() {
     setSearchedColumn(dataIndex);
   };
 
-  const data = arrAccount.data;
+  const data = arrAccountEmployer?.data;
   console.log(data);
 
   const getColumnSearchProps = (dataIndex) => ({
@@ -211,7 +211,7 @@ export default function EmployerMng() {
   return (
     <div>
       <div className="d-flex mb-3">
-        <h3 className="text-lg">Employer management</h3>
+        <h3 className="text-lg">Employer Management</h3>
         <Button
           href="/admin/empmng/addemp"
           type="primary"

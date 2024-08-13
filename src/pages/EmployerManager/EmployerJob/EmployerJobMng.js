@@ -153,7 +153,7 @@ export default function EmployerJobMng(props) {
             title: 'Skill Required',
             dataIndex: 'skill_required',
             key: 'skill_required',
-            width: '15%',
+            width: '5%',
             ...getColumnSearchProps('skill_required'),
             sorter: (a, b) => a.skill_required - b.skill_required,
             sortDirections: ['descend', 'ascend'],
@@ -161,21 +161,10 @@ export default function EmployerJobMng(props) {
 
         },
         {
-            title: 'Benefit',
-            dataIndex: 'benefit',
-            key: 'benefit',
-            width: '15%',
-            ...getColumnSearchProps('benefit'),
-            sorter: (a, b) => a.benefit - b.benefit,
-            sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
-
-        },
-        {
             title: 'Company',
             dataIndex: 'company_id',
             key: 'company_id ',
-            width: '5%',
+            width: '10%',
             ...getColumnSearchProps('company_id '),
             sorter: (a, b) => a.company_id - b.company_id,
             sortDirections: ['descend', 'ascend'],
@@ -189,7 +178,7 @@ export default function EmployerJobMng(props) {
             title: 'Location',
             dataIndex: 'location_id ',
             key: 'location_id ',
-            width: '5%',
+            width: '10%',
             ...getColumnSearchProps('location_id '),
             sorter: (a, b) => a.location_id - b.location_id,
             sortDirections: ['descend', 'ascend'],
@@ -231,7 +220,11 @@ export default function EmployerJobMng(props) {
             title: 'Manage',
             width: '15%',
             render: (text, job) => {
-                return <>
+                return <div className='flex items-center gap-1'>
+                    <Button key={3} onClick={() => {
+                        setIdJob(job.id)
+                        showModal()
+                    }}>Show Application Job</Button>
                     {
                         job?.start_date >= currentDay ?
                             <Button key={1} href={`/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => { }}></Button> :
@@ -244,11 +237,8 @@ export default function EmployerJobMng(props) {
                         }
                     }}></Button> : <div></div>}
 
-                    <Button key={3} onClick={() => {
-                        setIdJob(job.id)
-                        showModal()
-                    }}>Show Application Job</Button>
-                </>
+
+                </div>
 
             }
         },
@@ -259,13 +249,13 @@ export default function EmployerJobMng(props) {
     const items = [
         {
             key: '1',
-            label: 'Job Posted',
-            children: data?.jobsOpened ? <Table columns={columns} dataSource={data.jobsOpened} defaultDataSource={[]} rowKey={'id'} /> : "",
+            children: data?.jobsOpening ? <Table columns={columns} dataSource={data.jobsOpening} rowKey={'id'} /> : "",
+            label: 'Jobs Are Recruiting',
         },
         {
             key: '2',
-            children: data?.jobsOpening ? <Table columns={columns} dataSource={data.jobsOpening} rowKey={'id'} /> : "",
-            label: 'Jobs Are Recruiting',
+            label: 'Job Posted',
+            children: data?.jobsOpened ? <Table columns={columns} dataSource={data.jobsOpened} defaultDataSource={[]} rowKey={'id'} /> : "",
         },
         {
             key: '3',

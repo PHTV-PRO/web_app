@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Input, Space, Table } from "antd";
-import { SearchOutlined, EyeOutlined } from '@ant-design/icons';
+import { SearchOutlined, EyeOutlined, MailOutlined } from '@ant-design/icons';
 
 import Highlighter from "react-highlight-words";
-import { getApplicationByJob } from "../../../redux/actions/JobAction";
+import { getApplicationByJob, sendMailToCandidateAction } from "../../../redux/actions/JobAction";
 
 
 
@@ -17,7 +17,9 @@ const ModalApplicationByJob = (props) => {
         dispatch(getApplicationByJob(id))
     }, [dispatch, id])
 
-    console.log(arrApplication);
+    console.log(arrApplication?.data);
+
+    // con
 
     const data = arrApplication?.data;
 
@@ -122,7 +124,7 @@ const ModalApplicationByJob = (props) => {
             title: 'Content',
             dataIndex: 'note',
             key: 'note',
-            width: '10%',
+            width: '15%',
             ...getColumnSearchProps('note'),
             sorter: (a, b) => a.note - b.note,
             sortDirections: ['descend', 'ascend'],
@@ -133,7 +135,7 @@ const ModalApplicationByJob = (props) => {
             title: 'Name of Candidate',
             dataIndex: 'account',
             key: 'account',
-            width: '5%',
+            width: '15%',
             ...getColumnSearchProps('account'),
             sorter: (a, b) => a.account - b.account,
             sortDirections: ['descend', 'ascend'],
@@ -148,7 +150,7 @@ const ModalApplicationByJob = (props) => {
             title: 'Email of Candidate',
             dataIndex: 'account',
             key: 'account',
-            width: '5%',
+            width: '15%',
             ...getColumnSearchProps('account'),
             sorter: (a, b) => a.account - b.account,
             sortDirections: ['descend', 'ascend'],
@@ -163,17 +165,27 @@ const ModalApplicationByJob = (props) => {
             title: 'Curriculum Vitae of Candidate',
             dataIndex: 'account',
             key: 'account',
-            width: '5%',
+            width: '40%',
             ...getColumnSearchProps('account'),
             sorter: (a, b) => a.account - b.account,
             sortDirections: ['descend', 'ascend'],
             render: (text, cv) => {
-                return (<>
-                    {/* <Link to={cv.cv?.file_name}>Xem CV</Link> */}
-                    <a href={cv.cv?.file_name} target="_blank" rel="noopener noreferrer" className="text-xl  flex items-end justify-center hover:cursor-pointer">
-                        <EyeOutlined />
+                return (<div className="flex">
+                    <a href={cv.cv?.file_name} target="_blank" rel="noopener noreferrer" className="text-xl hover:no-underline text-blue flex items-end justify-center hover:cursor-pointer no-underline border-r-2 pr-4 border-gray-400">
+                        <EyeOutlined /> <text className="text-sm ml-2 my-0 py-0 "> View CV</text>
                     </a>
-                </>)
+                    <div className="flex text-xl items-center justify-between hover:cursor-pointer pl-4 gap-3 hover:text-blue-400">
+
+                        <Button
+                            icon={<MailOutlined />}
+                            onClick={() => {
+                                dispatch(sendMailToCandidateAction(cv?.id))
+                            }}
+                        >
+                            <text className="text-sm ml-2 my-0 py-0 "> Click ! . Send Mail to Candidate</text>
+                        </Button>
+                    </div>
+                </div>)
             },
 
         },

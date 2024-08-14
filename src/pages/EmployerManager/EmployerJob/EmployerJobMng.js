@@ -224,7 +224,7 @@ export default function EmployerJobMng(props) {
                     <Button key={3} onClick={() => {
                         setIdJob(job.id)
                         showModal()
-                    }}>Show Application Job</Button>
+                    }}>View Application</Button>
                     {
                         job?.start_date >= currentDay ?
                             <Button key={1} href={`/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => { }}></Button> :

@@ -217,6 +217,25 @@ export const getApplicationByJob = (id) => {
     }
 }
 
+
+export const sendMailToCandidateAction = (id) => {
+    return async (dispatch) => {
+        try {
+            const result = await jobService.sendEmailToCandidate(id);
+            console.log(result);
+            if (result.status === 200) {
+                // dispatch({
+                //     type: GET_APPLICATION_BY_JOB,
+                //     arrApplication: result.data
+                // })
+                console.log('data : ', result?.data);
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+
 export const updateEnableOfJobByAdmin = (id) => {
     return async (dispatch) => {
         try {

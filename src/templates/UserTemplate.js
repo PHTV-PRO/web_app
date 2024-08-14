@@ -6,14 +6,14 @@ export default function UserTemplate(props) {
 
   const { Component, ...restProps } = props;
 
-  useEffect(()=>{
-    window.scrollTo(0,0);
-})
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  })
 
   return <Route {...restProps} render={(propsRoute) => { //props.location, props.history, props.match
     return <Fragment>
       <div className="min-h-screen bg-purple-400 flex justify-center items-center" style={{
-        backgroundImage: 'url(./img/xx.png)',
+        backgroundImage: 'url(./img/backgroundImage.jpg)',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',

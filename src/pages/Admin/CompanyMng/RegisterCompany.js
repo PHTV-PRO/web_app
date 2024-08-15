@@ -59,7 +59,7 @@ export default function RegisterCompany() {
             reader.onload = (e) => {
                 setLogoSrc(e.target.result); //Hình base 64
             };
-            formik.setFieldValue("UploadFileLogo", file);
+            formik.setFieldValue("logo_image", file);
         }
     };
 
@@ -72,7 +72,7 @@ export default function RegisterCompany() {
             reader.onload = (e) => {
                 setBackgroundSrc(e.target.result); //Hình base 64
             };
-            formik.setFieldValue("UploadFileBackground", file);
+            formik.setFieldValue("background_image", file);
         }
     };
 

@@ -35,7 +35,7 @@ export class CompanyService extends baseService {
     };
     // 'http://localhost:8080/api/general/company/register
     registerCompany = (Company) => {
-        return this.post(`/api/general/company/register`, Company);
+        return this.postNotBearer(`/api/general/company/register`, Company);
     };
 }
 

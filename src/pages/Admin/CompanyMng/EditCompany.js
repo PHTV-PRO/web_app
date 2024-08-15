@@ -52,6 +52,7 @@ const EditCompany = (props) => {
             nationnality: companyDetail?.nationnality,
             logo_image: companyDetail?.logo_image,
             background_image: companyDetail?.background_image,
+            city_provence_id: companyDetail?.city_provence_id,
             enable: companyDetail?.enable,
             account: companyDetail?.account?.name,
             list_image: companyDetail?.list_image ? companyDetail?.list_image : null
@@ -110,7 +111,7 @@ const EditCompany = (props) => {
             reader.onload = (e) => {
                 setLogoSrc(e.target.result); //Hình base 64
             };
-            formik.setFieldValue("UploadFileLogo", file);
+            formik.setFieldValue("logo", file);
         }
     };
 
@@ -123,7 +124,7 @@ const EditCompany = (props) => {
             reader.onload = (e) => {
                 setBackgroundImageSrc(e.target.result); //Hình base 64
             };
-            formik.setFieldValue("UploadFileBackground", file);
+            formik.setFieldValue("background", file);
         }
     };
     const handleChangeInput = (e, editor, name) => {

@@ -6,11 +6,12 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { getListAccountAction } from "../../../redux/actions/AccountAction";
+import { getListAccountWithoutCompanyAction } from "../../../redux/actions/AccountAction";
 import { addCompanyAction, apiUploadImages } from "../../../redux/actions/CompanyAction"
 import { getLevelListAction } from '../../../redux/actions/LevelAction';
 import { getSkillListAction } from '../../../redux/actions/SkillAction';
 import LoadingImage from "../../../components/LoadingImage";
+import { getCityProvinceListAction } from "../../../redux/actions/CityProvinceAction";
 
 const { Option } = Select;
 
@@ -29,14 +30,17 @@ const AddNewCompany = () => {
 
     const dispatch = useDispatch();
 
-    let { arrAccount } = useSelector((state) => state.AccountReducer);
+    let { arrAccountWithoutCompany } = useSelector((state) => state.AccountReducer);
     let { arrLevel } = useSelector(state => state.LevelReducer);
     let { arrSkill } = useSelector(state => state.SkillReducer);
-    console.log(arrAccount);
+    let { arrCityProvince } = useSelector(state => state.CityProvinceReducer);
+    console.log(arrCityProvince);
+
     useEffect(() => {
         dispatch(getLevelListAction())
         dispatch(getSkillListAction());
-        dispatch(getListAccountAction());
+        dispatch(getListAccountWithoutCompanyAction());
+        dispatch(getCityProvinceListAction())
     }, [dispatch]);
 
 
@@ -48,8 +52,9 @@ const AddNewCompany = () => {
             profession: "",
             link_website: "",
             nationnality: "",
-            logo_image: "",
-            background_image: "",
+            location: "",
+            logo: "",
+            background: "",
             location: "",
             enable: "",
             images: "",
@@ -84,6 +89,10 @@ const AddNewCompany = () => {
     const handleChangeAccount = (value) => {
         formik.setFieldValue("account_id", value);
     };
+    const handleChangeCityProvince = (value) => {
+        formik.setFieldValue("city_provence_id", value);
+    };
+    console.log(arrAccountWithoutCompany);
 
     const handleChangeEnable = (value) => {
         formik.setFieldValue("enable", value);
@@ -103,7 +112,7 @@ const AddNewCompany = () => {
             reader.onload = (e) => {
                 setLogoSrc(e.target.result); //Hình base 64
             };
-            formik.setFieldValue("UploadFileLogo", file);
+            formik.setFieldValue("logo", file);
         }
     };
 
@@ -116,7 +125,7 @@ const AddNewCompany = () => {
             reader.onload = (e) => {
                 setBackgroundSrc(e.target.result); //Hình base 64
             };
-            formik.setFieldValue("UploadFileBackground", file);
+            formik.setFieldValue("background", file);
         }
     };
 
@@ -376,32 +385,6 @@ const AddNewCompany = () => {
                         </Select>
                     </Form.Item>
 
-                    {/* <Form.Item
-                        label="Enable"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Enable cannot be blank!",
-                            },
-                        ]}
-                    >
-                        
-                    </Form.Item> */}
-
-                    {/* <Form.Item
-                        label="Skill"
-                        style={{ minWidth: '100%' }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Skill is required!',
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Input name="skill" onChange={formik.handleChange} value={formik.values.skill} />
-                    </Form.Item> */}
-
                     <Form.Item
                         label="Link Website"
                         style={{ minWidth: '100%' }}
@@ -440,7 +423,7 @@ const AddNewCompany = () => {
                             },
                         ]}
                     >
-                        <Select name="Enable" onChange={handleChangeEnable} placeholder="Choose Enable" value={formik.values.enable}>
+                        <Select name="Enable" width={'30%'} onChange={handleChangeEnable} placeholder="Choose Enable" value={formik.values.enable}>
                             <Option value={0}>On</Option>
                             <Option value={1}>Off</Option>
                         </Select>
@@ -522,8 +505,8 @@ const AddNewCompany = () => {
                         <Select
                             rules={[{ required: true }]}
                             options={
-                                arrAccount
-                                    ? arrAccount?.data?.map((item, index) => ({
+                                arrAccountWithoutCompany
+                                    ? arrAccountWithoutCompany?.data?.map((item, index) => ({
                                         key: index,
                                         label: item.name,
                                         value: item.id,
@@ -531,6 +514,47 @@ const AddNewCompany = () => {
                                     : ""
                             }
                             onChange={handleChangeAccount}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Location"
+                        style={{ minWidth: '100%' }}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Location is required!',
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        <Input name="location" onChange={formik.handleChange} value={formik.values.location} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="City Province"
+                        name="city_provence_id"
+                        style={{ minWidth: "100%" }}
+                        rules={[
+                            {
+                                required: true,
+                                message: "City Province is required!",
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        <Select
+                            rules={[{ required: true }]}
+                            options={
+                                arrCityProvince
+                                    ? arrCityProvince?.data?.map((item, index) => ({
+                                        key: index,
+                                        label: item.name,
+                                        value: item.id,
+                                    }))
+                                    : ""
+                            }
+                            onChange={handleChangeCityProvince}
                         />
                     </Form.Item>
 

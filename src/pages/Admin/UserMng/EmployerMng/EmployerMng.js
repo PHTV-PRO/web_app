@@ -3,19 +3,19 @@ import {
   SearchOutlined,
   EditOutlined,
   DeleteOutlined,
+  InfoOutlined
 } from "@ant-design/icons";
 import { Button, Input, Space, Table, Avatar } from "antd";
 import { useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getListAccountEmployerAction, deleteAccountAction,
+  getListAccountEmployerAction, deleteAccountAction
 } from "../../../../redux/actions/AccountAction";
 
 export default function EmployerMng() {
   const dispatch = useDispatch();
   let { arrAccountEmployer } = useSelector((state) => state.AccountReducer);
-  console.log(arrAccountEmployer);
   useEffect(() => {
     dispatch(getListAccountEmployerAction());
   }, [dispatch]);
@@ -138,14 +138,6 @@ export default function EmployerMng() {
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Gender",
-      dataIndex: "gender",
-      key: "gender",
-      ...getColumnSearchProps("gender"),
-      sorter: (a, b) => a.gender.length - b.gender.length,
-      sortDirections: ["descend", "ascend"],
-    },
-    {
       title: "Address",
       dataIndex: "address",
       key: "address",
@@ -171,8 +163,10 @@ export default function EmployerMng() {
       key: "role",
       ...getColumnSearchProps("role")
     },
+
     {
       title: "Manage",
+      width: '15%',
       render: (text, data, index) => {
         return (
           <Fragment key={index}>
@@ -203,6 +197,13 @@ export default function EmployerMng() {
                 }
               }}
             ></Button>
+            <Button
+              type="link"
+              key={3}
+              icon={<InfoOutlined />}
+              href={`/employer/emprofile/${data.id}`}
+            ></Button>
+
           </Fragment>
         );
       },

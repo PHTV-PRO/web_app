@@ -42,7 +42,6 @@ export class JobService extends baseService {
     getApplicationByJob = (id) => {
         return this.get(`/api/employer/application_by_job?job_id=${id}&size=0&page=0`);
     };
-    // http://localhost:8080/api/employer/send_mail?application_id=11&size=0&page=0
     sendEmailToCandidate = (id) => {
         return this.get(`/api/employer/send_mail?application_id=${id}&size=0&page=0`);
     };

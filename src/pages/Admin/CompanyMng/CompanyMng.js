@@ -4,6 +4,7 @@ import { Button, Input, Space, Switch, Table } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
+import dayjs from "dayjs";
 import { getCompanyListAction, deleteCompanyAction, updateEnableOfCompanyByAdmin } from '../../../redux/actions/CompanyAction';
 // import ModalListJobOfCompany from './Modal/ModalListJobOfCompany';
 
@@ -32,7 +33,7 @@ export default function CompanyMng() {
         setSearchedColumn(dataIndex);
     };
     const data = arrCompany.data;
-    const [isChecked, setIsChecked] = useState();
+    console.log(data);
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -114,25 +115,6 @@ export default function CompanyMng() {
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Benifit',
-            dataIndex: 'benefit',
-            key: 'benefit',
-            width: '10%',
-            ...getColumnSearchProps('benefit'),
-            sorter: (a, b) => a.benefit - b.benefit,
-            sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
-        },
-        // {
-        //     title: 'Enable',
-        //     dataIndex: 'enable',
-        //     key: 'enable',
-        //     width: '5%',
-        //     ...getColumnSearchProps('enable'),
-        //     sorter: (a, b) => a.enable - b.enable,
-        //     sortDirections: ['descend', 'ascend'],
-        // },
-        {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
@@ -143,24 +125,34 @@ export default function CompanyMng() {
             render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
 
         },
+
         {
-            title: 'Nationality',
-            dataIndex: 'nationnality',
-            key: 'nationnality',
-            width: '5%',
-            ...getColumnSearchProps('nationnality'),
-            sorter: (a, b) => a.nationnality - b.nationnality,
+            title: 'Start Date Of Subcription Plan',
+            dataIndex: 'subcriptionPlan_id',
+            key: 'subcriptionPlan_id ',
+            width: '10%',
+            ...getColumnSearchProps('subcriptionPlan_id '),
+            sorter: (a, b) => a.subcriptionPlan_id - b.subcriptionPlan_id,
             sortDirections: ['descend', 'ascend'],
+            render: (text, data) => {
+                return (<>
+                    <span>{dayjs(data?.subcriptionPlan?.subcriptionPlanCompany?.start_date).format("DD-MM-YYYY")}</span>
+                </>)
+            },
         },
         {
-            title: 'Introduction',
-            dataIndex: 'introduction',
-            key: 'introduction',
-            width: '5%',
-            ...getColumnSearchProps('introduction'),
-            sorter: (a, b) => a.introduction - b.introduction,
+            title: 'End Date Of Subcription Plan',
+            dataIndex: 'subcriptionPlan_id',
+            key: 'subcriptionPlan_id ',
+            width: '10%',
+            ...getColumnSearchProps('subcriptionPlan_id '),
+            sorter: (a, b) => a.subcriptionPlan_id - b.subcriptionPlan_id,
             sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-6'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
+            render: (text, data) => {
+                return (<>
+                    <span>{dayjs(data?.subcriptionPlan?.subcriptionPlanCompany?.end_date).format("DD-MM-YYYY")}</span>
+                </>)
+            },
         },
         {
             title: "Logo Company",
@@ -196,15 +188,15 @@ export default function CompanyMng() {
         },
         {
             title: 'Account',
-            dataIndex: 'account_id ',
+            dataIndex: 'account_id',
             key: 'account_id ',
             width: '5%',
             ...getColumnSearchProps('account_id '),
             sorter: (a, b) => a.account_id - b.account_id,
             sortDirections: ['descend', 'ascend'],
-            render: (text, account) => {
+            render: (text, data) => {
                 return (<>
-                    <span>{account.account?.name}</span>
+                    <span>{data.account?.name}</span>
                 </>)
             },
         },
@@ -225,7 +217,7 @@ export default function CompanyMng() {
         },
         {
             title: 'Manage',
-            width: '10%',
+            width: '15%',
             render: (text, company) => {
                 return <>
                     <Button key={1} href={`/admin/companymng/edit/${company.id}`} type="link" icon={<EditOutlined />} onClick={() => {

@@ -5,7 +5,9 @@ import {
     GET_COMPANY_JOB,
     GET_COMPANY_FOR_EMPLOYER_FROM_ADMIN,
     GET_ACCOUNT_CANDIDATE_LIST,
-    GET_ACCOUNT_EMPLOYER_LIST
+    GET_ACCOUNT_EMPLOYER_LIST,
+    GET_ACCOUNT_WITHOUT_COMPANY,
+
 } from "../constants";
 
 
@@ -13,10 +15,13 @@ const initialState = {
     arrAccount: [],
     arrAccountCandidate: [],
     arrAccountEmployer: [],
+    arrAccountWithoutCompany: [],
+
     accountDetail: {},
     employerCompany: {},
     employerCompanyJob: {},
-    dataCompanyForEmployerFromAdmin: {}
+    dataCompanyForEmployerFromAdmin: {},
+    dataCompanyByAccountId: {},
 };
 
 export const AccountReducer = (state = initialState, action) => {
@@ -29,6 +34,9 @@ export const AccountReducer = (state = initialState, action) => {
             return { ...state };
         case GET_ACCOUNT_EMPLOYER_LIST:
             state.arrAccountEmployer = action.arrAccountEmployer;
+            return { ...state };
+        case GET_ACCOUNT_WITHOUT_COMPANY:
+            state.arrAccountWithoutCompany = action.arrAccountWithoutCompany;
             return { ...state };
         case GET_ACCOUNT_DETAIL:
             state.accountDetail = action.accountDetail;
@@ -43,6 +51,7 @@ export const AccountReducer = (state = initialState, action) => {
         case GET_COMPANY_FOR_EMPLOYER_FROM_ADMIN:
             state.dataCompanyForEmployerFromAdmin = action.dataCompanyForEmployerFromAdmin;
             return { ...state };
+
 
         // case GET_PROFILE_DETAIL:
         //     state.profile = action.profile;

@@ -1,4 +1,4 @@
-import { GET_ACCOUNT_CANDIDATE_LIST, GET_ACCOUNT_DETAIL, GET_ACCOUNT_EMPLOYER_LIST, GET_ACCOUNT_LIST, GET_COMPANY_FOR_EMPLOYER_FROM_ADMIN, GET_COMPANY_JOB, GET_EMPLOYER_COMPANY_DETAIL } from "../constants";
+import { GET_ACCOUNT_CANDIDATE_LIST, GET_ACCOUNT_DETAIL, GET_ACCOUNT_EMPLOYER_LIST, GET_ACCOUNT_LIST, GET_ACCOUNT_WITHOUT_COMPANY, GET_COMPANY_FOR_EMPLOYER_FROM_ADMIN, GET_COMPANY_JOB, GET_EMPLOYER_COMPANY_DETAIL } from "../constants";
 import { history } from "../../App";
 import { accountService } from "../../services/AccountService";
 import { notification } from "antd";
@@ -19,6 +19,7 @@ export const getListAccountAction = () => {
         }
     };
 };
+
 export const getListAccountCandidateAction = () => {
     return async (dispatch) => {
         try {
@@ -50,41 +51,7 @@ export const getListAccountEmployerAction = () => {
         }
     };
 };
-export const createAccountAction = (newAc) => {
-    return async (dispatch) => {
-        try {
-            const result = await accountService.createAccount(newAc);
-            console.log(result);
-            notification.success({
-                closeIcon: true,
-                message: "Success",
-                description: <>Create New Account Successfully.</>,
-            });
-            history.push("/admin/accmng");
-        } catch (error) {
-            notification.error({
-                closeIcon: true,
-                message: "Error",
-                description: <>Create New Account fail!</>,
-            });
-        }
-    };
-};
-export const deleteAccountAction = (id) => {
-    return async (dispatch) => {
-        try {
-            const result = await accountService.deleteAccount(id);
-            notification.success({
-                closeIcon: true,
-                message: "Success",
-                description: <>Delete Account successfully</>,
-            });
-            dispatch(getListAccountAction());
-        } catch (error) {
-            console.log("error", error);
-        }
-    };
-};
+
 
 export const getAccountByIdAction = (id) => {
     return async (dispatch) => {
@@ -101,6 +68,8 @@ export const getAccountByIdAction = (id) => {
         }
     };
 };
+
+
 
 export const getCompanyAndJobByTokenAction = (token) => {
     return async (dispatch) => {
@@ -134,7 +103,6 @@ export const getEmployerOfCompanyByIAction = (id) => {
     };
 };
 
-
 export const getCompanyForEmployerFromAdminById = (id) => {
     return async (dispatch) => {
         try {
@@ -143,6 +111,24 @@ export const getCompanyForEmployerFromAdminById = (id) => {
                 dispatch({
                     type: GET_COMPANY_FOR_EMPLOYER_FROM_ADMIN,
                     dataCompanyForEmployerFromAdmin: result.data.data,
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
+
+export const getListAccountWithoutCompanyAction = () => {
+    return async (dispatch) => {
+        try {
+            const result = await accountService.getListAccountWithoutCompany();
+            console.log(result);
+            if (result.status === 200) {
+                dispatch({
+                    type: GET_ACCOUNT_WITHOUT_COMPANY,
+                    arrAccountWithoutCompany: result.data,
                 });
             }
         } catch (error) {
@@ -162,10 +148,45 @@ export const updateAccountByIdAction = (id, formData) => {
                     <>Update Account successfully</>
                 ),
             });
-            // history.push('/admin/accmng');
             history.goBack();
         } catch (error) {
             console.log('error', error);
         }
     }
 }
+
+export const createAccountAction = (newAc) => {
+    return async (dispatch) => {
+        try {
+            const result = await accountService.createAccount(newAc);
+            console.log(result);
+            notification.success({
+                closeIcon: true,
+                message: "Success",
+                description: <>Create New Account Successfully.</>,
+            });
+            history.goBack();
+        } catch (error) {
+            notification.error({
+                closeIcon: true,
+                message: "Error",
+                description: <>Create New Account fail!</>,
+            });
+        }
+    };
+};
+export const deleteAccountAction = (id) => {
+    return async (dispatch) => {
+        try {
+            const result = await accountService.deleteAccount(id);
+            notification.success({
+                closeIcon: true,
+                message: "Success",
+                description: <>Delete Account successfully</>,
+            });
+            dispatch(getListAccountAction());
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+};

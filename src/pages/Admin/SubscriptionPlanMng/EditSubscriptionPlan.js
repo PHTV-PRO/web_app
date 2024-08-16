@@ -21,6 +21,7 @@ const EditSubscriptionPlan = (props) => {
             expiry: subscriptionPlanDetail?.expiry,
             name: subscriptionPlanDetail?.name,
             price: subscriptionPlanDetail?.price,
+            description: subscriptionPlanDetail?.description,
         },
         onSubmit: (values) => {
             let formData = new FormData();
@@ -70,6 +71,19 @@ const EditSubscriptionPlan = (props) => {
                         ]}
                     >
                         <Input name="name" onChange={formik.handleChange} value={formik.values.name} />
+                    </Form.Item>
+                    <Form.Item
+                        label="Description"
+                        style={{ minWidth: '100%' }}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'description is required!',
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        <Input name="description" onChange={formik.handleChange} value={formik.values.description} />
                     </Form.Item>
                     <Form.Item
                         label="Price"

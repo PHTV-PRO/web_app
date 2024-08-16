@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { addSubscriptionPlanAction } from '../../../redux/actions/SubscriptionPlanAction';
 
-
 const AddNewSubcriptionPlan = () => {
     const dispatch = useDispatch();
 
@@ -37,7 +36,6 @@ const AddNewSubcriptionPlan = () => {
 
         }
     })
-
 
     return (
         <Form
@@ -81,6 +79,13 @@ const AddNewSubcriptionPlan = () => {
                         ]}
                     >
                         <Input name="name" onChange={formik.handleChange} />
+                    </Form.Item>
+                    <Form.Item
+                        label="Description"
+                        name="description"
+                    >
+                      
+                        <Input name="description" onChange={formik.handleChange}  />
                     </Form.Item>
 
                     <Form.Item

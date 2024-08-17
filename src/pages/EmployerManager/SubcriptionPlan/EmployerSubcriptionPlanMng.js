@@ -43,7 +43,7 @@ export default function EmployerSubcriptionPlanMng() {
 
     const parseSubsObjecTotArray = [subscriptionPlanByAccount?.subcriptionPlanDTO]
     const data2 = parseSubsObjecTotArray;
-    
+
     const data1 = subscriptionPlanByAccount?.subcriptionPlanDTOs;
 
 
@@ -160,7 +160,7 @@ export default function EmployerSubcriptionPlanMng() {
             ...getColumnSearchProps('price'),
             sorter: (a, b) => a.price - b.price,
             render:(data)=>{
-                return <>{data} $$</>
+                return <>{data} $</>
             },
             sortDirections: ['descend', 'ascend'],
         },

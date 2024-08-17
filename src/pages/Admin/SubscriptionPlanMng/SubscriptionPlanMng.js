@@ -132,12 +132,24 @@ export default function SubcriptionPlanMng() {
             sortDirections: ['descend', 'ascend'],
         },
         {
+            title: 'Description',
+            dataIndex: 'description',
+            key: 'description',
+            width: '30%',
+            ...getColumnSearchProps('description'),
+            sorter: (a, b) => a.description - b.description,
+            sortDirections: ['descend', 'ascend'],
+        },
+        {
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
             width: '20%',
             ...getColumnSearchProps('price'),
             sorter: (a, b) => a.price - b.price,
+            render:(data)=>{
+                return <>{data} $</>
+            },
             sortDirections: ['descend', 'ascend'],
         },
         {

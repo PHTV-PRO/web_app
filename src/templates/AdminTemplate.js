@@ -462,10 +462,10 @@ export const AdminTemplate = (props) => { //path, exact, Component
       getItem('Employer', '2', <NavLink className='text-decoration-none' to="/admin/empmng"><UserOutlined /></NavLink>),
       getItem("Candidate", "3", <NavLink className="text-decoration-none" to="/admin/accmng"><UserOutlined /></NavLink>),
     ]),
-    getItem('Area Management', 'sub3', <CompassOutlined />, [
+    
       getItem('City Province ', '4', <NavLink className='text-decoration-none' to="/admin/cityprovincemng"><BankOutlined /></NavLink>),
       // getItem('Location ', '5', <NavLink className='text-decoration-none' to="/admin/locationmng"><AimOutlined /></NavLink>),
-    ]),
+    
     getItem('Job Type Management', '6', <NavLink className='text-decoration-none' to="/admin/jobtypemng"><AuditOutlined /></NavLink>),
     getItem('Level Management', '7', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
     getItem('SubscriptionPlan Management', '8', <NavLink className='text-decoration-none' to="/admin/subplanmng"><ContainerOutlined /></NavLink>),

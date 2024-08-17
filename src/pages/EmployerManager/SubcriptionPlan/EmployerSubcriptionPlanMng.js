@@ -43,7 +43,7 @@ export default function EmployerSubcriptionPlanMng() {
 
     const parseSubsObjecTotArray = [subscriptionPlanByAccount?.subcriptionPlanDTO]
     const data2 = parseSubsObjecTotArray;
-
+    
     const data1 = subscriptionPlanByAccount?.subcriptionPlanDTOs;
 
 
@@ -143,7 +143,7 @@ export default function EmployerSubcriptionPlanMng() {
             ...getColumnSearchProps('name'),
             sorter: (a, b) => a.name - b.name,
             render: (a) => {
-                if (data2[0]?.id == a) {
+                if (data2[0]?.id) {
                     return <div className='bg-yellow-300 rounded-md shadow-md  p-2 shadow-yellow-300   text-center'> {a} </div>
                 } else {
                     return <div className='bg-gray-200 rounded-md shadow-md  p-2 shadow-gray-300   text-center'> {a} </div>
@@ -159,6 +159,9 @@ export default function EmployerSubcriptionPlanMng() {
             width: '20%',
             ...getColumnSearchProps('price'),
             sorter: (a, b) => a.price - b.price,
+            render:(data)=>{
+                return <>{data} $$</>
+            },
             sortDirections: ['descend', 'ascend'],
         },
         {

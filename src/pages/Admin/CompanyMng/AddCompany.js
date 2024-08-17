@@ -17,7 +17,6 @@ const { Option } = Select;
 
 const AddNewCompany = (props) => {
     let { id } = props.match.params;
-    console.log(id);
     const [logoSrc, setLogoSrc] = useState("");
     const [backgroundSrc, setBackgroundSrc] = useState("");
     const [imagePreview, setImagePreview] = useState([]);
@@ -65,7 +64,7 @@ const AddNewCompany = (props) => {
             enable: "",
             images: "",
             list_image: "",
-            account_id: id
+            account_id: typeof(id) !="undefined" ? id :0
 
         },
         onSubmit: (values) => {
@@ -98,11 +97,12 @@ const AddNewCompany = (props) => {
     const setAccountId = (id) => {
         formik.setFieldValue("account_id", id)
     }
+    
     const handleChangeAccount = (value) => {
         formik.setFieldValue("account_id", value);
     };
     const handleChangeCityProvince = (value) => {
-        formik.setFieldValue("city_provence_id", value);
+        formik.setFieldValue("city_province_id", value);
     };
     console.log(arrAccountWithoutCompany);
 
@@ -498,12 +498,12 @@ const AddNewCompany = (props) => {
                                 transform: (value) => value.trim(),
                             },
                         ]}
-                    >
+                    >›
                         {renderSelectedLevel()}
 
                     </Form.Item>
 
-                    {id === null && <Form.Item
+                    {typeof(id) =="undefined"  ? <Form.Item
                         label="Account"
                         name="account"
                         style={{ minWidth: "100%" }}
@@ -529,6 +529,7 @@ const AddNewCompany = (props) => {
                             onChange={handleChangeAccount}
                         />
                     </Form.Item>
+                    :""
                     }
                     <Form.Item
                         label="Location"
@@ -546,7 +547,7 @@ const AddNewCompany = (props) => {
 
                     <Form.Item
                         label="City Province"
-                        name="city_provence_id"
+                        name="city_province_id"
                         style={{ minWidth: "100%" }}
                         rules={[
                             {

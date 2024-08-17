@@ -125,6 +125,8 @@ function App() {
         {/* Company */}
         <AdminTemplate path="/admin/companymng" exact Component={CompanyMng} />
         <AdminTemplate path="/admin/companymng/addcom" exact Component={AddNewCompany} />
+        <AdminTemplate path="/admin/companymng/addcom/:id" exact Component={AddNewCompany} />
+
         <AdminTemplate path="/admin/companymng/edit/:id" exact Component={EditCompany} />
         <UserTemplate path="/registerCompany" exact Component={RegisterCompany} />
 

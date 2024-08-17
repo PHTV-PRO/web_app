@@ -12,6 +12,7 @@ import { getDataChartOfEmployer, getDataChartOfEmployerFromAdminById } from '../
 import EmployerJobMng from './EmployerJob/EmployerJobMng';
 import ChartOfEmployer from './Chart/ChartOfEmployer';
 import SummaryDetailOfEmployer from './Summary/summaryDetailOfEmployer';
+import { LOGIN_ACTION } from '../../redux/constants';
 
 
 
@@ -32,6 +33,7 @@ const EmployerProfile = (props) => {
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
     }
+    console.log(chartEmployerFromAdminById);
 
     useEffect(() => {
         if (TOKEN != null) {
@@ -98,12 +100,12 @@ const EmployerProfile = (props) => {
 
     return (
         <div className='p-4'>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-2">
                 <div class="col-span-2">
                     <SummaryDetailOfEmployer chartEmployerFromAdminById={chartEmployerFromAdminById} dataChartOfEmployer={dataChartOfEmployerById}></SummaryDetailOfEmployer>
                 </div>
                 <div className='mt-6'>
-                    <div className='bg-gray-100 p-[32px] rounded-md shadow-md'>
+                    <div className='bg-gray-100 p-6 rounded-md shadow-md'>
                         <div className='d-flex justify-between'>
                             {
                                 userLogin?.role === "ADMIN" ? <div className='mr-2 font-extrabold text-lg'>Hello {dataCompanyForEmployerFromAdmin?.email}</div>
@@ -237,9 +239,10 @@ const EmployerProfile = (props) => {
 
                             </Modal>
                         </div> :
-                            <div className='w-[30%]'>
+                            <div className='w-[60%]'>
+                                {/* {arrDataSubcriptionPlanFromAdmin?.subcriptionPlanDTO !== null ? <text>{arrDataSubcriptionPlanFromAdmin?.subcriptionPlanDTO?.name}</text> : <text>None</text>} */}
                                 <div className='bg-yellow-300  rounded-md shadow-md  p-2 shadow-yellow-300   text-center'>
-                                    <text>{arrDataSubcriptionPlanFromAdmin?.subcriptionPlanDTO?.name}</text>
+                                    <text className='text-gray-600'>{arrDataSubcriptionPlanFromAdmin?.subcriptionPlanDTO?.name || "Don't Have Subcription Plan"}</text>
                                 </div>
                             </div>
                         }

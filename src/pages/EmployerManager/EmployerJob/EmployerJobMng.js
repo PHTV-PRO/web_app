@@ -17,8 +17,6 @@ export default function EmployerJobMng(props) {
 
     const dispatch = useDispatch();
     const idOfEmployer = props?.idOfEmployer?.id
-    const today = moment();
-    const currentDay = today.format("YYYY-MM-DD")
     let { employerCompanyJob } = useSelector(state => state.AccountReducer);
     let { userLogin } = useSelector(state => state.UserReducer);
     let { dataCompanyForEmployerFromAdmin } = useSelector(state => state.AccountReducer);
@@ -33,6 +31,8 @@ export default function EmployerJobMng(props) {
             dispatch(getCompanyForEmployerFromAdminById(idOfEmployer))
         }
     }, [userLogin])
+    const today = moment();
+    const currentDay = today.format("YYYY-MM-DD")
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [idJob, setIdJob] = useState(0);
     const [searchText, setSearchText] = useState('');
@@ -59,6 +59,10 @@ export default function EmployerJobMng(props) {
     };
     const data = employerCompanyJob?.companyForEmployer || dataCompanyForEmployerFromAdmin?.companyForEmployer;
     console.log(data?.jobsOpened);
+    console.log(employerCompanyJob);
+    console.log(employerCompanyJob?.companyForEmployer?.subcriptionPlan);
+
+
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
             <div style={{ padding: 8, }} onKeyDown={(e) => e.stopPropagation()} >
@@ -153,7 +157,7 @@ export default function EmployerJobMng(props) {
             title: 'Skill Required',
             dataIndex: 'skill_required',
             key: 'skill_required',
-            width: '5%',
+            width: '15%',
             ...getColumnSearchProps('skill_required'),
             sorter: (a, b) => a.skill_required - b.skill_required,
             sortDirections: ['descend', 'ascend'],
@@ -249,18 +253,18 @@ export default function EmployerJobMng(props) {
     const items = [
         {
             key: '1',
-            children: data?.jobsOpening ? <Table columns={columns} dataSource={data.jobsOpening} rowKey={'id'} /> : "",
+            children: data?.jobsOpening ? <Table columns={columns} dataSource={data.jobsOpening} rowKey={'id'} /> : <Table columns={columns} dataSource={[]} rowKey={'id'} />,
             label: 'Jobs Are Recruiting',
         },
         {
             key: '2',
             label: 'Job Posted',
-            children: data?.jobsOpened ? <Table columns={columns} dataSource={data.jobsOpened} defaultDataSource={[]} rowKey={'id'} /> : "",
+            children: data?.jobsOpened ? <Table columns={columns} dataSource={data.jobsOpened} defaultDataSource={[]} rowKey={'id'} /> : <Table columns={columns} dataSource={[]} rowKey={'id'} />,
         },
         {
             key: '3',
             label: 'Upcoming Job',
-            children: data?.jobsNotOpen ? <Table columns={columns} dataSource={data.jobsNotOpen} rowKey={'id'} /> : "",
+            children: data?.jobsNotOpen ? <Table columns={columns} dataSource={data.jobsNotOpen} rowKey={'id'} /> : <Table columns={columns} dataSource={[]} rowKey={'id'} />,
         },
     ];
 
@@ -269,9 +273,9 @@ export default function EmployerJobMng(props) {
         <div className=''>
             <div className='d-flex mb-1 items-center'>
                 {
-                    userLogin?.role === "EMPLOYER" ? employerCompanyJob?.count_jobs >= employerCompanyJob?.limit_job ?
-                        <h3 className='alert ml-2 text-base text-yellow-800 rounded-lg bg-yellow-50 w-100 text-center'>
-                            <a href='/employer/buyScPl'>You've reached your creation limit for job. Upgrade to create more job.</a>
+                    userLogin?.role === "EMPLOYER" ? employerCompanyJob?.count_jobs >= employerCompanyJob?.limit_job || employerCompanyJob?.companyForEmployer?.subcriptionPlan == null ?
+                        <h3 className='alert ml-2 text-base text-yellow-800 rounded-lg bg-yellow-50 w-100 text-left'>
+                            <a href='/employer/buyScPl'>You've reached your creation limit for job or Don't register Subcription Plan !!!.</a>
                         </h3> :
                         <Button href='/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button> :
                         <Button href={`/jobmng/addjob/${dataCompanyForEmployerFromAdmin?.companyForEmployer?.id}`} type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
@@ -279,7 +283,7 @@ export default function EmployerJobMng(props) {
             </div>
             {userLogin?.role === "EMPLOYER" && <div className='flex items-center '>
                 <h3 className='text-lg text-gray-600 italic'> Jobs created : </h3>
-                <h5 className='ml-2 text-base text-gray-500'>{employerCompanyJob?.count_jobs} / {employerCompanyJob?.limit_job}</h5>
+                <h5 className='ml-2 text-base text-gray-500'>{employerCompanyJob?.count_jobs < 0 ? 0 : employerCompanyJob?.count_jobs} / {employerCompanyJob?.limit_job}</h5>
             </div>}
 
         </div>

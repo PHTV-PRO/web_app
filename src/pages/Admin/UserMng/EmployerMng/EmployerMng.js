@@ -3,7 +3,9 @@ import {
   SearchOutlined,
   EditOutlined,
   DeleteOutlined,
-  InfoOutlined
+  InfoOutlined,
+  FormOutlined,
+  LineChartOutlined
 } from "@ant-design/icons";
 import { Button, Input, Space, Table, Avatar } from "antd";
 import { useRef, useState } from "react";
@@ -16,6 +18,7 @@ import {
 export default function EmployerMng() {
   const dispatch = useDispatch();
   let { arrAccountEmployer } = useSelector((state) => state.AccountReducer);
+  console.log(arrAccountEmployer);
   useEffect(() => {
     dispatch(getListAccountEmployerAction());
   }, [dispatch]);
@@ -36,7 +39,8 @@ export default function EmployerMng() {
   };
 
   const data = arrAccountEmployer?.data;
-  console.log(data);
+
+
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
@@ -175,9 +179,7 @@ export default function EmployerMng() {
               href={`/admin/empmng/edit/` + data.id}
               type="link"
               icon={<EditOutlined />}
-              onClick={() => {
-                // dispatch(updateEmployerByIdAction(data.id));
-              }}
+
             ></Button>
 
             <Button
@@ -197,12 +199,17 @@ export default function EmployerMng() {
                 }
               }}
             ></Button>
-            <Button
-              type="link"
-              key={3}
-              icon={<InfoOutlined />}
-              href={`/employer/emprofile/${data.id}`}
-            ></Button>
+
+            {
+
+              data?.company !== null ? <Button
+                type="link"
+                key={3}
+                icon={<LineChartOutlined />}
+                href={`/employer/emprofile/${data.id}`}
+                title='Dashboard Of Employer'
+              ></Button> : <Button type="link" href={`/admin/companymng/addcom/${data?.id}`} icon={<FormOutlined />}></Button>}
+
 
           </Fragment>
         );

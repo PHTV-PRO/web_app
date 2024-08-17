@@ -61,7 +61,7 @@ export default function RegisterCompany() {
     })
 
     const handleChangeCityProvince = (value) => {
-        formik.setFieldValue("city_provence_id", value);
+        formik.setFieldValue("city_province_id", value);
     };
 
     const handleChangeFileLogo = (e) => {
@@ -321,7 +321,7 @@ export default function RegisterCompany() {
 
                             <Form.Item
                                 label="City Province"
-                                name="city_provence_id"
+                                name="city_province_id"
                                 style={{ minWidth: "100%" }}
                                 rules={[
                                     {

@@ -55,9 +55,7 @@ const EditCompany = (props) => {
             logo_image: companyDetail?.logo_image,
             background_image: companyDetail?.background_image,
             city_province_id: companyDetail?.city_province?.id,
-            city_province: companyDetail?.city_province?.name,
             enable: companyDetail?.enable,
-            account: companyDetail?.account?.name,
             list_image: companyDetail?.list_image ? companyDetail?.list_image : null,
             account_id :companyDetail?.account?.id,
             // backgroundImageSrc:companyDetail?.
@@ -83,6 +81,8 @@ const EditCompany = (props) => {
         }
     })
 
+    console.log("check id:", formik.values.account_id);
+    
 
     // hàm lấy imge khi update
     useEffect(() => {
@@ -460,7 +460,7 @@ const EditCompany = (props) => {
                             },
                         ]}
                     >
-                        <Select value={formik.values.account} options={arrAccount?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeAccount} />
+                        <Select value={companyDetail?.account?.name} options={arrAccount?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeAccount} />
                     </Form.Item>
 
                     <Form.Item
@@ -474,7 +474,7 @@ const EditCompany = (props) => {
                             },
                         ]}
                     >
-                        <Select value={formik.values.city_province} options={arrAccount?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeCityProvince} />
+                        <Select value={formik?.values?.city_province_id} options={arrCityProvince?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeCityProvince} />
                     </Form.Item>
 
                     <Form.Item label="Logo Company">

@@ -1,18 +1,28 @@
-import React, { useState } from 'react'
-import { Button, Checkbox, Form, Input, notification } from 'antd';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Checkbox, Form, Input, notification, Select } from 'antd';
 import { useFormik } from 'formik';
 import { EnvironmentOutlined, EuroCircleOutlined, AuditOutlined } from '@ant-design/icons';
 
 import './company.css'
 import { registerCompanyAction } from '../../../redux/actions/CompanyAction';
+import { getCityProvinceListAction } from '../../../redux/actions/CityProvinceAction';
+
 
 
 export default function RegisterCompany() {
     const dispatch = useDispatch();
+
+    let { arrCityProvince } = useSelector(state => state.CityProvinceReducer);
     const [checked, setChecked] = useState(false);
     const [logoSrc, setLogoSrc] = useState("");
     const [backgroundSrc, setBackgroundSrc] = useState("");
+
+
+
+    useEffect(() => {
+        dispatch(getCityProvinceListAction());
+    }, [dispatch]);
 
     const formik = useFormik({
         initialValues: {
@@ -50,6 +60,10 @@ export default function RegisterCompany() {
         }
     })
 
+    const handleChangeCityProvince = (value) => {
+        formik.setFieldValue("city_provence_id", value);
+    };
+
     const handleChangeFileLogo = (e) => {
         let file = e.target.files[0];
 
@@ -75,12 +89,6 @@ export default function RegisterCompany() {
             formik.setFieldValue("background_image", file);
         }
     };
-
-    // check failed image
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
 
     const onChange = (e) => {
         setChecked(e.target.checked);
@@ -309,6 +317,33 @@ export default function RegisterCompany() {
                                 ]}
                             >
                                 <Input name="nationnality" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="National" />
+                            </Form.Item>
+
+                            <Form.Item
+                                label="City Province"
+                                name="city_provence_id"
+                                style={{ minWidth: "100%" }}
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "City Province is required!",
+                                        transform: (value) => value.trim(),
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    rules={[{ required: true }]}
+                                    options={
+                                        arrCityProvince
+                                            ? arrCityProvince?.data?.map((item, index) => ({
+                                                key: index,
+                                                label: item.name,
+                                                value: item.id,
+                                            }))
+                                            : ""
+                                    }
+                                    onChange={handleChangeCityProvince}
+                                />
                             </Form.Item>
 
                             <Form.Item

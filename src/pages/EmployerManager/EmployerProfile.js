@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Carousel } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+    CheckOutlined, DollarOutlined
+} from '@ant-design/icons';
 
 
 import dayjs from 'dayjs';
@@ -104,6 +107,7 @@ const EmployerProfile = (props) => {
                 <div class="col-span-2">
                     <SummaryDetailOfEmployer chartEmployerFromAdminById={chartEmployerFromAdminById} dataChartOfEmployer={dataChartOfEmployerById}></SummaryDetailOfEmployer>
                 </div>
+
                 <div className=''>
                     <div className='bg-gray-100 my-6 p-6 rounded-md shadow-md'>
                         <div className='flex justify-between'>
@@ -227,7 +231,7 @@ const EmployerProfile = (props) => {
                                     <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => { }}>Renew subscription plan</Button>
                                     <Button className='btn-primary bg-primary mt-2 px-5' type='primary' onClick={handleOk}>OK</Button>
                                 </>} >
-                                <div >
+                                {/* <div >
                                     Start date:{dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.start_date).format("DD-MM-YYYY")}
                                 </div><div >
                                     End date:{dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.end_date).format("DD-MM-YYYY")}
@@ -235,6 +239,34 @@ const EmployerProfile = (props) => {
                                     Price:{(subscriptionPlanByAccount?.subcriptionPlanDTO?.price)} $
                                 </div><div >
                                     Expiry:{(dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.end_date).diff(dayjs(), "days"))} Days
+                                </div> */}
+                                <div className='flex flex-col items-center justify-center mt-6'>
+                                    <div className="bg-blue-900 col-6 py-2 rounded-tl-[80px] rounded-br-[80px]">
+
+                                        <div className='bg-white py-3 rounded-tl-[80px] rounded-br-[80px]'>
+                                            <div className='flex flex-col justify-center items-center' >
+                                                <h1 className='font-bold text-xl text-blue-900 text-center mb-3'>${subscriptionPlanByAccount?.subcriptionPlanDTO?.price}</h1>
+                                                <div className='flex items-center justify-center border-b pb-2 border-gray-400 border-dashed mx-2'>
+                                                    <h1 className='text-gray-500 text-base mr-3 font-bold'><CheckOutlined /></h1>
+                                                    <h4 className='text-base font-light mb-0'>{subscriptionPlanByAccount?.subcriptionPlanDTO?.description}</h4>
+                                                </div>
+                                                <div className='flex items-center justify-center border-b mb-2 border-gray-400 border-dashed mx-2'>
+                                                    <h1 className='text-gray-500 text-base mr-3 font-bold'><CheckOutlined /></h1>
+                                                    <h4 className='text-base font-light mb-0'>
+                                                        {subscriptionPlanByAccount?.subcriptionPlanDTO?.expiry} jobs </h4>
+                                                </div>
+                                                <div className='text-white mt-2 w-[40%] flex items-center justify-center'>
+                                                    <div className="bg-blue-900  text-3xl shadow-2xl text-center rounded-full px-3 py-3 flex items-center justify-center">
+                                                        <DollarOutlined />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div className='bg-white mt-3 w-[80%] p-2 flex justify-center items-center rounded-xl'>
+                                            <h1 className="text-blue-900 font-xl font-bold m-0"> {subscriptionPlanByAccount?.subcriptionPlanDTO?.name}</h1>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </Modal>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-    CheckOutlined, DollarOutlined, FileSearchOutlined, LikeOutlined, FileProtectOutlined, CheckCircleFilled
+    CheckOutlined, DollarOutlined, FileSearchOutlined, LikeOutlined, FileProtectOutlined
 } from '@ant-design/icons';
 import { getSubscriptionPlanListAction } from '../../../redux/actions/SubscriptionPlanAction';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,7 +38,12 @@ export default function ShowSubcriptionPlan() {
         <div className='row flex justify-around'>
             {arrSubscriptionPlan?.data?.length > 0 && (arrSubscriptionPlan?.data)?.map((sb) => (
 
-                <div className={sb?.name === 'COMBO 30' ? `${backgroundColor1}` : sb?.name === 'COMBO 50' ? `${backgroundColor2}` : sb?.name === 'COMBO 100' ? `${backgroundColor3}` : `${backgroundColor4}`}>
+                <
+                    div className={sb?.name === 'COMBO 30' ? `${backgroundColor1}` :
+                        sb?.name === 'COMBO 50' ? `${backgroundColor2}` :
+                            sb?.name === 'COMBO 100' ? `${backgroundColor3}` :
+                                `${backgroundColor4}`}
+                >
 
                     <div className='bg-white py-3 rounded-tl-[80px] rounded-br-[80px]'>
                         <div className='flex flex-col justify-center items-center' >
@@ -61,7 +66,10 @@ export default function ShowSubcriptionPlan() {
 
                     </div>
                     <div className='bg-white mt-3 w-[80%] p-2 flex justify-center items-center rounded-xl'>
-                        <h1 className={sb?.name === 'COMBO 30' ? `${colorFooter1}` : sb?.name === 'COMBO 50' ? `${colorFooter2}` : sb?.name === 'COMBO 100' ? `${colorFooter3}` : `${colorFooter4}`}>{sb?.name}</h1>
+                        <h1 className={sb?.name === 'COMBO 30' ? `${colorFooter1}` :
+                            sb?.name === 'COMBO 50' ? `${colorFooter2}` :
+                                sb?.name === 'COMBO 100' ? `${colorFooter3}` : `
+                        ${colorFooter4}`}>{sb?.name}</h1>
                     </div>
                 </div>
             ))}

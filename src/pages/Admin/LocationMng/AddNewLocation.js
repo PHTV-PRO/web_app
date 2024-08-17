@@ -51,7 +51,7 @@ const AddNewLocation = () => {
     }
 
     const handleChangeCityProvince = (value) => {
-        formik.setFieldValue('city_provence_id', value)
+        formik.setFieldValue('city_province_id', value)
     }
 
 

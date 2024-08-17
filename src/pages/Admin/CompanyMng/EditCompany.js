@@ -12,6 +12,8 @@ import { getListAccountAction } from '../../../redux/actions/AccountAction';
 import { getLevelListAction } from '../../../redux/actions/LevelAction';
 import { getSkillListAction } from '../../../redux/actions/SkillAction';
 import LoadingImage from "../../../components/LoadingImage";
+import { getCityProvinceListAction } from "../../../redux/actions/CityProvinceAction";
+
 const { Option } = Select;
 
 const EditCompany = (props) => {
@@ -19,15 +21,13 @@ const EditCompany = (props) => {
     const [backgroundImageSrc, setBackgroundImageSrc] = useState("");
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
-    const [selectedLevel, setSelectedLevel] = useState([]);
-    const [selectedLevelId, setSelectedLevelId] = useState([]);
     const [imagePreview, setImagePreview] = useState([]);
     const [loading, setIsLoading] = useState(false);
 
     const dispatch = useDispatch();
     const { companyDetail } = useSelector(state => state.CompanyReducer)
     let { arrAccount } = useSelector(state => state.AccountReducer);
-    let { arrLevel } = useSelector(state => state.LevelReducer);
+    let { arrCityProvince } = useSelector(state => state.CityProvinceReducer);
     let { arrSkill } = useSelector(state => state.SkillReducer);
 
     let { id } = props.match.params;
@@ -36,6 +36,8 @@ const EditCompany = (props) => {
         dispatch(getLevelListAction())
         dispatch(getSkillListAction());
         dispatch(getCompanyIdAction(id))
+        dispatch(getCityProvinceListAction())
+
     }, [dispatch, id])
 
 
@@ -52,10 +54,12 @@ const EditCompany = (props) => {
             nationnality: companyDetail?.nationnality,
             logo_image: companyDetail?.logo_image,
             background_image: companyDetail?.background_image,
-            city_provence_id: companyDetail?.city_provence_id,
+            city_province_id: companyDetail?.city_province?.id,
+            city_province: companyDetail?.city_province?.name,
             enable: companyDetail?.enable,
             account: companyDetail?.account?.name,
-            list_image: companyDetail?.list_image ? companyDetail?.list_image : null
+            list_image: companyDetail?.list_image ? companyDetail?.list_image : null,
+            account_id :companyDetail?.account?.id,
             // backgroundImageSrc:companyDetail?.
         },
         onSubmit: (values) => {
@@ -86,6 +90,29 @@ const EditCompany = (props) => {
         console.log(images);
         images && setImagePreview(images);
     }, [companyDetail?.list_image])
+
+    useEffect(() => {
+        console.log("check list skill", companyDetail);
+        const listSkillId = [];
+        const listSkill = [];
+        companyDetail?.skills?.map((data)=>{
+            listSkillId.push(data?.id)
+            listSkill.push(data?.name)
+
+        })
+        setSelectedSkills(listSkill);
+        setSelectedSkillsId(listSkillId);
+        let ListId = '';
+        if (listSkillId.length > 0) {
+            listSkillId.map(skill => {
+                ListId += skill.toString() + ",";
+            })
+             formik.setFieldValue("skill_id", ListId);
+        };
+
+        formik.setFieldValue("city_province_id",companyDetail?.city_province?.id)
+        
+    }, [companyDetail])
 
 
     const handleChangeEnable = (value) => {
@@ -217,57 +244,9 @@ const EditCompany = (props) => {
         };
 
     }
-
-    const toggleLevel = async (name, id) => {
-        const newSelectedLevels = [...selectedLevel];
-        const newSelectedLevelId = [...selectedLevelId];
-
-        if (newSelectedLevels.includes(name)) {
-            newSelectedLevels.splice(newSelectedLevels.indexOf(name), 1);
-            newSelectedLevelId.splice(newSelectedLevelId.indexOf(id), 1);
-
-        } else {
-            newSelectedLevels.push(name);
-            newSelectedLevelId.push(id);
-        }
-        setSelectedLevel(newSelectedLevels);
-        setSelectedLevelId(newSelectedLevelId);
-
-        let ListId = '';
-        if (newSelectedLevelId.length > 0) {
-            newSelectedLevelId.map(level => {
-                console.log("check");
-                ListId += level.toString() + ",";
-            })
-            await formik.setFieldValue("level_id", ListId);
-        };
-
-    }
-
-    const renderSelectedLevel = () => (
-        <div>
-            {selectedLevel.map((level) => (
-                <Button key={level} className="mr-2 mb-2">
-                    {level}
-                </Button>
-            ))}
-        </div>
-    );
-    const renderLevel = () => (
-        <div className="grid grid-cols-3">
-            {arrLevel?.data?.map((level) => (
-                <Checkbox
-                    key={level.id}
-                    checked={selectedLevel.includes(level.name)}
-                    onChange={() => toggleLevel(level.name, level.id)}
-                    className="mr-2"
-                >
-                    {level.name}
-                </Checkbox>
-            ))}
-        </div>
-    );
-
+    const handleChangeCityProvince = (value) => {
+        formik.setFieldValue("city_province_id", value);
+    };
 
     return (
         <Form
@@ -468,37 +447,7 @@ const EditCompany = (props) => {
                         {renderSelectedSkills()}
 
                     </Form.Item>
-                    <Form.Item
-                        label="Level"
-                        name="Level"
-                        style={{ minWidth: "100%" }}
-                        rules={[
-                            {
-                                required: true,
-                                message: "SKill is required!",
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        {renderLevel()}
 
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Level Selected"
-                        name="Level"
-                        style={{ minWidth: "100%" }}
-                        rules={[
-                            {
-                                required: true,
-                                message: "SKill is required!",
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        {renderSelectedLevel()}
-
-                    </Form.Item>
 
                     <Form.Item
                         label="Account"
@@ -512,6 +461,20 @@ const EditCompany = (props) => {
                         ]}
                     >
                         <Select value={formik.values.account} options={arrAccount?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeAccount} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="City or Province"
+                        style={{ minWidth: '100%' }}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'City or Province is required!',
+                                transform: (value) => value.trim(),
+                            },
+                        ]}
+                    >
+                        <Select value={formik.values.city_province} options={arrAccount?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeCityProvince} />
                     </Form.Item>
 
                     <Form.Item label="Logo Company">

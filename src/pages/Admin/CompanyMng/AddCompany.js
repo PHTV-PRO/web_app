@@ -90,7 +90,7 @@ const AddNewCompany = () => {
         formik.setFieldValue("account_id", value);
     };
     const handleChangeCityProvince = (value) => {
-        formik.setFieldValue("city_provence_id", value);
+        formik.setFieldValue("city_province_id", value);
     };
     console.log(arrAccountWithoutCompany);
 
@@ -533,7 +533,7 @@ const AddNewCompany = () => {
 
                     <Form.Item
                         label="City Province"
-                        name="city_provence_id"
+                        name="city_province_id"
                         style={{ minWidth: "100%" }}
                         rules={[
                             {

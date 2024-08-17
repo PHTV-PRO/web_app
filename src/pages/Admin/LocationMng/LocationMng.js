@@ -138,11 +138,11 @@ export default function LocationMng() {
         },
         {
             title: 'City Province',
-            dataIndex: 'city_provence_id ',
-            key: 'city_provence_id ',
+            dataIndex: 'city_province_id ',
+            key: 'city_province_id ',
             width: '20%',
-            ...getColumnSearchProps('city_provence_id '),
-            sorter: (a, b) => a.city_provence_id - b.city_provence_id,
+            ...getColumnSearchProps('city_province_id '),
+            sorter: (a, b) => a.city_province_id - b.city_province_id,
             sortDirections: ['descend', 'ascend'],
             render: (text, cityProvince) => {
                 return (<>

@@ -182,7 +182,7 @@ const ModalApplicationByJob = (props) => {
                                 dispatch(sendMailToCandidateAction(cv?.id))
                             }}
                         >
-                            <text className="text-sm ml-2 my-0 py-0 "> Click ! . Send Mail to Candidate</text>
+                            <text className="text-sm ml-2 my-0 py-0 "> Click! . Send Mail to Candidate</text>
                         </Button>
                     </div>
                 </div>)

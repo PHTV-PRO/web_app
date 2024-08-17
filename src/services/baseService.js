@@ -45,4 +45,11 @@ export class baseService {
             headers: { 'Authorization': 'Bearer' + localStorage.getItem(TOKEN) } //JWT
         })
     }
+
+    getNotBearer = (url) => {
+        return Axios({
+            url: `${DOMAIN}${url}`,
+            method: 'GET',
+        })
+    }
 }

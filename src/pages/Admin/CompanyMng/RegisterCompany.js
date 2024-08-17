@@ -22,7 +22,7 @@ export default function RegisterCompany() {
 
     useEffect(() => {
         dispatch(getCityProvinceListAction());
-    }, [dispatch]);
+    }, []);
 
     const formik = useFormik({
         initialValues: {

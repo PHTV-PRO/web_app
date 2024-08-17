@@ -7,7 +7,7 @@ export class CityProvinceService extends baseService {
     }
 
     getCityProvinceList = () => {
-        return this.get(`/api/general/city_province`);
+        return this.getNotBearer(`/api/general/city_province`);
     }
 
     getCityProvinceById = (id) => {

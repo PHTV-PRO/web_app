@@ -104,9 +104,9 @@ const EmployerProfile = (props) => {
                 <div class="col-span-2">
                     <SummaryDetailOfEmployer chartEmployerFromAdminById={chartEmployerFromAdminById} dataChartOfEmployer={dataChartOfEmployerById}></SummaryDetailOfEmployer>
                 </div>
-                <div className='mt-6'>
-                    <div className='bg-gray-100 p-6 rounded-md shadow-md'>
-                        <div className='d-flex justify-between'>
+                <div className=''>
+                    <div className='bg-gray-100 my-6 p-6 rounded-md shadow-md'>
+                        <div className='flex justify-between'>
                             {
                                 userLogin?.role === "ADMIN" ? <div className='mr-2 font-extrabold text-lg'>Hello {dataCompanyForEmployerFromAdmin?.email}</div>
                                     : <div className='mr-2 font-extrabold text-lg'>Hello {employerCompanyJob?.email}</div>

@@ -14,7 +14,7 @@ const SummaryDetailOfEmployer = (props) => {
 
 
 
-    return <div className="mb-10">
+    return <div className="">
         {dataChartOfEmployer === undefined ? <div className='grid gap-4 grid-cols-3'>
             <div className="flex items-center  my-6 bg-gray-100 p-6 rounded-md shadow-md">
                 <div className=" bg-purple-400 mr-4  py-4 px-8 rounded-2xl text-2xl text-white"><FileProtectOutlined /></div>

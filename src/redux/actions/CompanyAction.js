@@ -153,7 +153,7 @@ export const updateEnableOfCompanyByAdmin = (id) => {
                 closeIcon: true,
                 message: 'Success',
                 description: (
-                    <>{result.data.data.enable ? "Enable successfully" : "Disable successfully"}</>
+                    <>{result.data.data === 'Success!!' ? "Enable successfully" : "Disable successfully"}</>
                 ),
             });
             dispatch(getCompanyListAction())

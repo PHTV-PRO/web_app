@@ -15,7 +15,9 @@ import { getCityProvinceListAction } from "../../../redux/actions/CityProvinceAc
 
 const { Option } = Select;
 
-const AddNewCompany = () => {
+const AddNewCompany = (props) => {
+    let { id } = props.match.params;
+    console.log(id);
     const [logoSrc, setLogoSrc] = useState("");
     const [backgroundSrc, setBackgroundSrc] = useState("");
     const [imagePreview, setImagePreview] = useState([]);
@@ -43,6 +45,10 @@ const AddNewCompany = () => {
         dispatch(getCityProvinceListAction())
     }, [dispatch]);
 
+    useEffect(() => {
+        setAccountId(id)
+    }, [id])
+
 
     const formik = useFormik({
         initialValues: {
@@ -58,7 +64,9 @@ const AddNewCompany = () => {
             location: "",
             enable: "",
             images: "",
-            list_image: ""
+            list_image: "",
+            account_id: id
+
         },
         onSubmit: (values) => {
             if (
@@ -69,6 +77,7 @@ const AddNewCompany = () => {
                 values.nationnality === "" ||
                 values.introduction === ""
             ) {
+
                 notification.error({
                     closeIcon: true,
                     message: "Error",
@@ -86,11 +95,14 @@ const AddNewCompany = () => {
     });
 
 
+    const setAccountId = (id) => {
+        formik.setFieldValue("account_id", id)
+    }
     const handleChangeAccount = (value) => {
         formik.setFieldValue("account_id", value);
     };
     const handleChangeCityProvince = (value) => {
-        formik.setFieldValue("city_province_id", value);
+        formik.setFieldValue("city_provence_id", value);
     };
     console.log(arrAccountWithoutCompany);
 
@@ -490,7 +502,8 @@ const AddNewCompany = () => {
                         {renderSelectedLevel()}
 
                     </Form.Item>
-                    <Form.Item
+
+                    {id === null && <Form.Item
                         label="Account"
                         name="account"
                         style={{ minWidth: "100%" }}
@@ -516,7 +529,7 @@ const AddNewCompany = () => {
                             onChange={handleChangeAccount}
                         />
                     </Form.Item>
-
+                    }
                     <Form.Item
                         label="Location"
                         style={{ minWidth: '100%' }}
@@ -533,7 +546,7 @@ const AddNewCompany = () => {
 
                     <Form.Item
                         label="City Province"
-                        name="city_province_id"
+                        name="city_provence_id"
                         style={{ minWidth: "100%" }}
                         rules={[
                             {
@@ -658,3 +671,4 @@ const AddNewCompany = () => {
 };
 
 export default AddNewCompany;
+

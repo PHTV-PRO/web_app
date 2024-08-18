@@ -17,9 +17,26 @@ export default function UserTemplate(props) {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
+         filter: 'blur(0px)',
+         position:"absolute",
+         height:"100vh",
+         width:"100%"
       }}>
-        <Component {...propsRoute} />
-
+      </div>
+      <div className="min-h-screen bg-black flex justify-center items-center" style={{
+        // backgroundImage: 'url(./img/backgroundImage.jpg)',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+         filter: 'blur(0px)',
+         position:"absolute",
+         opacity:0.3,
+         height:"100vh",
+         width:"100%"
+      }}>
+      </div>
+      <div className="min-h-screen flex justify-center items-center">
+      <Component {...propsRoute} />
       </div>
     </Fragment>
   }} />

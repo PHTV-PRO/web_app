@@ -21,6 +21,8 @@ import { AccountReducer } from './reducers/AccountReducer';
 import { CompanyReducer } from './reducers/CompanyReducer';
 import { JobReducer } from './reducers/JobReducer';
 import { LocationReducer } from './reducers/LocationReducer';
+import { AdvertisementReducer } from './reducers/AdvertisementReducer';
+
 
 
 
@@ -31,6 +33,7 @@ import { LocationReducer } from './reducers/LocationReducer';
 // LevelReducer
 
 const rootReducer = combineReducers({
+    AdvertisementReducer,
     SkillReducer,
     IndustryReducer,
     JobTypeReducer,

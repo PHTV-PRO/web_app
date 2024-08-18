@@ -59,6 +59,10 @@ import LocationMng from "./pages/Admin/LocationMng/LocationMng";
 import AddNewLocation from "./pages/Admin/LocationMng/AddNewLocation";
 import EditLocation from "./pages/Admin/LocationMng/EditLocation";
 
+//  AdvertisementMng
+import AdvertisementMng from "./pages/Admin/AdvertisementMng/AdvertisementMng";
+
+
 // Proflie Employer
 import EmployerProfile from "./pages/EmployerManager/EmployerProfile";
 import EmployerJobMng from "./pages/EmployerManager/EmployerJob/EmployerJobMng";
@@ -71,6 +75,8 @@ import UserTemplate from "./templates/UserTemplate";
 import Login from "./pages/Login/Login";
 import { ProfileTemplate } from "./templates/ProfileTemplate";
 import RegisterCompany from "./pages/Admin/CompanyMng/RegisterCompany";
+import AddAdvertisement from "./pages/Admin/AdvertisementMng/CreateAdvertisement";
+import AdvertisementEdit from "./pages/Admin/AdvertisementMng/EditAdvertisement";
 
 
 
@@ -146,6 +152,11 @@ function App() {
         <AdminTemplate path="/admin/accmng" exact Component={AccountMng} />
         <AdminTemplate path="/admin/accmng/addacc" exact Component={AddAccount} />
         <AdminTemplate path="/admin/accmng/edit/:id" exact Component={AccountEdit} />
+
+        {/* Account */}
+        <AdminTemplate path="/admin/advertisementmng/advertisementmng" exact Component={AdvertisementMng} />
+        <AdminTemplate path="/admin/advertisementmng/addadvertisement" exact Component={AddAdvertisement} />
+        <AdminTemplate path="/admin/advertisementmng/edit/:id" exact Component={AdvertisementEdit} />
 
         {/* chart */}
         <AdminTemplate path="/admin/chartmng" exact Component={GeneralChart} />

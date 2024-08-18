@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 import {
   HomeOutlined, UserOutlined, SearchOutlined, AuditOutlined,
-  ApartmentOutlined, BankOutlined, AimOutlined, CompassOutlined,
+  ApartmentOutlined, BankOutlined, LinkOutlined,
   HomeFilled, ContainerOutlined, WalletOutlined, IssuesCloseOutlined,
   EditOutlined, DeleteOutlined, BarChartOutlined
 } from '@ant-design/icons';
@@ -462,10 +462,10 @@ export const AdminTemplate = (props) => { //path, exact, Component
       getItem('Employer', '2', <NavLink className='text-decoration-none' to="/admin/empmng"><UserOutlined /></NavLink>),
       getItem("Candidate", "3", <NavLink className="text-decoration-none" to="/admin/accmng"><UserOutlined /></NavLink>),
     ]),
-    
-      getItem('City Province ', '4', <NavLink className='text-decoration-none' to="/admin/cityprovincemng"><BankOutlined /></NavLink>),
-      // getItem('Location ', '5', <NavLink className='text-decoration-none' to="/admin/locationmng"><AimOutlined /></NavLink>),
-    
+
+    getItem('City Province ', '4', <NavLink className='text-decoration-none' to="/admin/cityprovincemng"><BankOutlined /></NavLink>),
+    getItem('Advertisement ', '5', <NavLink className='text-decoration-none' to="/admin/advertisementmng/advertisementmng"><LinkOutlined /></NavLink>),
+
     getItem('Job Type Management', '6', <NavLink className='text-decoration-none' to="/admin/jobtypemng"><AuditOutlined /></NavLink>),
     getItem('Level Management', '7', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
     getItem('SubscriptionPlan Management', '8', <NavLink className='text-decoration-none' to="/admin/subplanmng"><ContainerOutlined /></NavLink>),

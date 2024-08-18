@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Checkbox, Form, Input, notification, Select } from 'antd';
 import { useFormik } from 'formik';
-import { EnvironmentOutlined, EuroCircleOutlined, AuditOutlined } from '@ant-design/icons';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import './company.css'
 import { registerCompanyAction } from '../../../redux/actions/CompanyAction';
 import { getCityProvinceListAction } from '../../../redux/actions/CityProvinceAction';
 
-
+const { Option } = Select;
 
 export default function RegisterCompany() {
     const dispatch = useDispatch();
@@ -90,6 +91,15 @@ export default function RegisterCompany() {
         }
     };
 
+    const handleChangeSize = (value) => {
+        formik.setFieldValue("size", value);
+    };
+
+    const handleChangeInput = (e, editor, name) => {
+        const data = editor.getData();
+        formik.setFieldValue(name, data);
+    };
+
     const onChange = (e) => {
         setChecked(e.target.checked);
     };
@@ -104,40 +114,7 @@ export default function RegisterCompany() {
                     backgroundPosition: 'center',
                 }}
             >
-                {/* <div className='flex justify-center items-center gap-4'>
-                    <div className='p-9 rounded-full bg-red-700'>
-                        <div className='text-white text-4xl font-bold flex items-center justify-center'>
-                            <AuditOutlined />
-                        </div>
-                    </div>
-                    <div>
-                        <h1 className='text-xl text-gray-100 uppercase' style={{ textShadow: '0 0 2px #111' }}>Job announcement</h1>
-                        <h1 className='text-lg font-normal text-gray-100' style={{ textShadow: '0 0 2px #111' }}>Get updated with the latest job opportunities from many leading companies</h1>
-                    </div>
-                </div>
-                <div className='flex justify-center items-center gap-4'>
-                    <div className='p-9 rounded-full bg-green-500'>
-                        <div className='text-white text-4xl font-bold flex items-center justify-center'>
-                            <EuroCircleOutlined />
-                        </div>
-                    </div>
-                    <div>
-                        <h1 className='text-xl text-gray-100 uppercase' style={{ textShadow: '0 0 2px #111' }}>Find a job easily</h1>
-                        <h1 className='text-lg font-normal text-gray-100' style={{ textShadow: '0 0 2px #111' }}>Find a job you love that matches your skills and interests</h1>
-                    </div>
-                </div>
 
-                <div className='flex justify-center items-center gap-4'>
-                    <div className='p-9 rounded-full bg-orange-400'>
-                        <div className='text-white text-4xl font-bold flex items-center justify-center'>
-                            <EnvironmentOutlined />
-                        </div>
-                    </div>
-                    <div>
-                        <h1 className='text-xl text-gray-100 uppercase' style={{ textShadow: '0 0 2px #111' }}>Apply quickly</h1>
-                        <h1 className='text-lg font-normal text-gray-100' style={{ textShadow: '0 0 2px #111' }}>Easily apply for multiple positions without wasting time</h1>
-                    </div>
-                </div> */}
             </div>
             <div className='py-8 px-8  bg-gray-50/80 rounded-r-lg'>
                 <h1 className="text-2xl font-bold text-black text-center mb-4">Sign Up Company</h1>
@@ -171,224 +148,292 @@ export default function RegisterCompany() {
                         >
 
 
-                            <Form.Item
-                                name="email"
-                                label=""
-                                rules={[
-                                    {
-                                        type: 'email',
-                                        message: 'E-mail is invalid!',
-                                    },
-                                    {
-                                        required: true,
-                                        message: 'E-mail is required!',
-                                        transform: (value) => value.trim(),
-                                    },
-                                ]}
-                            >
-                                <Input name='email' onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Email" />
-                            </Form.Item>
-
-
-                            <Form.Item
-                                label=""
-                                name="password"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Password is required!',
-                                        transform: (value) => value.trim(),
-                                    },
-                                ]}
-                            >
-                                <Input.Password className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Password" />
-                            </Form.Item>
-
-                            <Form.Item
-                                name="password_confirmation"
-                                label=""
-                                dependencies={['password']}
-                                hasFeedback
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please re-enter your password!',
-                                        transform: (value) => value.trim(),
-                                    },
-                                    ({ getFieldValue }) => ({
-                                        validator(_, value) {
-                                            if (!value || getFieldValue('password') === value) {
-                                                return Promise.resolve();
-                                            }
-                                            return Promise.reject(new Error('Password do not match, please try again!'));
+                            <div>
+                                <h2>Email : </h2>
+                                <Form.Item
+                                    name="email"
+                                    label=""
+                                    rules={[
+                                        {
+                                            type: 'email',
+                                            message: 'E-mail is invalid!',
                                         },
-                                    }),
-                                ]}
-                            >
-                                <Input.Password name="password" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Password confirm" />
-                            </Form.Item>
+                                        {
+                                            required: true,
+                                            message: 'E-mail is required!',
+                                            transform: (value) => value.trim(),
+                                        },
+                                    ]}
+                                >
+                                    <Input name='email' onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Email" />
+                                </Form.Item>
+                            </div>
 
-                            <Form.Item
-                                name="name_company"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Name Company is required!',
-                                        transform: (value) => value.trim(),
-                                    },
-                                ]}
-                            >
-                                <Input name="name_company" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Name Company" />
-
-                            </Form.Item>
-
-                            <Form.Item
-                                name="introduction"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Introduction is required!',
-                                        transform: (value) => value.trim(),
-                                    },
-                                ]}
-                            >
-                                <Input name="introduction" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Introduction" />
-                            </Form.Item>
-                            <Form.Item
-                                name="benefit"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Benefit is required!',
-                                        transform: (value) => value.trim(),
-                                    },
-                                ]}
-                            >
-                                <Input name="benefit" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Benefit" />
-                            </Form.Item>
-
-                            <Form.Item
-                                name="Profession"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'profession is required!',
-                                        transform: (value) => value.trim(),
-                                    },
-                                ]}
-                            >
-                                <Input name="profession" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Profession" />
-                            </Form.Item>
-
-                            <Form.Item
-                                name="Size"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'size is required!',
-                                        transform: (value) => value.trim(),
-                                    },
-                                ]}
-                            >
-                                <Input name="size" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Size" />
-                            </Form.Item>
-
-                            <Form.Item
-                                name="Link website"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'link_website is required!',
-                                        transform: (value) => value.trim(),
-                                    },
-                                ]}
-                            >
-                                <Input name="link_website" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Link website" />
-                            </Form.Item>
-
-                            <Form.Item
-                                name="nationnality"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'National is required!',
-                                        transform: (value) => value.trim(),
-                                    },
-                                ]}
-                            >
-                                <Input name="nationnality" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="National" />
-                            </Form.Item>
-
-                            <Form.Item
-                                label="City Province"
-                                name="city_province_id"
-                                style={{ minWidth: "100%" }}
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: "City Province is required!",
-                                        transform: (value) => value.trim(),
-                                    },
-                                ]}
-                            >
-                                <Select
-                                    rules={[{ required: true }]}
-                                    options={
-                                        arrCityProvince
-                                            ? arrCityProvince?.data?.map((item, index) => ({
-                                                key: index,
-                                                label: item.name,
-                                                value: item.id,
-                                            }))
-                                            : ""
-                                    }
-                                    onChange={handleChangeCityProvince}
-                                />
-                            </Form.Item>
-
-                            <Form.Item
-                                name="location"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Location is required!',
-                                        transform: (value) => value.trim(),
-                                    },
-                                ]}
-                            >
-                                <Input name="location" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Location" />
-                            </Form.Item>
 
                             <div>
-                                <Form.Item label="Logo Company">
-                                    <input
-                                        name="UploadFileLogo"
-                                        type="file"
-                                        onChange={handleChangeFileLogo}
-                                        accept="image/png, image/jpeg,image/gif,image/png"
-                                    />
-                                    <br />
-                                    {logoSrc ? (
-                                        <img style={{ width: 300, height: 200, objectFit: "cover", borderRadius: "10%", }} src={logoSrc} alt="..." />
-                                    ) : (
-                                        <img style={{ width: 300, height: 200, border: "0.1px solid #ccc", borderRadius: "10%", }} src="/img/placeholder-image.jpg" alt="..." />
-                                    )}
+                                <h2>Password : </h2>
+                                <Form.Item
+                                    label=""
+                                    name="password"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Password is required!',
+                                            transform: (value) => value.trim(),
+                                        },
+                                    ]}
+                                >
+                                    <Input.Password className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Password" />
                                 </Form.Item>
+                            </div>
 
-                                <Form.Item label="Background Company">
-                                    <input
-                                        name="UploadFileBackground"
-                                        type="file"
-                                        onChange={handleChangeFileBackground}
-                                        accept="image/png, image/jpeg,image/gif,image/png"
-                                    />
-                                    <br />
-                                    {backgroundSrc ? (
-                                        <img style={{ width: 300, height: 200, objectFit: "cover", borderRadius: "10%", }} src={backgroundSrc} alt="..." />
-                                    ) : (
-                                        <img style={{ width: 300, height: 200, border: "0.1px solid #ccc", borderRadius: "10%", }} src="/img/placeholder-image.jpg" alt="..." />
-                                    )}
+                            <div>
+                                <h2>Password Confirm : </h2>
+                                <Form.Item
+                                    name="password_confirmation"
+                                    label=""
+                                    dependencies={['password']}
+                                    hasFeedback
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please re-enter your password!',
+                                            transform: (value) => value.trim(),
+                                        },
+                                        ({ getFieldValue }) => ({
+                                            validator(_, value) {
+                                                if (!value || getFieldValue('password') === value) {
+                                                    return Promise.resolve();
+                                                }
+                                                return Promise.reject(new Error('Password do not match, please try again!'));
+                                            },
+                                        }),
+                                    ]}
+                                >
+                                    <Input.Password name="password" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Password confirm" />
                                 </Form.Item>
+                            </div>
+
+                            <div>
+                                <h2>Name Company : </h2>
+                                <Form.Item
+                                    name="name_company"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Name Company is required!',
+                                            transform: (value) => value.trim(),
+                                        },
+                                    ]}
+                                >
+                                    <Input name="name_company" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Name Company" />
+
+                                </Form.Item>
+                            </div>
+
+                            <div className=''>
+                                <h2>Introduction : </h2>
+                                <Form.Item
+                                >
+                                    <CKEditor
+                                        className="rounded-lg overflow-hidden"
+                                        data={formik.values.introduction}
+                                        name="introduction"
+                                        editor={ClassicEditor}
+                                        onChange={(event, editor) => {
+                                            handleChangeInput(event, editor, 'introduction')
+                                        }}
+                                        onReady={(editor) => {
+                                            editor.editing.view.change((writer) => {
+                                                writer.setStyle(
+                                                    "height",
+                                                    "200px",
+                                                    editor.editing.view.document.getRoot()
+                                                );
+                                            });
+                                        }}
+                                    ></CKEditor>
+                                </Form.Item>
+                            </div>
+
+                            <div className=''>
+                                <h2>Benefit : </h2>
+                                <Form.Item
+                                >
+                                    <CKEditor
+                                        className="rounded-lg  overflow-hidden"
+                                        name="benefit"
+                                        data={formik.values.benefit}
+                                        editor={ClassicEditor}
+                                        onChange={(event, editor) => {
+                                            handleChangeInput(event, editor, 'benefit')
+                                        }}
+                                        onReady={(editor) => {
+                                            editor.editing.view.change((writer) => {
+                                                writer.setStyle(
+                                                    "height",
+                                                    "200px",
+                                                    editor.editing.view.document.getRoot()
+                                                );
+                                            });
+                                        }}
+                                    ></CKEditor>
+                                    {/* <Input name="benefit" onChange={formik.handleChange} value={formik.values.benefit} /> */}
+                                </Form.Item>
+                            </div>
+
+                            <div>
+                                <h2>Profession : </h2>
+                                <Form.Item
+                                    name="Profession"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'profession is required!',
+                                            transform: (value) => value.trim(),
+                                        },
+                                    ]}
+                                >
+                                    <Input name="profession" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Profession" />
+                                </Form.Item>
+                            </div>
+                            <div>
+                                <h2>Size : </h2>
+                                <Form.Item
+                                    style={{ minWidth: '100%' }}
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Size  is required!',
+                                            transform: (value) => value.trim(),
+                                        },
+                                    ]}
+                                >
+                                    <Select name="size" onChange={handleChangeSize} placeholder="Choose Szie" value={formik.values.size}>
+                                        <Option value={"1 - 100"}>1 - 100</Option>
+                                        <Option value={'100 - 500'}>100 - 500</Option>
+                                        <Option value={'500 - 1000'}>500 - 1000</Option>
+                                        <Option value={'1000 - 5000'}>1000 - 5000</Option>
+                                        <Option value={'5000 - 9000'}>5000 - 9000</Option>
+
+                                    </Select>
+                                </Form.Item>
+                            </div>
+
+                            <div>
+                                <h2>Link Website : </h2>
+                                <Form.Item
+                                    name="Link website"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'link_website is required!',
+                                            transform: (value) => value.trim(),
+                                        },
+                                    ]}
+                                >
+                                    <Input name="link_website" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Link website" />
+                                </Form.Item>
+                            </div>
+
+                            <div>
+                                <h2>National : </h2>
+                                <Form.Item
+                                    name="nationnality"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'National is required!',
+                                            transform: (value) => value.trim(),
+                                        },
+                                    ]}
+                                >
+                                    <Input name="nationnality" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="National" />
+                                </Form.Item>
+                            </div>
+
+                            <div>
+                                <h2>City Province : </h2>
+                                <Form.Item
+                                    label=""
+                                    name="city_province_id"
+                                    style={{ minWidth: "100%" }}
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: "City Province is required!",
+                                            transform: (value) => value.trim(),
+                                        },
+                                    ]}
+                                >
+                                    <Select
+                                        rules={[{ required: true }]}
+                                        options={
+                                            arrCityProvince
+                                                ? arrCityProvince?.data?.map((item, index) => ({
+                                                    key: index,
+                                                    label: item.name,
+                                                    value: item.id,
+                                                }))
+                                                : ""
+                                        }
+                                        onChange={handleChangeCityProvince}
+                                    />
+                                </Form.Item>
+                            </div>
+
+                            <div>
+                                <h2>Location : </h2>
+                                <Form.Item
+                                    name="location"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Location is required!',
+                                            transform: (value) => value.trim(),
+                                        },
+                                    ]}
+                                >
+                                    <Input name="location" onChange={formik.handleChange} className="d-flex block text-sm py-2.5 px-4 mt-2 rounded-lg w-full border outline-none" placeholder="Location" />
+                                </Form.Item>
+                            </div>
+
+                            <div>
+                                <div>
+                                    <h2>Logo Company : </h2>
+                                    <Form.Item>
+                                        <input
+                                            name="UploadFileLogo"
+                                            type="file"
+                                            onChange={handleChangeFileLogo}
+                                            accept="image/png, image/jpeg,image/gif,image/png"
+                                        />
+                                        <br />
+                                        {logoSrc ? (
+                                            <img style={{ width: 300, height: 200, objectFit: "cover", borderRadius: "10%", }} src={logoSrc} alt="..." />
+                                        ) : (
+                                            <img style={{ width: 300, height: 200, border: "0.1px solid #ccc", borderRadius: "10%", }} src="/img/placeholder-image.jpg" alt="..." />
+                                        )}
+                                    </Form.Item>
+                                </div>
+
+                                <div>
+                                    <h2>Background Company : </h2>
+                                    <Form.Item>
+                                        <input
+                                            name="UploadFileBackground"
+                                            type="file"
+                                            onChange={handleChangeFileBackground}
+                                            accept="image/png, image/jpeg,image/gif,image/png"
+                                        />
+                                        <br />
+                                        {backgroundSrc ? (
+                                            <img style={{ width: 300, height: 200, objectFit: "cover", borderRadius: "10%", }} src={backgroundSrc} alt="..." />
+                                        ) : (
+                                            <img style={{ width: 300, height: 200, border: "0.1px solid #ccc", borderRadius: "10%", }} src="/img/placeholder-image.jpg" alt="..." />
+                                        )}
+                                    </Form.Item>
+                                </div>
                             </div>
 
 

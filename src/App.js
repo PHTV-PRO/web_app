@@ -160,6 +160,8 @@ function App() {
 
         {/* chart */}
         <AdminTemplate path="/admin/chartmng" exact Component={GeneralChart} />
+        <AdminTemplate path="/employer/chartmng" exact Component={GeneralChart} />
+
 
 
         {/* EmployerProfile */}
@@ -171,14 +173,8 @@ function App() {
 
         {/* job employer */}
         <AdminTemplate path="/employer/empljobmng" exact Component={EmployerJobMng} />
-        {/* <AdminTemplate path="/employer/job/edit/:id" exact Component={EmployerEditJob} /> */}
         <AdminTemplate path="/employer/buyScPl" exact Component={BuySubcriptionPlan} />
         <AdminTemplate path="/employer/showsubcriptionplan" exact Component={ShowSubcriptionPlan} />
-
-
-        {/* Chart */}
-        <AdminTemplate path="/employer/chartmng" exact Component={GeneralChart} />
-
 
         <AdminTemplate path="/admin" exact Component={UserMng} />
         <AdminTemplate path="/admin/users/edit/:id" exact Component={UserEdit} />

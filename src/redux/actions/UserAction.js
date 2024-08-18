@@ -14,6 +14,8 @@ export const loginAction = (loginInfo) => {
       localStorage.setItem(TOKEN, result.data.data.token);
       if (result.status === 200) {
         const user = await userService.getCurrentUser(result.data.data.token);
+        console.log(user.data.data?.companyForEmployer);
+        console.log(user.data.data);
         if (user.data.data.role == "ADMIN") {
           notification.success({
             closeIcon: true,
@@ -25,7 +27,21 @@ export const loginAction = (loginInfo) => {
             ),
           });
           history.push("/admin/chartmng");
-        } else
+        }
+        // else
+        //   if (user.data.data.role === "EMPLOYER" && user.data.data?.companyForEmployer === null) {
+        //     notification.error({
+        //       closeIcon: true,
+        //       message: "Error",
+        //       description: (
+        //         <>
+        //           Have'nt Company . Please Register Company !!!
+        //         </>
+        //       ),
+        //     });
+        //     history.push("/registerCompany");
+        //   }
+        else
           if (user.data.data.role === "EMPLOYER") {
             notification.success({
               closeIcon: true,

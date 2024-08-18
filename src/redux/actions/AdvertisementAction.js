@@ -1,6 +1,5 @@
 import { GET_ADVERTISEMENT_DETAIL, GET_ADVERTISEMENT_LIST } from "../constants";
 import { history } from "../../App";
-// import { jobTypeService } from "../../services/JobTypeService";
 import { notification } from "antd";
 import { advertisementService } from "../../services/AdvertisementService";
 
@@ -72,6 +71,7 @@ export const updateAdvertisementIdAction = (id, formData) => {
     return async (dispatch) => {
         try {
             const result = await advertisementService.updateAdvertisement(id, formData);
+            console.log(result);
             notification.success({
                 closeIcon: true,
                 message: 'Success',

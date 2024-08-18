@@ -170,6 +170,8 @@ export const registerCompanyAction = (formData) => {
         try {
             const result = await companyService.registerCompany(formData)
             console.log(result);
+            console.log(result?.data?.statusCode);
+
             if (result.data.statusCode === 200) {
                 notification.success({
                     closeIcon: true,
@@ -179,7 +181,18 @@ export const registerCompanyAction = (formData) => {
                     ),
                 });
                 history.push('/');
-            } else {
+            }
+            else if (result.data.statusCode === 400) {
+                notification.error({
+                    closeIcon: false,
+                    message: 'Fail !!!',
+                    description: (
+                        <>Email or Password incorrect!!</>
+                    ),
+                });
+                history.push('/');
+            }
+            else {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',

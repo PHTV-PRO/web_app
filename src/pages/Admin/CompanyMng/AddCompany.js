@@ -23,14 +23,10 @@ const AddNewCompany = (props) => {
     const [loading, setIsLoading] = useState(false);
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
-
-
     const [selectedLevel, setSelectedLevel] = useState([]);
     const [selectedLevelId, setSelectedLevelId] = useState([]);
 
-
     const dispatch = useDispatch();
-
     let { arrAccountWithoutCompany } = useSelector((state) => state.AccountReducer);
     let { arrLevel } = useSelector(state => state.LevelReducer);
     let { arrSkill } = useSelector(state => state.SkillReducer);
@@ -60,11 +56,10 @@ const AddNewCompany = (props) => {
             location: "",
             logo: "",
             background: "",
-            location: "",
             enable: "",
             images: "",
             list_image: "",
-            account_id: typeof(id) !="undefined" ? id :0
+            account_id: typeof (id) != "undefined" ? id : 0
 
         },
         onSubmit: (values) => {
@@ -97,7 +92,7 @@ const AddNewCompany = (props) => {
     const setAccountId = (id) => {
         formik.setFieldValue("account_id", id)
     }
-    
+
     const handleChangeAccount = (value) => {
         formik.setFieldValue("account_id", value);
     };
@@ -503,7 +498,7 @@ const AddNewCompany = (props) => {
 
                     </Form.Item>
 
-                    {typeof(id) =="undefined"  ? <Form.Item
+                    {typeof (id) == "undefined" ? <Form.Item
                         label="Account"
                         name="account"
                         style={{ minWidth: "100%" }}
@@ -529,7 +524,7 @@ const AddNewCompany = (props) => {
                             onChange={handleChangeAccount}
                         />
                     </Form.Item>
-                    :""
+                        : ""
                     }
                     <Form.Item
                         label="Location"

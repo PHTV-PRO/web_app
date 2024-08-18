@@ -6,6 +6,7 @@ import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
 import dayjs from "dayjs";
 import { getCompanyListAction, deleteCompanyAction, updateEnableOfCompanyByAdmin } from '../../../redux/actions/CompanyAction';
+import ModalSubcriptionPlanOfEmployer from './Modal/ModalSubcriptionPlanOfEmployer';
 // import ModalListJobOfCompany from './Modal/ModalListJobOfCompany';
 
 
@@ -16,9 +17,8 @@ export default function CompanyMng() {
     useEffect(() => {
         dispatch(getCompanyListAction())
     }, [dispatch])
-
     const [isModalOpenSubcriptionPlan, setIsModalOpenSubcriptionPlan] = useState(false);
-
+    const [idEmployer, setIdEmployer] = useState();
     const showModalSubcriptopnPlan = () => {
         setIsModalOpenSubcriptionPlan(true);
     };
@@ -47,6 +47,7 @@ export default function CompanyMng() {
     };
     const data = arrCompany.data;
     console.log(data);
+    console.log(idEmployer);
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -138,21 +139,6 @@ export default function CompanyMng() {
             render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text = null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
 
         },
-
-        // {
-        //     title: 'Start Date Of Subcription Plan',
-        //     dataIndex: 'subcriptionPlan_id',
-        //     key: 'subcriptionPlan_id ',
-        //     width: '10%',
-        //     ...getColumnSearchProps('subcriptionPlan_id '),
-        //     sorter: (a, b) => a.subcriptionPlan_id - b.subcriptionPlan_id,
-        //     sortDirections: ['descend', 'ascend'],
-        //     render: (text, data) => {
-        //         return (<>
-        //             <span>{dayjs(data?.subcriptionPlan?.subcriptionPlanCompany?.start_date).format("DD-MM-YYYY")}</span>
-        //         </>)
-        //     },
-        // },
         {
             title: 'Subcription Plan',
             dataIndex: 'subcriptionPlan_id',
@@ -163,7 +149,10 @@ export default function CompanyMng() {
             sortDirections: ['descend', 'ascend'],
             render: (text, data) => {
                 return (<div>
-                    <Button type="link" onClick={showModalSubcriptopnPlan}>
+                    <Button type="link" onClick={() => {
+                        showModalSubcriptopnPlan()
+                        setIdEmployer(data?.account?.id)
+                    }}>
                         {data?.subcriptionPlan?.name || "Don't Have Subcription Plan"}
                     </Button>
                 </div>)
@@ -255,10 +244,8 @@ export default function CompanyMng() {
             <Button href='/admin/companymng/addcom' type="primary" className='ml-3 small bg-primary'>+ Add New Company</Button>
         </div>
         <Table columns={columns} dataSource={data} rowKey={'id'} />
-        <Modal title="Basic Modal" open={isModalOpenSubcriptionPlan} onOk={handleOkSubcriptopnPlan} onCancel={handleCancelSubcriptopnPlan}>
-            <p>{data?.subcriptionPlan?.name} $</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
+        <Modal title="Detail Subcription Plan" open={isModalOpenSubcriptionPlan} onOk={handleOkSubcriptopnPlan} onCancel={handleCancelSubcriptopnPlan}>
+            <ModalSubcriptionPlanOfEmployer idEmployer={idEmployer}></ModalSubcriptionPlanOfEmployer>
         </Modal>
     </div>
 }

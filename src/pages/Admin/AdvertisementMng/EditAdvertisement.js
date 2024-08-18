@@ -19,7 +19,7 @@ const AdvertisementEdit = (props) => {
         enableReinitialize: true,
         initialValues: {
             path: advertisementDetail?.path,
-            image: advertisementDetail?.image,
+            // image: advertisementDetail?.image,
 
         },
         onSubmit: async (values) => {
@@ -85,7 +85,7 @@ const AdvertisementEdit = (props) => {
                     />
                     <br />
                     <img style={{ width: 200, height: 200, objectFit: 'cover', borderRadius: '10%', border: "0.1px solid #ccc" }}
-                        src={imgSrc === '' ? `${formik.values.image}` : imgSrc} alt="..." />
+                        src={imgSrc === '' ? `${advertisementDetail?.image}` : imgSrc} alt="..." />
                 </Form.Item>
 
                 <Form.Item label="Action">

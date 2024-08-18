@@ -37,9 +37,13 @@ const EditJob = (props) => {
     let { arrSkill } = useSelector(state => state.SkillReducer);
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
+    const [selectedSkillsIdString, setSelectedSkillsIdString] = useState([]);
+
 
     const [selectedLevel, setSelectedLevel] = useState([]);
     const [selectedLevelId, setSelectedLevelId] = useState([]);
+    const [selectedLevelIdString, setSelectedLevelIdString] = useState([]);
+
     let { userLogin } = useSelector(state => state.UserReducer);
     let { id } = props.match.params;
 
@@ -80,7 +84,9 @@ const EditJob = (props) => {
             experience_required: jobDetail?.experience_required,
             company_id: jobDetail?.company?.id,
             job_type_id: jobDetail?.jobType?.id,
-            _active: jobDetail?._active
+            _active: jobDetail?._active,
+            skill_id : selectedSkillsIdString,
+            level_id : selectedLevelIdString
         },
         onSubmit: (values) => {
             if (values.name == '' || values.introduction == '' || values.benefit == '') {
@@ -152,33 +158,53 @@ const EditJob = (props) => {
                 console.log("check");
                 ListId += skill.toString() + ",";
             })
-            await formik.setFieldValue("skill_id", ListId);
         };
 
-    }
-    const defaultSkill = async () => {
-        const newSelectedSkills = [];
-        const newSelectedSkillsId = [];
-        for (let index = 0; index < jobDetail?.skills?.length; index++) {
-            const element = jobDetail?.skills[index];
-            newSelectedSkills.push(element.name);
-            newSelectedSkillsId.push(element.id)
-        }
-        setSelectedSkills(newSelectedSkills);
-        setSelectedSkillsId(newSelectedSkillsId);
+       
+        await formik.setFieldValue("skill_id", ListId);
 
     }
-    const defaultLevel = async => {
-        const newSelectedLevels = [...selectedLevel];
-        const newSelectedLevelId = [...selectedLevelId];
-        for (let index = 0; index < jobDetail?.levels?.length; index++) {
-            const element = jobDetail?.levels[index];
-            newSelectedLevels.push(element.name);
-            newSelectedLevelId.push(element.id)
-        }
-        setSelectedLevel(newSelectedLevels);
-        setSelectedLevelId(newSelectedLevelId);
 
+    const defaultSkill =   () => {
+        const listSkillId = [];
+        const listSkill = [];
+        jobDetail?.skills?.map((data)=>{
+            listSkillId.push(data?.id)
+            listSkill.push(data?.name)
+
+        })
+        setSelectedSkills(listSkill);
+        setSelectedSkillsId(listSkillId);
+        let ListIdSkill = '';
+        if (listSkillId.length > 0) {
+            listSkillId.map(skill => {
+                ListIdSkill += skill.toString() + ",";
+            })
+        };
+        console.log("skill id :", ListIdSkill);
+         formik.setFieldValue("skill_id", ListIdSkill);
+         setSelectedSkillsIdString(ListIdSkill)
+    }
+    const defaultLevel =  () => {
+        const listLevellId = [];
+        const listLevel = [];
+        jobDetail?.levels?.map((data)=>{
+            listLevellId.push(data?.id)
+            listLevel.push(data?.name)
+
+        })
+        setSelectedLevel(listLevel);
+        setSelectedLevelId(listLevellId);
+        let ListIdLevel = '';
+        if (listLevellId.length > 0) {
+            listLevellId.map(level => {
+                ListIdLevel += level.toString() + ",";
+            })
+           
+        };
+        console.log("level id :", ListIdLevel);
+           formik.setFieldValue("level_id", ListIdLevel);
+           setSelectedLevelIdString(ListIdLevel)
     }
 
     const toggleLevel = async (name, id) => {
@@ -202,8 +228,8 @@ const EditJob = (props) => {
                 console.log("check");
                 ListId += level.toString() + ",";
             })
-            await formik.setFieldValue("level_id", ListId);
         };
+        await formik.setFieldValue("level_id", ListId);
 
     }
 

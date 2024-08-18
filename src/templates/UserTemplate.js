@@ -23,18 +23,18 @@ export default function UserTemplate(props) {
          width:"100%"
       }}>
       </div>
-      <div className="min-h-screen bg-black flex justify-center items-center" style={{
+      {/* <div className="min-h-screen bg-black flex justify-center items-center" style={{
         // backgroundImage: 'url(./img/backgroundImage.jpg)',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
          filter: 'blur(0px)',
          position:"absolute",
-         opacity:0.3,
+         opacity:0,
          height:"100vh",
          width:"100%"
       }}>
-      </div>
+      </div> */}
       <div className="min-h-screen flex justify-center items-center">
       <Component {...propsRoute} />
       </div>

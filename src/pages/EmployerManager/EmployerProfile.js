@@ -15,7 +15,8 @@ import { getDataChartOfEmployer, getDataChartOfEmployerFromAdminById } from '../
 import EmployerJobMng from './EmployerJob/EmployerJobMng';
 import ChartOfEmployer from './Chart/ChartOfEmployer';
 import SummaryDetailOfEmployer from './Summary/summaryDetailOfEmployer';
-import { LOGIN_ACTION } from '../../redux/constants';
+import { history } from '../../App';
+
 
 
 
@@ -36,7 +37,6 @@ const EmployerProfile = (props) => {
     if (localStorage.getItem(TOKEN)) {
         accessToken = localStorage.getItem(TOKEN)
     }
-    console.log(chartEmployerFromAdminById);
 
     useEffect(() => {
         if (TOKEN != null) {
@@ -56,7 +56,7 @@ const EmployerProfile = (props) => {
         }
     }, [userLogin])
 
-
+    console.log(userLogin);
 
     let URL = window.location.href;
     //subcription plan
@@ -71,10 +71,6 @@ const EmployerProfile = (props) => {
             dispatch(returnBuyScriptionPlan(paymentId, payerId))
         }
     }, [URL])
-
-    // if (userLogin && (userLogin?.role !== 'EMPLOYER' && userLogin?.role !== 'ADMIN')) {
-    //     history.replace('/')
-    // }
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -108,8 +104,8 @@ const EmployerProfile = (props) => {
                     <SummaryDetailOfEmployer chartEmployerFromAdminById={chartEmployerFromAdminById} dataChartOfEmployer={dataChartOfEmployerById}></SummaryDetailOfEmployer>
                 </div>
 
-                <div className='col-span-1'>
-                    <div className='bg-gray-100 my-6 p-6 rounded-md shadow-md h-36'>
+                <div className=''>
+                    <div className='bg-gray-100 my-6 p-6 rounded-md shadow-md'>
                         <div className='flex justify-between'>
                             {
                                 userLogin?.role === "ADMIN" ? <div className='mr-2 font-extrabold text-lg'>Hello {dataCompanyForEmployerFromAdmin?.email}</div>

@@ -202,7 +202,35 @@ export const registerCompanyAction = (formData) => {
                 });
             }
         } catch (error) {
-            console.log('error', error);
+            if (error.response.request.status === 400) {
+                notification.error({
+                    closeIcon: false,
+                    message: 'Fail !!!',
+                    description: (
+                        <>Email or Password incorrect . Or No Employer Registered!!</>
+                    ),
+                });
+                history.push('/registerCompany');
+            } else if (error.response.request.status === 409) {
+                notification.error({
+                    closeIcon: false,
+                    message: 'Fail !!!',
+                    description: (
+                        <>This Employer  Already Has Company !!</>
+                    ),
+                });
+                history.push('/registerCompany');
+            }
+            else if (error.response.request.status === 500) {
+                notification.error({
+                    closeIcon: false,
+                    message: 'Fail !!!',
+                    description: (
+                        <>Register Fail !!</>
+                    ),
+                });
+                history.push('/registerCompany');
+            }
         }
     }
 }

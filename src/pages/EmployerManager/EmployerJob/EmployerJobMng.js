@@ -58,9 +58,9 @@ export default function EmployerJobMng(props) {
         setIsModalOpen(false);
     };
     const data = employerCompanyJob?.companyForEmployer || dataCompanyForEmployerFromAdmin?.companyForEmployer;
-    console.log(data?.jobsOpened);
-    console.log(employerCompanyJob);
-    console.log(employerCompanyJob?.companyForEmployer?.subcriptionPlan);
+    // console.log(data?.jobsOpened);
+    // console.log(employerCompanyJob);
+    // console.log(employerCompanyJob?.companyForEmployer?.subcriptionPlan);
 
 
     const getColumnSearchProps = (dataIndex) => ({

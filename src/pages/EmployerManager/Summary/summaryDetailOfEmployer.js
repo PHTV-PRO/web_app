@@ -8,11 +8,6 @@ import {
 const SummaryDetailOfEmployer = (props) => {
     const dataChartOfEmployerFromAdminById = props.chartEmployerFromAdminById?.data
     const dataChartOfEmployer = props.dataChartOfEmployer?.data
-    console.log(dataChartOfEmployerFromAdminById);
-    console.log(dataChartOfEmployerFromAdminById);
-
-
-
 
     return <div className="">
         {dataChartOfEmployer === undefined ? <div className='grid gap-4 grid-cols-3'>

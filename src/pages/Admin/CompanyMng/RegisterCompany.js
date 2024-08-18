@@ -97,7 +97,7 @@ export default function RegisterCompany() {
         // py-8 px-8  rounded-2xl mt-5 
         <div className="shadow-xl z-10 flex" >
             <div
-                className='w-[500px]  py-8 px-8 rounded-l-lg flex flex-col items-center bg-blue-200/10 justify-around' style={{
+                className='w-[500px]  py-8 px-8 rounded-l-lg flex flex-col items-center bg-gray-400/60 justify-around' style={{
                     backgroundImage: 'url(./img/signUpImage.gif)',
                     backgroundSize: 'contain',
                     backgroundRepeat: 'no-repeat',

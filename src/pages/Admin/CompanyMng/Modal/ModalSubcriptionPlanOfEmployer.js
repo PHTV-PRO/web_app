@@ -7,7 +7,6 @@ import dayjs from "dayjs";
 
 
 const ModalSubcriptionPlanOfEmployer = (props) => {
-    console.log(props);
     const dispatch = useDispatch();
     const { arrDataSubcriptionPlanFromAdmin } = useSelector(state => state.SubscriptionPlanReducer)
     const id = props.idEmployer;

@@ -149,12 +149,18 @@ export default function CompanyMng() {
             sortDirections: ['descend', 'ascend'],
             render: (text, data) => {
                 return (<div>
-                    <Button type="link" onClick={() => {
+                    {data?.subcriptionPlan === null ? <h2 className='font-normal text-sm m-0 px-[15px] py-[4px] text-red-500'>Don't Have Subcription Plan</h2> : <Button type="link" onClick={() => {
+                        showModalSubcriptopnPlan()
+                        setIdEmployer(data?.account?.id)
+                    }}>
+                        {data?.subcriptionPlan?.name}
+                    </Button>}
+                    {/* <Button type="link" onClick={() => {
                         showModalSubcriptopnPlan()
                         setIdEmployer(data?.account?.id)
                     }}>
                         {data?.subcriptionPlan?.name || "Don't Have Subcription Plan"}
-                    </Button>
+                    </Button> */}
                 </div>)
             },
         },

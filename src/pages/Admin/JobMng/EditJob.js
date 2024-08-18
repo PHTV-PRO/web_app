@@ -43,7 +43,7 @@ const EditJob = (props) => {
     const [selectedLevel, setSelectedLevel] = useState([]);
     const [selectedLevelId, setSelectedLevelId] = useState([]);
     const [selectedLevelIdString, setSelectedLevelIdString] = useState([]);
-
+    const [startDate, setStartDate] = useState(null);
     let { userLogin } = useSelector(state => state.UserReducer);
     let { id } = props.match.params;
 
@@ -78,8 +78,8 @@ const EditJob = (props) => {
             amount: jobDetail?.amount,
             salary_max: jobDetail?.salary_max,
             salary_min: jobDetail?.salary_min,
-            start_date: dayjs(jobDetail?.start_date),
-            end_date: dayjs(jobDetail?.end_date),
+            start_date: dayjs(jobDetail?.start_date?.slice(0, 10)).add(20, 'hour'),
+            end_date: dayjs(jobDetail?.end_date?.slice(0, 10)).add(20, 'hour'),
             gender: jobDetail?.gender,
             experience_required: jobDetail?.experience_required,
             company_id: jobDetail?.company?.id,
@@ -113,9 +113,22 @@ const EditJob = (props) => {
         }
     })
 
+    console.log("check date: ", jobDetail?.start_date?.slice(0, 10));
+    
+    const disabledDate = (current) => {
+        if (!startDate) {
+            return current && current < dayjs().endOf('day') || current > dayjs().add(30,'day').endOf('day');
+          }
+        // Can not select days before today and today
+        return  current && current > dayjs(formik?.values?.start_date).add(60,'day').endOf('day');
+      };
     const onDateChange = (value) => {
-        formik.setFieldValue('end_date', dayjs(value[0]));
-        formik.setFieldValue('start_date', dayjs(value[1]));
+        if(value!=null){
+            setStartDate(value[0]);
+            formik.setFieldValue('end_date', dayjs(value[1]).add(20, 'hour'));
+            formik.setFieldValue('start_date', dayjs(value[0]).add(20, 'hour'));
+        }
+      
     };
 
     const handleChangeGender = (value) => {
@@ -470,10 +483,9 @@ const EditJob = (props) => {
                         style={{ minWidth: '100%' }}
                         rules={[
                             { required: true, message: 'Salary Min is required !', transform: (value) => value.trim() },
-                            { type: 'number', min: 0, max: 99999 },
                         ]}
                     >
-                        <Input name="salary_min" type="number" onChange={formik.handleChange} value={formik?.values?.salary_min} />
+                        <Input name="salary_min" type="text" onChange={formik.handleChange} value={formik?.values?.salary_min} />
                     </Form.Item>
 
                     <Form.Item
@@ -481,10 +493,9 @@ const EditJob = (props) => {
                         style={{ minWidth: '100%' }}
                         rules={[
                             { required: true, message: 'Salary Max is required !', transform: (value) => value.trim() },
-                            { type: 'number', min: 0, max: 99999 },
                         ]}
                     >
-                        <Input name="salary_max" type="number" onChange={formik.handleChange} value={formik?.values?.salary_max} />
+                        <Input name="salary_max" type="text" onChange={formik.handleChange} value={formik?.values?.salary_max} />
                     </Form.Item>
 
                     <Form.Item
@@ -497,7 +508,16 @@ const EditJob = (props) => {
                             },
                         ]}
                     >
-                        <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} rules={[{ required: true, message: 'Date can not be blank!' }]} onChange={onDateChange} value={[formik?.values?.start_date, formik?.values?.end_date]} />
+                        <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} 
+                            rules={[{ required: true, message: 'Date can not be blank!' }]} onChange={onDateChange} 
+                            disabledDate={disabledDate}
+                            value={[formik?.values?.start_date,formik?.values?.end_date]} />
+                        <div className='hidden'>
+                        <RangePicker
+                        defaultValue={[dayjs('2024-01-22'), dayjs(jobDetail?.end_date?.slice(0, 10))]}
+                        format={day => day.tz("Asia/Saigon").format(dateFormat)} 
+                        /></div>
+                     
                         {/* <DatePicker name="start_date"  format={day => day.tz("Asia/Saigon").format(dateFormat)}   /> */}
                     </Form.Item>
 

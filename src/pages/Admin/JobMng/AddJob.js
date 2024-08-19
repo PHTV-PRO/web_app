@@ -11,7 +11,7 @@ import { getSkillListAction } from '../../../redux/actions/SkillAction';
 import { addJobOfEmployerAction } from "../../../redux/actions/JobAction";
 import { getCompanyAndJobByTokenAction } from '../../../redux/actions/AccountAction';
 import { getCurrentUserAction } from '../../../redux/actions/UserAction';
-
+import moment from 'moment';
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -37,6 +37,7 @@ const AddNewJob = (props) => {
     const [selectedLevelId, setSelectedLevelId] = useState([]);
     const dateFormat = 'DD-MM-YYYY';
     const dispatch = useDispatch();
+    const [startDate, setStartDate] = useState(null);
 
     let { arrLevel } = useSelector(state => state.LevelReducer);
     let { arrSkill } = useSelector(state => state.SkillReducer);
@@ -80,8 +81,8 @@ const AddNewJob = (props) => {
             experience_required: "",
             salary_max: "",
             salary_min: "",
-            start_date: "",
-            end_date: "",
+            // start_date: dayjs(),
+            // end_date: dayjs(),
             is_active: "true",
             company_id: userLogin?.role === "EMPLOYER" ? employerCompanyJob?.companyForEmployer?.id : companyDetail?.id
         },
@@ -128,20 +129,27 @@ const AddNewJob = (props) => {
     const handleChangeCompany = () => {
         formik.setFieldValue("company_id", companyDetail?.id);
     };
-    const handleChangeActive = (checked) => {
-        formik.setFieldValue("is_active", checked.toString());
-    };
+
 
     const handleChangeInput = (e, editor, name) => {
         const data = editor.getData();
         formik.setFieldValue(name, data);
     };
+    const disabledDate = (current) => {
+            if(!formik?.values?.start_date && current < dayjs().endOf('day') || current> dayjs().add(60,'day').endOf('day')){
+                return true;
+
+            }
+      }
+    
     const onDateChange = (value) => {
-        formik.setFieldValue('end_date', value[1].toString());
-        formik.setFieldValue('start_date', value[0].toString());
-
+        if(value!=null){
+            setStartDate(value[0]);
+            formik.setFieldValue('end_date', dayjs(value[1]).add(20, 'hour'));
+            formik.setFieldValue('start_date', dayjs(value[0]).add(20, 'hour'));
+        }
+      
     };
-
 
     const toggleSkill = async (skillName, id) => {
         const newSelectedSkills = [...selectedSkills];
@@ -431,10 +439,9 @@ const AddNewJob = (props) => {
                         style={{ minWidth: '100%' }}
                         rules={[
                             { required: true, message: 'Salary Min is required !', transform: (value) => value.trim() },
-                            { type: 'number', min: 0, max: 99999 },
                         ]}
                     >
-                        <Input name="salary_min" type="number" onChange={formik.handleChange} />
+                        <Input name="salary_min" type="text" onChange={formik.handleChange} />
                     </Form.Item>
 
                     <Form.Item
@@ -442,14 +449,13 @@ const AddNewJob = (props) => {
                         style={{ minWidth: '100%' }}
                         rules={[
                             { required: true, message: 'Salary Max is required !', transform: (value) => value.trim() },
-                            { type: 'number', min: 0, max: 99999 },
                             {
                                 validator: checkSalary
                             },
                         ]}
 
                     >
-                        <Input name="salary_max" type="number" onChange={formik.handleChange} />
+                        <Input name="salary_max" type="text" onChange={formik.handleChange} />
                     </Form.Item>
 
                     <Form.Item
@@ -462,8 +468,13 @@ const AddNewJob = (props) => {
                             },
                         ]}
                     >
-                        <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} rules={[{ required: true, message: 'Date can not be blank!' }]} onChange={onDateChange} />
+                         <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} 
+                            rules={[{ required: true, message: 'Date can not be blank!' }]} onChange={onDateChange} 
+                            disabledDate={disabledDate}
+                            
+                           />
 
+                        
                     </Form.Item>
 
 

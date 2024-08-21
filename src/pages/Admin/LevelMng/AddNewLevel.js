@@ -13,7 +13,7 @@ const AddNewLevel = () => {
             name: ''
         },
         onSubmit: (values) => {
-            if (values.name == '') {
+            if (values.name.trim() === '') {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',
@@ -28,8 +28,6 @@ const AddNewLevel = () => {
                 for (let key in values) {
                     formData.append(key, values[key]);
                 }
-                console.table('formData', [...formData])
-                // console.log(formData);
                 dispatch(addJobTypeAction(formData));
             }
 

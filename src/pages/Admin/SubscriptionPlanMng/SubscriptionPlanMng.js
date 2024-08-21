@@ -9,7 +9,6 @@ import { deleteSubscriptionPlanAction, getSubscriptionPlanListAction } from '../
 
 export default function SubcriptionPlanMng() {
     let { arrSubscriptionPlan } = useSelector(state => state.SubscriptionPlanReducer);
-    console.log(arrSubscriptionPlan);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getSubscriptionPlanListAction())
@@ -147,7 +146,7 @@ export default function SubcriptionPlanMng() {
             width: '20%',
             ...getColumnSearchProps('price'),
             sorter: (a, b) => a.price - b.price,
-            render:(data)=>{
+            render: (data) => {
                 return <>{data} $</>
             },
             sortDirections: ['descend', 'ascend'],

@@ -33,7 +33,6 @@ export default function ShowSubcriptionPlan() {
         dispatch(getSubscriptionPlanListAction())
     }, [])
     let { arrSubscriptionPlan } = useSelector(state => state.SubscriptionPlanReducer);
-    console.log(arrSubscriptionPlan);
     return (
         <div className='row flex justify-around'>
             {arrSubscriptionPlan?.data?.length > 0 && (arrSubscriptionPlan?.data)?.map((sb) => (

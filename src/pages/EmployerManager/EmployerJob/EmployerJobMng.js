@@ -225,21 +225,25 @@ export default function EmployerJobMng(props) {
             width: '15%',
             render: (text, job) => {
                 return <div className='flex items-center gap-1'>
-                    <Button key={3} onClick={() => {
-                        setIdJob(job.id)
-                        showModal()
-                    }}>View Application</Button>
                     {
+                        // Job are recruting
                         job?.start_date >= currentDay ?
-                            <Button key={1} href={`/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => { }}></Button> :
-                            <div></div>
+                            <div>
+                                <Button key={1} href={`/jobmng/edit/${job.id}`} type="link" icon={<EditOutlined />} onClick={() => { }}></Button>
+                            </div> :
+                            <Button key={3} onClick={() => {
+                                setIdJob(job.id)
+                                showModal()
+                            }}>View Application</Button>
                     }
 
-                    {job?.end_date >= currentDay ? <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
-                        if (window.confirm('Do you want to delete ' + job.title + '?')) {
-                            dispatch(deleteJobAction(job.id))
-                        }
-                    }}></Button> : <div></div>}
+                    {
+                        //job posted
+                        job?.end_date >= currentDay ? <Button key={2} type="link" danger icon={<DeleteOutlined />} onClick={() => {
+                            if (window.confirm('Do you want to delete ' + job.title + '?')) {
+                                dispatch(deleteJobAction(job.id))
+                            }
+                        }}></Button> : <div></div>}
 
 
                 </div>

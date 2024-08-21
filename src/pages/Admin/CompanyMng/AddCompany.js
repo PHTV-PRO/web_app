@@ -64,18 +64,17 @@ const AddNewCompany = (props) => {
         },
         onSubmit: (values) => {
             if (
-                values.name === "" ||
-                values.introduction === "" ||
-                values.benefit === "" ||
-                values.profession === "" ||
-                values.nationnality === "" ||
-                values.introduction === ""
+                values.name === "" || values?.name?.startsWith(' ') === true ||
+                values.profession === "" || values?.profession?.startsWith(' ') === true ||
+                values.nationnality === "" || values?.nationnality?.startsWith(' ') === true ||
+                values.link_website?.trim() === "" || values?.link_website?.startsWith(' ') === true ||
+                values.location?.trim() === "" || values?.location?.startsWith(' ') === true
             ) {
 
                 notification.error({
                     closeIcon: true,
                     message: "Error",
-                    description: <>Please fill in all required fields.</>,
+                    description: <>Please fill in all required fields. No leading spaces!</>,
                 });
             } else {
                 let formData = new FormData();

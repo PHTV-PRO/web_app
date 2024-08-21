@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, notification } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { getJobTypeByIdAction, updateJobTypeByIdAction } from '../../../redux/actions/JobTypeAction';
@@ -8,8 +8,6 @@ import { getJobTypeByIdAction, updateJobTypeByIdAction } from '../../../redux/ac
 const EditJobType = (props) => {
     const dispatch = useDispatch();
     const { JobTypeDetail } = useSelector(state => state.JobTypeReducer)
-    console.log(JobTypeDetail);
-
     let { id } = props.match.params;
     useEffect(() => {
         dispatch(getJobTypeByIdAction(id));
@@ -21,11 +19,23 @@ const EditJobType = (props) => {
             name: JobTypeDetail?.name
         },
         onSubmit: (values) => {
-            let formData = new FormData();
-            for (let key in values) {
-                formData.append(key, values[key]);
+            if (values.name === "" || values?.name?.trim() === "") {
+                notification.error({
+                    closeIcon: true,
+                    message: 'Error',
+                    description: (
+                        <>
+                            Please fill in all required fields.
+                        </>
+                    ),
+                });
+            } else {
+                let formData = new FormData();
+                for (let key in values) {
+                    formData.append(key, values[key]);
+                }
+                dispatch(updateJobTypeByIdAction(id, formData))
             }
-            dispatch(updateJobTypeByIdAction(id, formData))
         }
     })
 

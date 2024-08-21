@@ -33,7 +33,6 @@ ChartJS.register(
 const GeneralChart = () => {
 
     let { chartAdmin } = useSelector(state => state.JobReducer);
-    console.log(chartAdmin);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getDataChartOfAdmin())

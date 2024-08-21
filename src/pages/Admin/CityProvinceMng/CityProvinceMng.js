@@ -9,7 +9,6 @@ import { getCityProvinceListAction, deleteCityProvinceAction } from '../../../re
 
 export default function CityProvinceMng() {
     let { arrCityProvince } = useSelector(state => state.CityProvinceReducer);
-    console.log(arrCityProvince);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getCityProvinceListAction())

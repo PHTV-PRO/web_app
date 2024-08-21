@@ -4,38 +4,35 @@ import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSkillIdAction, updateSkillByIdAction } from '../../../redux/actions/SkillAction';
 import { getIndustryListAction } from '../../../redux/actions/IndustryAction';
-import { getCityProvinceListAction } from '../../../redux/actions/CityProvinceAction';
-
-
-
 
 const EditSkill = (props) => {
     const dispatch = useDispatch();
     const { skillDetail } = useSelector(state => state.SkillReducer)
     let { arrIndustry } = useSelector(state => state.IndustryReducer);
+
     console.log(arrIndustry);
     console.log(skillDetail);
-
     let { id } = props.match.params;
     useEffect(() => {
         dispatch(getSkillIdAction(id));
         dispatch(getIndustryListAction());
-
     }, [dispatch, id])
 
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            name: skillDetail?.name
+            name: skillDetail?.name,
+            industry_id: skillDetail?.id
+
         },
         onSubmit: (values) => {
-            if (values.name.trim() === '') {
+            if (values.name.trim() === '' || values?.name?.startsWith(' ') === true) {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',
                     description: (
                         <>
-                            Please fill in all required fields.
+                            Please fill in all required fields. No leading spaces!
                         </>
                     ),
                 });
@@ -94,7 +91,7 @@ const EditSkill = (props) => {
                             },
                         ]}
                     >
-                        <Select value={formik.values.industry} options={arrIndustry?.data?.map((item, index) => ({ key: index, label: item.name, value: item.id }))} onChange={handleChangeIndustry} />
+                        <Select value={skillDetail?.industry?.name} options={arrIndustry?.data?.map((item, index) => ({ key: index, label: item?.name, value: item.id }))} onChange={handleChangeIndustry} />
                     </Form.Item>
 
 

@@ -42,9 +42,11 @@ export default function EmployerSubcriptionPlanMng() {
     };
 
     const parseSubsObjecTotArray = [subscriptionPlanByAccount?.subcriptionPlanDTO]
-    const data2 = parseSubsObjecTotArray;
 
+    const data2 = parseSubsObjecTotArray;
     const data1 = subscriptionPlanByAccount?.subcriptionPlanDTOs;
+    console.log(data2);
+    console.log(data1);
 
 
     const getColumnSearchProps = (dataIndex) => ({
@@ -159,7 +161,7 @@ export default function EmployerSubcriptionPlanMng() {
             width: '20%',
             ...getColumnSearchProps('price'),
             sorter: (a, b) => a.price - b.price,
-            render:(data)=>{
+            render: (data) => {
                 return <>{data} $</>
             },
             sortDirections: ['descend', 'ascend'],

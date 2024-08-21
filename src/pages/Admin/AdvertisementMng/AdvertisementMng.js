@@ -13,14 +13,10 @@ import { deleteAdvertisementAction, getAdvertisementListAction } from "../../../
 
 export default function AdvertisementMng() {
     const dispatch = useDispatch();
-
     let { arrAdvertisement } = useSelector((state) => state.AdvertisementReducer);
-    console.log(arrAdvertisement);
-
     useEffect(() => {
         dispatch(getAdvertisementListAction())
     }, [dispatch]);
-
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
@@ -117,6 +113,7 @@ export default function AdvertisementMng() {
         {
             title: "ID",
             dataIndex: "id",
+            width: '10%',
             key: "id",
             sorter: (a, b) => a.id - b.id,
             sortDirections: ["descend", "ascend"],
@@ -124,6 +121,7 @@ export default function AdvertisementMng() {
         {
             title: "Path",
             dataIndex: "path",
+            width: '50%',
             key: "path",
             ...getColumnSearchProps("path"),
             sorter: (a, b) => a.path.length - b.path.length,
@@ -138,25 +136,21 @@ export default function AdvertisementMng() {
             },
         },
         {
-            title: "Avatar",
+            title: "Image",
             dataIndex: "avatar",
             key: "avatar",
+            width: '20%',
             render: (text, data, index) => {
                 return data.image != null ? (
                     <img key={index} style={{ width: 40, height: 40, objectFit: "cover", borderRadius: "10%", }} src={`${data.image}`} alt={data.image} />
                 ) : (
-                    <Avatar size={40} style={{ fontSize: "20px", display: "flex", justifyContent: "center", alignItems: "center" }} icon={data.email.substr(0, 1)} />
+                    <Avatar size={40} style={{ fontSize: "20px", display: "flex", justifyContent: "center", alignItems: "center" }} icon={data?.email?.substr(0, 1)} />
                 );
             },
         },
         {
-            title: "Role",
-            dataIndex: "role",
-            key: "role",
-            ...getColumnSearchProps("role")
-        },
-        {
             title: "Manage",
+            width: '20%',
             render: (text, data, index) => {
                 return (
                     <Fragment key={index}>

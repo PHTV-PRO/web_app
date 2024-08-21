@@ -21,13 +21,13 @@ const AddNewSkill = () => {
             name: '',
         },
         onSubmit: (values) => {
-            if (values.name === '') {
+            if (values?.name?.trim() === '' || values?.name?.startsWith(' ') === true) {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',
                     description: (
                         <>
-                            Please fill in all required fields.
+                            Please fill in all required fields. No leading spaces!
                         </>
                     ),
                 });
@@ -36,17 +36,11 @@ const AddNewSkill = () => {
                 for (let key in values) {
                     formData.append(key, values[key]);
                 }
-                console.table('formData', [...formData])
-                // console.log(formData);
                 dispatch(addSkillAction(formData));
             }
 
         }
     })
-
-    // const handleChangeCompany = (value) => {
-    //     formik.setFieldValue('company_id', value)
-    // }
 
     const handleChangeIndustry = (value) => {
         formik.setFieldValue('industry_id', value)

@@ -18,11 +18,8 @@ import { now } from 'moment/moment';
 const BuySubcriptionPlan = () => {
     const dispatch = useDispatch();
     let { userLogin } = useSelector(state => state.UserReducer);
-    // let { subscriptionPlanByAccount } = useSelector(state => state.SubscriptionPlanReducer);
     let { arrSubscriptionPlan } = useSelector(state => state.SubscriptionPlanReducer);
-    console.log("check goi:", arrSubscriptionPlan.data);
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
 
     let accessToken = {}

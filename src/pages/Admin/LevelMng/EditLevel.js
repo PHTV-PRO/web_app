@@ -7,8 +7,7 @@ import { getLevelByIdAction, updateLevelByIdAction } from '../../../redux/action
 
 const EditLevel = (props) => {
     const dispatch = useDispatch();
-    const { levelDetail } = useSelector(state => state.LevelReducer)
-    console.log(levelDetail);
+    const { levelDetail } = useSelector(state => state.LevelReducer);
 
     let { id } = props.match.params;
     useEffect(() => {

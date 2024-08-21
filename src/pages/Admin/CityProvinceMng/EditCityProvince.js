@@ -8,8 +8,6 @@ import { getCityProvinceByIdAction, updateCityProvinceByIdAction } from '../../.
 const EditCityProvince = (props) => {
     const dispatch = useDispatch();
     const { cityProvinceDetail } = useSelector(state => state.CityProvinceReducer)
-    console.log(cityProvinceDetail);
-
     let { id } = props.match.params;
     useEffect(() => {
         dispatch(getCityProvinceByIdAction(id));
@@ -21,13 +19,13 @@ const EditCityProvince = (props) => {
             name: cityProvinceDetail?.name
         },
         onSubmit: (values) => {
-            if (values.name.trim() === '') {
+            if (values?.name?.trim() === '' || values?.name?.startsWith(' ') === true) {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',
                     description: (
                         <>
-                            Please fill in all required fields.
+                            Please fill in all required fields. No leading spaces!
                         </>
                     ),
                 });

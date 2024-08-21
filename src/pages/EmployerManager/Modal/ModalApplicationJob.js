@@ -9,20 +9,31 @@ import { getApplicationByJob, sendMailToCandidateAction } from "../../../redux/a
 
 
 const ModalApplicationByJob = (props) => {
-    console.log(props);
     const dispatch = useDispatch();
     const { arrApplication } = useSelector(state => state.JobReducer)
+    let { userLogin } = useSelector(state => state.UserReducer);
+    const [buttonStates, setButtonStates] = useState({});
+    console.log(userLogin);
+
     const id = props.jobId;
     useEffect(() => {
         dispatch(getApplicationByJob(id))
     }, [dispatch, id])
-
-    console.log(arrApplication?.data);
-
-    // con
-
     const data = arrApplication?.data;
 
+    const handleButtonClick = (id) => {
+        setButtonStates((prevStates) => ({
+            ...prevStates,
+            [id]: true,
+        }));
+
+        setTimeout(() => {
+            setButtonStates((prevStates) => ({
+                ...prevStates,
+                [id]: false,
+            }));
+        }, 3000);
+    };
 
 
     const [searchText, setSearchText] = useState('');
@@ -165,27 +176,37 @@ const ModalApplicationByJob = (props) => {
             title: 'Curriculum Vitae of Candidate',
             dataIndex: 'account',
             key: 'account',
-            width: '40%',
+            width: '30%',
             ...getColumnSearchProps('account'),
             sorter: (a, b) => a.account - b.account,
             sortDirections: ['descend', 'ascend'],
             render: (text, cv) => {
-                return (<div className="flex">
-                    <a href={cv.cv?.file_name} target="_blank" rel="noopener noreferrer" className="text-xl hover:no-underline text-blue flex items-end justify-center hover:cursor-pointer no-underline border-r-2 pr-4 border-gray-400">
-                        <EyeOutlined /> <text className="text-sm ml-2 my-0 py-0 "> View CV</text>
-                    </a>
-                    <div className="flex text-xl items-center justify-between hover:cursor-pointer pl-4 gap-3 hover:text-blue-400">
-
-                        <Button
-                            icon={<MailOutlined />}
-                            onClick={() => {
-                                dispatch(sendMailToCandidateAction(cv?.id))
-                            }}
-                        >
-                            <text className="text-sm ml-2 my-0 py-0 "> Click! . Send Mail to Candidate</text>
-                        </Button>
+                return (
+                    <div className="flex items-center" key={cv.id}>
+                        <a href={cv.cv?.file_name} target="_blank" rel="noopener noreferrer" className="text-xl hover:no-underline text-blue flex items-end justify-center hover:cursor-pointer no-underline  border-r-2 pr-4 border-gray-400">
+                            <EyeOutlined /> <text className="text-sm ml-2 my-0 py-0 "> View CV</text>
+                        </a>
+                        <div className="flex text-xl items-center justify-between hover:cursor-pointer pl-4 gap-3 hover:text-blue-400">
+                            {userLogin?.role === "EMPLOYER" &&
+                                <div className={`flex items-center justify-center font-thin `}>
+                                    <Button
+                                        className="text-lg bg-white"
+                                        icon={<MailOutlined />}
+                                        key={cv?.id}
+                                        onClick={() => {
+                                            console.log(cv?.id);
+                                            dispatch(sendMailToCandidateAction(cv?.id));
+                                            handleButtonClick(cv?.id)
+                                        }}
+                                        style={{ display: buttonStates[cv?.id] ? 'none' : 'flex', alignItems: 'center' }}
+                                    >
+                                        <text className="text-sm ml-1 my-0 py-0 ">Send Mail to Candidate !</text>
+                                    </Button>
+                                </div>
+                            }
+                        </div>
                     </div>
-                </div>)
+                )
             },
 
         },

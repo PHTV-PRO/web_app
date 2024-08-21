@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Form, Input, Button, notification } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { addCityProvinceAction } from '../../../redux/actions/CityProvinceAction';
+import { useState } from 'react';
 
 
 const AddNewCityProvince = () => {
     const dispatch = useDispatch();
+    // tạo ra two way biding để tương tác data (nhập data để tìm kiếm)
+
+
+    // useEffect(() => {
+    //     if (inputValue.startsWith(' ')) {
+    //         inputRef.current.focus();
+    //     }
+    // }, [inputValue]);
 
     const formik = useFormik({
         initialValues: {
             name: ''
         },
         onSubmit: (values) => {
-            if (values.name === '') {
+            if (values?.name?.trim === "" || values?.name?.startsWith(' ') === true) {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',
                     description: (
                         <>
-                            Please fill in all required fields.
+                            Please fill in all required fields and No leading spaces!
                         </>
                     ),
                 });
@@ -28,11 +37,8 @@ const AddNewCityProvince = () => {
                 for (let key in values) {
                     formData.append(key, values[key]);
                 }
-                console.table('formData', [...formData])
-                // console.log(formData);
                 dispatch(addCityProvinceAction(formData));
             }
-
         }
     })
 
@@ -63,7 +69,9 @@ const AddNewCityProvince = () => {
                             },
                         ]}
                     >
-                        <Input name="name" onChange={formik.handleChange} />
+                        <Input name="name"
+                            onChange={formik.handleChange}
+                        />
                     </Form.Item>
 
                     <Form.Item label="Action">

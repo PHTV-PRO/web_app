@@ -57,16 +57,22 @@ const EditCompany = (props) => {
             city_province_id: companyDetail?.city_province?.id,
             enable: companyDetail?.enable,
             list_image: companyDetail?.list_image ? companyDetail?.list_image : null,
-            account_id :companyDetail?.account?.id,
+            account_id: companyDetail?.account?.id,
             // backgroundImageSrc:companyDetail?.
         },
         onSubmit: (values) => {
-            if (values.name == '' || values.introduction == '' || values.benefit == '') {
+            if (
+                values.name === "" || values?.name?.startsWith(' ') === true ||
+                values.profession === "" || values?.profession?.startsWith(' ') === true ||
+                values.nationnality === "" || values?.nationnality?.startsWith(' ') === true ||
+                values.link_website?.trim() === "" || values?.link_website?.startsWith(' ') === true ||
+                values.location?.trim() === "" || values?.location?.startsWith(' ') === true
+            ) {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',
                     description: (
-                        <>Please fill in all required fields.</>
+                        <>Please fill in all required fields. No leading spaces!.</>
                     ),
                 });
             } else {
@@ -82,7 +88,7 @@ const EditCompany = (props) => {
     })
 
     console.log("check id:", formik.values.account_id);
-    
+
 
     // hàm lấy imge khi update
     useEffect(() => {
@@ -95,7 +101,7 @@ const EditCompany = (props) => {
         console.log("check list skill", companyDetail);
         const listSkillId = [];
         const listSkill = [];
-        companyDetail?.skills?.map((data)=>{
+        companyDetail?.skills?.map((data) => {
             listSkillId.push(data?.id)
             listSkill.push(data?.name)
 
@@ -107,11 +113,11 @@ const EditCompany = (props) => {
             listSkillId.map(skill => {
                 ListId += skill.toString() + ",";
             })
-             formik.setFieldValue("skill_id", ListId);
+            formik.setFieldValue("skill_id", ListId);
         };
 
-        formik.setFieldValue("city_province_id",companyDetail?.city_province?.id)
-        
+        formik.setFieldValue("city_province_id", companyDetail?.city_province?.id)
+
     }, [companyDetail])
 
 

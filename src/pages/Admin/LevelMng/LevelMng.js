@@ -10,18 +10,10 @@ import { deleteLevelAction, getLevelListAction } from '../../../redux/actions/Le
 
 export default function LevelMng() {
     let { arrLevel } = useSelector(state => state.LevelReducer);
-
-    console.log(arrLevel);
-
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getLevelListAction())
     }, [dispatch])
-
-    // useEffect(() => {
-    //     dispatch(loginAction())
-    // }, [dispatch])
-
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');

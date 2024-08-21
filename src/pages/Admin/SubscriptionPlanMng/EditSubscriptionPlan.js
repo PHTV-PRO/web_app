@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, notification } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSubscriptionPlanByIdAction, updateSubscriptionPlanByIdAction } from '../../../redux/actions/SubscriptionPlanAction';
@@ -8,7 +8,6 @@ import { getSubscriptionPlanByIdAction, updateSubscriptionPlanByIdAction } from 
 const EditSubscriptionPlan = (props) => {
     const dispatch = useDispatch();
     const { subscriptionPlanDetail } = useSelector(state => state.SubscriptionPlanReducer)
-    console.log(subscriptionPlanDetail);
 
     let { id } = props.match.params;
     useEffect(() => {
@@ -24,11 +23,27 @@ const EditSubscriptionPlan = (props) => {
             description: subscriptionPlanDetail?.description,
         },
         onSubmit: (values) => {
-            let formData = new FormData();
-            for (let key in values) {
-                formData.append(key, values[key]);
+            if (values?.expiry === ""
+                || values.name.trim() === '' || values?.name?.startsWith(' ') === true
+                || values?.price === ""
+                || values.description.trim() === '' || values?.description?.startsWith(' ') === true
+            ) {
+                notification.error({
+                    closeIcon: true,
+                    message: 'Error',
+                    description: (
+                        <>
+                            Please fill in all required fields. No leading spaces!
+                        </>
+                    ),
+                });
+            } else {
+                let formData = new FormData();
+                for (let key in values) {
+                    formData.append(key, values[key]);
+                }
+                dispatch(updateSubscriptionPlanByIdAction(id, formData))
             }
-            dispatch(updateSubscriptionPlanByIdAction(id, formData))
         }
     })
 

@@ -13,7 +13,7 @@ const AddNewJobType = () => {
             name: ''
         },
         onSubmit: (values) => {
-            if (values.name == '') {
+            if (values.name === '' || values?.name?.trim() === '') {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',
@@ -28,11 +28,8 @@ const AddNewJobType = () => {
                 for (let key in values) {
                     formData.append(key, values[key]);
                 }
-                console.table('formData', [...formData])
-                // console.log(formData);
                 dispatch(addJobTypeAction(formData));
             }
-
         }
     })
 
@@ -58,8 +55,8 @@ const AddNewJobType = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Name  is required!',
                                 transform: (value) => value.trim(),
+                                message: 'Name  is required!',
                             },
                         ]}
                     >

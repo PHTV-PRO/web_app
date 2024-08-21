@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, notification } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { useEffect } from "react";
@@ -23,16 +23,28 @@ const AdvertisementEdit = (props) => {
 
         },
         onSubmit: async (values) => {
-            let formData = new FormData();
-            for (let key in values) {
-                if (key !== "image") {
-                    formData.append(key, values[key]);
-                } else {
-                    formData.append("image", values["image"]);
-                }
+            if (values?.path === "" || values?.path?.trim() === "") {
+                notification.error({
+                    closeIcon: true,
+                    message: 'Error',
+                    description: (
+                        <>
+                            Please fill in all required fields.
+                        </>
+                    ),
+                });
             }
-            console.table("formData", [...formData]);
-            dispatch(updateAdvertisementIdAction(id, formData));
+            else {
+                let formData = new FormData();
+                for (let key in values) {
+                    if (key !== "image") {
+                        formData.append(key, values[key]);
+                    } else {
+                        formData.append("image", values["image"]);
+                    }
+                }
+                dispatch(updateAdvertisementIdAction(id, formData));
+            }
         },
     });
 

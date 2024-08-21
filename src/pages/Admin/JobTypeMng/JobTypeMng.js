@@ -9,7 +9,6 @@ import { deleteJobTypeAction, getJobTypeListAction } from '../../../redux/action
 
 export default function JobTypeMng() {
     let { arrJobType } = useSelector(state => state.JobTypeReducer);
-    console.log(arrJobType);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getJobTypeListAction())

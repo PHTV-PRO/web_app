@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, notification } from "antd";
 import {
   createAccountAction
 } from "../../../../redux/actions/AccountAction";
@@ -22,17 +22,33 @@ const AddEmployer = () => {
       role: "EMPLOYER"
     },
     onSubmit: async (values) => {
-      let formData = new FormData();
-      for (let key in values) {
-        if (key !== "image") {
-          formData.append(key, values[key]);
-        } else {
-          formData.append("image", values["image"]);
+      if (
+        values?.name?.trim() === "" || values?.name?.startsWith(' ') === true ||
+        values?.email?.trim() === "" || values?.email?.startsWith(' ') === true ||
+        values?.address?.trim() === "" || values?.address?.startsWith(' ') === true ||
+        values?.password?.trim() === "" || values?.password?.startsWith(' ') === true
+      ) {
+        notification.error({
+          closeIcon: true,
+          message: 'Error',
+          description: (
+            <>
+              Please fill in all required fields. No leading spaces!
+            </>
+          ),
+        });
+      } else {
+        let formData = new FormData();
+        for (let key in values) {
+          if (key !== "image") {
+            formData.append(key, values[key]);
+          } else {
+            formData.append("image", values["image"]);
+          }
         }
+        dispatch(createAccountAction(formData));
       }
-      console.table("formData", [...formData]);
-      dispatch(createAccountAction(formData));
-    },
+    }
   });
 
   const handleChangeGender = (value) => {

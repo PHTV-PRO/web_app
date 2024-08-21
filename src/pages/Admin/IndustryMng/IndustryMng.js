@@ -9,7 +9,6 @@ import { deleteIndustryAction, getIndustryListAction } from '../../../redux/acti
 
 export default function IndustryMng() {
   let { arrIndustry } = useSelector(state => state.IndustryReducer);
-  console.log(arrIndustry);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getIndustryListAction())

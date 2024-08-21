@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Select, Checkbox } from "antd";
+import { Form, Input, Button, Select, Checkbox, notification } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { useEffect } from "react";
@@ -35,16 +35,32 @@ const AccountEdit = (props) => {
             role: accountDetail?.role
         },
         onSubmit: async (values) => {
-            let formData = new FormData();
-            for (let key in values) {
-                if (key !== "image") {
-                    formData.append(key, values[key]);
-                } else {
-                    formData.append("image", values["image"]);
+            if (
+                values?.name?.trim() === "" || values?.name?.startsWith(' ') === true ||
+                values?.email?.trim() === "" || values?.email?.startsWith(' ') === true
+                || values?.address?.trim() === "" || values?.address?.startsWith(' ') === true
+                || values?.password?.trim() === "" || values?.password?.startsWith(' ') === true
+            ) {
+                notification.error({
+                    closeIcon: true,
+                    message: 'Error',
+                    description: (
+                        <>
+                            Please fill in all required fields. No leading spaces!
+                        </>
+                    ),
+                });
+            } else {
+                let formData = new FormData();
+                for (let key in values) {
+                    if (key !== "image") {
+                        formData.append(key, values[key]);
+                    } else {
+                        formData.append("image", values["image"]);
+                    }
                 }
+                dispatch(updateAccountByIdAction(id, formData));
             }
-            console.table("formData", [...formData]);
-            dispatch(updateAccountByIdAction(id, formData));
         },
     });
 
@@ -182,7 +198,7 @@ const AccountEdit = (props) => {
                         accept="image/png, image/jpeg,image/gif,image/png"
                     />
                     <br />
-                    <img style={{ width: 200, height: 200, objectFit: 'cover', borderRadius: '50%', border: "0.1px solid #ccc" }} src={imgSrc === '' ? `${DOMAIN}/api/file/image/${formik.values.image}` : imgSrc} alt="..." />
+                    <img style={{ width: 200, height: 200, objectFit: 'cover', borderRadius: '50%', border: "0.1px solid #ccc" }} src={imgSrc === '' ? accountDetail?.image : imgSrc} alt="..." />
                 </Form.Item>
 
                 <Form.Item label="Action">

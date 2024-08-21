@@ -16,7 +16,6 @@ export default function AccountMng() {
     const dispatch = useDispatch();
     // let { arrAccount } = useSelector((state) => state.AccountReducer);
     let { arrAccountCandidate } = useSelector((state) => state.AccountReducer);
-    console.log(arrAccountCandidate);
     useEffect(() => {
         // dispatch(getListAccountAction());
         dispatch(getListAccountCandidateAction())

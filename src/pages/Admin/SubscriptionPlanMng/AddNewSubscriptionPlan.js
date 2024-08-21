@@ -11,16 +11,22 @@ const AddNewSubcriptionPlan = () => {
         initialValues: {
             expiry: '',
             name: '',
-            price: ''
+            price: '',
+            description: ''
         },
         onSubmit: (values) => {
-            if (values.expiry === '' || values.name === '' || values.price === '') {
+            if (
+                values?.expiry === ""
+                || values.name.trim() === '' || values?.name?.startsWith(' ') === true
+                || values?.price === ""
+                || values.description.trim() === '' || values?.description?.startsWith(' ') === true
+            ) {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',
                     description: (
                         <>
-                            Please fill in all required fields.
+                            Please fill in all required fields. No leading spaces!
                         </>
                     ),
                 });
@@ -29,8 +35,6 @@ const AddNewSubcriptionPlan = () => {
                 for (let key in values) {
                     formData.append(key, values[key]);
                 }
-                console.table('formData', [...formData])
-                console.log(formData);
                 dispatch(addSubscriptionPlanAction(formData));
             }
 
@@ -84,8 +88,8 @@ const AddNewSubcriptionPlan = () => {
                         label="Description"
                         name="description"
                     >
-                      
-                        <Input name="description" onChange={formik.handleChange}  />
+
+                        <Input name="description" onChange={formik.handleChange} />
                     </Form.Item>
 
                     <Form.Item

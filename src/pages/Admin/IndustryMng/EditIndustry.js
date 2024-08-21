@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, notification } from 'antd';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIndustryByIdAction, updateIndustryByIdAction } from '../../../redux/actions/IndustryAction';
@@ -21,11 +21,23 @@ const EditIndustry = (props) => {
             name: industryDetail?.name
         },
         onSubmit: (values) => {
-            let formData = new FormData();
-            for (let key in values) {
-                formData.append(key, values[key]);
+            if (values?.name?.trim() === "" || values?.name?.startsWith(' ') === true) {
+                notification.error({
+                    closeIcon: true,
+                    message: 'Error',
+                    description: (
+                        <>
+                            Please fill in all required fields. No leading spaces!
+                        </>
+                    ),
+                });
+            } else {
+                let formData = new FormData();
+                for (let key in values) {
+                    formData.append(key, values[key]);
+                }
+                dispatch(updateIndustryByIdAction(id, formData))
             }
-            dispatch(updateIndustryByIdAction(id, formData))
         }
     })
 

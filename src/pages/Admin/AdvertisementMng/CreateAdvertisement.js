@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, notification } from "antd";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 
@@ -12,19 +12,30 @@ const AddAdvertisement = () => {
     const formik = useFormik({
         initialValues: {
             path: "",
-
         },
         onSubmit: async (values) => {
-            let formData = new FormData();
-            for (let key in values) {
-                if (key !== "image") {
-                    formData.append(key, values[key]);
-                } else {
-                    formData.append("image", values["image"]);
+            if (values?.path === '' || values?.path?.trim() === '') {
+                notification.error({
+                    closeIcon: true,
+                    message: 'Error',
+                    description: (
+                        <>
+                            Please fill in all required fields.
+                        </>
+                    ),
+                });
+            } else {
+                let formData = new FormData();
+                for (let key in values) {
+                    if (key !== "image") {
+                        formData.append(key, values[key]);
+                    } else {
+                        formData.append("image", values["image"]);
+                    }
                 }
+                dispatch(addAdvertisementAction(formData));
             }
-            console.table("formData", [...formData]);
-            dispatch(addAdvertisementAction(formData));
+
         },
     });
 
@@ -69,7 +80,7 @@ const AddAdvertisement = () => {
                         {
                             required: true,
                             message: 'Path is required!',
-                            transform: (value) => value.trim(),
+                            transform: (value) => value?.trim(),
                         },
                     ]}
                 >

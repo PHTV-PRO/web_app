@@ -49,16 +49,11 @@ import CompanyMng from "./pages/Admin/CompanyMng/CompanyMng";
 import AddNewCompany from "./pages/Admin/CompanyMng/AddCompany";
 import EditCompany from "./pages/Admin/CompanyMng/EditCompany";
 //Job
-import JobMng from "./pages/Admin/JobMng/JobMng";
+// import JobMng from "./pages/Admin/JobMng/JobMng";
 import AddNewJob from "./pages/Admin/JobMng/AddJob";
 import EditJob from "./pages/Admin/JobMng/EditJob";
 // Chart
 import GeneralChart from "./pages/Admin/Chart/ChartAdmin";
-//Location
-import LocationMng from "./pages/Admin/LocationMng/LocationMng";
-import AddNewLocation from "./pages/Admin/LocationMng/AddNewLocation";
-import EditLocation from "./pages/Admin/LocationMng/EditLocation";
-
 //  AdvertisementMng
 import AdvertisementMng from "./pages/Admin/AdvertisementMng/AdvertisementMng";
 
@@ -118,11 +113,6 @@ function App() {
         <AdminTemplate path="/admin/cityprovincemng/addcityprovince" exact Component={AddNewCityProvince} />
         <AdminTemplate path="/admin/cityprovincemng/edit/:id" exact Component={EditCityProvince} />
 
-        {/* Location */}
-        <AdminTemplate path="/admin/locationmng" exact Component={LocationMng} />
-        <AdminTemplate path="/admin/locationmng/addlocation" exact Component={AddNewLocation} />
-        <AdminTemplate path="/admin/locationmng/edit/:id" exact Component={EditLocation} />
-
         {/* SubscriptionPlan */}
         <AdminTemplate path="/admin/subplanmng" exact Component={SubscriptionPlanMng} />
         <AdminTemplate path="/admin/subplanmng/addsubplan" exact Component={AddNewSubscriptionPlan} />
@@ -138,7 +128,7 @@ function App() {
 
 
         {/* Job */}
-        <AdminTemplate path="/admin/jobmng" exact Component={JobMng} />
+        {/* <AdminTemplate path="/admin/jobmng" exact Component={JobMng} /> */}
         <AdminTemplate path="/jobmng/addjob" exact Component={AddNewJob} />
         <AdminTemplate path="/jobmng/edit/:id" exact Component={EditJob} />
         <AdminTemplate path="/jobmng/addjob/:id" exact Component={AddNewJob} />

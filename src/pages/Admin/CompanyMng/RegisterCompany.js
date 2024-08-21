@@ -42,13 +42,20 @@ export default function RegisterCompany() {
         },
         onSubmit: async (values) => {
             if (
-                values.name === "" ||
-                values.nationnality === ""
+                values.email === "" || values?.email?.startsWith(' ') === true ||
+                values.password === "" || values?.password?.startsWith(' ') === true ||
+                values.name_company === "" || values?.name_company?.startsWith(' ') === true ||
+                values.nationnality === "" || values?.nationnality?.startsWith(' ') === true ||
+                values.link_website === "" || values?.link_website?.startsWith(' ') === true ||
+                values.location === "" || values?.location?.startsWith(' ') === true ||
+                values.profession === "" || values?.profession?.startsWith(' ') === true
+
+
             ) {
                 notification.error({
                     closeIcon: true,
                     message: "Error",
-                    description: <>Please fill in all required fields.</>,
+                    description: <>Please fill in all required fields. No leading spaces! </>,
                 });
             } else {
                 let formData = new FormData();

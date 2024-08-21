@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, notification } from "antd";
 import {
     createAccountAction
 } from "../../../../redux/actions/AccountAction";
@@ -22,16 +22,32 @@ const AddAccount = () => {
             role: "CANDIDATE"
         },
         onSubmit: async (values) => {
-            let formData = new FormData();
-            for (let key in values) {
-                if (key !== "image") {
-                    formData.append(key, values[key]);
-                } else {
-                    formData.append("image", values["image"]);
+            if (
+                values?.name?.trim() === "" || values?.name?.startsWith(' ') === true ||
+                values?.email?.trim() === "" || values?.email?.startsWith(' ') === true ||
+                values?.address?.trim() === "" || values?.address?.startsWith(' ') === true ||
+                values?.password?.trim() === "" || values?.password?.startsWith(' ') === true
+            ) {
+                notification.error({
+                    closeIcon: true,
+                    message: 'Error',
+                    description: (
+                        <>
+                            Please fill in all required fields. No leading spaces!
+                        </>
+                    ),
+                });
+            } else {
+                let formData = new FormData();
+                for (let key in values) {
+                    if (key !== "image") {
+                        formData.append(key, values[key]);
+                    } else {
+                        formData.append("image", values["image"]);
+                    }
                 }
+                dispatch(createAccountAction(formData));
             }
-            console.table("formData", [...formData]);
-            dispatch(createAccountAction(formData));
         },
     });
 
@@ -161,24 +177,6 @@ const AddAccount = () => {
                         <img style={{ width: 200, height: 200, border: "0.1px solid #ccc", borderRadius: "50%", }} src="/img/placeholder-image.jpg" alt="..." />
                     )}
                 </Form.Item>
-
-
-                {/* <Form.Item
-          name="role"
-          label="Role"
-          rules={[
-            {
-              required: true,
-              message: " Role User cannot be blank!",
-            },
-          ]}
-        >
-          <Select name="role" onChange={handleChangeRole} placeholder="Choose Role User" >
-            <Option value="Admin">Admin</Option>
-            <Option value="Mod">Mod</Option>
-            <Option value="User">User</Option>
-          </Select>
-        </Form.Item> */}
 
                 <Form.Item label="Action">
                     <Button htmlType="submit" className="btn-primary bg-primary" type="primary" > Add Candidate </Button>

@@ -5,20 +5,19 @@ import { SearchOutlined, EyeOutlined } from '@ant-design/icons';
 import Highlighter from "react-highlight-words";
 import dayjs from 'dayjs';
 
-import { getCVSavedAction } from "../../../../redux/actions/JobAction";
+import { getFollowCompanyAction } from "../../redux/actions/CompanyAction";
 
 
 
-const ManagerCVForJob = () => {
+const FollowCompanyByCandidate = () => {
     const dispatch = useDispatch();
-    const { arrCvSaved } = useSelector(state => state.JobReducer)
+    const { arrFollowCompany } = useSelector(state => state.CompanyReducer)
 
     useEffect(() => {
-        dispatch(getCVSavedAction())
+        dispatch(getFollowCompanyAction())
     }, [dispatch])
-    const data = arrCvSaved?.data;
-
-
+    const data = arrFollowCompany?.data;
+    console.log(data);
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
@@ -116,31 +115,31 @@ const ManagerCVForJob = () => {
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Name of Candidate',
+            title: 'Name of Candidate Follow',
             dataIndex: 'account',
             key: 'account',
             width: '15%',
             ...getColumnSearchProps('account'),
             sorter: (a, b) => a.account - b.account,
             sortDirections: ['descend', 'ascend'],
-            render: (text, account) => {
+            render: (text, data) => {
                 return (<>
-                    <span>{account.account?.name}</span>
+                    <span>{data?.name}</span>
                 </>)
             },
 
         },
         {
             title: 'Email of Candidate',
-            dataIndex: 'account',
-            key: 'account',
+            dataIndex: 'data',
+            key: 'data',
             width: '15%',
-            ...getColumnSearchProps('account'),
+            ...getColumnSearchProps('data'),
             sorter: (a, b) => a.account - b.account,
             sortDirections: ['descend', 'ascend'],
-            render: (text, account) => {
+            render: (text, data) => {
                 return (<>
-                    <span>{account.account?.email}</span>
+                    <span>{data?.email}</span>
                 </>)
             },
 
@@ -151,71 +150,27 @@ const ManagerCVForJob = () => {
             key: "avatar",
             width: '10%',
             render: (text, data, index) => {
-                return data?.account?.image != null ? (
-                    <img key={index} style={{ width: 40, height: 40, objectFit: "cover", borderRadius: "50%", }} src={`${data?.account?.image}`} alt={data?.account?.image} />
+                console.log(data?.image);
+                return data?.image != null ? (
+                    <img key={index} style={{ width: 40, height: 40, objectFit: "cover", borderRadius: "50%", }} src={`${data?.image}`} alt={data?.account?.image} />
                 ) : (
                     <Avatar size={40} style={{ fontSize: "20px", display: "flex", justifyContent: "center", alignItems: "center" }} icon={data?.account?.email?.substr(0, 1)} />
                 );
             },
         },
-        {
-            title: 'Date Applicated',
-            dataIndex: 'account',
-            key: 'account',
-            width: '15%',
-            ...getColumnSearchProps('account'),
-            sorter: (a, b) => a.account - b.account,
-            sortDirections: ['descend', 'ascend'],
-            render: (text, account) => {
-                return (<>
-                    <span>{dayjs(account?.date_applied).format("DD-MM-YYYY")}</span>
-                </>)
-            },
-
-        },
-        {
-            title: 'Job Applicated',
-            dataIndex: 'account',
-            key: 'account',
-            width: '20%',
-            ...getColumnSearchProps('account'),
-            sorter: (a, b) => a.account - b.account,
-            sortDirections: ['descend', 'ascend'],
-            render: (text, account) => {
-                return (<>
-                    <span>{account?.job?.title}</span>
-
-                </>)
-            },
-
-        },
-        {
-            title: 'Curriculum Vitae of Candidate',
-            dataIndex: 'account',
-            key: 'account',
-            width: '20%',
-            ...getColumnSearchProps('account'),
-            sorter: (a, b) => a.account - b.account,
-            sortDirections: ['descend', 'ascend'],
-            render: (text, cv) => {
-                return (
-                    <div className="flex items-center" key={cv.id}>
-                        <a href={cv.cv?.file_name} target="_blank" rel="noopener noreferrer" className="text-xl hover:no-underline text-blue flex items-end justify-center hover:cursor-pointer no-underline  pr-4">
-                            <EyeOutlined /> <text className="text-sm ml-2 my-0 py-0 "> View CV</text>
-                        </a>
-                    </div>
-                )
-            },
-
-        },
     ]
     return <div>
+        <div className="flex items-center mb-2">
+            <div className="text-xl flex items-center mr-2 text-blue-600"><EyeOutlined></EyeOutlined></div>
+            <h2 className="text-lg text-gray-500 mr-2 my-0">Followers By Candidate : </h2>
+            <h4 className="text-lg text-gray-400 my-0">{data?.length}</h4>
+        </div>
         <div className='d-flex mb-3'>
-            <h3 className='text-lg'>Curriculum Vitae Saved Management</h3>
+            <h3 className='text-lg'>Manage Followers Company By Candidate : </h3>
         </div>
         <Table columns={columns} dataSource={data} rowKey={'id'} />
     </div>
 
 };
 
-export default ManagerCVForJob;
+export default FollowCompanyByCandidate;

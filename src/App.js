@@ -48,6 +48,8 @@ import AddUser from "./pages/Admin/UserMng/AddUser";
 import CompanyMng from "./pages/Admin/CompanyMng/CompanyMng";
 import AddNewCompany from "./pages/Admin/CompanyMng/AddCompany";
 import EditCompany from "./pages/Admin/CompanyMng/EditCompany";
+import FollowCompanyByCandidate from "./pages/EmployerManager/FollowCompanyByCandidate";
+
 //Job
 // import JobMng from "./pages/Admin/JobMng/JobMng";
 import AddNewJob from "./pages/Admin/JobMng/AddJob";
@@ -70,7 +72,6 @@ import ShowSubcriptionPlan from "./pages/EmployerManager/SubcriptionPlan/ShowSub
 
 import UserTemplate from "./templates/UserTemplate";
 import Login from "./pages/Login/Login";
-import { ProfileTemplate } from "./templates/ProfileTemplate";
 import RegisterCompany from "./pages/Admin/CompanyMng/RegisterCompany";
 import AddAdvertisement from "./pages/Admin/AdvertisementMng/CreateAdvertisement";
 import AdvertisementEdit from "./pages/Admin/AdvertisementMng/EditAdvertisement";
@@ -124,6 +125,8 @@ function App() {
         <AdminTemplate path="/admin/companymng" exact Component={CompanyMng} />
         <AdminTemplate path="/admin/companymng/addcom" exact Component={AddNewCompany} />
         <AdminTemplate path="/admin/companymng/addcom/:id" exact Component={AddNewCompany} />
+        <AdminTemplate path="/employer/followCompany" exact Component={FollowCompanyByCandidate} />
+
 
         <AdminTemplate path="/admin/companymng/edit/:id" exact Component={EditCompany} />
         <UserTemplate path="/registerCompany" exact Component={RegisterCompany} />

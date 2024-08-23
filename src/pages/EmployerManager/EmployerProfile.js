@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     CheckOutlined, DollarOutlined
 } from '@ant-design/icons';
-
-
 import dayjs from 'dayjs';
+
 import { TOKEN } from '../../util/settings/config';
 import { getCurrentUserAction } from '../../redux/actions/UserAction';
 import { getCompanyAndJobByTokenAction, getCompanyForEmployerFromAdminById } from '../../redux/actions/AccountAction';
@@ -227,15 +226,6 @@ const EmployerProfile = (props) => {
                                     <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => { }}>Renew subscription plan</Button>
                                     <Button className='btn-primary bg-primary mt-2 px-5' type='primary' onClick={handleOk}>OK</Button>
                                 </>} >
-                                {/* <div >
-                                    Start date:{dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.start_date).format("DD-MM-YYYY")}
-                                </div><div >
-                                    End date:{dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.end_date).format("DD-MM-YYYY")}
-                                </div><div >
-                                    Price:{(subscriptionPlanByAccount?.subcriptionPlanDTO?.price)} $
-                                </div><div >
-                                    Expiry:{(dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.end_date).diff(dayjs(), "days"))} Days
-                                </div> */}
                                 <div className='flex flex-col items-center justify-center mt-6'>
                                     <div className="bg-blue-900 col-6 py-2 rounded-tl-[80px] rounded-br-[80px]">
 

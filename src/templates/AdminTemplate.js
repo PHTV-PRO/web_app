@@ -4,7 +4,7 @@ import {
   HomeOutlined, UserOutlined, SearchOutlined, AuditOutlined,
   ApartmentOutlined, BankOutlined, LinkOutlined,
   HomeFilled, ContainerOutlined, SolutionOutlined, IssuesCloseOutlined,
-  EditOutlined, DeleteOutlined, BarChartOutlined
+  EditOutlined, DeleteOutlined, BarChartOutlined, FundViewOutlined
 } from '@ant-design/icons';
 
 import { Layout, Menu, theme, Button, Input, Modal, Table, Avatar } from 'antd';
@@ -19,8 +19,6 @@ import { deleteAccountAction, } from "../redux/actions/AccountAction";
 import { deleteCompanyAction } from '../redux/actions/CompanyAction';
 import { deleteJobAction } from '../redux/actions/JobAction';
 
-import dayjs from "dayjs";
-import { Chart } from "chart.js";
 const { Header, Content, Sider } = Layout;
 
 function getItem(label, key, icon, children) {
@@ -480,7 +478,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
     getItem('Your SubcriptionPlan', '2', <NavLink className='text-decoration-none' to="/employer/employersubmng"><i className="fa fa-tags"></i></NavLink>),
     getItem('SubscriptionPlan', '3', <NavLink className='text-decoration-none' to="/employer/showsubcriptionplan"><ContainerOutlined /></NavLink>),
     getItem('Curriculum Vitea Saved', '4', <NavLink className='text-decoration-none' to="/employer/cvSaved"><SolutionOutlined /></NavLink>),
-
+    getItem('Follow Company Management', '5', <NavLink className='text-decoration-none' to="/employer/followCompany"><FundViewOutlined /></NavLink>),
   ]
 
 

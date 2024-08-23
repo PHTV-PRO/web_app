@@ -8,6 +8,9 @@ export class CompanyService extends baseService {
     getListCompany = () => {
         return this.get(`/api/general/company?size=0&page=0`);
     };
+    getFollowCompanyByCandidate = () => {
+        return this.get(`/api/employer/candidate_followed_by_company?size=0&page=0`);
+    };
     getCompanyById = (id) => {
         return this.get(`/api/general/company/${id}`);
     };

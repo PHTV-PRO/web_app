@@ -1,4 +1,4 @@
-import { GET_COMPANY_LIST, GET_COMPANY_DETAIL, GET_DATA_CHART_BY_COMPANYID_OF_EMPLOYER } from "../constants";
+import { GET_COMPANY_LIST, GET_COMPANY_DETAIL, GET_DATA_CHART_BY_COMPANYID_OF_EMPLOYER, GET_FOLLOW_COMPANY_BY_CANDIDATE } from "../constants";
 import { history } from "../../App";
 import { companyService } from "../../services/CompanyService";
 import { notification } from "antd";
@@ -39,8 +39,22 @@ export const getCompanyIdAction = (id) => {
     }
 }
 
-
-
+export const getFollowCompanyAction = () => {
+    return async (dispatch) => {
+        try {
+            const result = await companyService.getFollowCompanyByCandidate();
+            console.log(result);
+            if (result.status === 200) {
+                dispatch({
+                    type: GET_FOLLOW_COMPANY_BY_CANDIDATE,
+                    arrFollowCompany: result.data
+                })
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
 
 export const addCompanyAction = (formData) => {
     return async (dispatch) => {

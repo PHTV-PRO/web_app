@@ -1,37 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Input, Space, Switch, Table } from "antd";
-import { SearchOutlined, EyeOutlined, MailOutlined } from '@ant-design/icons';
-
+import { Avatar, Button, Input, Space, Table, } from "antd";
+import { SearchOutlined, EyeOutlined } from '@ant-design/icons';
 import Highlighter from "react-highlight-words";
-import { getApplicationByJob, sendMailToCandidateAction, updateEnableOfApplicationByEmployer } from "../../../redux/actions/JobAction";
+import dayjs from 'dayjs';
+
+import { getCVSavedAction } from "../../../../redux/actions/JobAction";
 
 
 
 const ModalApplicationByJob = (props) => {
     const dispatch = useDispatch();
-    const { arrApplication } = useSelector(state => state.JobReducer)
+    const { arrCvSaved } = useSelector(state => state.JobReducer)
     let { userLogin } = useSelector(state => state.UserReducer);
-    const [buttonStates, setButtonStates] = useState({});
+    console.log(userLogin);
 
     const id = props.jobId;
     useEffect(() => {
-        dispatch(getApplicationByJob(id))
+        dispatch(getCVSavedAction(id))
     }, [dispatch, id])
-    const data = arrApplication?.data;
-    const handleButtonClick = (id) => {
-        setButtonStates((prevStates) => ({
-            ...prevStates,
-            [id]: true,
-        }));
+    const data = arrCvSaved?.data;
 
-        setTimeout(() => {
-            setButtonStates((prevStates) => ({
-                ...prevStates,
-                [id]: false,
-            }));
-        }, 3000);
-    };
 
 
     const [searchText, setSearchText] = useState('');
@@ -130,17 +119,6 @@ const ModalApplicationByJob = (props) => {
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Content',
-            dataIndex: 'note',
-            key: 'note',
-            width: '15%',
-            ...getColumnSearchProps('note'),
-            sorter: (a, b) => a.note - b.note,
-            sortDirections: ['descend', 'ascend'],
-            render: (text, index) => { return <p key={index} className='text-ellipsis overflow-hidden line-clamp-2'>{text == null ? "" : text.replace(/<[^>]+>/g, '')}</p> }
-
-        },
-        {
             title: 'Name of Candidate',
             dataIndex: 'account',
             key: 'account',
@@ -171,10 +149,54 @@ const ModalApplicationByJob = (props) => {
 
         },
         {
+            title: "Avatar",
+            dataIndex: "avatar",
+            key: "avatar",
+            width: '10%',
+            render: (text, data, index) => {
+                return data?.account?.image != null ? (
+                    <img key={index} style={{ width: 40, height: 40, objectFit: "cover", borderRadius: "50%", }} src={`${data?.account?.image}`} alt={data?.account?.image} />
+                ) : (
+                    <Avatar size={40} style={{ fontSize: "20px", display: "flex", justifyContent: "center", alignItems: "center" }} icon={data?.account?.email?.substr(0, 1)} />
+                );
+            },
+        },
+        {
+            title: 'Date Applicated',
+            dataIndex: 'account',
+            key: 'account',
+            width: '15%',
+            ...getColumnSearchProps('account'),
+            sorter: (a, b) => a.account - b.account,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, account) => {
+                return (<>
+                    <span>{dayjs(account?.date_applied).format("DD-MM-YYYY")}</span>
+                </>)
+            },
+
+        },
+        {
+            title: 'Job Applicated',
+            dataIndex: 'account',
+            key: 'account',
+            width: '20%',
+            ...getColumnSearchProps('account'),
+            sorter: (a, b) => a.account - b.account,
+            sortDirections: ['descend', 'ascend'],
+            render: (text, account) => {
+                return (<>
+                    <span>{account?.job?.title}</span>
+
+                </>)
+            },
+
+        },
+        {
             title: 'Curriculum Vitae of Candidate',
             dataIndex: 'account',
             key: 'account',
-            width: '30%',
+            width: '20%',
             ...getColumnSearchProps('account'),
             sorter: (a, b) => a.account - b.account,
             sortDirections: ['descend', 'ascend'],
@@ -184,41 +206,6 @@ const ModalApplicationByJob = (props) => {
                         <a href={cv.cv?.file_name} target="_blank" rel="noopener noreferrer" className="text-xl hover:no-underline text-blue flex items-end justify-center hover:cursor-pointer no-underline  pr-4">
                             <EyeOutlined /> <text className="text-sm ml-2 my-0 py-0 "> View CV</text>
                         </a>
-                        <div className="border-r-2  h-4  border-gray-400 bg-slate-400"></div>
-                        <div className="flex items-center justify-center px-4">
-                            {userLogin?.role === "EMPLOYER" &&
-                                <Switch size="small"
-                                    style={{ border: '1px solid #333' }}
-                                    defaultChecked={cv?.cv_is_save === "true" ? true : false}
-                                    checked={cv?.cv_is_save}
-                                    onClick={() => {
-                                        dispatch(updateEnableOfApplicationByEmployer(cv.id, id))
-
-                                    }}
-                                />}
-                        </div>
-                        <div className="border-r-2  h-4  border-gray-400 bg-slate-400"></div>
-
-                        <div className="flex text-xl items-center justify-between hover:cursor-pointer pl-4 gap-3 hover:text-blue-400">
-                            {userLogin?.role === "EMPLOYER" &&
-                                <div className={`flex items-center justify-center font-thin `}>
-                                    <Button
-                                        className="text-lg bg-white"
-                                        icon={<MailOutlined />}
-                                        key={cv?.id}
-                                        onClick={() => {
-
-                                            dispatch(sendMailToCandidateAction(cv?.id));
-                                            handleButtonClick(cv?.id)
-                                        }}
-                                        style={{ display: buttonStates[cv?.id] ? 'none' : 'flex', alignItems: 'center' }}
-                                    >
-                                        <text className="text-sm ml-1 my-0 py-0 ">Send Mail to Candidate !</text>
-                                    </Button>
-                                </div>
-                            }
-                        </div>
-
                     </div>
                 )
             },
@@ -227,7 +214,7 @@ const ModalApplicationByJob = (props) => {
     ]
     return <div>
         <div className='d-flex mb-3'>
-            <h3 className='text-lg'>Applcation Job Management</h3>
+            <h3 className='text-lg'>Curriculum Vitae Saved Management</h3>
         </div>
         <Table columns={columns} dataSource={data} rowKey={'id'} />
     </div>

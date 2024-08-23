@@ -85,11 +85,19 @@ const EditJob = (props) => {
             company_id: jobDetail?.company?.id,
             job_type_id: jobDetail?.jobType?.id,
             _active: jobDetail?._active,
-            skill_id : selectedSkillsIdString,
-            level_id : selectedLevelIdString
+            skill_id: selectedSkillsIdString,
+            level_id: selectedLevelIdString
         },
         onSubmit: (values) => {
-            if (values.name == '' || values.introduction == '' || values.benefit == '') {
+            if (values.title?.trim() === "" ||
+                values.description?.trim() === "" ||
+                values.reponsibility?.trim() === "" ||
+                values.skill_required?.trim() === "" ||
+                values.benefit?.trim() === "" ||
+                values.amount === "" ||
+                values.experience_required?.trim() === "" ||
+                values.salary_max?.trim() === "" ||
+                values.salary_min?.trim() === "") {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',
@@ -102,7 +110,6 @@ const EditJob = (props) => {
                 for (let key in values) {
                     formData.append(key, values[key]);
                 }
-                console.table('formData', [...formData])
                 if (userLogin?.role === "ADMIN") {
                     dispatch(updateJobByIdAction(id, formData))
                 }
@@ -113,22 +120,22 @@ const EditJob = (props) => {
         }
     })
 
-    console.log("check date: ", jobDetail?.start_date?.slice(0, 10));
-    
+    // console.log("check date: ", jobDetail?.start_date?.slice(0, 10));
+
     const disabledDate = (current) => {
         if (!startDate) {
-            return current && current < dayjs().endOf('day') || current > dayjs().add(30,'day').endOf('day');
-          }
+            return current && current < dayjs().endOf('day') || current > dayjs().add(30, 'day').endOf('day');
+        }
         // Can not select days before today and today
-        return  current && current > dayjs(formik?.values?.start_date).add(60,'day').endOf('day');
-      };
+        return current && current > dayjs(formik?.values?.start_date).add(60, 'day').endOf('day');
+    };
     const onDateChange = (value) => {
-        if(value!=null){
+        if (value != null) {
             setStartDate(value[0]);
             formik.setFieldValue('end_date', dayjs(value[1]).add(20, 'hour'));
             formik.setFieldValue('start_date', dayjs(value[0]).add(20, 'hour'));
         }
-      
+
     };
 
     const handleChangeGender = (value) => {
@@ -168,20 +175,19 @@ const EditJob = (props) => {
         let ListId = '';
         if (newSelectedSkillsId.length > 0) {
             newSelectedSkillsId.map(skill => {
-                console.log("check");
                 ListId += skill.toString() + ",";
             })
         };
 
-       
+
         await formik.setFieldValue("skill_id", ListId);
 
     }
 
-    const defaultSkill =   () => {
+    const defaultSkill = () => {
         const listSkillId = [];
         const listSkill = [];
-        jobDetail?.skills?.map((data)=>{
+        jobDetail?.skills?.map((data) => {
             listSkillId.push(data?.id)
             listSkill.push(data?.name)
 
@@ -194,14 +200,13 @@ const EditJob = (props) => {
                 ListIdSkill += skill.toString() + ",";
             })
         };
-        console.log("skill id :", ListIdSkill);
-         formik.setFieldValue("skill_id", ListIdSkill);
-         setSelectedSkillsIdString(ListIdSkill)
+        formik.setFieldValue("skill_id", ListIdSkill);
+        setSelectedSkillsIdString(ListIdSkill)
     }
-    const defaultLevel =  () => {
+    const defaultLevel = () => {
         const listLevellId = [];
         const listLevel = [];
-        jobDetail?.levels?.map((data)=>{
+        jobDetail?.levels?.map((data) => {
             listLevellId.push(data?.id)
             listLevel.push(data?.name)
 
@@ -213,11 +218,10 @@ const EditJob = (props) => {
             listLevellId.map(level => {
                 ListIdLevel += level.toString() + ",";
             })
-           
+
         };
-        console.log("level id :", ListIdLevel);
-           formik.setFieldValue("level_id", ListIdLevel);
-           setSelectedLevelIdString(ListIdLevel)
+        formik.setFieldValue("level_id", ListIdLevel);
+        setSelectedLevelIdString(ListIdLevel)
     }
 
     const toggleLevel = async (name, id) => {
@@ -238,7 +242,6 @@ const EditJob = (props) => {
         let ListId = '';
         if (newSelectedLevelId.length > 0) {
             newSelectedLevelId.map(level => {
-                console.log("check");
                 ListId += level.toString() + ",";
             })
         };
@@ -508,16 +511,16 @@ const EditJob = (props) => {
                             },
                         ]}
                     >
-                        <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} 
-                            rules={[{ required: true, message: 'Date can not be blank!' }]} onChange={onDateChange} 
+                        <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)}
+                            rules={[{ required: true, message: 'Date can not be blank!' }]} onChange={onDateChange}
                             disabledDate={disabledDate}
-                            value={[formik?.values?.start_date,formik?.values?.end_date]} />
+                            value={[formik?.values?.start_date, formik?.values?.end_date]} />
                         <div className='hidden'>
-                        <RangePicker
-                        defaultValue={[dayjs('2024-01-22'), dayjs(jobDetail?.end_date?.slice(0, 10))]}
-                        format={day => day.tz("Asia/Saigon").format(dateFormat)} 
-                        /></div>
-                     
+                            <RangePicker
+                                defaultValue={[dayjs('2024-01-22'), dayjs(jobDetail?.end_date?.slice(0, 10))]}
+                                format={day => day.tz("Asia/Saigon").format(dateFormat)}
+                            /></div>
+
                         {/* <DatePicker name="start_date"  format={day => day.tz("Asia/Saigon").format(dateFormat)}   /> */}
                     </Form.Item>
 

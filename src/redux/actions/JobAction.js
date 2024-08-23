@@ -1,4 +1,4 @@
-import { GET_JOB_LIST, GET_JOB_DETAIL, GET_CHART_OF_EMPLOYER, GET_CHART_OF_ADMIN, GET_APPLICATION_BY_JOB, GET_CHART_OF_EMPLOYER_BY_ID } from "../constants";
+import { GET_JOB_LIST, GET_JOB_DETAIL, GET_CHART_OF_EMPLOYER, GET_CHART_OF_ADMIN, GET_APPLICATION_BY_JOB, GET_CHART_OF_EMPLOYER_BY_ID, GET_CV_SAVED } from "../constants";
 import { history } from "../../App";
 import { jobService } from "../../services/JobService";
 import { notification } from "antd";
@@ -200,6 +200,23 @@ export const getDataChartOfAdmin = () => {
     }
 }
 
+export const getCVSavedAction = () => {
+    return async (dispatch) => {
+        try {
+            const result = await jobService.getCVSave();
+            console.log(result);
+            if (result.status === 200) {
+                dispatch({
+                    type: GET_CV_SAVED,
+                    arrCvSaved: result.data
+                })
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+
 export const getApplicationByJob = (id) => {
     return async (dispatch) => {
         try {
@@ -218,16 +235,15 @@ export const getApplicationByJob = (id) => {
 }
 
 
+
+
+
 export const sendMailToCandidateAction = (id) => {
     return async (dispatch) => {
         try {
             const result = await jobService.sendEmailToCandidate(id);
             console.log(result);
             if (result.status === 200) {
-                // dispatch({
-                //     type: GET_APPLICATION_BY_JOB,
-                //     arrApplication: result.data
-                // })
                 console.log('data : ', result?.data);
             }
         } catch (error) {
@@ -270,6 +286,26 @@ export const updateEnableOfJobByEmployer = (id) => {
                 ),
             });
             dispatch(getJobListAction())
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+}
+
+export const updateEnableOfApplicationByEmployer = (id, idJob) => {
+    return async (dispatch) => {
+        try {
+            const result = await jobService.putEnableOfApplicationByEmployer(id);
+            console.log(result);
+            console.log(result.data.data);
+            notification.success({
+                closeIcon: true,
+                message: 'Success',
+                description: (
+                    <>{result.data.data === "Save Success!" ? "Save Success!" : "UnSave Success!"}</>
+                ),
+            });
+            dispatch(getApplicationByJob(idJob))
         } catch (error) {
             console.log('error', error);
         }

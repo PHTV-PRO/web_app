@@ -81,27 +81,25 @@ const AddNewJob = (props) => {
             experience_required: "",
             salary_max: "",
             salary_min: "",
-            // start_date: dayjs(),
-            // end_date: dayjs(),
             is_active: "true",
             company_id: userLogin?.role === "EMPLOYER" ? employerCompanyJob?.companyForEmployer?.id : companyDetail?.id
         },
         onSubmit: (values) => {
             if (
-                values.title === "" ||
-                values.description === "" ||
-                values.reponsibility === "" ||
-                values.skill_required === "" ||
-                values.benefit === "" ||
+                values.title?.trim() === "" || values?.title?.startsWith(' ') === true ||
+                // values.description?.trim() === "" || values?.description?.startsWith(' ') === true ||
+                // values.reponsibility?.trim() === "" || values?.title?.startsWith(' ') === true ||
+                // values.skill_required?.trim() === "" || values?.title?.startsWith(' ') === true ||
+                // values.benefit?.trim() === "" || values?.title?.startsWith(' ') === true ||
                 values.amount === "" ||
-                values.experience_required === "" ||
-                values.salary_max === "" ||
-                values.salary_min === ""
+                // values.experience_required?.trim() === "" || values?.title?.startsWith(' ') === true ||
+                values.salary_max?.trim() === "" || values?.salary_max?.startsWith(' ') === true ||
+                values.salary_min?.trim() === "" || values?.salary_min?.startsWith(' ') === true
             ) {
                 notification.error({
                     closeIcon: true,
                     message: "Error",
-                    description: <>Please fill in all required fields.</>,
+                    description: <>Please fill in all required fields. No leading spaces!.</>,
                 });
             } else {
                 let formData = new FormData();
@@ -136,19 +134,19 @@ const AddNewJob = (props) => {
         formik.setFieldValue(name, data);
     };
     const disabledDate = (current) => {
-            if(!formik?.values?.start_date && current < dayjs().endOf('day') || current> dayjs().add(60,'day').endOf('day')){
-                return true;
+        if (!formik?.values?.start_date && current < dayjs().endOf('day') || current > dayjs().add(60, 'day').endOf('day')) {
+            return true;
 
-            }
-      }
-    
+        }
+    }
+
     const onDateChange = (value) => {
-        if(value!=null){
+        if (value != null) {
             setStartDate(value[0]);
             formik.setFieldValue('end_date', dayjs(value[1]).add(20, 'hour'));
             formik.setFieldValue('start_date', dayjs(value[0]).add(20, 'hour'));
         }
-      
+
     };
 
     const toggleSkill = async (skillName, id) => {
@@ -169,7 +167,6 @@ const AddNewJob = (props) => {
         let ListId = '';
         if (newSelectedSkillsId.length > 0) {
             newSelectedSkillsId.map(skill => {
-                console.log("check");
                 ListId += skill.toString() + ",";
             })
             await formik.setFieldValue("skill_id", ListId);
@@ -195,7 +192,6 @@ const AddNewJob = (props) => {
         let ListId = '';
         if (newSelectedLevelId.length > 0) {
             newSelectedLevelId.map(level => {
-                console.log("check");
                 ListId += level.toString() + ",";
             })
             await formik.setFieldValue("level_id", ListId);
@@ -250,14 +246,6 @@ const AddNewJob = (props) => {
         </div>
     );
 
-    const checkSalary = (value, salaryMin) => {
-        console.log(value);
-        if (value <= salaryMin) {
-            return "Salary Max must be greater than Salary Min";
-        }
-        return true;
-    };
-    const salaryMin = formik.values.salary_min
 
     return (
         <Form
@@ -449,9 +437,6 @@ const AddNewJob = (props) => {
                         style={{ minWidth: '100%' }}
                         rules={[
                             { required: true, message: 'Salary Max is required !', transform: (value) => value.trim() },
-                            {
-                                validator: checkSalary
-                            },
                         ]}
 
                     >
@@ -468,13 +453,13 @@ const AddNewJob = (props) => {
                             },
                         ]}
                     >
-                         <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)} 
-                            rules={[{ required: true, message: 'Date can not be blank!' }]} onChange={onDateChange} 
+                        <RangePicker format={day => day.tz("Asia/Saigon").format(dateFormat)}
+                            rules={[{ required: true, message: 'Date can not be blank!' }]} onChange={onDateChange}
                             disabledDate={disabledDate}
-                            
-                           />
 
-                        
+                        />
+
+
                     </Form.Item>
 
 

@@ -305,7 +305,6 @@ const EditCompany = (props) => {
                                 });
                             }}
                         ></CKEditor>
-                        {/* <Input name="introduction" onChange={formik.handleChange} value={formik.values.introduction} /> */}
                     </Form.Item>
 
                     <Form.Item
@@ -329,7 +328,6 @@ const EditCompany = (props) => {
                                 });
                             }}
                         ></CKEditor>
-                        {/* <Input name="benefit" onChange={formik.handleChange} value={formik.values.benefit} /> */}
                     </Form.Item>
 
                     <Form.Item
@@ -366,21 +364,6 @@ const EditCompany = (props) => {
 
                         </Select>
                     </Form.Item>
-
-                    {/* <Form.Item
-                        label="Skill"
-                        style={{ minWidth: '100%' }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Skill is required!',
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        <Input name="skill" onChange={formik.handleChange} value={formik.values.skill} />
-                    </Form.Item> */}
-
                     <Form.Item
                         label="Link Website"
                         style={{ minWidth: '100%' }}
@@ -507,8 +490,6 @@ const EditCompany = (props) => {
 
                     <Form.Item label="List Image">
                         <div className="w-[70%] mb-6">
-                            {/* <h2 className="font-semibold text-xl py-2">Hình Ảnh</h2> */}
-
                             <div className="w-full">
 
                                 <label
@@ -534,12 +515,7 @@ const EditCompany = (props) => {
                                     hidden
                                     multiple
                                 ></input>
-                                {/* <small className="text-red-500 block w-full">
-                                    {invalidFields?.some((item) => item.name === "images") &&
-                                        invalidFields?.find((item) => item.name === "images")
-                                            ?.message}
-                                </small> */}
-                                <h3 className="font-medium py-2 text-xl">Ảnh Đã Chọn</h3>
+                                <h3 className="font-medium py-2 text-xl">Ảnh Đã Chọn : </h3>
                                 <div className="flex gap-4 items-center">
                                     {imagePreview?.map((item) => {
                                         return (

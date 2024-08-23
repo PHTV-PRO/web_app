@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import {
   HomeOutlined, UserOutlined, SearchOutlined, AuditOutlined,
   ApartmentOutlined, BankOutlined, LinkOutlined,
-  HomeFilled, ContainerOutlined, WalletOutlined, IssuesCloseOutlined,
+  HomeFilled, ContainerOutlined, SolutionOutlined, IssuesCloseOutlined,
   EditOutlined, DeleteOutlined, BarChartOutlined
 } from '@ant-design/icons';
 
@@ -478,7 +478,9 @@ export const AdminTemplate = (props) => { //path, exact, Component
   const itemsEmployer = [
     getItem('Your Profile Detail', '1', <NavLink className='text-decoration-none' to="/employer/emprofile"><i className="fa-solid fa-user"></i></NavLink>),
     getItem('Your SubcriptionPlan', '2', <NavLink className='text-decoration-none' to="/employer/employersubmng"><i className="fa fa-tags"></i></NavLink>),
-    getItem('SubscriptionPlan', '6', <NavLink className='text-decoration-none' to="/employer/showsubcriptionplan"><ContainerOutlined /></NavLink>),
+    getItem('SubscriptionPlan', '3', <NavLink className='text-decoration-none' to="/employer/showsubcriptionplan"><ContainerOutlined /></NavLink>),
+    getItem('Curriculum Vitea Saved', '4', <NavLink className='text-decoration-none' to="/employer/cvSaved"><SolutionOutlined /></NavLink>),
+
   ]
 
 

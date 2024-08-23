@@ -1,4 +1,4 @@
-import { GET_JOB_DETAIL, GET_JOB_LIST, GET_CHART_OF_EMPLOYER, GET_CHART_OF_ADMIN, GET_APPLICATION_BY_JOB, GET_CHART_OF_EMPLOYER_BY_ID } from "../constants";
+import { GET_JOB_DETAIL, GET_JOB_LIST, GET_CV_SAVED, GET_CHART_OF_EMPLOYER, GET_CHART_OF_ADMIN, GET_APPLICATION_BY_JOB, GET_CHART_OF_EMPLOYER_BY_ID } from "../constants";
 
 const initialState = {
     arrJob: [],
@@ -6,7 +6,8 @@ const initialState = {
     dataChartOfEmployerById: {},
     chartAdmin: {},
     arrApplication: [],
-    chartEmployerFromAdminById: {}
+    chartEmployerFromAdminById: {},
+    arrCvSaved: []
 }
 
 export const JobReducer = (state = initialState, action) => {
@@ -29,6 +30,9 @@ export const JobReducer = (state = initialState, action) => {
             return { ...state }
         case GET_APPLICATION_BY_JOB:
             state.arrApplication = action.arrApplication;
+            return { ...state }
+        case GET_CV_SAVED:
+            state.arrCvSaved = action.arrCvSaved;
             return { ...state }
         default:
             return { ...state }

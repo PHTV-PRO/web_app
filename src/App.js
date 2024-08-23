@@ -52,6 +52,8 @@ import EditCompany from "./pages/Admin/CompanyMng/EditCompany";
 // import JobMng from "./pages/Admin/JobMng/JobMng";
 import AddNewJob from "./pages/Admin/JobMng/AddJob";
 import EditJob from "./pages/Admin/JobMng/EditJob";
+import ManagerCVForJob from "./pages/EmployerManager/EmployerJob/CV/ManagerCVForJob";
+
 // Chart
 import GeneralChart from "./pages/Admin/Chart/ChartAdmin";
 //  AdvertisementMng
@@ -165,6 +167,8 @@ function App() {
         <AdminTemplate path="/employer/empljobmng" exact Component={EmployerJobMng} />
         <AdminTemplate path="/employer/buyScPl" exact Component={BuySubcriptionPlan} />
         <AdminTemplate path="/employer/showsubcriptionplan" exact Component={ShowSubcriptionPlan} />
+        <AdminTemplate path="/employer/cvSaved" exact Component={ManagerCVForJob} />
+
 
         <AdminTemplate path="/admin" exact Component={UserMng} />
         <AdminTemplate path="/admin/users/edit/:id" exact Component={UserEdit} />

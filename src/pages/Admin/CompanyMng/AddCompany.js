@@ -65,7 +65,9 @@ const AddNewCompany = (props) => {
         onSubmit: (values) => {
             if (
                 values.name === "" || values?.name?.startsWith(' ') === true ||
+                values.benefit === "" || values?.benefit?.startsWith(' ') === true ||
                 values.profession === "" || values?.profession?.startsWith(' ') === true ||
+                values.introduction === "" || values?.introduction?.startsWith(' ') === true ||
                 values.nationnality === "" || values?.nationnality?.startsWith(' ') === true ||
                 values.link_website?.trim() === "" || values?.link_website?.startsWith(' ') === true ||
                 values.location?.trim() === "" || values?.location?.startsWith(' ') === true

@@ -42,6 +42,9 @@ export class JobService extends baseService {
     getApplicationByJob = (id) => {
         return this.get(`/api/employer/application_by_job?job_id=${id}&size=0&page=0`);
     };
+    getCVSave = () => {
+        return this.get(`/api/employer/cv_save?size=0&page=0`);
+    };
     sendEmailToCandidate = (id) => {
         return this.get(`/api/employer/send_mail?application_id=${id}&size=0&page=0`);
     };
@@ -51,6 +54,9 @@ export class JobService extends baseService {
     1
     putEnableOfJobByEmployer = (id) => {
         return this.put(`/api/employer/job/on_or_off/${id}`);
+    };
+    putEnableOfApplicationByEmployer = (id) => {
+        return this.post(`/api/employer/cv_save/${id}`);
     };
 
 }

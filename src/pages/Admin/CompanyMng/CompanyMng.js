@@ -17,6 +17,7 @@ export default function CompanyMng() {
     useEffect(() => {
         dispatch(getCompanyListAction())
     }, [dispatch])
+
     const [isModalOpenSubcriptionPlan, setIsModalOpenSubcriptionPlan] = useState(false);
     const [idEmployer, setIdEmployer] = useState();
     const showModalSubcriptopnPlan = () => {
@@ -46,8 +47,8 @@ export default function CompanyMng() {
         setSearchedColumn(dataIndex);
     };
     const data = arrCompany.data;
-    console.log(data);
-    console.log(idEmployer);
+    // console.log(data);
+    // console.log(idEmployer);
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
@@ -219,7 +220,8 @@ export default function CompanyMng() {
             render: (text, company) => {
                 return <Switch size="small"
                     defaultChecked={company?.enable === 1 ? true : false}
-                    checked={company?.company?.enable} onClick={() => {
+                    checked={company?.company?.enable}
+                    onClick={() => {
                         dispatch(updateEnableOfCompanyByAdmin(company?.id),
                         )
                     }} />

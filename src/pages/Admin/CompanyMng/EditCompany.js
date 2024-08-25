@@ -37,7 +37,6 @@ const EditCompany = (props) => {
         dispatch(getSkillListAction());
         dispatch(getCompanyIdAction(id))
         dispatch(getCityProvinceListAction())
-
     }, [dispatch, id])
 
 

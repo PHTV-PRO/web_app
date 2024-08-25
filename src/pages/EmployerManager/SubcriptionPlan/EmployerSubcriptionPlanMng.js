@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, TagOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table } from 'antd';
 import { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getSubscriptionPlanByAccountAction } from '../../../redux/actions/SubscriptionPlanAction';
 import { TOKEN } from '../../../util/settings/config';
-import { render } from '@testing-library/react';
 import dayjs from 'dayjs';
 
 
@@ -45,7 +44,6 @@ export default function EmployerSubcriptionPlanMng() {
 
     const data2 = parseSubsObjecTotArray;
     const data1 = subscriptionPlanByAccount?.subcriptionPlanDTOs;
-    console.log(data2);
     console.log(data1);
 
 
@@ -195,17 +193,31 @@ export default function EmployerSubcriptionPlanMng() {
     return <div>
         <div className='d-flex mb-3 h-15'>
             <h3 className='text-xl'>SubcriptionPlan Management</h3>
-            {/* <Button href='/admin/subplanmng/addsubplan' type="primary" className='ml-3 small bg-primary'>+ Add New SubcriptionPlan</Button> */}
         </div>
-        <div>
+        {data1 === undefined || data1?.length === 0 ? <div>
+            <div className='flex items-center justify-center'>
+                <h2 className='text-lg font-light text-gray-500 flex items-center justify-center'>
+                    <div className='flex items-center justify-center mr-2'>
+                        < TagOutlined />
+                    </div>
+                    No Register SubcriptionPlan .
+                    <a href='/employer/buyScPl' className='font-normal text-blue-400 hover:cursor-pointer hover:text-red-500'>Please Register SubcriptionPlan !
+                    </a>
+                </h2>
+            </div>
+        </div> : <div>
             <div className='mb-5'>
+
                 <h3 className='text-lg italic text-gray-500'>Registered</h3>
                 <Table columns={columns} dataSource={data2} rowKey={'id'} pagination={false} />
+
             </div>
             <div className=''>
                 <h3 className='text-lg italic text-gray-500 '>Out of Date</h3>
                 <Table columns={columns} dataSource={data1} rowKey={'id'} />
             </div>
-        </div>
+        </div>}
+
+
     </div>
 }

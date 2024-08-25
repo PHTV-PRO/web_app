@@ -47,9 +47,9 @@ export default function ShowSubcriptionPlan() {
                     <div className='bg-white py-3 rounded-tl-[80px] rounded-br-[80px]'>
                         <div className='flex flex-col justify-center items-center' >
                             <h1 className='font-bold text-xl text-green-300 text-center mb-3'>${sb?.price}</h1>
-                            <div className='flex items-center justify-center border-b pb-2 border-gray-400 border-dashed mx-2'>
+                            <div className='flex items-center justify-center border-b pb-2 border-gray-400 border-dashed mx-2 h-[75px] '>
                                 <h1 className='text-gray-500 text-base mr-3 font-bold'><CheckOutlined /></h1>
-                                <h4 className='text-base font-light mb-0'>{sb.description}</h4>
+                                <h4 className='text-base font-light mb-0 text-ellipsis overflow-hidden line-clamp-2'>{sb.description}</h4>
                             </div>
                             <div className='flex items-center justify-center border-b mb-2 border-gray-400 border-dashed mx-2'>
                                 <h1 className='text-gray-500 text-base mr-3 font-bold'><CheckOutlined /></h1>

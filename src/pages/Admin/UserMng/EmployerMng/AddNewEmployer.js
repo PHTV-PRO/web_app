@@ -8,7 +8,6 @@ import { useFormik } from "formik";
 const { Option } = Select;
 
 const AddEmployer = () => {
-  let userLogin = {};
   const dispatch = useDispatch();
   const [imgSrc, setImgSrc] = useState("");
   const formik = useFormik({
@@ -18,7 +17,6 @@ const AddEmployer = () => {
       gender: "",
       address: "",
       password: "",
-      image: "",
       role: "EMPLOYER"
     },
     onSubmit: async (values) => {

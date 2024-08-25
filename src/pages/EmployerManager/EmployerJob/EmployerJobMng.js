@@ -18,6 +18,7 @@ export default function EmployerJobMng(props) {
     const dispatch = useDispatch();
     const idOfEmployer = props?.idOfEmployer?.id
     let { employerCompanyJob } = useSelector(state => state.AccountReducer);
+    // console.log(employerCompanyJob);
     let { userLogin } = useSelector(state => state.UserReducer);
     let { dataCompanyForEmployerFromAdmin } = useSelector(state => state.AccountReducer);
     let accessToken = {}
@@ -281,7 +282,7 @@ export default function EmployerJobMng(props) {
                         <h3 className='alert ml-2 text-base text-yellow-800 rounded-lg bg-yellow-50 w-100 text-left'>
                             <a href='/employer/buyScPl'>You've reached your creation limit for job or Don't register Subcription Plan !!!.</a>
                         </h3> :
-                        <Button href='/jobmng/addjob' type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button> :
+                        <Button href={`/jobmng/addjob/${employerCompanyJob?.companyForEmployer?.id}`} type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button> :
                         <Button href={`/jobmng/addjob/${dataCompanyForEmployerFromAdmin?.companyForEmployer?.id}`} type="primary" className='ml-3 small bg-primary'>+ Add New Job</Button>
                 }
             </div>

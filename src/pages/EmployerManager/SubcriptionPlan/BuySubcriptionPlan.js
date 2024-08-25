@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Button, Typography, Modal } from 'antd';
+import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { TOKEN } from '../../../util/settings/config';
-
-
+import dayjs from 'dayjs';
 
 import { getCurrentUserAction } from '../../../redux/actions/UserAction';
 import { getCompanyAndJobByTokenAction } from '../../../redux/actions/AccountAction';
 import { buyScriptionPlan, getSubscriptionPlanListAction } from '../../../redux/actions/SubscriptionPlanAction';
-
 import { history } from '../../../App';
-import dayjs from 'dayjs';
-import { now } from 'moment/moment';
+
+
 
 
 

@@ -29,6 +29,7 @@ const { RangePicker } = DatePicker;
 
 const AddNewJob = (props) => {
     let { id } = props.match.params;
+    console.log(id);
 
     // const [location, setLocation] = useState(0);
     const [selectedSkills, setSelectedSkills] = useState([]);

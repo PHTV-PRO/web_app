@@ -184,7 +184,7 @@ export const deleteAccountAction = (id) => {
                 message: "Success",
                 description: <>Delete Account successfully</>,
             });
-            dispatch(getListAccountAction());
+            dispatch(getListAccountEmployerAction());
         } catch (error) {
             console.log("error", error);
         }

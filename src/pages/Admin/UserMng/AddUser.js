@@ -6,7 +6,6 @@ import { useFormik } from "formik";
 const { Option } = Select;
 
 const AddUser = () => {
-  let userLogin = {};
   const dispatch = useDispatch();
   const [imgSrc, setImgSrc] = useState("");
   const formik = useFormik({
@@ -42,10 +41,6 @@ const AddUser = () => {
       };
       formik.setFieldValue("UploadImage", file);
     }
-  };
-
-  const handleChangeRole = (value) => {
-    formik.setFieldValue("role", value);
   };
 
   return (

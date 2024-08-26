@@ -30,7 +30,19 @@ const AddNewSubcriptionPlan = () => {
                         </>
                     ),
                 });
-            } else {
+            }
+            else if (values?.price < 0 || values?.expiry < 0) {
+                notification.error({
+                    closeIcon: true,
+                    message: 'Error',
+                    description: (
+                        <>
+                            Price & Expiry must be than 0
+                        </>
+                    ),
+                });
+            }
+            else {
                 let formData = new FormData();
                 for (let key in values) {
                     formData.append(key, values[key]);
@@ -102,6 +114,7 @@ const AddNewSubcriptionPlan = () => {
                                 message: 'Price of seat is required!',
                                 transform: (value) => value.trim(),
                             },
+
                         ]}
                     >
                         <Input name="price" type='number' onChange={formik.handleChange} />

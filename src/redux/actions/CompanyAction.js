@@ -201,7 +201,7 @@ export const registerCompanyAction = (formData) => {
                     closeIcon: false,
                     message: 'Fail !!!',
                     description: (
-                        <>Email or Password incorrect!!</>
+                        <>Email or Password incorrect , Or No Employer Registered!!</>
                     ),
                 });
                 history.push('/');
@@ -216,7 +216,7 @@ export const registerCompanyAction = (formData) => {
                 });
             }
         } catch (error) {
-            if (error.response.request.status === 400) {
+            if (error?.response?.data?.statusCode === 400) {
                 notification.error({
                     closeIcon: false,
                     message: 'Fail !!!',
@@ -225,12 +225,23 @@ export const registerCompanyAction = (formData) => {
                     ),
                 });
                 history.push('/registerCompany');
-            } else if (error.response.request.status === 409) {
+            }
+            else if (error.response.request.status === 400) {
                 notification.error({
                     closeIcon: false,
                     message: 'Fail !!!',
                     description: (
-                        <>This Employer  Already Has Company !!</>
+                        <>Register Fail !! , Please fill in all required fields</>
+                    ),
+                });
+                history.push('/registerCompany');
+            }
+            else if (error.response.request.status === 409) {
+                notification.error({
+                    closeIcon: false,
+                    message: 'Fail !!!',
+                    description: (
+                        <>This Employer Already Has Company !!</>
                     ),
                 });
                 history.push('/registerCompany');

@@ -37,8 +37,8 @@ export default function RegisterCompany() {
             link_website: '',
             nationnality: '',
             location: '',
-            logo_image: "",
-            background_image: "",
+            logo: "",
+            background: "",
         },
         onSubmit: async (values) => {
             if (
@@ -49,8 +49,6 @@ export default function RegisterCompany() {
                 values.link_website === "" || values?.link_website?.startsWith(' ') === true ||
                 values.location === "" || values?.location?.startsWith(' ') === true ||
                 values.profession === "" || values?.profession?.startsWith(' ') === true
-
-
             ) {
                 notification.error({
                     closeIcon: true,
@@ -74,27 +72,26 @@ export default function RegisterCompany() {
 
     const handleChangeFileLogo = (e) => {
         let file = e.target.files[0];
-
+        console.log(file);
         if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png') {
             let reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = (e) => {
                 setLogoSrc(e.target.result); //Hình base 64
             };
-            formik.setFieldValue("logo_image", file);
+            formik.setFieldValue("logo", file);
         }
     };
 
     const handleChangeFileBackground = (e) => {
         let file = e.target.files[0];
-
         if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png') {
             let reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = (e) => {
                 setBackgroundSrc(e.target.result); //Hình base 64
             };
-            formik.setFieldValue("background_image", file);
+            formik.setFieldValue("background", file);
         }
     };
 

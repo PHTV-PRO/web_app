@@ -115,7 +115,13 @@ const EmployerProfile = (props) => {
                                     showModalOfCompany()
                                 }}> <i class="fa-solid fa-arrow-up-right-from-square"></i></Button>
                                 {/* Modal of Company Detail */}
-                                <Modal width={'90%'} title="Your Company Detail" open={isModalOfCompanyOpen} onOk={handleOfCompanyOk} onCancel={handleOfCompanyCancel}>
+                                <Modal
+                                    width={'90%'}
+                                    title="Your Company Detail"
+                                    open={isModalOfCompanyOpen}
+                                    onOk={handleOfCompanyOk}
+                                    onCancel={handleOfCompanyCancel}
+                                >
                                     <div className='mt-1 '>
                                         <div className='w-[100%] h-[100%] px-20 bg-white mb-10'>
                                             <Carousel style={{ padding: '20px' }} autoplay>
@@ -142,10 +148,8 @@ const EmployerProfile = (props) => {
                                             </div>
                                             {userLogin?.role === "EMPLOYER" && <Button
                                                 className='btn-primary bg-primary ml-4'
-                                                key={1} href={`/employer/job/edit/${employerCompanyJob.companyForEmployer?.id}`} type="link"
-                                                onClick={() => {
+                                                key={1} href={`/admin/companymng/edit/${employerCompanyJob.companyForEmployer?.id}`} type="link"
 
-                                                }}
                                             >Update Company</Button>}
                                         </div>
 

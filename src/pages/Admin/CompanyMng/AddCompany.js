@@ -72,7 +72,6 @@ const AddNewCompany = (props) => {
                 values.link_website?.trim() === "" || values?.link_website?.startsWith(' ') === true ||
                 values.location?.trim() === "" || values?.location?.startsWith(' ') === true
             ) {
-
                 notification.error({
                     closeIcon: true,
                     message: "Error",
@@ -231,54 +230,54 @@ const AddNewCompany = (props) => {
 
     }
 
-    const toggleLevel = async (name, id) => {
-        const newSelectedLevels = [...selectedLevel];
-        const newSelectedLevelId = [...selectedLevelId];
+    // const toggleLevel = async (name, id) => {
+    //     const newSelectedLevels = [...selectedLevel];
+    //     const newSelectedLevelId = [...selectedLevelId];
 
-        if (newSelectedLevels.includes(name)) {
-            newSelectedLevels.splice(newSelectedLevels.indexOf(name), 1);
-            newSelectedLevelId.splice(newSelectedLevelId.indexOf(id), 1);
+    //     if (newSelectedLevels.includes(name)) {
+    //         newSelectedLevels.splice(newSelectedLevels.indexOf(name), 1);
+    //         newSelectedLevelId.splice(newSelectedLevelId.indexOf(id), 1);
 
-        } else {
-            newSelectedLevels.push(name);
-            newSelectedLevelId.push(id);
-        }
-        setSelectedLevel(newSelectedLevels);
-        setSelectedLevelId(newSelectedLevelId);
+    //     } else {
+    //         newSelectedLevels.push(name);
+    //         newSelectedLevelId.push(id);
+    //     }
+    //     setSelectedLevel(newSelectedLevels);
+    //     setSelectedLevelId(newSelectedLevelId);
 
-        let ListId = '';
-        if (newSelectedLevelId.length > 0) {
-            newSelectedLevelId.map(level => {
-                console.log("check");
-                ListId += level.toString() + ",";
-            })
-            await formik.setFieldValue("level_id", ListId);
-        };
+    //     let ListId = '';
+    //     if (newSelectedLevelId.length > 0) {
+    //         newSelectedLevelId.map(level => {
+    //             console.log("check");
+    //             ListId += level.toString() + ",";
+    //         })
+    //         await formik.setFieldValue("level_id", ListId);
+    //     };
 
-    }
-    const renderSelectedLevel = () => (
-        <div>
-            {selectedLevel.map((level) => (
-                <Button key={level} className="mr-2 mb-2">
-                    {level}
-                </Button>
-            ))}
-        </div>
-    );
-    const renderLevel = () => (
-        <div className="grid grid-cols-3">
-            {arrLevel?.data?.map((level) => (
-                <Checkbox
-                    key={level.id}
-                    checked={selectedLevel.includes(level.name)}
-                    onChange={() => toggleLevel(level.name, level.id)}
-                    className="mr-2"
-                >
-                    {level.name}
-                </Checkbox>
-            ))}
-        </div>
-    );
+    // }
+    // const renderSelectedLevel = () => (
+    //     <div>
+    //         {selectedLevel.map((level) => (
+    //             <Button key={level} className="mr-2 mb-2">
+    //                 {level}
+    //             </Button>
+    //         ))}
+    //     </div>
+    // );
+    // const renderLevel = () => (
+    //     <div className="grid grid-cols-3">
+    //         {arrLevel?.data?.map((level) => (
+    //             <Checkbox
+    //                 key={level.id}
+    //                 checked={selectedLevel.includes(level.name)}
+    //                 onChange={() => toggleLevel(level.name, level.id)}
+    //                 className="mr-2"
+    //             >
+    //                 {level.name}
+    //             </Checkbox>
+    //         ))}
+    //     </div>
+    // );
 
 
     return (
@@ -432,8 +431,8 @@ const AddNewCompany = (props) => {
                         ]}
                     >
                         <Select name="Enable" width={'30%'} onChange={handleChangeEnable} placeholder="Choose Enable" value={formik.values.enable}>
-                            <Option value={0}>On</Option>
-                            <Option value={1}>Off</Option>
+                            <Option value={0}>Off</Option>
+                            <Option value={1}>On</Option>
                         </Select>
                     </Form.Item>
 
@@ -467,7 +466,7 @@ const AddNewCompany = (props) => {
                         {renderSelectedSkills()}
 
                     </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                         label="Level"
                         name="Level"
                         style={{ minWidth: "100%" }}
@@ -481,9 +480,9 @@ const AddNewCompany = (props) => {
                     >
                         {renderLevel()}
 
-                    </Form.Item>
+                    </Form.Item> */}
 
-                    <Form.Item
+                    {/* <Form.Item
                         label="Level Selected"
                         name="Level"
                         style={{ minWidth: "100%" }}
@@ -497,7 +496,7 @@ const AddNewCompany = (props) => {
                     >›
                         {renderSelectedLevel()}
 
-                    </Form.Item>
+                    </Form.Item> */}
 
                     {typeof (id) == "undefined" ? <Form.Item
                         label="Account"

@@ -167,11 +167,19 @@ export const createAccountAction = (newAc) => {
             });
             history.goBack();
         } catch (error) {
-            notification.error({
-                closeIcon: true,
-                message: "Error",
-                description: <>Create New Account fail!</>,
-            });
+            if (error?.response?.data?.statusCode === 409) {
+                notification.error({
+                    closeIcon: true,
+                    message: "Error",
+                    description: <>Create New Account Fail! . Email Already In Use</>,
+                });
+            } else {
+                notification.error({
+                    closeIcon: true,
+                    message: "Error",
+                    description: <>Create New Account Fail!</>,
+                });
+            }
         }
     };
 };

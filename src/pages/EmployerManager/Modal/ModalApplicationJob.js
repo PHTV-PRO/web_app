@@ -184,7 +184,7 @@ const ModalApplicationByJob = (props) => {
                         <a href={cv.cv?.file_name} target="_blank" rel="noopener noreferrer" className="text-xl hover:no-underline text-blue flex items-end justify-center hover:cursor-pointer no-underline  pr-4">
                             <EyeOutlined /> <text className="text-sm ml-2 my-0 py-0 "> View CV</text>
                         </a>
-                        <div className="border-r-2  h-4  border-gray-400 bg-slate-400"></div>
+                        {userLogin?.role === 'EMPLOYER' && <div className="border-r-2  h-4  border-gray-400 bg-slate-400"></div>}
                         <div className="flex items-center justify-center px-4">
                             {userLogin?.role === "EMPLOYER" &&
                                 <Switch size="small"
@@ -197,7 +197,7 @@ const ModalApplicationByJob = (props) => {
                                     }}
                                 />}
                         </div>
-                        <div className="border-r-2  h-4  border-gray-400 bg-slate-400"></div>
+                        {userLogin?.role === 'EMPLOYER' && <div className="border-r-2  h-4  border-gray-400 bg-slate-400"></div>}
 
                         <div className="flex text-xl items-center justify-between hover:cursor-pointer pl-4 gap-3 hover:text-blue-400">
                             {userLogin?.role === "EMPLOYER" &&

@@ -156,12 +156,7 @@ export default function CompanyMng() {
                     }}>
                         {data?.subcriptionPlan?.name}
                     </Button>}
-                    {/* <Button type="link" onClick={() => {
-                        showModalSubcriptopnPlan()
-                        setIdEmployer(data?.account?.id)
-                    }}>
-                        {data?.subcriptionPlan?.name || "Don't Have Subcription Plan"}
-                    </Button> */}
+
                 </div>)
             },
         },

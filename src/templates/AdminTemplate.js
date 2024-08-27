@@ -451,24 +451,21 @@ export const AdminTemplate = (props) => { //path, exact, Component
 
   const itemsAdmin = [
     getItem('Dashboard', '1', <NavLink className='text-decoration-none' to="/admin/chartmng"><BarChartOutlined /></NavLink>),
-    getItem('Industry Management', 'sub1', <IssuesCloseOutlined />, [
-      getItem('Industry ', '11', <NavLink className='text-decoration-none' to="/admin/industry"><i className="fa fa-check"></i></NavLink>),
-      getItem('Skill ', '12', <NavLink className='text-decoration-none' to="/admin/skillmng"><i className="fa fa-check"></i></NavLink>),
-    ]),
-
-    getItem('User Management', 'sub2', <UserOutlined />, [
+    getItem('User Management', 'sub1', <UserOutlined />, [
       getItem('Employer', '2', <NavLink className='text-decoration-none' to="/admin/empmng"><UserOutlined /></NavLink>),
       getItem("Candidate", "3", <NavLink className="text-decoration-none" to="/admin/accmng"><UserOutlined /></NavLink>),
     ]),
+    getItem('Customer Management', '4', <NavLink className='text-decoration-none' to="/admin/companymng"><HomeFilled /></NavLink>),
+    getItem('City Province ', '5', <NavLink className='text-decoration-none' to="/admin/cityprovincemng"><BankOutlined /></NavLink>),
+    getItem('SubscriptionPlan Management', '6', <NavLink className='text-decoration-none' to="/admin/subplanmng"><ContainerOutlined /></NavLink>),
+    getItem('Industry Management', 'sub2', <IssuesCloseOutlined />, [
+      getItem('Industry ', '7', <NavLink className='text-decoration-none' to="/admin/industry"><i className="fa fa-check"></i></NavLink>),
+      getItem('Skill ', '8', <NavLink className='text-decoration-none' to="/admin/skillmng"><i className="fa fa-check"></i></NavLink>),
+    ]),
+    getItem('Advertisement ', '9', <NavLink className='text-decoration-none' to="/admin/advertisementmng/advertisementmng"><LinkOutlined /></NavLink>),
+    getItem('Job Type Management', '10', <NavLink className='text-decoration-none' to="/admin/jobtypemng"><AuditOutlined /></NavLink>),
+    getItem('Level Management', '11', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
 
-    getItem('City Province ', '4', <NavLink className='text-decoration-none' to="/admin/cityprovincemng"><BankOutlined /></NavLink>),
-    getItem('Advertisement ', '5', <NavLink className='text-decoration-none' to="/admin/advertisementmng/advertisementmng"><LinkOutlined /></NavLink>),
-
-    getItem('Job Type Management', '6', <NavLink className='text-decoration-none' to="/admin/jobtypemng"><AuditOutlined /></NavLink>),
-    getItem('Level Management', '7', <NavLink className='text-decoration-none' to="/admin/levelmng"><ApartmentOutlined /></NavLink>),
-    getItem('SubscriptionPlan Management', '8', <NavLink className='text-decoration-none' to="/admin/subplanmng"><ContainerOutlined /></NavLink>),
-    getItem('Customer Management', '9', <NavLink className='text-decoration-none' to="/admin/companymng"><HomeFilled /></NavLink>),
-    // getItem('Job Management', '10', <NavLink className='text-decoration-none' to="/admin/jobmng"><WalletOutlined /></NavLink>),
 
   ]
 

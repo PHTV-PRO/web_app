@@ -2,9 +2,7 @@ import { GET_SUBSCRIPTION_PLAN_DETAIL, GET_SUBSCRIPTION_PLAN_LIST, GET_SUBSCRIPT
 import { history } from "../../App";
 import { subcriptionPlanService } from "../../services/SubscriptionPlanService";
 import { notification } from "antd";
-import { getCompanyAndJobByTokenAction } from '../../redux/actions/AccountAction';
-import { GET_COMPANY_JOB } from "../constants";
-import { accountService } from "../../services/AccountService";
+
 
 export const getSubscriptionPlanListAction = () => {
     return async (dispatch) => {
@@ -69,7 +67,7 @@ export const returnBuyScriptionPlan = (paymentId, payerId) => {
                     closeIcon: true,
                     message: 'Buy Subscription Plan Fail. plase try again!!',
                     description: (
-                        <>Add new station successfully.</>
+                        <>Add new Subcription Plan successfully.</>
                     ),
                 })
                 history.push("/employer/emprofile")
@@ -118,7 +116,7 @@ export const addSubscriptionPlanAction = (formData) => {
                     closeIcon: true,
                     message: 'Success',
                     description: (
-                        <>Add new  SubcriptionPlan successfully.</>
+                        <>Add new  Subcription Plan successfully.</>
                     ),
                 });
                 history.push('/admin/subplanmng');
@@ -127,7 +125,7 @@ export const addSubscriptionPlanAction = (formData) => {
                     closeIcon: true,
                     message: 'Error',
                     description: (
-                        <>Add new SubcriptionPlan fail.</>
+                        <>Add new Subcription Plan fail.</>
                     ),
                 });
             }
@@ -145,7 +143,7 @@ export const updateSubscriptionPlanByIdAction = (id, formData) => {
                 closeIcon: true,
                 message: 'Success',
                 description: (
-                    <>Update SubcriptionPlan successfully</>
+                    <>Update Subcription Plan successfully</>
                 ),
             });
             history.push('/admin/subplanmng');
@@ -163,12 +161,21 @@ export const deleteSubscriptionPlanAction = (id) => {
                 closeIcon: true,
                 message: 'Success',
                 description: (
-                    <>Delete SubcriptionPlan successfully</>
+                    <>Delete Subcription Plan successfully</>
                 ),
             });
             dispatch(getSubscriptionPlanListAction())
         } catch (error) {
-            console.log('error', error);
+            if (error?.response?.data?.statusCode === 500) {
+                notification.error({
+                    closeIcon: false,
+                    message: 'Delete Fail !!!',
+                    description: (
+                        <>Can't Delete Subcription Plan</>
+                    ),
+                });
+                history.push('/admin/subplanmng');
+            }
         }
     }
 }

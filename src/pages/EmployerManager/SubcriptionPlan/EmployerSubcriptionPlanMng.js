@@ -192,7 +192,7 @@ export default function EmployerSubcriptionPlanMng() {
     ]
     return <div>
         <div className='d-flex mb-3 h-15'>
-            <h3 className='text-xl'>SubcriptionPlan Management</h3>
+            <h3 className='text-xl'>Subcription Plan Management</h3>
         </div>
         {data1 === undefined || data1?.length === 0 ? <div>
             <div className='flex items-center justify-center'>
@@ -200,8 +200,8 @@ export default function EmployerSubcriptionPlanMng() {
                     <div className='flex items-center justify-center mr-2'>
                         < TagOutlined />
                     </div>
-                    No Register SubcriptionPlan .
-                    <a href='/employer/buyScPl' className='font-normal text-blue-400 hover:cursor-pointer hover:text-red-500'>Please Register SubcriptionPlan !
+                    No Register Subcription Plan .
+                    <a href='/employer/buyScPl' className='font-normal text-blue-400 hover:cursor-pointer hover:text-red-500'>Please Register Subcription Plan !
                     </a>
                 </h2>
             </div>

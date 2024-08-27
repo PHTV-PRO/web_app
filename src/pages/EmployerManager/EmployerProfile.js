@@ -105,15 +105,21 @@ const EmployerProfile = (props) => {
 
                 <div className=''>
                     <div className='bg-gray-100 my-6 p-6 rounded-md shadow-md h-36'>
-                        <div className='flex justify-between'>
+                        <div className='flex justify-between mb-2'>
                             {
-                                userLogin?.role === "ADMIN" ? <div className='mr-2 font-extrabold text-lg'>Hello {dataCompanyForEmployerFromAdmin?.email}</div>
-                                    : <div className='mr-2 font-extrabold text-lg'>Hello {employerCompanyJob?.email}</div>
+                                userLogin?.role === "ADMIN" ? <div className='mr-2 font-extrabold text-xl'>Hello {dataCompanyForEmployerFromAdmin?.email}</div>
+                                    : <div className='mr-2 font-extrabold text-xl'>Hello {employerCompanyJob?.email}</div>
                             }
                             <div >
-                                <Button onClick={() => {
-                                    showModalOfCompany()
-                                }}> <i class="fa-solid fa-arrow-up-right-from-square"></i></Button>
+                                <div className='font-bold'>
+                                    <Button
+                                        className='text-xl font-bold'
+                                        onClick={() => {
+                                            showModalOfCompany()
+                                        }}
+                                        title='Show Company Detail'
+                                    > <i class="fa-solid fa-arrow-up-right-from-square"></i></Button>
+                                </div>
                                 {/* Modal of Company Detail */}
                                 <Modal
                                     width={'90%'}

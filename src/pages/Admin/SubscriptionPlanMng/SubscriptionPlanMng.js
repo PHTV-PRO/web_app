@@ -170,7 +170,7 @@ export default function SubcriptionPlanMng() {
     ]
     return <div>
         <div className='d-flex mb-3'>
-            <h3 className='text-lg'>SubcriptionPlan Management</h3>
+            <h3 className='text-lg'>Subcription Plan Management</h3>
             <Button href='/admin/subplanmng/addsubplan' type="primary" className='ml-3 small bg-primary'>+ Add New SubcriptionPlan</Button>
         </div>
         <Table columns={columns} dataSource={data} rowKey={'id'} />

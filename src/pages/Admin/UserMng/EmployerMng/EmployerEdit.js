@@ -36,8 +36,7 @@ const EmployeeEdit = (props) => {
         },
         onSubmit: async (values) => {
             if (
-                values?.name?.trim() === "" || values?.name?.startsWith(' ') === true ||
-                values?.email?.trim() === "" || values?.email?.startsWith(' ') === true
+                values?.name?.trim() === "" || values?.name?.startsWith(' ') === true
                 || values?.address?.trim() === "" || values?.address?.startsWith(' ') === true
                 || values?.password?.trim() === "" || values?.password?.startsWith(' ') === true
             ) {
@@ -129,6 +128,7 @@ const EmployeeEdit = (props) => {
                         disabled
                         className="text-dark"
                         name="email"
+                        readOnly
                         onChange={formik.handleChange}
                         value={formik.values.email}
                         placeholder="Email"

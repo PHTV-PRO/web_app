@@ -37,8 +37,8 @@ const AccountEdit = (props) => {
         onSubmit: async (values) => {
             if (
                 values?.name?.trim() === "" || values?.name?.startsWith(' ') === true ||
-                values?.email?.trim() === "" || values?.email?.startsWith(' ') === true
-                || values?.address?.trim() === "" || values?.address?.startsWith(' ') === true
+                // values?.email?.trim() === "" || values?.email?.startsWith(' ') === true
+                values?.address?.trim() === "" || values?.address?.startsWith(' ') === true
                 || values?.password?.trim() === "" || values?.password?.startsWith(' ') === true
             ) {
                 notification.error({
@@ -132,6 +132,7 @@ const AccountEdit = (props) => {
                         onChange={formik.handleChange}
                         value={formik.values.email}
                         placeholder="Email"
+                        readOnly
                     />
                 </Form.Item>
 

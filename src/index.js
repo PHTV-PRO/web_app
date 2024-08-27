@@ -6,14 +6,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './redux/configStore';
-import Loading from './components/Loading/Loading';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <App />
-    </Provider>
+  </Provider>
 );
 // const preLoader = ReactDOM.render(document.getElementById('preLoader'));
 // preLoader.render( <Loading/> 

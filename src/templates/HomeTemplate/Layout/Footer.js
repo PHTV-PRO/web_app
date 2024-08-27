@@ -3,19 +3,19 @@ import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function Footer() {
   return (
-    <footer className="px-4 divide-y text-gray-100" style={{backgroundColor: '#22577a'}}>
+    <footer className="px-4 divide-y text-gray-100" style={{ backgroundColor: '#22577a' }}>
       <div className="container flex flex-col justify-between py-10 mx-auto space-y-8 lg:flex-row lg:space-y-0">
         <div className="lg:w-1/3">
           <a rel="noopener noreferrer" href="/home" style={{ textDecoration: 'none' }} className="flex justify-center space-x-3 lg:justify-start">
             <div className="flex items-center justify-center h-12 rounded-full dark:bg-red-400">
-              <img src='/img/logonotext.png' alt='logo' style={{width: '50px'}} />
+              <img src='/img/logo.png' alt='logo' style={{ width: '50px' }} />
             </div>
-            <span className="self-center text-2xl font-semibold">PHTV BUS</span>
+            <span className="self-center text-2xl font-semibold">PHTV PRO</span>
           </a>
         </div>
         <div className="grid grid-cols-2 text-sm gap-x-3 gap-y-8 lg:w-2/3 sm:grid-cols-4">
           <div className="space-y-3">
-            <h3 className="tracking-wide uppercase dark:text-gray-50">PHTV Bus  Online Ticket</h3>
+            <h3 className="tracking-wide uppercase dark:text-gray-50">PHTV PRO  Online Ticket</h3>
             <NavLink to="/about" style={{ textDecoration: 'none' }} className="items-center  hover:text-violet-400">About Us</NavLink><br />
             <NavLink to="/news" style={{ textDecoration: 'none' }} className="items-center  hover:text-violet-400">News</NavLink><br />
             <NavLink to="/" style={{ textDecoration: 'none' }} className="items-center  hover:text-violet-400">Home</NavLink><br />
@@ -30,7 +30,7 @@ export default function Footer() {
             <h3 className="uppercase dark:text-gray-50">CUSTOMER CARE</h3>
             <p>
               Hotline: 1900 6017<br />
-              Work time: 8:00 - 22:00 <br /> 
+              Work time: 8:00 - 22:00 <br />
               (All days including Holidays)<br />
               Support email: hoidap@phtv.com<br />
             </p>

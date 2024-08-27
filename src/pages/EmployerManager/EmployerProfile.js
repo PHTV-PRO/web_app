@@ -232,10 +232,10 @@ const EmployerProfile = (props) => {
                                 : <Button href={`/employer/buyScPl`} className='btn-primary bg-primary mt-1 px-5' type='primary' onClick={() => { }}>Buy subscription plan</Button>}
 
                             <Modal title="Current subscription plan" onOk={handleOk} onCancel={handleCancel} open={isModalOpen} footer={
-                                <>
-                                    <Button href={`/admin/empmng/edit/${userLogin?.id}`} className='btn-primary bg-primary mt-3 px-5' type='primary' onClick={() => { }}>Renew subscription plan</Button>
+                                <div className='text-center'>
                                     <Button className='btn-primary bg-primary mt-2 px-5' type='primary' onClick={handleOk}>OK</Button>
-                                </>} >
+                                </div>}
+                            >
                                 <div className='flex flex-col items-center justify-center mt-6'>
                                     <div className="bg-blue-900 col-6 py-2 rounded-tl-[80px] rounded-br-[80px]">
 

@@ -138,14 +138,6 @@ export default function AccountMng() {
             sortDirections: ["descend", "ascend"],
         },
         {
-            title: "Gender",
-            dataIndex: "gender",
-            key: "gender",
-            ...getColumnSearchProps("gender"),
-            sorter: (a, b) => a.gender.length - b.gender.length,
-            sortDirections: ["descend", "ascend"],
-        },
-        {
             title: "Address",
             dataIndex: "address",
             key: "address",

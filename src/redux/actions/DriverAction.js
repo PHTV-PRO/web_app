@@ -25,7 +25,7 @@ export const getRegisterDriverAction = () => {
     return async (dispatch) => {
         try {
             const result = await driverService.getRegisterDriver();
-        
+
             if (result.data.status === 200) {
                 dispatch({
                     type: GET_REGISTER_DRIVER_LIST,
@@ -57,8 +57,8 @@ export const addDriverAction = (newDriver) => {
         try {
             const result = await driverService.postDriver(newDriver);
 
-           
-            if(result.data.status===200){
+
+            if (result.data.status === 200) {
                 notification.success({
                     closeIcon: true,
                     message: 'Success',
@@ -68,7 +68,7 @@ export const addDriverAction = (newDriver) => {
                 });
                 history.push('/admin/drivermng');
             }
-            else if(result.data.status===409){
+            else if (result.data.status === 409) {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',
@@ -92,8 +92,8 @@ export const addDriverByUserAction = (newDriver) => {
     return async (dispatch) => {
         try {
             const result = await driverService.postDriver(newDriver);
-         
-            if(result.data.status===200){
+
+            if (result.data.status === 200) {
                 notification.success({
                     closeIcon: true,
                     message: 'Success',
@@ -103,7 +103,7 @@ export const addDriverByUserAction = (newDriver) => {
                 });
                 history.push('/loginDriver');
             }
-            else if(result.data.status===409){
+            else if (result.data.status === 409) {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',
@@ -143,7 +143,7 @@ export const deleteDriver = (id) => {
     }
 }
 
-export const updateDriver = (id, newDriver) =>{
+export const updateDriver = (id, newDriver) => {
     return async (dispatch) => {
         try {
             const result = await driverService.putDriver(id, newDriver)
@@ -160,7 +160,7 @@ export const updateDriver = (id, newDriver) =>{
         }
     }
 }
-export const updateByDriverAction = (id, newDriver) =>{
+export const updateByDriverAction = (id, newDriver) => {
     return async (dispatch) => {
         try {
             const result = await driverService.putDriver(id, newDriver)
@@ -178,7 +178,7 @@ export const updateByDriverAction = (id, newDriver) =>{
     }
 }
 
-export const approveDriver = (id) =>{
+export const approveDriver = (id) => {
     return async (dispatch) => {
         try {
             const result = await driverService.approveDriver(id)
@@ -197,82 +197,82 @@ export const approveDriver = (id) =>{
 }
 export const forgetPassword = (emailInfo) => {
     return async (dispatch) => {
-      try {
-        dispatch(displayLoadingAction);
-        const result = await driverService.forgetPassword(emailInfo);
-        if (result.data.status === 200) {
-        //   dispatch({
-        //     type: LAY_LAI_MAT_KHAU_ACTION,
-        //     emailInfo: result.data.content,
-        //   });
-          await dispatch(hideLoadingAction);
-          notification.success({
-            closeIcon: false,
-            message: "Success",
-            description: (
-              <>
-                Your new password has been sent to your email, please check your email or spam box and login again.
-              </>
-            ),
-          });
-          history.replace("loginDriver");
+        try {
+            dispatch(displayLoadingAction);
+            const result = await driverService.forgetPassword(emailInfo);
+            if (result.data.status === 200) {
+                //   dispatch({
+                //     type: LAY_LAI_MAT_KHAU_ACTION,
+                //     emailInfo: result.data.content,
+                //   });
+                await dispatch(hideLoadingAction);
+                notification.success({
+                    closeIcon: false,
+                    message: "Success",
+                    description: (
+                        <>
+                            Your new password has been sent to your email, please check your email or spam box and login again.
+                        </>
+                    ),
+                });
+                history.replace("loginDriver");
+            }
+        } catch (error) {
+            console.log(error);
+            await dispatch(hideLoadingAction);
+            alert("Account not existed");
         }
-      } catch (error) {
-        console.log(error);
-        await dispatch(hideLoadingAction);
-        alert("Account not existed");
-      }
     };
-  };
+};
 export const loginDriverAction = (loginDriverInfo) => {
     return async (dispatch) => {
-      try {
-        const result = await driverService.loginDriver(loginDriverInfo);
-        if(result.data.data.isApprove){
-            if (result.status === 200) {
-                localStorage.setItem("driverId", result.data.data.id);
-                 notification.success({
-                   closeIcon: true,
-                   message: "Success",
-                   description: (
-                     <>
-                       Login successfully.<br />
-                       Welcom to PHTV Bus.
-                     </>
-                   ),
-                 });
-                 history.push("/detailTripOfDriver");
-               } else {
-                 await dispatch(hideLoadingAction);
-                 history.replace("loginDriver");
-               }
-        }else{
+        try {
+            const result = await driverService.loginDriver(loginDriverInfo);
+            if (result.data.data.isApprove) {
+                if (result.status === 200) {
+                    localStorage.setItem("driverId", result.data.data.id);
+                    notification.success({
+                        closeIcon: true,
+                        message: "Success",
+                        description: (
+                            <>
+                                Login successfully.<br />
+                                Welcom to PHTV PRO.
+                            </>
+                        ),
+                    });
+                    history.push("/detailTripOfDriver");
+                } else {
+                    await dispatch(hideLoadingAction);
+                    history.replace("loginDriver");
+                }
+            } else {
+                notification.error({
+                    closeIcon: true,
+                    message: "Error",
+                    description: (
+                        <>
+                            Your account has not been approved.<br />
+                            Please try again.
+                        </>
+                    ),
+                });
+            }
+
+            await dispatch(hideLoadingAction);
+        } catch (error) {
+            dispatch(hideLoadingAction);
             notification.error({
                 closeIcon: true,
                 message: "Error",
                 description: (
-                  <>
-                    Your account has not been approved.<br />
-                    Please try again.
-                  </>
+                    <>
+                        Wrong account or password!!.<br />
+                        Please try again.
+                    </>
                 ),
-              });
+            });
         }
-  
-        await dispatch(hideLoadingAction);
-      } catch (error) {
-        dispatch(hideLoadingAction);
-        notification.error({
-          closeIcon: true,
-          message: "Error",
-          description: (
-            <>
-              Wrong account or password!!.<br />
-              Please try again.
-            </>
-          ),
-        });
-      }
     };
-  };
+};
 

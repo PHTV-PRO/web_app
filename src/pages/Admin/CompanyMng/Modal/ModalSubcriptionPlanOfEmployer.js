@@ -16,7 +16,6 @@ const ModalSubcriptionPlanOfEmployer = (props) => {
     }, [dispatch, id])
 
     const data = arrDataSubcriptionPlanFromAdmin?.subcriptionPlanDTO;
-    console.log(data);
 
     return <div>
         <div className="flex flex-col gap-2">

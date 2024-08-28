@@ -17,7 +17,6 @@ const FollowCompanyByCandidate = () => {
         dispatch(getFollowCompanyAction())
     }, [dispatch])
     const data = arrFollowCompany?.data;
-    console.log(data);
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
@@ -150,7 +149,6 @@ const FollowCompanyByCandidate = () => {
             key: "avatar",
             width: '10%',
             render: (text, data, index) => {
-                console.log(data?.image);
                 return data?.image != null ? (
                     <img key={index} style={{ width: 40, height: 40, objectFit: "cover", borderRadius: "50%", }} src={`${data?.image}`} alt={data?.account?.image} />
                 ) : (

@@ -10,8 +10,6 @@ const EditSkill = (props) => {
     const { skillDetail } = useSelector(state => state.SkillReducer)
     let { arrIndustry } = useSelector(state => state.IndustryReducer);
 
-    console.log(arrIndustry);
-    console.log(skillDetail);
     let { id } = props.match.params;
     useEffect(() => {
         dispatch(getSkillIdAction(id));

@@ -47,8 +47,7 @@ export default function CompanyMng() {
         setSearchedColumn(dataIndex);
     };
     const data = arrCompany.data;
-    // console.log(data);
-    // console.log(idEmployer);
+
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (

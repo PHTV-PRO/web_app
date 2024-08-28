@@ -72,7 +72,6 @@ export default function RegisterCompany() {
 
     const handleChangeFileLogo = (e) => {
         let file = e.target.files[0];
-        console.log(file);
         if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/png') {
             let reader = new FileReader();
             reader.readAsDataURL(file);

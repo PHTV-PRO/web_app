@@ -8,7 +8,6 @@ export const getSkillListAction = () => {
     return async (dispatch) => {
         try {
             const result = await skillService.getListSkill();
-            console.log(result);
             if (result.status === 200) {
                 dispatch({
                     type: GET_SKILL_LIST,
@@ -25,8 +24,6 @@ export const getSkillIdAction = (id) => {
     return async (dispatch) => {
         try {
             const result = await skillService.getSkillById(id);
-            console.log(result);
-            console.log(result.data.data);
             dispatch({
                 type: GET_SKILL_DETAIL,
                 skillDetail: result.data.data

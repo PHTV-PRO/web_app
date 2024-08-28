@@ -8,7 +8,6 @@ import { getIndustryByIdAction, updateIndustryByIdAction } from '../../../redux/
 const EditIndustry = (props) => {
     const dispatch = useDispatch();
     const { industryDetail } = useSelector(state => state.IndustryReducer)
-    console.log(industryDetail);
 
     let { id } = props.match.params;
     useEffect(() => {

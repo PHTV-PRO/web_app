@@ -25,8 +25,6 @@ export const getJobTypeByIdAction = (id) => {
     return async (dispatch) => {
         try {
             const result = await jobTypeService.getJobTypeById(id);
-            console.log(result);
-            console.log(result.data.data);
             dispatch({
                 type: GET_JOB_TYPE_DETAIL,
                 JobTypeDetail: result.data.data

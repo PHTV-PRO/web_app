@@ -18,7 +18,6 @@ export default function EmployerJobMng(props) {
     const dispatch = useDispatch();
     const idOfEmployer = props?.idOfEmployer?.id
     let { employerCompanyJob } = useSelector(state => state.AccountReducer);
-    // console.log(employerCompanyJob);
     let { userLogin } = useSelector(state => state.UserReducer);
     let { dataCompanyForEmployerFromAdmin } = useSelector(state => state.AccountReducer);
     let accessToken = {}
@@ -59,9 +58,6 @@ export default function EmployerJobMng(props) {
         setIsModalOpen(false);
     };
     const data = employerCompanyJob?.companyForEmployer || dataCompanyForEmployerFromAdmin?.companyForEmployer;
-    // console.log(data?.jobsOpened);
-    // console.log(employerCompanyJob);
-    // console.log(employerCompanyJob?.companyForEmployer?.subcriptionPlan);
 
 
     const getColumnSearchProps = (dataIndex) => ({
@@ -253,7 +249,6 @@ export default function EmployerJobMng(props) {
         },
     ]
     const onChange = (key) => {
-        // console.log(key);
     };
     const items = [
         {

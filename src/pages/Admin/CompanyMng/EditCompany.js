@@ -89,18 +89,16 @@ const EditCompany = (props) => {
         }
     })
 
-    console.log("check id:", formik.values.account_id);
-
 
     // hàm lấy imge khi update
     useEffect(() => {
         const images = companyDetail?.list_image ? JSON.parse(companyDetail?.list_image) : [];
-        console.log(images);
+
         images && setImagePreview(images);
     }, [companyDetail?.list_image])
 
     useEffect(() => {
-        console.log("check list skill", companyDetail);
+
         const listSkillId = [];
         const listSkill = [];
         companyDetail?.skills?.map((data) => {
@@ -124,7 +122,6 @@ const EditCompany = (props) => {
 
 
     const handleChangeEnable = (value) => {
-        console.log(value);
         formik.setFieldValue("enable", value);
     };
 
@@ -245,7 +242,6 @@ const EditCompany = (props) => {
         let ListId = '';
         if (newSelectedSkillsId.length > 0) {
             newSelectedSkillsId.map(skill => {
-                console.log("check");
                 ListId += skill.toString() + ",";
             })
             await formik.setFieldValue("skill_id", ListId);

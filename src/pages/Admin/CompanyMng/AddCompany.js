@@ -23,15 +23,13 @@ const AddNewCompany = (props) => {
     const [loading, setIsLoading] = useState(false);
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
-    const [selectedLevel, setSelectedLevel] = useState([]);
-    const [selectedLevelId, setSelectedLevelId] = useState([]);
+
 
     const dispatch = useDispatch();
     let { arrAccountWithoutCompany } = useSelector((state) => state.AccountReducer);
-    let { arrLevel } = useSelector(state => state.LevelReducer);
     let { arrSkill } = useSelector(state => state.SkillReducer);
     let { arrCityProvince } = useSelector(state => state.CityProvinceReducer);
-    console.log(arrCityProvince);
+
 
     useEffect(() => {
         dispatch(getLevelListAction())
@@ -99,7 +97,7 @@ const AddNewCompany = (props) => {
     const handleChangeCityProvince = (value) => {
         formik.setFieldValue("city_province_id", value);
     };
-    console.log(arrAccountWithoutCompany);
+
 
     const handleChangeEnable = (value) => {
         formik.setFieldValue("enable", value);
@@ -222,7 +220,7 @@ const AddNewCompany = (props) => {
         let ListId = '';
         if (newSelectedSkillsId.length > 0) {
             newSelectedSkillsId.map(skill => {
-                console.log("check");
+
                 ListId += skill.toString() + ",";
             })
             await formik.setFieldValue("skill_id", ListId);
@@ -230,54 +228,7 @@ const AddNewCompany = (props) => {
 
     }
 
-    // const toggleLevel = async (name, id) => {
-    //     const newSelectedLevels = [...selectedLevel];
-    //     const newSelectedLevelId = [...selectedLevelId];
 
-    //     if (newSelectedLevels.includes(name)) {
-    //         newSelectedLevels.splice(newSelectedLevels.indexOf(name), 1);
-    //         newSelectedLevelId.splice(newSelectedLevelId.indexOf(id), 1);
-
-    //     } else {
-    //         newSelectedLevels.push(name);
-    //         newSelectedLevelId.push(id);
-    //     }
-    //     setSelectedLevel(newSelectedLevels);
-    //     setSelectedLevelId(newSelectedLevelId);
-
-    //     let ListId = '';
-    //     if (newSelectedLevelId.length > 0) {
-    //         newSelectedLevelId.map(level => {
-    //             console.log("check");
-    //             ListId += level.toString() + ",";
-    //         })
-    //         await formik.setFieldValue("level_id", ListId);
-    //     };
-
-    // }
-    // const renderSelectedLevel = () => (
-    //     <div>
-    //         {selectedLevel.map((level) => (
-    //             <Button key={level} className="mr-2 mb-2">
-    //                 {level}
-    //             </Button>
-    //         ))}
-    //     </div>
-    // );
-    // const renderLevel = () => (
-    //     <div className="grid grid-cols-3">
-    //         {arrLevel?.data?.map((level) => (
-    //             <Checkbox
-    //                 key={level.id}
-    //                 checked={selectedLevel.includes(level.name)}
-    //                 onChange={() => toggleLevel(level.name, level.id)}
-    //                 className="mr-2"
-    //             >
-    //                 {level.name}
-    //             </Checkbox>
-    //         ))}
-    //     </div>
-    // );
 
 
     return (

@@ -29,8 +29,6 @@ const { RangePicker } = DatePicker;
 
 const AddNewJob = (props) => {
     let { id } = props.match.params;
-    console.log(id);
-
     // const [location, setLocation] = useState(0);
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
@@ -46,7 +44,6 @@ const AddNewJob = (props) => {
     let { userLogin } = useSelector(state => state.UserReducer);
     const { companyDetail } = useSelector(state => state.CompanyReducer)
     const { employerCompanyJob } = useSelector(state => state.AccountReducer);
-    console.log(companyDetail?.id);
 
     let accessToken = {}
     if (localStorage.getItem(TOKEN)) {
@@ -66,7 +63,6 @@ const AddNewJob = (props) => {
         dispatch(getCompanyIdAction(id));
         if (userLogin?.role === "EMPLOYER") {
             dispatch(getCompanyAndJobByTokenAction(accessToken))
-            console.log("check data", formik?.values?.company_id);
         }
     }, [userLogin])
 

@@ -8,7 +8,6 @@ export const getSubscriptionPlanListAction = () => {
     return async (dispatch) => {
         try {
             const result = await subcriptionPlanService.getSubcriptionPlanList();
-            console.log(result);
             if (result.status === 200) {
                 dispatch({
                     type: GET_SUBSCRIPTION_PLAN_LIST,
@@ -25,8 +24,6 @@ export const getSubscriptionPlanByIdAction = (id) => {
     return async (dispatch) => {
         try {
             const result = await subcriptionPlanService.getSubcriptionPlanById(id);
-            console.log(result);
-            console.log(result.data.data);
             dispatch({
                 type: GET_SUBSCRIPTION_PLAN_DETAIL,
                 subscriptionPlanDetail: result.data.data
@@ -52,7 +49,6 @@ export const returnBuyScriptionPlan = (paymentId, payerId) => {
     return async (dispatch) => {
         try {
             const result = await subcriptionPlanService.getReturnSubcriptionPlan(paymentId, payerId);
-            console.log("check result: ", result);
             if (result.status === 200) {
                 notification.success({
                     closeIcon: true,

@@ -25,8 +25,6 @@ export const getLevelByIdAction = (id) => {
     return async (dispatch) => {
         try {
             const result = await levelService.getLevelById(id);
-            console.log(result);
-            console.log(result.data.data);
             dispatch({
                 type: GET_LEVEL_DETAIL,
                 levelDetail: result.data.data
@@ -42,7 +40,6 @@ export const addJobTypeAction = (formData) => {
     return async (dispatch) => {
         try {
             const result = await levelService.addNewLevel(formData)
-            console.log(result);
             if (result.data.statusCode === 200) {
                 notification.success({
                     closeIcon: true,

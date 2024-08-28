@@ -8,7 +8,6 @@ export const getCityProvinceListAction = () => {
     return async (dispatch) => {
         try {
             const result = await cityProvinceService.getCityProvinceList();
-            console.log(result);
             if (result.status === 200) {
                 dispatch({
                     type: GET_CITY_PROVINCE_LIST,
@@ -25,8 +24,6 @@ export const getCityProvinceByIdAction = (id) => {
     return async (dispatch) => {
         try {
             const result = await cityProvinceService.getCityProvinceById(id);
-            console.log(result);
-            console.log(result.data.data);
             dispatch({
                 type: GET_CITY_PROVINCE_DETAIL,
                 cityProvinceDetail: result.data.data
@@ -42,7 +39,6 @@ export const addCityProvinceAction = (formData) => {
     return async (dispatch) => {
         try {
             const result = await cityProvinceService.addNewCityProvince(formData)
-            console.log(result);
             if (result.data.statusCode === 200) {
                 notification.success({
                     closeIcon: true,

@@ -7,18 +7,6 @@ import { DOMAIN, IMAGE, TOKEN, USER_LOGIN } from '../../util/settings/config';
 const Profile = () => {
   const dispatch = useDispatch();
   let { userLogin } = useSelector(state => state.UserReducer);
-  console.log(userLogin);
-
-  // let accessToken = {}
-  // if (localStorage.getItem(TOKEN)) {
-  //   accessToken = localStorage.getItem(TOKEN)
-  // }
-
-  // useEffect(() => {
-  //   if (accessToken != null) {
-  //     dispatch(getCurrentUserAction(accessToken))
-  //   }
-  // }, [dispatch]);
 
   return (
     <div >

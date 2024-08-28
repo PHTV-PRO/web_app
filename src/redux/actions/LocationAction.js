@@ -25,8 +25,6 @@ export const getLocationIdAction = (id) => {
     return async (dispatch) => {
         try {
             const result = await locationService.getLocationById(id);
-            console.log(result);
-            console.log(result.data.data);
             dispatch({
                 type: GET_LOCATION_DETAIL,
                 locationDetail: result.data.data

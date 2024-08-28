@@ -7,7 +7,6 @@ export const getListAccountAction = () => {
     return async (dispatch) => {
         try {
             const result = await accountService.getListAccount();
-            console.log(result);
             if (result.status === 200) {
                 dispatch({
                     type: GET_ACCOUNT_LIST,
@@ -39,7 +38,6 @@ export const getListAccountEmployerAction = () => {
     return async (dispatch) => {
         try {
             const result = await accountService.getListAccountEmployer();
-            console.log(result);
             if (result.status === 200) {
                 dispatch({
                     type: GET_ACCOUNT_EMPLOYER_LIST,
@@ -124,7 +122,6 @@ export const getListAccountWithoutCompanyAction = () => {
     return async (dispatch) => {
         try {
             const result = await accountService.getListAccountWithoutCompany();
-            console.log(result);
             if (result.status === 200) {
                 dispatch({
                     type: GET_ACCOUNT_WITHOUT_COMPANY,
@@ -159,7 +156,6 @@ export const createAccountAction = (newAc) => {
     return async (dispatch) => {
         try {
             const result = await accountService.createAccount(newAc);
-            console.log(result);
             notification.success({
                 closeIcon: true,
                 message: "Success",

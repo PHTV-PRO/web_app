@@ -9,7 +9,6 @@ import { deleteSkillAction, getSkillListAction } from '../../../redux/actions/Sk
 
 export default function SkillMng() {
     let { arrSkill } = useSelector(state => state.SkillReducer);
-    // console.log(arrSkill);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getSkillListAction())
@@ -22,11 +21,6 @@ export default function SkillMng() {
         setCurrentPage(page);
         setPageSize(pageSize);
     };
-
-    console.log('page : ', currentPage);
-    console.log('page size : ', pageSize);
-
-
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');

@@ -14,7 +14,6 @@ import { getDataChartOfEmployer, getDataChartOfEmployerFromAdminById } from '../
 import EmployerJobMng from './EmployerJob/EmployerJobMng';
 import ChartOfEmployer from './Chart/ChartOfEmployer';
 import SummaryDetailOfEmployer from './Summary/summaryDetailOfEmployer';
-import { history } from '../../App';
 
 
 
@@ -55,8 +54,6 @@ const EmployerProfile = (props) => {
         }
     }, [userLogin])
 
-    console.log(userLogin);
-
     let URL = window.location.href;
     //subcription plan
     useEffect(() => {
@@ -96,10 +93,11 @@ const EmployerProfile = (props) => {
     };
 
 
+
     return (
         <div className='p-4'>
             <div className="grid grid-cols-3 gap-2">
-                <div class="col-span-2">
+                <div className="col-span-2">
                     <SummaryDetailOfEmployer chartEmployerFromAdminById={chartEmployerFromAdminById} dataChartOfEmployer={dataChartOfEmployerById}></SummaryDetailOfEmployer>
                 </div>
 
@@ -118,7 +116,7 @@ const EmployerProfile = (props) => {
                                             showModalOfCompany()
                                         }}
                                         title='Show Company Detail'
-                                    > <i class="fa-solid fa-arrow-up-right-from-square"></i></Button>
+                                    > <i className="fa-solid fa-arrow-up-right-from-square"></i></Button>
                                 </div>
                                 {/* Modal of Company Detail */}
                                 <Modal
@@ -131,23 +129,30 @@ const EmployerProfile = (props) => {
                                     <div className='mt-1 '>
                                         <div className='w-[100%] h-[100%] px-20 bg-white mb-10'>
                                             <Carousel style={{ padding: '20px' }} autoplay>
-                                                {employerCompanyJob?.companyForEmployer?.list_image?.length || dataCompanyForEmployerFromAdmin?.companyForEmployer?.list_image?.length > 0 ? JSON.parse(employerCompanyJob?.companyForEmployer?.list_image || dataCompanyForEmployerFromAdmin?.companyForEmployer?.list_image).map((image, i) => {
-                                                    return (
-                                                        <div className=''>
-                                                            <img
-                                                                key={i}
-                                                                className=' w-[100%] object-cover  rounded-lg border-solid border-gray-300 flex items-center h-[700px]'
-                                                                src={image}
-                                                                alt="..." />
 
-                                                        </div>
-                                                    )
-                                                }) :
-                                                    <img className=' w-[100%] object-cover  rounded-lg border-solid border-gray-300 flex items-center h-[700px]' src="/img/placeholder-image.jpg" alt="..." />
+                                                {
+                                                    employerCompanyJob?.companyForEmployer?.list_image?.length > 4 ||
+                                                        dataCompanyForEmployerFromAdmin?.companyForEmployer?.list_image?.length > 4 ?
+                                                        JSON.parse(employerCompanyJob?.companyForEmployer?.list_image ||
+                                                            dataCompanyForEmployerFromAdmin?.companyForEmployer?.list_image)?.map((image, i) => {
+                                                                return (
+                                                                    <div className='' key={i}>
+                                                                        <img
+                                                                            key={i}
+                                                                            className=' w-[100%] object-cover  rounded-lg border-solid border-gray-300 flex items-center h-[700px]'
+                                                                            src={image}
+                                                                            alt="..." />
+
+                                                                    </div>
+                                                                )
+                                                            }
+                                                            ) :
+                                                        <img className=' w-[100%] object-cover  rounded-lg border-solid border-gray-300 flex items-center h-[700px]' src="/img/placeholder-image.jpg" alt="..." />
                                                 }
                                             </Carousel>
                                         </div>
                                         <div className='flex items-center px-20 mt-10 mb-4'>
+
                                             <div className='flex items-center'>
                                                 <h2 className='text-lg font-bold m-0 mr-2 p-0 '>Company Management : </h2>
                                                 <h4 className='text-lg m-0 p-0 mr-2'>{employerCompanyJob?.companyForEmployer?.name || dataCompanyForEmployerFromAdmin?.companyForEmployer?.name}</h4>
@@ -161,55 +166,62 @@ const EmployerProfile = (props) => {
 
                                         <div className='  py-3  px-20 w-[100%] '>
                                             <div className='px-6 py-6 rounded-xl  bg-gray-100 '>
-                                                <div>
-                                                    <h2 className='font-bold text-lg'>Introduction :
-                                                        <text className='text-base font-normal ml-2'
+                                                <div className='flex'>
+                                                    <h2 className='font-bold text-lg flex gap-2 justify-center'>
+                                                        <h2 className='flex-2'>Introduction :</h2>
+                                                        <p className='text-base font-normal ml-2 flex-1'
                                                             dangerouslySetInnerHTML={{ __html: employerCompanyJob?.companyForEmployer?.introduction || dataCompanyForEmployerFromAdmin?.companyForEmployer?.introduction }}
                                                         >
-                                                        </text>
+                                                        </p>
                                                     </h2>
                                                 </div>
                                                 <div>
-                                                    <h2 className='font-bold text-lg'>Profession :
-                                                        <text className='text-base font-normal ml-2'>
+                                                    <h2 className='font-bold text-lg flex gap-2 justify-center'>
+                                                        <h2 className='flex-2'>Profession :</h2>
+                                                        <p className='text-base font-normal ml-2 flex-1'>
                                                             {employerCompanyJob.companyForEmployer?.profession || dataCompanyForEmployerFromAdmin?.companyForEmployer?.profession}
-                                                        </text>
+                                                        </p>
                                                     </h2>
                                                 </div>
                                                 <div>
-                                                    <h2 className='font-bold text-lg'>Link Website :
-                                                        <a className='text-base font-normal ml-2' href={employerCompanyJob.companyForEmployer?.link_website || dataCompanyForEmployerFromAdmin?.companyForEmployer?.link_website}>
+                                                    <h2 className='font-bold text-lg flex gap-2 justify-center'>
+                                                        <h2 className='flex-2'> Link Website :</h2>
+                                                        <a className='text-base font-normal ml-2 flex-1' href={employerCompanyJob.companyForEmployer?.link_website || dataCompanyForEmployerFromAdmin?.companyForEmployer?.link_website}>
                                                             {employerCompanyJob.companyForEmployer?.link_website || dataCompanyForEmployerFromAdmin?.companyForEmployer?.link_website}
                                                         </a>
                                                     </h2>
                                                 </div>
                                                 <div>
-                                                    <h2 className='font-bold text-lg'>National :
-                                                        <text className='text-base font-normal ml-2'>
+                                                    <h2 className='font-bold text-lg flex gap-2 justify-center'>
+                                                        <h2 className='flex-2'> National :</h2>
+                                                        <p className='text-base font-normal ml-2 flex-1'>
                                                             {employerCompanyJob.companyForEmployer?.nationnality || dataCompanyForEmployerFromAdmin?.companyForEmployer?.nationnality}
-                                                        </text>
+                                                        </p>
                                                     </h2>
                                                 </div>
                                                 <div>
-                                                    <h2 className='font-bold text-lg'>Location :
-                                                        <text className='text-base font-normal ml-2'>
+                                                    <h2 className='font-bold text-lg flex gap-2 justify-center'>
+                                                        <h2 className='flex-2'> Location :</h2>
+                                                        <p className='text-base font-normal ml-2 flex-1'>
                                                             {employerCompanyJob.companyForEmployer?.location || dataCompanyForEmployerFromAdmin?.companyForEmployer?.location}
-                                                        </text>
+                                                        </p>
                                                     </h2>
                                                 </div>
                                                 <div>
-                                                    <h2 className='font-bold text-lg'>Benefit :
-                                                        <text className='text-base font-normal ml-2'
+                                                    <h2 className='font-bold text-lg flex gap-2 justify-center'>
+                                                        <h2 className='flex-2'>Benefit :</h2>
+                                                        <p className='text-base font-normal ml-2 flex-1'
                                                             dangerouslySetInnerHTML={{ __html: employerCompanyJob.companyForEmployer?.benefit || dataCompanyForEmployerFromAdmin?.companyForEmployer?.benefit }}
                                                         >
-                                                        </text>
+                                                        </p>
                                                     </h2>
                                                 </div>
                                                 <div>
-                                                    <h2 className='font-bold text-lg'>Size :
-                                                        <text className='text-base font-normal ml-2'>
+                                                    <h2 className='font-bold text-lg flex gap-2 justify-center'>
+                                                        <h2 className='flex-2'>Size :</h2>
+                                                        <p className='text-base font-normal ml-2 flex-1'>
                                                             {employerCompanyJob.companyForEmployer?.size || dataCompanyForEmployerFromAdmin?.companyForEmployer?.size || 'None'}
-                                                        </text>
+                                                        </p>
                                                     </h2>
                                                 </div>
                                             </div>
@@ -225,8 +237,8 @@ const EmployerProfile = (props) => {
                                 ?
                                 <div className='w-[60%] cursor-pointer'>
                                     <div onClick={showModal} className='bg-yellow-300  rounded-md shadow-md  p-2 shadow-yellow-300 flex flex-col gap-2 text-center'>
-                                        <text>{subscriptionPlanByAccount?.subcriptionPlanDTO?.name}</text>
-                                        <text>From {dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.start_date).format("DD-MM-YYYY")} To {dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.end_date).format("DD-MM-YYYY")} </text>
+                                        <p className='m-0 p-0'>{subscriptionPlanByAccount?.subcriptionPlanDTO?.name}</p>
+                                        <p className='m-0 p-0'>From {dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.start_date).format("DD-MM-YYYY")} To {dayjs(subscriptionPlanByAccount?.subcriptionPlanDTO?.end_date).format("DD-MM-YYYY")} </p>
                                     </div>
                                 </div>
                                 : <Button href={`/employer/buyScPl`} className='btn-primary bg-primary mt-1 px-5' type='primary' onClick={() => { }}>Buy subscription plan</Button>}
@@ -268,9 +280,8 @@ const EmployerProfile = (props) => {
                             </Modal>
                         </div> :
                             <div className='w-[60%]'>
-                                {/* {arrDataSubcriptionPlanFromAdmin?.subcriptionPlanDTO !== null ? <text>{arrDataSubcriptionPlanFromAdmin?.subcriptionPlanDTO?.name}</text> : <text>None</text>} */}
                                 <div className='bg-yellow-300  rounded-md shadow-md  p-2 shadow-yellow-300   text-center'>
-                                    <text className='text-gray-600'>{arrDataSubcriptionPlanFromAdmin?.subcriptionPlanDTO?.name || "Don't Have Subcription Plan"}</text>
+                                    <p className='text-gray-600 p-0 m-0'>{arrDataSubcriptionPlanFromAdmin?.subcriptionPlanDTO?.name || "Don't Have Subcription Plan"}</p>
                                 </div>
                             </div>
                         }

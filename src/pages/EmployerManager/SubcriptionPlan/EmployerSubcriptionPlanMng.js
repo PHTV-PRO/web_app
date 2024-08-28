@@ -44,8 +44,6 @@ export default function EmployerSubcriptionPlanMng() {
 
     const data2 = parseSubsObjecTotArray;
     const data1 = subscriptionPlanByAccount?.subcriptionPlanDTOs;
-    console.log(data1);
-
 
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (

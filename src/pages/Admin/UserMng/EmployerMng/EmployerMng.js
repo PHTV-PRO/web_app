@@ -18,7 +18,6 @@ import {
 export default function EmployerMng() {
   const dispatch = useDispatch();
   let { arrAccountEmployer } = useSelector((state) => state.AccountReducer);
-  console.log(arrAccountEmployer);
   useEffect(() => {
     dispatch(getListAccountEmployerAction());
   }, [dispatch]);

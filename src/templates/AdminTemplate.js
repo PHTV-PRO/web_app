@@ -70,7 +70,6 @@ export const AdminTemplate = (props) => { //path, exact, Component
     showModal()
     if (code !== null) {
       dispatch(search(code));
-      console.log("check data search :", arrData);
     }
   }
 

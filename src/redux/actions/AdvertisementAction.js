@@ -8,7 +8,6 @@ export const getAdvertisementListAction = () => {
     return async (dispatch) => {
         try {
             const result = await advertisementService.getAdvertisementList();
-            console.log(result.data);
             if (result.status === 200) {
                 dispatch({
                     type: GET_ADVERTISEMENT_LIST,
@@ -25,8 +24,6 @@ export const getAdvertisementByIdAction = (id) => {
     return async (dispatch) => {
         try {
             const result = await advertisementService.getAdvertisementById(id);
-            console.log(result);
-            console.log(result.data.data);
             dispatch({
                 type: GET_ADVERTISEMENT_DETAIL,
                 advertisementDetail: result.data.data
@@ -42,7 +39,6 @@ export const addAdvertisementAction = (formData) => {
     return async (dispatch) => {
         try {
             const result = await advertisementService.addAdvertisement(formData)
-            console.log(result);
             if (result.data.statusCode === 200) {
                 notification.success({
                     closeIcon: true,

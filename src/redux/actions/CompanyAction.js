@@ -10,7 +10,6 @@ export const getCompanyListAction = () => {
     return async (dispatch) => {
         try {
             const result = await companyService.getListCompany();
-            console.log(result);
             if (result.status === 200) {
                 dispatch({
                     type: GET_COMPANY_LIST,
@@ -27,8 +26,6 @@ export const getCompanyIdAction = (id) => {
     return async (dispatch) => {
         try {
             const result = await companyService.getCompanyById(id);
-            console.log(result);
-            console.log(result.data.data);
             dispatch({
                 type: GET_COMPANY_DETAIL,
                 companyDetail: result.data.data
@@ -43,7 +40,6 @@ export const getFollowCompanyAction = () => {
     return async (dispatch) => {
         try {
             const result = await companyService.getFollowCompanyByCandidate();
-            console.log(result);
             if (result.status === 200) {
                 dispatch({
                     type: GET_FOLLOW_COMPANY_BY_CANDIDATE,
@@ -60,7 +56,6 @@ export const addCompanyAction = (formData) => {
     return async (dispatch) => {
         try {
             const result = await companyService.createCompany(formData)
-            console.log(result);
             if (result.data.statusCode === 200) {
                 notification.success({
                     closeIcon: true,
@@ -80,7 +75,16 @@ export const addCompanyAction = (formData) => {
                 });
             }
         } catch (error) {
-            console.log('error', error);
+            if (error.response.request.status === 400) {
+                notification.error({
+                    closeIcon: true,
+                    message: "Error",
+                    description: <>Create New Company Fail! .</>,
+                });
+            } else {
+
+                console.log('error', error);
+            }
         }
     }
 }
@@ -142,7 +146,6 @@ export const deleteCompanyAction = (id) => {
 
 
 export const apiUploadImages = (images) => new Promise(async (resolve, reject) => {
-    console.log(images);
     try {
         const response = await axios({
             method: 'post',
@@ -161,8 +164,6 @@ export const updateEnableOfCompanyByAdmin = (id) => {
     return async (dispatch) => {
         try {
             const result = await companyService.updateEnableFromAdmin(id);
-            console.log(result);
-            console.log(result.data.data.enable);
             notification.success({
                 closeIcon: true,
                 message: 'Success',
@@ -183,8 +184,6 @@ export const registerCompanyAction = (formData) => {
     return async (dispatch) => {
         try {
             const result = await companyService.registerCompany(formData)
-            console.log(result);
-            console.log(result?.data?.statusCode);
 
             if (result.data.statusCode === 200) {
                 notification.success({

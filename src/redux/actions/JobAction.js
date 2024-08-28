@@ -221,7 +221,6 @@ export const getApplicationByJob = (id) => {
     return async (dispatch) => {
         try {
             const result = await jobService.getApplicationByJob(id);
-            console.log(result);
             if (result.status === 200) {
                 dispatch({
                     type: GET_APPLICATION_BY_JOB,
@@ -256,8 +255,6 @@ export const updateEnableOfJobByAdmin = (id) => {
     return async (dispatch) => {
         try {
             const result = await jobService.putEnableOfJobByAdmin(id);
-            console.log(result);
-            console.log(result.data.data._active);
             notification.success({
                 closeIcon: true,
                 message: 'Success',
@@ -276,8 +273,6 @@ export const updateEnableOfJobByEmployer = (id) => {
     return async (dispatch) => {
         try {
             const result = await jobService.putEnableOfJobByEmployer(id);
-            console.log(result);
-            console.log(result.data.data._active);
             notification.success({
                 closeIcon: true,
                 message: 'Success',

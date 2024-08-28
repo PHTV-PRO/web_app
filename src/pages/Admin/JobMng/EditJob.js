@@ -120,8 +120,6 @@ const EditJob = (props) => {
         }
     })
 
-    // console.log("check date: ", jobDetail?.start_date?.slice(0, 10));
-
     const disabledDate = (current) => {
         if (!startDate) {
             return current && current < dayjs().endOf('day') || current > dayjs().add(30, 'day').endOf('day');

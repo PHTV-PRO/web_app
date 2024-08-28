@@ -19,9 +19,8 @@ If you find this project useful, please consider giving it a ⭐ on Github and f
        -   Setup backend database
             ```bash
             $ Adjust the appsetting.json file with your SQL Server account
-            $ Open Nuget console and run the command: "update-database"
+            $ Start Intelij IDEA 
             $ Wait for database is created and updated
-            $ After finishing, Start the ASP.NET server
             ```                       
 -   Frontend ()
        -   Installation NodeJS

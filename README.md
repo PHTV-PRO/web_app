@@ -1,5 +1,5 @@
 
-<p align="center"><a href="#" target="_blank"><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/145688135/361904819-047e916b-6a8f-4c2f-b74c-bfb0195231d4.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240827%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240827T165821Z&X-Amz-Expires=300&X-Amz-Signature=b921bbea0c02ab1fb2ea2c0de8b3da913f90273295ec83c8a41d91e676634d08&X-Amz-SignedHeaders=host&actor_id=145688135&key_id=0&repo_id=803976424" width="180" alt="Laravel Logo"></a></p>
+<p align="center"><a href="#" target="_blank"><img src="https://github.com/user-attachments/assets/4db261bf-35bb-4b1c-b9d9-759f271f64ff" width="180" alt="Laravel Logo"></a></p>
 
 # Project PHTV-PRO
 A is a fairly basic system implemented using Spring Boot, ReactJS, SQL Server.

@@ -22,7 +22,7 @@ const AddNewCityProvince = () => {
             name: ''
         },
         onSubmit: (values) => {
-            if (values?.name?.trim === "" || values?.name?.startsWith(' ') === true) {
+            if (values?.name?.trim() === "" || values?.name?.startsWith(' ') === true) {
                 notification.error({
                     closeIcon: true,
                     message: 'Error',

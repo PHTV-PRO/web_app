@@ -40,7 +40,6 @@ export const addJobAction = (formData) => {
     return async (dispatch) => {
         try {
             const result = await jobService.createJob(formData)
-            console.log(result);
             if (result.data.statusCode === 200) {
                 notification.success({
                     closeIcon: true,
@@ -69,7 +68,6 @@ export const addJobOfEmployerAction = (formData) => {
     return async (dispatch) => {
         try {
             const result = await jobService.createJobEmployer(formData)
-            console.log(result);
             if (result.data.statusCode === 200) {
                 notification.success({
                     closeIcon: true,
@@ -187,7 +185,6 @@ export const getDataChartOfAdmin = () => {
     return async (dispatch) => {
         try {
             const result = await jobService.getChartOfAdmin();
-            console.log(result);
             if (result.status === 200) {
                 dispatch({
                     type: GET_CHART_OF_ADMIN,
@@ -204,7 +201,6 @@ export const getCVSavedAction = () => {
     return async (dispatch) => {
         try {
             const result = await jobService.getCVSave();
-            console.log(result);
             if (result.status === 200) {
                 dispatch({
                     type: GET_CV_SAVED,
@@ -232,9 +228,6 @@ export const getApplicationByJob = (id) => {
         }
     }
 }
-
-
-
 
 
 export const sendMailToCandidateAction = (id) => {

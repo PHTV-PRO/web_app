@@ -8,7 +8,6 @@ export const getLevelListAction = () => {
     return async (dispatch) => {
         try {
             const result = await levelService.getLevelList();
-            console.log(result);
             if (result.status === 200) {
                 dispatch({
                     type: GET_LEVEL_LIST,

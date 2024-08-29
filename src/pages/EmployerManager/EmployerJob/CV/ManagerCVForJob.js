@@ -201,7 +201,7 @@ const ManagerCVForJob = () => {
                 return (
                     <div className="flex items-center" key={cv.id}>
                         <a href={cv.cv?.file_name} target="_blank" rel="noopener noreferrer" className="text-xl hover:no-underline text-blue flex items-end justify-center hover:cursor-pointer no-underline  pr-4">
-                            <EyeOutlined /> <text className="text-sm ml-2 my-0 py-0 "> View CV</text>
+                            <EyeOutlined /> <p className="text-sm ml-2 my-0 py-0 "> View CV</p>
                         </a>
                     </div>
                 )

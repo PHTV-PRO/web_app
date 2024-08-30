@@ -139,7 +139,8 @@ export const deleteJobAction = (id) => {
                     <>Delete Job successfully</>
                 ),
             });
-            history.goBack()
+            window.location.reload();
+            // history.()
         } catch (error) {
             console.log('error', error);
         }

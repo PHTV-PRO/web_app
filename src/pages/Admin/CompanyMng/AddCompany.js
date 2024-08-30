@@ -23,7 +23,7 @@ const AddNewCompany = (props) => {
     const [loading, setIsLoading] = useState(false);
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
-
+    const [disible,setDisble] = useState(false)
 
     const dispatch = useDispatch();
     let { arrAccountWithoutCompany } = useSelector((state) => state.AccountReducer);
@@ -82,6 +82,7 @@ const AddNewCompany = (props) => {
                 }
                 console.table("formData", [...formData]);
                 dispatch(addCompanyAction(formData));
+                setDisble(true)
             }
         },
     });
@@ -609,7 +610,7 @@ const AddNewCompany = (props) => {
 
 
                     <Form.Item label="Action">
-                        <Button htmlType="submit">Add Company</Button>
+                        {disible ===  false ? <Button htmlType="submit">Add Company</Button> : <Button disabled htmlType="submit">Add Company</Button> }
                     </Form.Item>
                 </div>
             </div>

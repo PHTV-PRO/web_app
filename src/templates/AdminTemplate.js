@@ -483,6 +483,7 @@ export const AdminTemplate = (props) => { //path, exact, Component
       <form className="m-auto" onSubmit={handleSearch}>
         <Input style={{ width: 350 }} onChange={handleOnChange} value={code} placeholder="Search Account, Company or Job" prefix={<SearchOutlined />}></Input>
       </form>
+
       <Button type="link" href="/"><HomeOutlined style={{ fontSize: '24px' }} /></Button>
       <UserAvatar />
     </div>

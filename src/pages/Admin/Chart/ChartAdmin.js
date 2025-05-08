@@ -56,7 +56,8 @@ const GeneralChart = () => {
                 borderColor: "rgb(75, 192, 192)",
                 data: chartAdmin?.data?.number_of_all_subcription_plan_by_month,
                 tension: 0.5,
-                type: 'line'
+                type: 'line',
+
             },
         ],
     };
@@ -105,6 +106,7 @@ const GeneralChart = () => {
                 <div className="mb-10 font-bold">Manage The Number Of Subcription Plan By Month and Total Monthly Subcription Plan Amount</div>
                 <Bar height={100} data={data} />
             </div>
+
             <div className="rounded-xl p-8 border-2 border-gray-300 mt-4">
                 <div className="mb-10 font-bold">Manage Number of Subcription Plan by Month </div>
                 <Line height={100} data={dataStatisticsSubcriptionPlanByMonth} />

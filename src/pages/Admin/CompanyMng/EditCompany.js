@@ -62,6 +62,7 @@ const EditCompany = (props) => {
         },
         onSubmit: (values) => {
             if (
+
                 values.name === "" || values?.name?.startsWith(' ') === true ||
                 values.profession === "" || values?.profession?.startsWith(' ') === true ||
                 values.introduction === "" ||
@@ -204,7 +205,6 @@ const EditCompany = (props) => {
 
     const handleDeleteImage = (image) => {
         // 20:14/64
-
         let a = formik?.values?.list_image
         setImagePreview((pre) => pre?.filter((item) => item !== image));
         formik.setFieldValue("list_image", JSON.stringify(JSON.parse((a))?.filter((item) => item !== image)));

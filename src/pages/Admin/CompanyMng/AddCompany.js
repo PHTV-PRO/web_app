@@ -23,7 +23,7 @@ const AddNewCompany = (props) => {
     const [loading, setIsLoading] = useState(false);
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillsId, setSelectedSkillsId] = useState([]);
-    const [disible,setDisble] = useState(false)
+    const [disible, setDisble] = useState(false)
 
     const dispatch = useDispatch();
     let { arrAccountWithoutCompany } = useSelector((state) => state.AccountReducer);
@@ -418,37 +418,9 @@ const AddNewCompany = (props) => {
                         {renderSelectedSkills()}
 
                     </Form.Item>
-                    {/* <Form.Item
-                        label="Level"
-                        name="Level"
-                        style={{ minWidth: "100%" }}
-                        rules={[
-                            {
-                                required: true,
-                                message: "SKill is required!",
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >
-                        {renderLevel()}
 
-                    </Form.Item> */}
 
-                    {/* <Form.Item
-                        label="Level Selected"
-                        name="Level"
-                        style={{ minWidth: "100%" }}
-                        rules={[
-                            {
-                                required: true,
-                                message: "SKill is required!",
-                                transform: (value) => value.trim(),
-                            },
-                        ]}
-                    >›
-                        {renderSelectedLevel()}
 
-                    </Form.Item> */}
 
                     {typeof (id) == "undefined" ? <Form.Item
                         label="Account"
@@ -610,7 +582,7 @@ const AddNewCompany = (props) => {
 
 
                     <Form.Item label="Action">
-                        {disible ===  false ? <Button htmlType="submit">Add Company</Button> : <Button disabled htmlType="submit">Add Company</Button> }
+                        {disible === false ? <Button htmlType="submit">Add Company</Button> : <Button disabled htmlType="submit">Add Company</Button>}
                     </Form.Item>
                 </div>
             </div>

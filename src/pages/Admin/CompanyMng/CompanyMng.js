@@ -200,6 +200,7 @@ export default function CompanyMng() {
             sorter: (a, b) => a.account_id - b.account_id,
             sortDirections: ['descend', 'ascend'],
             render: (text, data) => {
+                console.log(data);
                 return (<>
                     <span>{data.account?.name}</span>
                 </>)
